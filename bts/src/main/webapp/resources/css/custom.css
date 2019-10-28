@@ -1,0 +1,81 @@
+@charset "UTF-8";
+@font-face{
+	font-family : 'NanumGothic';
+	src: url("NanumGothic.eot");
+	src: local(""), url("NanumGothic.woff") format("woff");
+}
+
+@font-face{
+	font-family : 'Binggrae-Bold';
+	src: url("/bts/resources/fonts/Binggrae-Bold.ttf");	
+}
+
+*{
+	font-family: "NanumGothic", sans-serif;
+	list-style: none;
+	text-decoration: none;
+	outline: 0;	
+}
+
+h1.title{
+	font-family: "Binggrae-Bold", sans-serif;
+}
+/* 페이지네이션 */
+.pagination{
+   display:block;
+   text-align:center;
+   margin-top:10px;
+   margin-left:350px;
+}
+
+.pagination >li >span{
+   float:none;
+   color:#999999;
+}
+
+#pagination{
+   padding-right:388px;
+   
+}
+
+
+/* 전체적인 틀 */
+html, body {
+	margin: 0;
+	padding: 0;
+	background-color: white;
+}
+
+
+img.card-img-top{
+	max-width:298px;
+	max-height:198.66px;
+}
+
+div.col-lg-4 col-md-6 mb-4{
+	max-width: 360px;
+	max-height: 450px;
+}
+
+div.row{
+	margin-left: 300px;
+	margin-right: 300px;
+}
+
+.btn btn-outline-dark btn-sm{
+	margin-left: 100px;
+}
+
+.form-control{
+	max-width: 130px;
+	max-height: 35px;
+}
+
+img.main{
+	width: 1300px;
+	max-height: 300px;
+	margin-right: 200px;
+}
+
+
+

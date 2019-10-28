@@ -14,18 +14,17 @@ xmlns="http://www.springframework.org/schema/mvc"
 	
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
-	<mvc:default-servlet-handler />	
+	<resources mapping="/resources/**" location="/resources/" /> 
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources 
 		in the /WEB-INF/views directory -->
-	
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"> 
 		<beans:property name="prefix" value="/WEB-INF/views/" /> 
 		<beans:property name="suffix" value=".jsp" /> 
 		<beans:property name="order" value="2" /> 
 	</beans:bean>
 
-	<context:component-scan	base-package="project" />
+	<context:component-scan	base-package="bts" />
 
     <beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles2.TilesConfigurer">
 		<beans:property name="definitions">

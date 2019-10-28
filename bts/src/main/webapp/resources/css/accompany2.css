@@ -1,0 +1,16 @@
+@charset "UTF-8";
+@font-face{
+	src:url("/bts/resources/fonts/BMJUA_ttf.ttf");
+	font-family:"bmjua";	
+}
+
+.container{
+	margin-top:20px;
+	margin-bottom:50px;
+	font-family:"bmjua";
+}
+.img-selectAccompany{
+	max-width:500px;
+max-height:300px;
+border-radius:1em;
+}

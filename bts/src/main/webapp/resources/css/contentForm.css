@@ -1,0 +1,60 @@
+@charset "UTF-8";
+@import
+	url(https://fonts.googleapis.com/css?family=Material+Icons|Roboto:400,700)
+	;
+
+
+* {
+	list-style: none;
+	text-decoration: none;
+	outline: 0;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	background-color: white;
+	font-family: 'Roboto', sans-serif;
+}
+
+
+#content_header {
+	position:relative;
+	width: 100%;
+	height: 300px;
+	background-image:url("/bts/resources/image/seoul.jpg");
+	background-repeat: repeat-y;	 
+	background-size:100% 100%
+}
+
+#content_header>h1{
+	position:absolute;
+	margin:0;
+	width:100%;
+	bottom:20%;
+	height:auto;
+	text-align:center;
+	font-size:80px;
+	color:#bebebe;
+	opacity:0.55;
+	z-index: 2;
+}
+
+#content_section {
+	padding:40px;
+	position:relative;
+	top:-100px;
+	margin: auto;
+	width: 85%;
+	height: auto;
+	background-color: white;
+	border-radius: 3px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.26);
+	z-index: 1;
+}
+
+#image_grid {
+	margin-top: 50px;
+	
+
+}

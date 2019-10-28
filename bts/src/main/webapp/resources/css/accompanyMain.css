@@ -1,0 +1,118 @@
+@font-face{
+	src:url("/bts/resources/fonts/BMJUA_ttf.ttf");
+	font-family:"bmjua";	
+}
+
+.container{
+	margin-top:20px;
+	margin-bottom:50px;
+	font-family:"bmjua";
+}
+.img-accompany{
+max-width:500px;
+max-height:300px;
+border-radius:1em;
+}
+.card-image{
+width:220px;
+height:120px;
+max-width:100%;
+max-height:100%;
+border-radius:1em;
+}
+
+.pagination{
+	display:block;
+	text-align:center;
+	margin-top:10px;
+}
+.pagination >li > a{
+	float:none;
+	color:#999999;
+}
+
+
+#card1{
+	border-radius: 1em;
+	border-style:solid;
+	border-color:#999999;
+	border-width:2px;
+	
+}
+#card2{
+		border-radius: 1em;
+	border-style:solid;
+	border-color:#999999;
+	border-width:2px;
+}
+#card3{
+		border-radius: 1em;
+	border-style:solid;
+	border-color:#999999;
+	border-width:2px;
+}
+
+#cardbody1{
+	padding:15px;
+}
+
+#cardbody2{
+	padding:15px;
+}
+
+#cardbody3{
+	padding:15px;
+}
+
+#centercard{
+	border-color:#999999;
+	background-color:#999999;
+	border-radius:1em;
+	border-style:solid;
+	margin:50px;
+	padding:20px;
+	width:100%;
+}
+#centercardText{
+	font-size:180%;
+	font-color:#FFFFFF;
+}
+
+#cardbtn1{
+	margin:15px;
+}
+#cardbtn1 >a{
+	background-color:#999999;
+	border-color:#999999;
+	width: 100px;
+	height: 40px;
+	font-size: 20px;
+}
+
+#cardbtn2{
+	margin:15px;
+
+}
+#cardbtn2 >a{
+	background-color:#999999;
+	border-color:#999999;
+	width: 100px;
+	height: 40px;
+	font-size: 20px;
+}
+
+#cardbtn3{
+	margin:15px;	
+}
+#cardbtn3 >a{
+	background-color:#999999;
+	border-color:#999999;
+	width: 100px;
+	height: 40px;
+	font-size: 20px;
+}
+
+#centercartText{
+	inherit:none;
+	position:relative;
+}
