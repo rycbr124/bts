@@ -38,8 +38,10 @@ public class P001_2ControllerImpl implements P001_2Controller{
 			String upper_name = upperCategory.get(i).getName();
 			
 			for(int j = 0; j < category.size(); j++) {
-				String cd = category.get(j).getCategory_cd();
+				String cd = category.get(j).getUpper_category_cd();
+				String lower_cd = category.get(j).getCategory_cd();
 				String name = category.get(j).getName();
+				
 			}
 		}
 		
