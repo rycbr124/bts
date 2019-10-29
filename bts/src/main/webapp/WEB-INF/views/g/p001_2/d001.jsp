@@ -68,7 +68,6 @@
 			<option value="32">숙박</option>
 			<option value="38">쇼핑</option>
 			<option value="39">음식점</option>
-			
 		</select>
 		
 		
