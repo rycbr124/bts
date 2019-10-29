@@ -29,45 +29,47 @@
 		<h1 class="title">지역별 추천</h1>
 		<strong>지역선택 : </strong>
 		<select class="form-control" id="sigungucode" style="display:inline-block;">
-			<option value="">지역선택</option>
-			<option value="1">강남구</option>
-			<option value="2">강동구</option>
-			<option value="3">강북구</option>
-			<option value="4">강서구</option>
-			<option value="5">관악구</option>
-			<option value="6">광진구</option>
-			<option value="7">구로구</option>
-			<option value="8">금천구</option>
-			<option value="9">노원구</option>
-			<option value="10">도봉구</option>
-			<option value="11">동대문구</option>
-			<option value="12">동작구</option>
-			<option value="13">마포구</option>
-			<option value="14">서대문구</option>
-			<option value="15">서초구</option>
-			<option value="16">성동구</option>
-			<option value="17">성북구</option>
-			<option value="18">송파구</option>
-			<option value="19">양천구</option>
-			<option value="20">영등포구</option>
-			<option value="21">용산구</option>
-			<option value="22">은평구</option>
-			<option value="23">종로구</option>
-			<option value="24">중구</option>
-			<option value="25">중랑구</option>
+			<option value="" <c:if test="${sigungucode==''}"> selected </c:if>>지역선택</option>
+			<option value="1" <c:if test="${sigungucode=='1'}"> selected </c:if>>강남구</option>
+			<option value="2" <c:if test="${sigungucode=='2'}"> selected </c:if>>강동구</option>
+			<option value="3" <c:if test="${sigungucode=='3'}"> selected </c:if>>강북구</option>
+			<option value="4" <c:if test="${sigungucode=='4'}"> selected </c:if>>강서구</option>
+			<option value="5" <c:if test="${sigungucode=='5'}"> selected </c:if>>관악구</option>
+			<option value="6" <c:if test="${sigungucode=='6'}"> selected </c:if>>광진구</option>
+			<option value="7" <c:if test="${sigungucode=='7'}"> selected </c:if>>구로구</option>
+			<option value="8" <c:if test="${sigungucode=='8'}"> selected </c:if>>금천구</option>
+			<option value="9" <c:if test="${sigungucode=='9'}"> selected </c:if>>노원구</option>
+			<option value="10" <c:if test="${sigungucode=='10'}"> selected </c:if>>도봉구</option>
+			<option value="11" <c:if test="${sigungucode=='11'}"> selected </c:if>>동대문구</option>
+			<option value="12" <c:if test="${sigungucode=='12'}"> selected </c:if>>동작구</option>
+			<option value="13" <c:if test="${sigungucode=='13'}"> selected </c:if>>마포구</option>
+			<option value="14" <c:if test="${sigungucode=='14'}"> selected </c:if>>서대문구</option>
+			<option value="15" <c:if test="${sigungucode=='15'}"> selected </c:if>>서초구</option>
+			<option value="16" <c:if test="${sigungucode=='16'}"> selected </c:if>>성동구</option>
+			<option value="17" <c:if test="${sigungucode=='17'}"> selected </c:if>>성북구</option>
+			<option value="18" <c:if test="${sigungucode=='18'}"> selected </c:if>>송파구</option>
+			<option value="19" <c:if test="${sigungucode=='19'}"> selected </c:if>>양천구</option>
+			<option value="20" <c:if test="${sigungucode=='20'}"> selected </c:if>>영등포구</option>
+			<option value="21" <c:if test="${sigungucode=='21'}"> selected </c:if>>용산구</option>
+			<option value="22" <c:if test="${sigungucode=='22'}"> selected </c:if>>은평구</option>
+			<option value="23" <c:if test="${sigungucode=='23'}"> selected </c:if>>종로구</option>
+			<option value="24" <c:if test="${sigungucode=='24'}"> selected </c:if>>중구</option>
+			<option value="25" <c:if test="${sigungucode=='25'}"> selected </c:if>>중랑구</option>
 			
 		</select>
 	
 		<strong>관광타입 : </strong>
 		<select class="form-control" id="contenttypeid" onchange="selectChange()" style="display:inline-block;">
-			<option value="">타입선택</option>
-			<option value="12">관광지</option>
-			<option value="14">문화시설</option>
-			<option value="15">축제공연행사</option>
-			<option value="28">레포츠</option>
-			<option value="32">숙박</option>
-			<option value="38">쇼핑</option>
-			<option value="39">음식점</option>
+			<option value="" <c:if test="${contenttypeid==''}"> selected </c:if>>타입선택</option>
+			<!-- 
+			<option value="12" <c:if test="${contenttypeid=='12'}"> selected </c:if>>관광지</option>
+			<option value="14" <c:if test="${contenttypeid=='14'}"> selected </c:if>>문화시설</option>
+			<option value="15" <c:if test="${contenttypeid=='15'}"> selected </c:if>>축제공연행사</option>
+			<option value="28" <c:if test="${contenttypeid=='28'}"> selected </c:if>>레포츠</option>
+			<option value="32" <c:if test="${contenttypeid=='32'}"> selected </c:if>>숙박</option>
+			<option value="38" <c:if test="${contenttypeid=='38'}"> selected </c:if>>쇼핑</option>
+			<option value="39" <c:if test="${contenttypeid=='39'}"> selected </c:if>>음식점</option>
+			-->
 		</select>
 		
 		

@@ -3,6 +3,8 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-	<typeAliases>
-	</typeAliases>
+   <typeAliases>
+      <typeAlias type="bts.g.p001_2.vo.P001_2VO"  alias="p001_2VO" />
+      
+   </typeAliases>
 </configuration>
