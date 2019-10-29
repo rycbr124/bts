@@ -2,8 +2,7 @@
  * 추천(지역별) - 한국관광공사 API 
  */
 $(document).ready(function (){
-		//$('#search').on('click', image_init);
-		$('#search').on('click', result_init);
+	$('#search').on('click', result_init);
 });
 
 
@@ -65,6 +64,10 @@ function image_init(pageNo) {
 
 	var cat3 = $("#cat3 option:selected").val();
 	console.log("소분류 : " + cat3);
+	if(cat3 === undefined){
+		cat3 = "";
+	}
+	console.log("소분류22: " + cat3);
 	
 	var sigungucode = $("#sigungucode option:selected").val();
 
