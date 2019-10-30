@@ -14,8 +14,8 @@
 <link rel="stylesheet" href="${contextPath}/resources/library/bootstrap/css/bootstrap-grid.min.css">
 
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script> <!-- jQuery -->
-
 <script type="text/javascript" src="${contextPath}/resources/js/recommend.js"></script> <!-- 커스텀 js -->
+
 
 <!-- 부트스트랩 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -24,6 +24,33 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </head>
+<script>
+
+$(document).ready(function (){
+	console.log(typeof ${result.upper});
+	
+	for(var i in ${result.upper}){
+		$('#contenttypeid').append("option value='" + ${result.upper[i].category_cd} + "'>" + ${result.upper[i].name} + "</option>");
+	}
+	
+	
+	/*
+	var i = ${result.upper[0].category_cd};
+	var j = ${result.upper[0].name};
+	console.log(typeof j);
+	var option = document.createElement('option');
+	$(option).prop('value', i);
+	
+	var context = document.createTextNode(j);
+	option.appendChild(context);
+	
+	$('#contenttypeid').append(option);
+	*/
+	
+
+});
+
+</script>
 <body>
 	<div class="container">
 		<h1 class="title">지역별 추천</h1>
@@ -70,6 +97,8 @@
 			<option value="38" <c:if test="${contenttypeid=='38'}"> selected </c:if>>쇼핑</option>
 			<option value="39" <c:if test="${contenttypeid=='39'}"> selected </c:if>>음식점</option>
 			-->
+			<option></option>
+			
 		</select>
 		
 		

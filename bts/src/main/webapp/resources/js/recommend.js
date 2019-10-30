@@ -2,17 +2,14 @@
  * 추천(지역별) - 한국관광공사 API 
  */
 $(document).ready(function (){
+	
 	$('#search').on('click', result_init);
 });
 
 
 function selectChange(){
 	
-	var accom = ["관광호텔", "가족호텔", "유스호스텔", "펜션", "모텔", "게스트하우스", "홈스테이", "서비스드레지던스", "한옥스테이"];
-	var accom_num = ["B02010100", "B02010400", "B02010600", "B02010700", "B02010900", "B02011100", "B02011200", "B02011300", "B02011600"];
 	
-	var food = ["한식", "서양식", "일식", "중식", "아시아식", "패밀리레스토랑", "이색음식점", "채식전문점", "바/카페"];
-	var food_num = ["A05020100", "A05020200", "A05020300", "A05020400", "A05020500", "A05020600", "A05020700", "A05020800", "A05020900"];
 	
 	var selectItem = $("#contenttypeid").val();
 	console.log(selectItem);
@@ -38,6 +35,8 @@ function selectChange(){
 		$(option).prop('value', changeNum[count]);
 	}
 }
+
+
 	 
  ////////////////
  function result_init(){
