@@ -4,6 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 
-public interface P001_2Service {
+public interface G_P001_2Service {
 	public Map<String, List<String>> searchCategory(String input) throws Exception;
 }

@@ -14,33 +14,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import bts.g.p001_2.service.P001_2Service;
-import bts.g.p001_2.vo.P001_2VO;
+import bts.g.p001_2.service.G_P001_2Service;
 
 
 @Controller("g_p001_2")
 @RequestMapping(value="/recommend")
-public class P001_2ControllerImpl implements P001_2Controller{
+public class G_P001_2ControllerImpl implements G_P001_2Controller{
 	@Autowired
-	P001_2Service p001_2Service;
-	
-	@Autowired
-	P001_2VO p001_2VO;
+	G_P001_2Service g_p001_2Service;
 
 	@Override
 	@RequestMapping(value="/recommend1" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView G_P001_D001(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView P001_D001(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");		
-		Map<String, List<String>> searchResult = p001_2Service.searchCategory("place");
-		//List<P001_2VO> upperCategory = searchResult.get("upper");
-		//List<P001_2VO> category = searchResult.get("lower");
+		Map<String, List<String>> searchResult = g_p001_2Service.searchCategory("place");
+
 		JSONObject totaObject = new JSONObject(searchResult);
-		System.out.println("json loggggggggggggggggggggggggggg : "+totaObject);
-		System.out.println("json loggggggggggggggggggggggggggg : "+totaObject.toJSONString());
-		//for(P001_2VO vo : upperCategory) {
-			
-		//}
-		
+	
 		ModelAndView mav = new ModelAndView("/g/p001_2/d001");
 		
 		mav.addObject("result", totaObject.toJSONString());

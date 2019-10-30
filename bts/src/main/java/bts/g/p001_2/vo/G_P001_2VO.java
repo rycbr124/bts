@@ -2,8 +2,8 @@ package bts.g.p001_2.vo;
 
 import org.springframework.stereotype.Component;
 
-@Component("p001_2VO")
-public class P001_2VO {
+@Component("g_p001_2VO")
+public class G_P001_2VO {
 	private String category_cd;
 	private String name;
 	private String upper_category_cd;

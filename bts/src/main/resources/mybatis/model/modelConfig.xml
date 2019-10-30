@@ -4,7 +4,7 @@
 
 <configuration>
    <typeAliases>
-      <typeAlias type="bts.g.p001_2.vo.P001_2VO"  alias="p001_2VO" />
+      <typeAlias type="bts.g.p001_2.vo.G_P001_2VO"  alias="g_p001_2VO" />
       
    </typeAliases>
 </configuration>

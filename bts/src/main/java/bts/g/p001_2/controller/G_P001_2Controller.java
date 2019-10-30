@@ -5,6 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.ModelAndView;
 
-public interface P001_2Controller {
-	public ModelAndView G_P001_D001(HttpServletRequest request, HttpServletResponse response) throws Exception;
+public interface G_P001_2Controller {
+	public ModelAndView P001_D001(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

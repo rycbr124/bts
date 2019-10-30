@@ -9,8 +9,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 
-@Repository("p001_2DAO")
-public class P001_2DAOImpl implements P001_2DAO{
+@Repository("g_p001_2DAO")
+public class G_P001_2DAOImpl implements G_P001_2DAO{
 	@Autowired
 	private SqlSession sqlSession;
 	

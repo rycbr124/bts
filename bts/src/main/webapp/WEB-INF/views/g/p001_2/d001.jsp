@@ -33,6 +33,16 @@ $(document).ready(function (){
 	
 	$("#contenttypeid").change(function(){
 		$("#cat3").empty();
+		var initOption = document.createElement('option');
+		var option_name = document.createTextNode('분류');
+		initOption.appendChild(option_name);
+		$(initOption).prop('value', '');
+		
+		
+		
+		$("#cat3").append(initOption);
+		
+		
 		var check=Number($(this).val());
 		for(var i in catArray.lower){
 			if(check === catArray.lower[i].upper_category_cd){
@@ -93,15 +103,7 @@ $(document).ready(function (){
 		<strong>관광타입 : </strong>
 		<select class="form-control" id="contenttypeid" style="display:inline-block;">
 			<option value="" selected>타입선택</option>
-			<!-- 
-			<option value="12" <c:if test="${contenttypeid=='12'}"> selected </c:if>>관광지</option>
-			<option value="14" <c:if test="${contenttypeid=='14'}"> selected </c:if>>문화시설</option>
-			<option value="15" <c:if test="${contenttypeid=='15'}"> selected </c:if>>축제공연행사</option>
-			<option value="28" <c:if test="${contenttypeid=='28'}"> selected </c:if>>레포츠</option>
-			<option value="32" <c:if test="${contenttypeid=='32'}"> selected </c:if>>숙박</option>
-			<option value="38" <c:if test="${contenttypeid=='38'}"> selected </c:if>>쇼핑</option>
-			<option value="39" <c:if test="${contenttypeid=='39'}"> selected </c:if>>음식점</option>
-			-->			
+		
 		</select>
 		
 		
@@ -128,6 +130,7 @@ $(document).ready(function (){
 			<li class="page-item"><span class="page-link">4</span></li>
 			<li class="page-item"><span class="page-link">5</span></li>
 			<li class="page-item"><span class="page-link">Next</span></li>
+			
 		</ul>
 	</div>
 	</div>

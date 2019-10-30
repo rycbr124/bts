@@ -6,38 +6,6 @@ $(document).ready(function (){
 	$('#search').on('click', result_init);
 });
 
-/*
-function selectChange(){
-	
-	
-	
-	var selectItem = $("#contenttypeid").val();
-	console.log(selectItem);
-	var changeItem;
-	var changeNum;
-	
-	if(selectItem == "32"){
-		changeItem = accom;
-		changeNum = accom_num;
-	} else if(selectItem == "39"){
-		changeItem = food;
-		changeNum = food_num;
-	}
-	
-	console.log(changeItem);
-	
-	$("#cat3").empty();
-	
-	for(var count = 0; count < changeItem.length; count++){
-		var option = $("<option>" + changeItem[count] + "</option>");
-		$("#cat3").append(option);
-		console.log(changeNum[count]);
-		$(option).prop('value', changeNum[count]);
-	}
-}
- * */
-
-
 	 
  ////////////////
  function result_init(){
@@ -64,15 +32,13 @@ function image_init(pageNo) {
 	var contentTypeId = $("#contenttypeid option:selected").val();
 
 	var cat3 = $("#cat3 option:selected").val();
-	console.log("소분류 : " + cat3);
+
 	if(cat3 === undefined){
 		cat3 = "";
 	}
-	console.log("소분류22: " + cat3);
-	
+
 	var sigungucode = $("#sigungucode option:selected").val();
 
-	console.log(sigungucode);
 	var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey='
 			+ serviceKey
@@ -118,7 +84,7 @@ function image_init(pageNo) {
 						$(card).prop('class', 'card');
 						$(card).prop('style', 'width:300px');
 						$(image).prop('class', 'card-img-top');
-						$(image).prop('src', '/pro27/image/no_img.jpg');
+						$(image).prop('src', '/bts/resources/image/no_img.jpg');
 						$(image).prop('alt', 'Card image');
 						$(image).prop('style', 'width:100%');
 						$(body).prop('class', 'card-body');
@@ -185,7 +151,7 @@ function image_init(pageNo) {
 					$(card).prop('class', 'card');
 					$(card).prop('style', 'width:300px');
 					$(image).prop('class', 'card-img-top');
-					$(image).prop('src', '/pro27/image/no_img.jpg');
+					$(image).prop('src', '/bts/resources/image/no_img.jpg');
 					$(image).prop('alt', 'Card image');
 					$(image).prop('style', 'width:100%');
 					$(body).prop('class', 'card-body');
