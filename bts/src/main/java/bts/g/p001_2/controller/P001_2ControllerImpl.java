@@ -1,13 +1,13 @@
 package bts.g.p001_2.controller;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,14 +31,19 @@ public class P001_2ControllerImpl implements P001_2Controller{
 	@RequestMapping(value="/recommend1" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView G_P001_D001(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");		
-		Map<String, List<P001_2VO>> searchResult = p001_2Service.searchCategory("place");
+		Map<String, List<String>> searchResult = p001_2Service.searchCategory("place");
 		//List<P001_2VO> upperCategory = searchResult.get("upper");
 		//List<P001_2VO> category = searchResult.get("lower");
-		
+		JSONObject totaObject = new JSONObject(searchResult);
+		System.out.println("json loggggggggggggggggggggggggggg : "+totaObject);
+		System.out.println("json loggggggggggggggggggggggggggg : "+totaObject.toJSONString());
+		//for(P001_2VO vo : upperCategory) {
+			
+		//}
 		
 		ModelAndView mav = new ModelAndView("/g/p001_2/d001");
 		
-		mav.addObject("result", searchResult);
+		mav.addObject("result", totaObject.toJSONString());
 		return mav;
 	}
 

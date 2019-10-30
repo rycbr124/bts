@@ -27,28 +27,34 @@
 <script>
 
 $(document).ready(function (){
-	console.log(typeof ${result.upper});
-	
-	for(var i in ${result.upper}){
-		$('#contenttypeid').append("option value='" + ${result.upper[i].category_cd} + "'>" + ${result.upper[i].name} + "</option>");
-	}
-	
-	
-	/*
-	var i = ${result.upper[0].category_cd};
-	var j = ${result.upper[0].name};
-	console.log(typeof j);
-	var option = document.createElement('option');
-	$(option).prop('value', i);
-	
-	var context = document.createTextNode(j);
-	option.appendChild(context);
-	
-	$('#contenttypeid').append(option);
-	*/
-	
+	var catArray = ${result};
 
+	optionInit(catArray);
+	
+	$("#contenttypeid").change(function(){
+		$("#cat3").empty();
+		var check=Number($(this).val());
+		for(var i in catArray.lower){
+			if(check === catArray.lower[i].upper_category_cd){
+				var option = document.createElement("option");
+				$(option).prop('value',catArray.lower[i].category_cd);
+				$(option).text(catArray.lower[i].name);
+				$("#cat3").append(option);
+			}
+		}
+	});
+
+	function optionInit(catArray){
+		for(var i in catArray.upper){
+			var option = document.createElement("option");
+			$(option).prop('value',catArray.upper[i].category_cd);
+			$(option).text(catArray.upper[i].name);
+			$("#contenttypeid").append(option);
+		}
+	};
+	
 });
+
 
 </script>
 <body>
@@ -81,13 +87,12 @@ $(document).ready(function (){
 			<option value="22" <c:if test="${sigungucode=='22'}"> selected </c:if>>은평구</option>
 			<option value="23" <c:if test="${sigungucode=='23'}"> selected </c:if>>종로구</option>
 			<option value="24" <c:if test="${sigungucode=='24'}"> selected </c:if>>중구</option>
-			<option value="25" <c:if test="${sigungucode=='25'}"> selected </c:if>>중랑구</option>
-			
+			<option value="25" <c:if test="${sigungucode=='25'}"> selected </c:if>>중랑구</option>		
 		</select>
 	
 		<strong>관광타입 : </strong>
-		<select class="form-control" id="contenttypeid" onchange="selectChange()" style="display:inline-block;">
-			<option value="" <c:if test="${contenttypeid==''}"> selected </c:if>>타입선택</option>
+		<select class="form-control" id="contenttypeid" style="display:inline-block;">
+			<option value="" selected>타입선택</option>
 			<!-- 
 			<option value="12" <c:if test="${contenttypeid=='12'}"> selected </c:if>>관광지</option>
 			<option value="14" <c:if test="${contenttypeid=='14'}"> selected </c:if>>문화시설</option>
@@ -96,9 +101,7 @@ $(document).ready(function (){
 			<option value="32" <c:if test="${contenttypeid=='32'}"> selected </c:if>>숙박</option>
 			<option value="38" <c:if test="${contenttypeid=='38'}"> selected </c:if>>쇼핑</option>
 			<option value="39" <c:if test="${contenttypeid=='39'}"> selected </c:if>>음식점</option>
-			-->
-			<option></option>
-			
+			-->			
 		</select>
 		
 		

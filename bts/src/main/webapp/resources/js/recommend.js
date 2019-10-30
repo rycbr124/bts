@@ -6,7 +6,7 @@ $(document).ready(function (){
 	$('#search').on('click', result_init);
 });
 
-
+/*
 function selectChange(){
 	
 	
@@ -35,6 +35,7 @@ function selectChange(){
 		$(option).prop('value', changeNum[count]);
 	}
 }
+ * */
 
 
 	 

@@ -5,7 +5,7 @@
 
 <mapper namespace="g.p001_2">
 <!-- 리절트 맵 정의 -->
-	<resultMap id="categoryResult" type="p001_2VO">
+	<resultMap id="categoryResult" type="java.util.HashMap">
 		<result property="category_cd" column="category_cd" />
 		<result property="name" column="name" />
 		<result property="upper_category_cd" column="upper_category_cd" />		
