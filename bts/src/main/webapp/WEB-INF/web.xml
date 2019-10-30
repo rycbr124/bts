@@ -3,11 +3,27 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
          http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
          version="3.1">
-         
+   <!-- 한글 필터기능, 한글깨짐 현상방지 -->
+   <filter>
+      <filter-name>encodingFilter</filter-name>
+      <filter-class>
+         org.springframework.web.filter.CharacterEncodingFilter
+      </filter-class>
+      <!-- CharacterEncodingFilter() -->
+      <init-param>
+         <param-name>encoding</param-name>
+         <param-value>UTF-8</param-value>
+      </init-param>
+   </filter>
+   
+   <filter-mapping>
+      <filter-name>encodingFilter</filter-name>
+      <url-pattern>/*</url-pattern><!-- 모든경로설정 -->
+   </filter-mapping>         
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/action-mybatis.xml</param-value>
+		<param-value>/WEB-INF/spring/*.xml</param-value>
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
