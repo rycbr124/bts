@@ -1,4 +1,4 @@
-package bts.z.p000;
+package bts.z.p000.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +17,7 @@ public class P000ControllerImpl implements p000Controller{
 		public ModelAndView Z_P000_D001(HttpServletRequest request, HttpServletResponse response) throws Exception{
 			request.setCharacterEncoding("utf-8");
 			System.out.println("main : ");
-			ModelAndView mav = new ModelAndView("z/p000/d001");
+			ModelAndView mav = new ModelAndView("/z/p000/d001");
 			return mav;
 		}
 }

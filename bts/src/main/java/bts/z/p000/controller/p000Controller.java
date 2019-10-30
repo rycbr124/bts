@@ -1,4 +1,4 @@
-package bts.z.p000;
+package bts.z.p000.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

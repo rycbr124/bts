@@ -10,7 +10,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main/main.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/main/layout.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/layout/layout.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main/footer.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="${contextPath}/resources/js/main/logo.js"></script>
@@ -18,7 +18,7 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <style>
 @font-face {
-	src: url("font/Binggrae-Bold.woff");
+	src: url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
 	font-family: "Binggrae";
 }
 
@@ -74,7 +74,7 @@ $(document).on('click','a[href="#"]',function(e){
 </head>
 <body>
 	<div id="header">
-		<a href="index.jsp" class="header_logo"> <img
+		<a href="main" class="header_logo"> <img
 			src="${contextPath}/resources/image/logo/흰색/logo_white_all.png" alt="BTS">
 		</a>
 		<div class="header_control_container">
@@ -83,7 +83,7 @@ $(document).on('click','a[href="#"]',function(e){
 				<li class="menu_reservation"><a href="#">예약</a></li>
 				<li class="menu_accompany"><a href="#">동행</a></li>
 				<li class="menu_community"><a href="#">커뮤니티</a></li>
-				<li class="menu_planner"><a href="#">플래너</a></li>
+				<li class="menu_planner"><a href="${contextPath}/planner/planner">플래너</a></li>
 			</ul>
 			<div class="member_menu">
 				<a href="#popup-layer" class="login"><span>LOGIN</span></a> 

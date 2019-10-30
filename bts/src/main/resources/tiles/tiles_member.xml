@@ -8,29 +8,34 @@
 	<definition name="baseLayout"  template="/WEB-INF/views/common/baseLayout.jsp">
       <put-attribute name="title" value="" />
       <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
-      <put-attribute name="body" value="" />
+      <put-attribute name="content" value="" />
       <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
 	</definition>
 	
 	<!-- 레이아웃 미적용 화면 템플릿-->
 	<definition name="emptyLayout"  template="/WEB-INF/views/common/emptyLayout.jsp">	
 	</definition>
-	
-	<!-- 레이아웃 적용-->
-	<definition name="/g/*/*" extends="baseLayout">
+		<!-- 레이아웃 적용-->
+	<definition name="/z/*/*" extends="emptyLayout">
 		<put-attribute name="title" value="제목" />
 		<put-attribute name="body"
-			value="/WEB-INF/views/g/{1}/{2}.jsp" />
+			value="/WEB-INF/views/z/{1}/{2}.jsp" />
 	</definition>
+		<definition name="/i/p002/d001" extends="emptyLayout">
+		<put-attribute name="title" value="제목" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/i/p002/d001.jsp" />
+	</definition>
+	
 	
 	<!-- 레이아웃 미적용 -->
 	<!--  
 	-->
-	<definition name="/*/*" extends="emptyLayout">
+	<definition name="/*/*" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/{1}/{2}.jsp" />
 	</definition>
-	<definition name="/*/*/*" extends="emptyLayout">
+	<definition name="/*/*/*" extends="baseLayout">
 		<put-attribute name="body"
 			value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
 	</definition>	
