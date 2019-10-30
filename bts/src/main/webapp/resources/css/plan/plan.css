@@ -1,0 +1,55 @@
+@charset "UTF-8";
+body{
+	margin:0;
+}
+.write_form{
+	margin:20px;
+}
+.map_controller{
+	position:relative;
+	width:10%;
+	float:left;
+	margin-top:0px;
+	margin-left:0px;
+	background:rgb(127,127,127);
+	height:934px;
+	border:1px solid lightgray;
+	border-radius:9px;
+}
+.plan_tab{
+	border:1px solid lightgray;
+	padding-top:5px;
+	background-size:auto;
+	background-position-x:initial;
+	background-image:initial;
+	background-position-y:initial;
+	line-height:20px;
+	box-sizing:border-box;
+	display:block;
+	font-size:14px;
+}
+.plan_tab img{
+	width:100px;
+	height:60px;
+	
+}
+.calendar{
+	
+	border-bottom:1px solid white;
+	margin:10px;
+	margin-top:20px;
+}
+.calendar img{
+	width:18px;
+	height:18px;
+	margin-bottom:-5px;
+}
+.calendar input{
+	background-color:transparent;
+	border:0;
+	cursor:pointer;
+	font-size:11px;
+}
+.calendar input:focus{
+	outline:none;
+}

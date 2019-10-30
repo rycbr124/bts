@@ -10,7 +10,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller("z_p000")
 @RequestMapping(value="/main")
-public class P000ControllerImpl implements p000Controller{
+public class Z_P000ControllerImpl implements Z_p000Controller{
 
 		@Override
 		@RequestMapping(value="/main" , method= {RequestMethod.POST , RequestMethod.GET})
