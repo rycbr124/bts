@@ -72,7 +72,7 @@ function image_init(pageNo) {
 						$(card).prop('class', 'card');
 						$(card).prop('style', 'width:300px');
 						$(image).prop('class', 'card-img-top');
-						$(image).prop('src', '/pro27/image/no_img.jpg');
+						$(image).prop('src', '/bts/resources/image/no_img.jpg');
 						$(image).prop('alt', 'Card image');
 						$(image).prop('style', 'width:100%');
 						$(body).prop('class', 'card-body');
@@ -138,7 +138,7 @@ function image_init(pageNo) {
 					$(card).prop('class', 'card');
 					$(card).prop('style', 'width:300px');
 					$(image).prop('class', 'card-img-top');
-					$(image).prop('src', '/pro27/image/no_img.jpg');
+					$(image).prop('src', '/bts/resources/image/no_img.jpg');
 					$(image).prop('alt', 'Card image');
 					$(image).prop('style', 'width:100%');
 					$(body).prop('class', 'card-body');
