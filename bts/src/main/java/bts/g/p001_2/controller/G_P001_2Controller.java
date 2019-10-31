@@ -7,4 +7,5 @@ import org.springframework.web.servlet.ModelAndView;
 
 public interface G_P001_2Controller {
 	public ModelAndView P001_D001(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView P001_D002(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

@@ -1,9 +1,8 @@
 /**
  * 추천(코스별) - 한국관광공사 API 
  */
-$(document).ready(function (){
-		//$('#search').on('click', image_init);
-		$('#search').on('click', result_init);
+$(document).ready(function (){	
+	$('#search').on('click', result_init);
 });
 
  function result_init(){

@@ -12,23 +12,22 @@
 	</resultMap>
 	
 	<!-- 상위 카테고리 -->
-	<select id="selectUpperCategory" resultMap="categoryResult" parameterType="String">
+	<select id="selectUpperCategory" resultMap="categoryResult">
 		<![CDATA[
 			SELECT category_cd, name
 			FROM category
 			WHERE upper_category_cd IS NULL
+			AND category_cd != '25'				
 		]]>	
-
-			<choose>
-				<when test="test='place'">
-					AND category_cd != '25'
-				</when>
-				<otherwise>
-					AND category_cd = '25'	
-				</otherwise>
-			</choose>
-
-		
+	</select>
+	
+	<!-- 코스 카테고리 -->
+	<select id="selectCourseCategory" resultMap="categoryResult">
+		<![CDATA[
+			SELECT category_cd, name
+			FROM category
+			WHERE upper_category_cd = '25'
+		]]>	
 	</select>
 	
 	<!-- 하위 카테고리 -->
@@ -39,5 +38,6 @@
 			WHERE upper_category_cd IS NOT NULL			 
 		]]>	
 	</select>
+
 
 </mapper>

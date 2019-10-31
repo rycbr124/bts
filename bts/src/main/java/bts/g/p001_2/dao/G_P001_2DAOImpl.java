@@ -2,6 +2,7 @@ package bts.g.p001_2.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +16,17 @@ public class G_P001_2DAOImpl implements G_P001_2DAO{
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<String> searchUpperCategory(String input) throws DataAccessException {
+	public List<String> searchUpperCategory() throws DataAccessException {
 		List<String> upper_category = new ArrayList<>();
-		upper_category = sqlSession.selectList("g.p001_2.selectUpperCategory", input);
+		upper_category = sqlSession.selectList("g.p001_2.selectUpperCategory");
 		return upper_category;
+	}
+	
+	@Override
+	public List<String> searchCourseCategory() throws DataAccessException {
+		List<String> course_category = new ArrayList<>();
+		course_category = sqlSession.selectList("g.p001_2.selectCourseCategory");
+		return course_category;
 	}
 
 	@Override
@@ -27,6 +35,8 @@ public class G_P001_2DAOImpl implements G_P001_2DAO{
 		category = sqlSession.selectList("g.p001_2.selectCategory");
 		return category;
 	}
+
+
 	
 
 

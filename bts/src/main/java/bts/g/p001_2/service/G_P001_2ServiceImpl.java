@@ -15,9 +15,9 @@ public class G_P001_2ServiceImpl implements G_P001_2Service{
 	G_P001_2DAO g_p001_2DAO;
 	
 	@Override
-	public Map<String, List<String>> searchCategory(String input) throws Exception {
+	public Map<String, List<String>> searchCategory() throws Exception {
 		Map<String, List<String>> result = new HashMap<>(); 
-		List<String> upperCategory = g_p001_2DAO.searchUpperCategory(input);
+		List<String> upperCategory = g_p001_2DAO.searchUpperCategory();
 		List<String> category = g_p001_2DAO.searchCategory();
 		
 		result.put("upper", upperCategory);
@@ -25,5 +25,19 @@ public class G_P001_2ServiceImpl implements G_P001_2Service{
 		
 		return result;
 	}
+
+	@Override
+	public Map<String, List<String>> courseCategory() throws Exception {
+		Map<String, List<String>> result = new HashMap<>(); 
+		
+		List<String> courseCategory = g_p001_2DAO.searchCourseCategory();
+		
+		result.put("course", courseCategory);
+		
+		return result;
+	}
+
+	
+
 
 }
