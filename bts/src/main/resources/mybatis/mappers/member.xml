@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.member">
+	<!-- 리절트 맵 정의 -->
+	<resultMap id="memberResult" type="D001VO">
+		<result property="member_id" column="member_id" />
+		<result property="password" column="password" />
+		<result property="name" column="name" />
+		<result property="gender" column="gender" />
+
+		<result property="birth" column="birth" />
+
+		<result property="tel_no" column="tel_no" />
+
+		<result property="nick_name" column="nick_name" />
+
+		<result property="email" column="email" />
+
+	</resultMap>
+	<!-- 회원가입 ID 중복검사 -->
+	<select id="selectOverlappedID" parameterType="String"
+		resultType="String">
+		select decode(count(*),1, 'true', 0, 'false')
+		from b_member
+		where member_id = #{id}
+	</select>
+
+	<!-- 회원가입 insert문 -->
+	<insert id="insertNewMember" parameterType="d001VO">
+	<![CDATA[
+	insert into b_member(member_id, password, name, gender, birth,
+	tel_no, nick_name, email)
+	values(#{member_id,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{birth,jdbcType=VARCHAR}
+	, #{tel_no,jdbcType=VARCHAR}, #{nick_name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR})
+	]]>
+	</insert>
+	
+	<!-- 로그인 쿼리문 -->
+	<select id="login" resultType="D001VO" parameterType="java.util.Map"  >
+	    <![CDATA[
+			select*from b_member 
+			 where member_id=#{member_id,jdbcType=VARCHAR}
+			 and password=#{password,jdbcType=VARCHAR} 
+		]]>
+	</select>
+	
+</mapper>

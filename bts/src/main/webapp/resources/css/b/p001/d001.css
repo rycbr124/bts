@@ -1,0 +1,12 @@
+@charset "UTF-8";
+@font-face{
+	src:url("/bts/resources/fonts/Binggrae-Bold.ttf");
+	font-family:"binggrae";	
+}
+body{
+	font-family:"binggrae";
+}
+#signupBtn{
+	border-radius:1em;
+	border:solid 1px gray;
+}
