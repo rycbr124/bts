@@ -13,9 +13,9 @@
 	</classpathentry>
 	<classpathentry kind="src" output="target/test-classes" path="src/test/java">
 		<attributes>
+			<attribute name="test" value="true"/>
 			<attribute name="optional" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
-			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
@@ -29,10 +29,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/tomcat9/lib/websocket-api.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="https://javaee.github.io/javaee-spec/javadocs/"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/websocket-api.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
