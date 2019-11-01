@@ -11,7 +11,7 @@
 <link rel="stylesheet" href="/bts/resources/library/bootstrap/css/bootstrap.min.css" />
 </head>
 <body>
-<div id="side">
+<div id="sideber">
 <div class="containers">
             <div class="roww">
    <div class="col-md-3">
