@@ -34,6 +34,7 @@
    </definition>
 
    
+
    <!-- 마이페이지 레이아웃 적용-->
    <definition name="/c/*/*" extends="myPageLayout">
       <put-attribute name="body"
@@ -51,8 +52,6 @@
 		<put-attribute name="body"
 			value="/WEB-INF/views/i/p002/d001.jsp" />
 	</definition>
-   
-   
    
    
    <!-- 레이아웃 적용-->

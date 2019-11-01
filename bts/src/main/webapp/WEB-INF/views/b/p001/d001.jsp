@@ -24,8 +24,7 @@
 			<div class="form-group">
 				<label for="provision" class="col-lg-2 control-label">회원가입약관</label>
 				<div class="col-lg-10" id="provision">
-					<textarea class="form-control" rows="8" style="resize: none">
-약관동의
+					<textarea class="form-control" rows="8" style="resize: none">약관동의
                     </textarea>
 					<div class="radio">
 						<label> <input type="radio" id="provisionYn" name="provisionYn" value="Y" autofocus="autofocus" checked> 동의합니다.
@@ -40,8 +39,7 @@
 			<div class="form-group">
 				<label for="memberInfo" class="col-lg-2 control-label">개인정보취급방침</label>
 				<div class="col-lg-10" id="memberInfo">
-					<textarea class="form-control" rows="8" style="resize: none">
-개인정보의 항목 및 수집방법
+					<textarea class="form-control" rows="8" style="resize: none">개인정보의 항목 및 수집방법
                     </textarea>
 					<div class="radio">
 						<label> <input type="radio" id="memberInfoYn" name="memberInfoYn" value="Y" checked> 동의합니다.

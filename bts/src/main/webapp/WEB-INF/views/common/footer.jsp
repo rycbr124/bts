@@ -79,7 +79,7 @@ html:not(.mobile) .footer_menu > li.footer_menu_privacy > a:hover { background:#
 					<li>Best Travel Seoul</li>
 				    <li class="name"><span>대표이사</span>이주희</li>
 					<li><span>주소</span>서울특별시 서초구 서초동</li>
-					<li class="sub_name"><span>직원</span>안밀령 이재홍 안은영 원종평</li>
+					<li class="sub_name"><span>직원</span>안민형 이재홍 안은영 원종평</li>
 				</ul>
 				<div lang="en" class="copyright"> <span>COPYRIGHT 2019 BTS Corp. ALL RIGHTS RESERVED.</span></div>
 			</div><!-- .footer_info -->
