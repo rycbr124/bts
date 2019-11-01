@@ -1,9 +1,8 @@
 /**
  * 추천(코스별) - 한국관광공사 API 
  */
-$(document).ready(function (){
-		//$('#search').on('click', image_init);
-		$('#search').on('click', result_init);
+$(document).ready(function (){	
+	$('#search').on('click', result_init);
 });
 
  function result_init(){
@@ -53,19 +52,16 @@ function image_init(pageNo) {
 					var image = document.createElement('img');
 					var body = document.createElement('div');
 					var title = document.createElement('h5');
-					
-					var href = document.createElement('a');					
+					var addr = document.createElement('p');
+					var form = document.createElement('form');
+					var hidden = document.createElement('input');
+					var submit = document.createElement('input');				
 					
 					var c_title = document
 							.createTextNode(resultArray[i].title);
-					
-					var c_button = document
-					.createTextNode('상세보기');
-				
+									
 					title.appendChild(c_title);
-					
-					href.appendChild(c_button);
-					
+										
 					var imageArr = resultArray[i].firstimage;
 					if (imageArr === undefined) {
 						$(col).prop('class', 'col-lg-4 col-md-6 mb-4');
@@ -73,14 +69,19 @@ function image_init(pageNo) {
 						$(card).prop('class', 'card');
 						$(card).prop('style', 'width:300px');
 						$(image).prop('class', 'card-img-top');
-						$(image).prop('src', '/pro27/image/no_img.jpg');
+						$(image).prop('src', '/bts/resources/image/no_img.jpg');
 						$(image).prop('alt', 'Card image');
 						$(image).prop('style', 'width:100%');
 						$(body).prop('class', 'card-body');
 						$(title).prop('class', 'card-title');
+						$(form).prop('action', '/bts/recommend/course_detail');
+						$(form).prop('method', 'post');
+						$(hidden).prop('type', 'hidden');
+						$(hidden).prop('name', 'contentid');
+						$(hidden).prop('value', resultArray[i].contentid);
+						$(submit).prop('type', 'submit');
+						$(submit).prop('value', '상세보기');
 						
-						$(href).prop('href', '#');
-						$(href).prop('class', 'btn btn-outline-dark btn-sm');		
 						//대체 이미지 경로 삽입
 					} else {
 						$(col).prop('class', 'col-lg-4 col-md-6 mb-4');
@@ -93,9 +94,14 @@ function image_init(pageNo) {
 						$(image).prop('style', 'width:100%');
 						$(body).prop('class', 'card-body');
 						$(title).prop('class', 'card-title');
+						$(form).prop('action', '/bts/recommend/course_detail');
+						$(form).prop('method', 'post');
+						$(hidden).prop('type', 'hidden');
+						$(hidden).prop('name', 'contentid');
+						$(hidden).prop('value', resultArray[i].contentid);
+						$(submit).prop('type', 'submit');
+						$(submit).prop('value', '상세보기');
 						
-						$(href).prop('href', '#');
-						$(href).prop('class', 'btn btn-outline-dark btn-sm');	
 						
 
 					}
@@ -107,8 +113,10 @@ function image_init(pageNo) {
 					$(card).append(image);
 					$(card).append(body);
 					$(body).append(title);
+					$(body).append(form);
+					$(form).append(hidden);
+					$(form).append(submit);
 					
-					$(body).append(href);
 					
 					
 				}
@@ -119,19 +127,16 @@ function image_init(pageNo) {
 				var image = document.createElement('img');
 				var body = document.createElement('div');
 				var title = document.createElement('h5');
-				
-				var href = document.createElement('a');					
+				var form = document.createElement('form');
+				var hidden = document.createElement('input');
+				var submit = document.createElement('input');	
+							
 				
 				var c_title = document
 						.createTextNode(resultArray.title);
 				
-				var c_button = document
-				.createTextNode('상세보기');
-			
 				title.appendChild(c_title);
-				
-				href.appendChild(c_button);
-				
+								
 				var imageArr = resultArray.firstimage;
 				if (imageArr === undefined) {
 					$(col).prop('class', 'col-lg-4 col-md-6 mb-4');
@@ -139,14 +144,18 @@ function image_init(pageNo) {
 					$(card).prop('class', 'card');
 					$(card).prop('style', 'width:300px');
 					$(image).prop('class', 'card-img-top');
-					$(image).prop('src', '/pro27/image/no_img.jpg');
+					$(image).prop('src', '/bts/resources/image/no_img.jpg');
 					$(image).prop('alt', 'Card image');
 					$(image).prop('style', 'width:100%');
 					$(body).prop('class', 'card-body');
 					$(title).prop('class', 'card-title');
-					
-					$(href).prop('href', '#');
-					$(href).prop('class', 'btn btn-outline-dark btn-sm');	
+					$(form).prop('action', '/bts/recommend/course_detail');
+					$(form).prop('method', 'post');
+					$(hidden).prop('type', 'hidden');
+					$(hidden).prop('name', 'contentid');
+					$(hidden).prop('value', resultArray[i].contentid);
+					$(submit).prop('type', 'submit');
+					$(submit).prop('value', '상세보기');	
 					//대체 이미지 경로 삽입
 				} else {
 					$(col).prop('class', 'col-lg-4 col-md-6 mb-4');
@@ -159,10 +168,13 @@ function image_init(pageNo) {
 					$(image).prop('style', 'width:100%');
 					$(body).prop('class', 'card-body');
 					$(title).prop('class', 'card-title');
-					
-					$(href).prop('href', '#');
-					$(href).prop('class', 'btn btn-outline-dark btn-sm');	
-
+					$(form).prop('action', '/bts/recommend/course_detail');
+					$(form).prop('method', 'post');
+					$(hidden).prop('type', 'hidden');
+					$(hidden).prop('name', 'contentid');
+					$(hidden).prop('value', resultArray[i].contentid);
+					$(submit).prop('type', 'submit');
+					$(submit).prop('value', '상세보기');
 				}
 
 				$('#image_grid').append(col);
@@ -171,8 +183,9 @@ function image_init(pageNo) {
 				$(card).append(image);
 				$(card).append(body);
 				$(body).append(title);
-				
-				$(body).append(href);
+				$(body).append(form);
+				$(form).append(hidden);
+				$(form).append(submit);
 
 			}
 

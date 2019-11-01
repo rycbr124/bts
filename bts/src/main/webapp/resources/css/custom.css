@@ -1,11 +1,5 @@
 @charset "UTF-8";
 @font-face{
-	font-family : 'NanumGothic';
-	src: url("NanumGothic.eot");
-	src: local(""), url("NanumGothic.woff") format("woff");
-}
-
-@font-face{
 	font-family : 'Binggrae-Bold';
 	src: url("/bts/resources/fonts/Binggrae-Bold.ttf");	
 }
