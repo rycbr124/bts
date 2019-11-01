@@ -1,23 +1,24 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"
+	isELIgnored="false"
+	%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main/main.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/main/layout.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/layout/layout.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main/footer.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/main/loginPopup.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="${contextPath}/resources/js/main/logo.js"></script>
-<link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <style>
 @font-face {
-	src: url("../resources/fonts/Binggrae-Bold.woff");
+	src: url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
 	font-family: "Binggrae";
 }
 
@@ -42,77 +43,39 @@ h3.title {
 	font-family: "Binggrae";
 	margin-bottom: 100px;
 }
-
-#login-box {
-	font-family: "Binggrae";
-}
 </style>
 <meta charset="UTF-8">
 <title>Best Travel Seoul</title>
 <script>
-	function search_value() {
-		var text = $("#tab1").text();
+function search_value(){
+	var text = $("#tab1").text();
 		$('#search_text').val(text);
-	}
-	function search_value1() {
-		var text2 = $("#tab2").text();
-		$('#search_text').val(text2);
-	}
-	function search_value2() {
-		var text3 = $("#tab3").text();
-		$('#search_text').val(text3);
-	}
-	function search_value3() {
-		var text4 = $("#tab4").text();
-		$('#search_text').val(text4);
-	}
-	function search_value4() {
-		var text5 = $("#tab5").text();
-		$('#search_text').val(text5);
-	}
-	$(document).on('click', 'a[href="#"]', function(e) {
-		e.preventDefault();
-	});
-</script>
-<script>
-	$(document).ready(function() {
-		$('a.login').click(function() {
-
-			// Getting the variable's value from a link 
-			var loginBox = $(this).attr('href');
-
-			//Fade in the Popup and add close button
-			$(loginBox).fadeIn(300);
-
-			//Set the center alignment padding + border
-			var popMargTop = ($(loginBox).height() + 24) / 2;
-			var popMargLeft = ($(loginBox).width() + 24) / 2;
-
-			$(loginBox).css({
-				'margin-top' : -popMargTop,
-				'margin-left' : -popMargLeft
-			});
-
-			// Add the mask to body
-			$('body').append('<div id="mask"></div>');
-			$('#mask,.login-popup').fadeIn(300);
-
-			return false;
-		});
-
-		// When clicking on the button close or the mask layer the popup closed
-		$('a.close, #mask').live('click', function() {
-			$('#mask , .login-popup').fadeOut(300, function() {
-				$('#mask').remove();
-			});
-			return false;
-		});
-	});
+}		
+function search_value1(){
+	var text2 = $("#tab2").text();	
+	$('#search_text').val(text2);
+}		
+function search_value2(){
+	var text3 = $("#tab3").text();
+	$('#search_text').val(text3);
+}
+function search_value3(){	
+	var text4 = $("#tab4").text();
+	$('#search_text').val(text4);
+}
+function search_value4(){
+	var text5 = $("#tab5").text();
+	$('#search_text').val(text5);
+}
+$(document).on('click','a[href="#"]',function(e){
+	e.preventDefault();
+});
 </script>
 </head>
 <body>
 	<div id="header">
-		<a href="index.jsp" class="header_logo"> <img src="${contextPath}/resources/image/logo/흰색/logo_white_all.png" alt="BTS">
+		<a href="main" class="header_logo"> <img
+			src="${contextPath}/resources/image/logo/흰색/logo_white_all.png" alt="BTS">
 		</a>
 		<div class="header_control_container">
 			<ul id="menu" class="menu">
@@ -120,48 +83,29 @@ h3.title {
 				<li class="menu_reservation"><a href="#">예약</a></li>
 				<li class="menu_accompany"><a href="#">동행</a></li>
 				<li class="menu_community"><a href="#">커뮤니티</a></li>
-				<li class="menu_planner"><a href="#">플래너</a></li>
+				<li class="menu_planner"><a href="${contextPath}/planner/planner">플래너</a></li>
 			</ul>
 			<div class="member_menu">
-				<c:choose>
-					<c:when test="${isLogOn== true and not empty memberInfo }">
-						<a href="#" class="mypage"><span>마이페이지</span></a>
-						<a href="#" class="logout"><span>로그아웃</span></a>			 
-					
-					</c:when>
-					<c:otherwise>
-						<a href="#popup-layer" class="login"><span>LOGIN</span></a>
-						<a href="${contextPath }/signup/signup" class="signup"><span>SIGN UP</span></a>
-					</c:otherwise>
-				</c:choose>
+				<a href="#popup-layer" class="login"><span>LOGIN</span></a> 
+				<a href="#" class="signup"><span>SIGN UP</span></a>
 			</div>
 			<!-- member_menu -->
 		</div>
-
 	</div>
 	<!-- header -->
+	
+	
 
-	<!-- login popup -->
-	<div id="login-box" class="login-popup">
-		<a href="#" class="close"><img src="${contextPath}/resources/image/main/close_pop.png" alt="close" /></a>
-		<form method="post" role="form" class="signin" action="${contextPath}/signup/login">
-			<fieldset class="textbox">
-				<p id="h2text" style="color: white;">BTS 로그인</p>
-				<label class="member_id"> <span>ID</span> <input id="member_id" name="member_id" type="text" autocomplete="on" placeholder="ID">
-				</label> <label class="password"> <span>Password</span> <input id="password" name="password" type="password" placeholder="Password">
-				</label> <input type="submit" value="LOGIN" class="submit button" type="button" id="button">
 
-				<p>
-					<a class="forgot" href="#">비밀번호 찾기</a>
-				</p>
-			</fieldset>
-		</form>
-	</div>
+	
 
+	
 	<main class="main">
-	<div id="carousel-example-generic" class="carousel slide active" data-ride="carousel" data-pause="false">
+	<div id="carousel-example-generic" class="carousel slide active"
+		data-ride="carousel" data-pause="false">
 		<ol class="carousel-indicators">
-			<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+			<li data-target="#carousel-example-generic" data-slide-to="0"
+				class="active"></li>
 			<li data-target="#carousel-example-generic" data-slide-to="1"></li>
 			<li data-target="#carousel-example-generic" data-slide-to="2"></li>
 		</ol>
@@ -197,51 +141,60 @@ h3.title {
 					</div>
 				</div>
 			</div>
-		</div>
-		<!-- careusel-inner -->
-	</div>
-	<!-- carousel -->
+		</div><!-- careusel-inner -->
+	</div><!-- carousel -->
 	<div class="main_section_search" id="main_section main_section_search">
 		<p class="search_title">원하는 여행지를 빠르게 찾아보세요!</p>
 		<div class="search_container">
-			<li class="search">
-				<div class="search_quick" id="search_quick">
-					<p>여행지</p>
-					<input type="text" id="search_text" placeholder="원하시는 여행지를 입력하세요."> <select class="select_list" id="select_list">
-						<option value="통합검색">통합검색</option>
-						<option value="추천">추천</option>
-						<option value="예약">예약</option>
-						<option value="동행">동행</option>
-						<option value="커뮤니티">커뮤니티</option>
-						<option value="플래너">틀래너</option>
-					</select>
-				</div>
+		<li class="search">
+			<div class="search_quick" id="search_quick">
+				<p>여행지</p>
+				<input type="text" id="search_text" placeholder="원하시는 여행지를 입력하세요.">
+				<select class="select_list" id="select_list">
+					<option value="통합검색">통합검색</option>
+					<option value="추천">추천</option>
+					<option value="예약">예약</option>
+					<option value="동행">동행</option>
+					<option value="커뮤니티">커뮤니티</option>
+					<option value="플래너">틀래너</option>
+				</select>
+			</div>
 			</li>
 			<li class="select">
-				<div class="city_selct" id="city_select">
-					<p>다른 도시 보기</p>
-					<p class="box_tab">
-						<a href="#" id="tab1" onclick="search_value()">#을지로</a> <a href="#" id="tab2" onclick="search_value1()">#종로구</a> <a href="#" id="tab3" onclick="search_value2()">#강남구</a> <a href="#" id="tab4" onclick="search_value3()">#홍대</a> <a href="#" id="tab5" onclick="search_value4()">#서초구</a>
-					</p>
-				</div>
+			<div class="city_selct" id="city_select">
+				<p>다른 도시 보기</p>
+				<p class="box_tab">
+					<a href="#" id="tab1" onclick="search_value()">#을지로</a>
+					<a href="#" id="tab2" onclick="search_value1()">#종로구</a>
+					<a href="#" id="tab3" onclick="search_value2()">#강남구</a>
+					<a href="#" id="tab4" onclick="search_value3()">#홍대</a>
+					<a href="#" id="tab5" onclick="search_value4()">#서초구</a>
+				</p>
+			</div>
 			</li>
-			<div class="hot-place-tab" id="hot-palce-tab">
+				<div class="hot-place-tab" id="hot-palce-tab">
 				<span class="hotplace_title">지금 핫한 곳!</span>
 				<p class="box_tab">
-					<a href="#" id="tab1" onclick="search_value()">#을지로</a> <a href="#" id="tab2" onclick="search_value1()">#종로구</a> <a href="#" id="tab3" onclick="search_value2()">#강남구</a> <a href="#" id="tab4" onclick="search_value3()">#홍대</a> <a href="#" id="tab5" onclick="search_value4()">#서초구</a>
+					<a href="#" id="tab1" onclick="search_value()">#을지로</a>
+					<a href="#" id="tab2" onclick="search_value1()">#종로구</a>
+					<a href="#" id="tab3" onclick="search_value2()">#강남구</a>
+					<a href="#" id="tab4" onclick="search_value3()">#홍대</a>
+					<a href="#" id="tab5" onclick="search_value4()">#서초구</a>
 				</p>
-				<button type="button" class="btn search_city" id="search_city">검색하기</button>
+				<button type="button" class="btn search_city" id="search_city">검색하기</button>		
 			</div>
 		</div>
-	</div>
+		</div>
 
 	<!-- Scroll down_1 Reservation -->
-	<div class="main_section_reservation" id="main_section main_section_reservation" style="position: relative;">
+	<div class="main_section_reservation"
+		id="main_section main_section_reservation" style="position:relative;">
 		<div class="caption">
 			<h1 style="font-weight: bold;">RESERVATION</h1>
 		</div>
 		<p>BTS는 완벽한 여행이 되도록 최선을 다합니다.</p>
-		<p style="color: gray; text-decoration: underline;">새로운 곳에서 새로운 사람과 새로운 경험</p>
+		<p style="color: gray; text-decoration: underline;">새로운 곳에서 새로운
+			사람과 새로운 경험</p>
 		<div>
 			<h3 class="title">BTS와 함께 성공적인 여행을 경험하세요!</h3>
 		</div>
@@ -249,19 +202,27 @@ h3.title {
 		<h3 style="font-weight: bold">지금 가장 인기있는 숙소</h3>
 		<div style="margin-left: 100px; margin-bottom: 200px">
 			<div class="imageGroup_1">
-				<img class="detail" src="${contextPath}/resources/image/main/reservation_1.PNG" alt="first-image"> <img class="detail" src="${contextPath}/resources/image/main/reservation_2.PNG" alt="second-image"> <img class="detail" src="${contextPath}/resources/image/main/reservation_3.PNG" alt="third-image">
+				<img class="detail" src="${contextPath}/resources/image/main/reservation_1.PNG"
+					alt="first-image"> 
+				<img class="detail"
+					src="${contextPath}/resources/image/main/reservation_2.PNG" alt="second-image">
+				<img class="detail" src="${contextPath}/resources/image/main/reservation_3.PNG"
+					alt="third-image">
 			</div>
-			<button type="button" class="btn btn-secondary" style="float: right; margin-right: 200px; margin-top: 50px;">more</button>
+			<button type="button" class="btn btn-secondary"
+				style="float: right; margin-right: 200px; margin-top: 50px;">more</button>
 		</div>
 	</div>
 
 	<!-- Scroll down_2 Accompany -->
-	<div class="main_section_accompany" id="main_section main_section_accompany">
+	<div class="main_section_accompany"
+		id="main_section main_section_accompany">
 		<div class="caption">
 			<h1 style="font-weight: bold; margin-top: 150px;">ACCOMPANY</h1>
 		</div>
 		<p>BTS는 완벽한 여행이 되도록 최선을 다합니다.</p>
-		<p style="color: gray; text-decoration: underline;">새로운 곳에서 새로운 사람과 새로운 경험</p>
+		<p style="color: gray; text-decoration: underline;">새로운 곳에서 새로운
+			사람과 새로운 경험</p>
 		<div>
 			<h3 class="title">BTS와 함께 성공적인 여행을 경험하세요!</h3>
 		</div>
@@ -269,9 +230,14 @@ h3.title {
 		<h3 style="font-weight: bold">가장 최근에 등록된 글</h3>
 		<div style="margin-left: 100px; margin-bottom: 200px">
 			<div class="imageGroup_2">
-				<img class="detail" src="${contextPath}/resources/image/main/image_1.jpg" alt="first-image"> <img class="detail" src="${contextPath}/resources/image/main/image_2.jpg" alt="second-image"> <img class="detail" src="${contextPath}/resources/image/main/image_3.jpg" alt="third-image">
+				<img class="detail" src="${contextPath}/resources/image/main/image_1.jpg"
+					alt="first-image"> <img class="detail"
+					src="${contextPath}/resources/image/main/image_2.jpg" alt="second-image"> <img
+					class="detail" src="${contextPath}/resources/image/main/image_3.jpg"
+					alt="third-image">
 			</div>
-			<button type="button" class="btn btn-secondary" style="float: right; margin-right: 200px; margin-top: 50px;">more</button>
+			<button type="button" class="btn btn-secondary"
+				style="float: right; margin-right: 200px; margin-top: 50px;">more</button>
 		</div>
 	</div>
 
