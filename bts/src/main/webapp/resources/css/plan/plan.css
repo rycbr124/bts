@@ -92,7 +92,7 @@ body{
 
 .day_list .day{
 	position:relatuve;
-	font-size:15px;
+	font-size:13px;
 	transform:translate(0,-60%);
 }
 .content_container #day_list:hover{
@@ -138,6 +138,9 @@ body{
 	margin:0;
 	text-align:center;
 	padding-bottom:8px;
+}
+.plan_reset{
+	
 }
 .plan_box{
 	list-style:none;
