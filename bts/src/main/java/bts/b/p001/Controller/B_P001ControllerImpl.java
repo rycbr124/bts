@@ -25,6 +25,8 @@ import bts.b.p001.VO.B_P001VO;
 @Controller("b_p001")
 @RequestMapping(value = "/signup")
 public class B_P001ControllerImpl implements B_P001Controller {
+	
+	
 	@Autowired
 	B_P001Service d001Service;
 	@Autowired
