@@ -19,22 +19,7 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6b2f7da39af5c9b3e7839e09fedbc28a"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <title>Best Travel Seoul[플랜 작성]</title>
-<style>
-html, body {width:100%;height:100%;margin:0;padding:0;} 
-.map_wrap {position:relative;overflow:hidden;width:100%;height:350px;}
-.radius_border{border:1px solid #919191;border-radius:5px;}     
-.custom_typecontrol {position:absolute;top:10px;right:10px;overflow:hidden;width:130px;height:30px;margin:0;padding:0;z-index:3;font-size:12px;font-family:'Malgun Gothic', '맑은 고딕', sans-serif;}
-.custom_typecontrol span {display:block;width:65px;height:30px;float:left;text-align:center;line-height:30px;cursor:pointer;}
-.custom_typecontrol .btn {background:#fff;background:linear-gradient(#fff,  #e6e6e6);}       
-.custom_typecontrol .btn:hover {background:#f5f5f5;background:linear-gradient(#f5f5f5,#e3e3e3);}
-.custom_typecontrol .btn:active {background:#e6e6e6;background:linear-gradient(#e6e6e6, #fff);}    
-.custom_typecontrol .selected_btn {color:#fff;background:#425470;background:linear-gradient(#425470, #5b6d8a);}
-.custom_typecontrol .selected_btn:hover {color:#fff;}   
-.custom_zoomcontrol {position:absolute;top:50px;right:10px;width:36px;height:80px;overflow:hidden;z-index:3;background-color:#f5f5f5;} 
-.custom_zoomcontrol span {display:block;width:36px;height:40px;text-align:center;cursor:pointer;}     
-.custom_zoomcontrol span img {width:15px;height:15px;padding:12px 0;border:none;}             
-.custom_zoomcontrol span:first-child{border-bottom:1px solid #bfbfbf;}            
-</style>
+
 
 </head>
 <body>
@@ -54,23 +39,13 @@ html, body {width:100%;height:100%;margin:0;padding:0;}
 
 
 <div class="plan_list_container" id="plan_list_container">
-	<div class="plan_list_header" id="plan_list_header">
-	<a href="javascript:reset()" class="reset" id="reset"><img src=""/></a>
-	</div>
+	<div class="plan_list_header" id="plan_list_header"></div>
 	<ul class="plan_box"></ul>
 </div>
 <div class="map_area" id="map_area">
-<div id="map" style="width:1450px;height:100vh;">
-<div class="custom_typecontrol radius_border">
-        <span id="btnRoadmap" class="selected_btn" onclick="setMapType('roadmap')">지도</span>
-        <span id="btnSkyview" class="btn" onclick="setMapType('skyview')">스카이뷰</span>
-    </div>
-    <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
-    <div class="custom_zoomcontrol radius_border"> 
-        <span onclick="zoomIn()"><img src="http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png" alt="확대"></span>  
-        <span onclick="zoomOut()"><img src="http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png" alt="축소"></span>
-    </div>
-	<input type="text" placeholder="제목을 입력하세요."  size="20" style="position:absolute; text-align:center;z-index:2; height:30px; margin:10px; border-radius:9px;"/>
+<div id="map" style="width:auto;height:100vh;">
+	<input type="text" placeholder="제목을 입력하세요."  size="20" style="position:absolute; text-align:center;z-index:2; outline:none; height:30px; margin:10px; border-radius:9px;"/>
+
 </div>
 </div>
 
