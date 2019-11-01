@@ -208,7 +208,7 @@
 			<version>2.9.8</version>
 		</dependency>
 		
-		 <!-- httpcore(카카오) -->
+		<!-- httpcore(카카오) -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpcore</artifactId>
