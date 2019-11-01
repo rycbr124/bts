@@ -64,18 +64,20 @@ function image_init(pageNo) {
 					var body = document.createElement('div');
 					var title = document.createElement('h5');
 					var addr = document.createElement('p');
-					var href = document.createElement('a');					
+					var form = document.createElement('form');
+					var hidden = document.createElement('input');
+					var submit = document.createElement('input');
+				
 					
 					var c_title = document
 							.createTextNode(resultArray[i].title);
 					var c_addr1 = document
 							.createTextNode(resultArray[i].addr1);
-					var c_button = document
-					.createTextNode('상세보기');
+
 				
 					title.appendChild(c_title);
 					addr.appendChild(c_addr1);
-					href.appendChild(c_button);
+
 					
 					var imageArr = resultArray[i].firstimage;
 					if (imageArr === undefined) {
@@ -90,8 +92,14 @@ function image_init(pageNo) {
 						$(body).prop('class', 'card-body');
 						$(title).prop('class', 'card-title');
 						$(addr).prop('class', 'card-text');
-						$(href).prop('href', '#');
-						$(href).prop('class', 'btn btn-outline-dark btn-sm');		
+						$(form).prop('action', '/bts/recommend/place_detail');
+						$(form).prop('method', 'post');
+						$(hidden).prop('type', 'hidden');
+						$(hidden).prop('name', 'contentid');
+						$(hidden).prop('value', resultArray[i].contentid);
+						$(submit).prop('type', 'submit');
+						$(submit).prop('value', '상세보기');
+
 						//대체 이미지 경로 삽입
 					} else {
 						$(col).prop('class', 'col-lg-4 col-md-6 mb-4');
@@ -105,8 +113,14 @@ function image_init(pageNo) {
 						$(body).prop('class', 'card-body');
 						$(title).prop('class', 'card-title');
 						$(addr).prop('class', 'card-text');
-						$(href).prop('href', '#');
-						$(href).prop('class', 'btn btn-outline-dark btn-sm');	
+						$(form).prop('action', '/bts/recommend/place_detail');
+						$(form).prop('method', 'post');
+						$(hidden).prop('type', 'hidden');
+						$(hidden).prop('name', 'contentid');
+						$(hidden).prop('value', resultArray[i].contentid);
+						$(submit).prop('type', 'submit');
+						$(submit).prop('value', '상세보기');
+
 						
 
 					}
@@ -119,7 +133,10 @@ function image_init(pageNo) {
 					$(card).append(body);
 					$(body).append(title);
 					$(body).append(addr);
-					$(body).append(href);
+					$(body).append(form);
+					$(form).append(hidden);
+					$(form).append(submit);
+
 					
 					
 				}
@@ -131,18 +148,17 @@ function image_init(pageNo) {
 				var body = document.createElement('div');
 				var title = document.createElement('h5');
 				var addr = document.createElement('p');
-				var href = document.createElement('a');					
+				var form = document.createElement('form');
+				var hidden = document.createElement('input');
+				var submit = document.createElement('input');				
 				
 				var c_title = document
 						.createTextNode(resultArray.title);
 				var c_addr1 = document
-						.createTextNode(resultArray.addr1);
-				var c_button = document
-				.createTextNode('상세보기');
+						.createTextNode(resultArray.addr1);			
 			
 				title.appendChild(c_title);
 				addr.appendChild(c_addr1);
-				href.appendChild(c_button);
 				
 				var imageArr = resultArray.firstimage;
 				if (imageArr === undefined) {
@@ -157,8 +173,13 @@ function image_init(pageNo) {
 					$(body).prop('class', 'card-body');
 					$(title).prop('class', 'card-title');
 					$(addr).prop('class', 'card-text');
-					$(href).prop('href', '#');
-					$(href).prop('class', 'btn btn-outline-dark btn-sm');	
+					$(form).prop('action', '/bts/recommend/place_detail');
+					$(form).prop('method', 'post');
+					$(hidden).prop('type', 'hidden');
+					$(hidden).prop('name', 'contentid');
+					$(hidden).prop('value', resultArray[i].contentid);
+					$(submit).prop('type', 'submit');
+					$(submit).prop('value', '상세보기');	
 					//대체 이미지 경로 삽입
 				} else {
 					$(col).prop('class', 'col-lg-4 col-md-6 mb-4');
@@ -172,8 +193,13 @@ function image_init(pageNo) {
 					$(body).prop('class', 'card-body');
 					$(title).prop('class', 'card-title');
 					$(addr).prop('class', 'card-text');
-					$(href).prop('href', '#');
-					$(href).prop('class', 'btn btn-outline-dark btn-sm');	
+					$(form).prop('action', '/bts/recommend/place_detail');
+					$(form).prop('method', 'post');
+					$(hidden).prop('type', 'hidden');
+					$(hidden).prop('name', 'contentid');
+					$(hidden).prop('value', resultArray[i].contentid);
+					$(submit).prop('type', 'submit');
+					$(submit).prop('value', '상세보기');	
 
 				}
 
@@ -184,7 +210,9 @@ function image_init(pageNo) {
 				$(card).append(body);
 				$(body).append(title);
 				$(body).append(addr);
-				$(body).append(href);
+				$(body).append(form);
+				$(form).append(hidden);
+				$(form).append(submit);
 
 			}
 

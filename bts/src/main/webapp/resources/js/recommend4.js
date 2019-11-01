@@ -9,7 +9,7 @@ function result_init(){
 }
 
 function image_init(idNumber) {
-	$("#image_grid").empty();
+$("#image_grid").empty();
 	
 	var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + idNumber + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
@@ -23,6 +23,7 @@ function image_init(idNumber) {
 			console.log(resultArray)
 			console.log(resultArray.mapx);
 			console.log(resultArray.mapy);
+			console.log("12121212");
 			
 			var img_1 = document.createElement('img');
 			$(img_1).prop('class', 'img-fluid rounded mb-4 mb-lg-0');
@@ -48,7 +49,45 @@ function image_init(idNumber) {
 			alert("잘못된 접근입니다.")
 		}
 	});
+	course_detail(idNumber);
 }
+
+function course_detail(idNumber) {
+	$("#image_grid").empty();
+	
+	var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
+	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo?ServiceKey=' + serviceKey + '&contentTypeId=25&contentId=' + idNumber + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&listYN=Y';
+	
+	$.ajax({
+		async : false,
+		url : reqUrl,
+		dataType : 'json',
+		success : function(data, textStatus) {
+			var result_length = data.response.body.items.item.length
+			
+			for(var i = 0; i < result_length; i++){
+						
+				var resultArray = data.response.body.items.item[i];
+				console.log("222222222222 : " + resultArray.subname);
+				
+				var content_div = document.createElement('div');
+				$(content_div).prop('class', 'content_' + i);
+				var title = document.createElement('strong');
+				var text_title = document.createTextNode(resultArray.subname);
+				title.appendChild(text_title);
+				
+				$('.content').append(content_div);
+				$('.content_' + i).append(title);
+			}
+		},
+		error : function(data, textStatus) {
+			alert("잘못된 접근입니다.")
+		}
+	});
+}
+
+
+
 
 function map_print(title, mapx, mapy){
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
