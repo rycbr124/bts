@@ -69,8 +69,17 @@ html .member_menu a:hover{color:rgb(127,127,127);}
       </ul>
       </div><!-- header_control_container -->
    <div class="member_menu">
-      <a href="#" class="login"><span>LOGIN</span></a>
-      <a href="#" class="signup"><span>SIGN UP</span></a>
+		<c:choose>
+			<c:when test="${isLogOn== true and not empty memberInfo }">
+				<a href="${contextPath }/my/profile" class="mypage"><span>마이페이지</span></a>
+				<a href="#" class="logout"><span>로그아웃</span></a>			 
+			
+			</c:when>
+			<c:otherwise>
+				<a href="#popup-layer" class="login"><span>LOGIN</span></a>
+				<a href="${contextPath }/signup/signup" class="signup"><span>SIGN UP</span></a>
+			</c:otherwise>
+		</c:choose>
    </div><!-- member_menu -->
    </div><!-- header -->
 </body>
