@@ -1,13 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main/main.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/main/layout.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/layout/layout.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main/footer.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main/loginPopup.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -18,7 +20,7 @@
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <style>
 @font-face {
-	src: url("../resources/fonts/Binggrae-Bold.woff");
+	src: url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
 	font-family: "Binggrae";
 }
 
