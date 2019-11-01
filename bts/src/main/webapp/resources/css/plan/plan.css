@@ -1,0 +1,164 @@
+@charset "UTF-8";
+body{
+	margin:0;
+	overflow:hidden;
+}
+
+.map_controller{
+	position:relative;
+	width:200px;
+	float:left;
+	margin-top:0px;
+	margin-left:0px;
+	background:rgb(100,100,100);
+	height:100vh;
+	border:1px solid lightgray;
+}
+.plan_tab{
+	border:1px solid rgb(127,127,127);
+	padding-top:5px;
+	background-size:auto;
+	background-position-x:initial;
+	background-image:initial;
+	background-position-y:initial;
+	line-height:20px;
+	box-sizing:border-box;
+	display:block;
+	font-size:14px;
+	border-left:0;
+	border-right:0;
+	border-top:0;
+}
+.plan_tab img{
+	width:130px;
+	height:70px;
+	
+}
+.calendar{
+	border-bottom:1px solid white;
+	margin:10px;
+	margin-top:20px;
+	height:25px;
+}
+.calendar img{
+	width:18px;
+	height:18px;
+	margin-bottom:-3px;
+}
+.calendar input{
+	background-color:transparent;
+	border:0;
+	cursor:pointer;
+	font-size:13px;
+	font-color:rgb(200,200,200);
+	transform:translate(15%,-120%);
+}
+.calendar input:focus{
+	outline:none;
+}
+.content_container{
+	height:100vh;
+	width:100%;
+	max-height:800px;
+	overflow-y:auto;
+}
+.content_container #day_list{
+	width:100%;
+	height:50px;
+	border:1px solid white;
+	border-top:0;
+	border-right:0;
+	border-left:0;
+	font-size:20px;
+	text-align:center;
+	background-color:rgb(127,127,127);
+	color:#fff;
+	padding-top:20px;
+	
+}
+#day_list .date_dtw{
+	position:relatuve;
+	margin:0;
+	font-size:12px;
+	border:1px solid #fff;
+	width:20px;
+	float:right;
+	border-radius:100%;
+	background-color:gray;
+	border:block;
+	margin-right:5px;
+	top:0;
+}
+
+.day_list .day{
+	position:relatuve;
+	font-size:15px;
+	transform:translate(0,-60%);
+}
+.content_container #day_list:hover{
+	background-color:rgb(160,160,160);
+	color:black;
+}
+.plan_list_container{
+	display:inline-block;
+	border:1px solid lightgray;
+	border-left:0;
+	height:100vh;
+	width:260px;
+}
+.plan_list_container .plan_list_header{
+	float:top;
+	boder:1px solid gray;
+	background-color:rgb(100,100,100);
+	width:100%;
+	height:45px;
+	margin:0;
+	
+}
+#date{
+	margin:0;
+}
+.date_value{
+	margin:0;
+	margin-right:0;
+	width:40%;
+	height:30px;
+	color:#fff;
+	font-size:20px;
+	padding-top:7px;
+	padding-left:10px;
+	padding-bottom:7px;
+}
+.day_value{
+	border-left:1px solid #fff;
+	color:#fff;
+	transform:translate(100%,-150%);
+	width:70px;
+	height:15px;
+	margin:0;
+	text-align:center;
+	padding-bottom:8px;
+}
+.plan_box{
+	list-style:none;
+	width:auto;
+	height:100vh;
+	padding:0;
+	margin:0;
+	overflow-y:auto;
+	max-height:893px;
+}
+.plan_box li{
+	border:0.5px solid navy;
+	width:auto;
+	height:60px;
+	border-left:0;
+	border-right:0;
+	border-top:0;
+}
+.map_area{
+	display:inline-block;
+	height:100vh;
+	width:1457px;
+	float:right;
+}

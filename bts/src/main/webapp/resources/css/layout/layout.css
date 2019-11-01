@@ -8,6 +8,8 @@ body {
 	font-family: 'NotoSansKR', sans-serif;
 	background: white;
 	position: relative;
+	margin:0;
+	padding:0;
 }
 
 /******************************
@@ -18,9 +20,12 @@ body {
 	height: 100px;
 	position: fixed;
 	z-index: 200;
-	top: 0;
+	margin:0;
 	-webkit-transition: background 300ms, height 200ms;
 	transition: background 300ms, height 200ms;
+}
+.header_control_container{
+	height:100px;
 }
 /*LOGO*/
 .header_logo img {
@@ -36,7 +41,7 @@ body {
 .header_logo img:hover {
 	width: 130px;
 	height: 70px;
-	content: url(../image/logo/흰색/logo_white.png);
+	content: url(/bts/resources/image/logo/흰색/logo_white.png);
 }
 
 /*MENU*/
