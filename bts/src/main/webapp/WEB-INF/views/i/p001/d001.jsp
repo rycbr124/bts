@@ -13,7 +13,7 @@
 <body>
 	<div class="body" id="body">
 		<div class="top_content" id="top_content">
-			<img src="${contextPath}/resources/image/planner/plan_main.jpg">
+			<img src="${contextPath}/resources/image/planner/plan.jpg">
 			<div class="plan_desc" id="plan_desc">
 				<h1>PLANNER</h1>
 				<span style="color:gray; font-size:20px;">상상속 여행을 현실로 실행하세요!</span>

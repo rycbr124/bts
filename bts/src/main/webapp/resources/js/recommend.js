@@ -108,6 +108,7 @@ function image_init(pageNo) {
 					href.appendChild(c_button);
 					
 					var imageArr = resultArray[i].firstimage;
+					
 					if (imageArr === undefined) {
 						$(col).prop('class', 'col-lg-4 col-md-6 mb-4');
 						$(container).prop('class', 'container');
