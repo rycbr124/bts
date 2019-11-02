@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main/main.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/layout/layout.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/main/layout.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main/footer.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main/loginPopup.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>

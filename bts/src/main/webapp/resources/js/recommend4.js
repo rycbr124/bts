@@ -64,19 +64,23 @@ function course_detail(idNumber) {
 		dataType : 'json',
 		success : function(data, textStatus) {
 			var result_length = data.response.body.items.item.length
-			
 			for(var i = 0; i < result_length; i++){
 						
 				var resultArray = data.response.body.items.item[i];
-				console.log("222222222222 : " + resultArray.subname);
-				
+								
 				var content_div = document.createElement('div');
 				$(content_div).prop('class', 'content_' + i);
+				
 				var title = document.createElement('strong');
 				var text_title = document.createTextNode(resultArray.subname);
 				title.appendChild(text_title);
 				
+				var img = document.createElement('img');
+				$(img).prop('src', resultArray.subdetailimg);
+				$(img).prop('class', 'card-img');
+				
 				$('.content').append(content_div);
+				$('.content_' + i).append(img);
 				$('.content_' + i).append(title);
 			}
 		},
