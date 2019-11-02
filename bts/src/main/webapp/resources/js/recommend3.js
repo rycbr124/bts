@@ -33,6 +33,13 @@ function image_init(idNumber) {
 			var title_text = document.createTextNode(resultArray.title);
 			title.appendChild(title_text);
 			
+			var addr1 = document.createElement('p');
+			$(addr1).prop('class', 'addr');
+			var addr1_text = document.createTextNode(resultArray.addr1);
+			addr1.appendChild(addr1_text);
+			
+			
+			
 			var overview = document.createElement('p');
 			var overview_text = document.createTextNode(resultArray.overview);
 			$(overview).html(resultArray.overview);
@@ -40,7 +47,8 @@ function image_init(idNumber) {
 			$('.col-lg-7').append(img_1);
 
 			$('.col-lg-5').append(title);
-			$('.col-lg-5').append(overview);
+			$('.col-lg-5').append(addr1);
+			$('.content').append(overview);
 			
 			map_print(resultArray.title, resultArray.mapx, resultArray.mapy);
 		},

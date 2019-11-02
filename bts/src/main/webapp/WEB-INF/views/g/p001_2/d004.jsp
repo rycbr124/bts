@@ -26,6 +26,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6b2f7da39af5c9b3e7839e09fedbc28a"></script>
+
+<style>
+img.card-img{
+	width : 450px;
+	height : 250px;
+	display : inline-block;
+}
+
+</style>
 </head>
 <body>
 <!-- Page Content -->
@@ -50,8 +59,9 @@
        	<div id="map" style="width:900px;height:300px; position:relative;">
       </div>
     <!-- Content Row -->
+
 	  <div class="content">
-	  
+
 	  </div>    	
 
   </div>

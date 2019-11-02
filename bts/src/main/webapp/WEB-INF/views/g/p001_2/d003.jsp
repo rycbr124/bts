@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
     isELIgnored="false"
@@ -16,7 +17,6 @@
 		var id = ${contentid};
 		image_init(id);
 	});
-
 </script>
 
 <!-- 부트스트랩 -->
@@ -46,10 +46,13 @@
     <!-- /.row -->
 
     <!-- Call to Action Well -->
-      <div class="card-body" style="background-color:white; padding:0; margin-right:50%; transform:translate(20%);">
-       	<div id="map" style="width:900px;height:300px; position:relative;">
-      </div>
+    <div class="card-body" style="background-color:white; padding:0; margin-right:50%; transform:translate(20%);">
+     	<div id="map" style="width:900px;height:300px; position:relative;">
+    </div>
     <!-- Content Row -->
+    <div class="content">
+    	
+    </div>
 
   </div>
   <!-- /.container -->
