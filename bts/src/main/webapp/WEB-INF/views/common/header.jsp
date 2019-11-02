@@ -46,13 +46,13 @@ html .member_menu a:hover{color:rgb(127,127,127);}
 </head>
 <body>
 <div id="header">
-      <a href="index.jsp" class="header_logo">
+      <a href="${contextPath}/main/main" class="header_logo">
          <img src="${contextPath}/resources/image/BTS_logo_black.png" alt="BTS">
       </a>
    <div class="header_control_container">
       <ul id="menu" class="menu">
          <li class="menu_recommend">
-            <a href="#">추천</a>
+            <a href="${contextPath}/recommend_main">추천</a>
          </li>
          <li class="menu_reservation">
             <a href="#">예약</a>
@@ -64,7 +64,7 @@ html .member_menu a:hover{color:rgb(127,127,127);}
             <a href="#">커뮤니티</a>
          </li>
          <li class="menu_planner">
-            <a href="#">플래너</a>
+            <a href="${contextPath}/planner/planner">플래너</a>
          </li>      
       </ul>
       </div><!-- header_control_container -->

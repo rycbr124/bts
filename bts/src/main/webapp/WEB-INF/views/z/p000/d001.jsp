@@ -79,7 +79,7 @@ $(document).on('click','a[href="#"]',function(e){
       </a>
       <div class="header_control_container">
          <ul id="menu" class="menu">
-            <li class="menu_recommend"><a href="#">추천</a></li>
+            <li class="menu_recommend"><a href="${contextPath}/recommend_main">추천</a></li>
             <li class="menu_reservation"><a href="#">예약</a></li>
             <li class="menu_accompany"><a href="#">동행</a></li>
             <li class="menu_community"><a href="#">커뮤니티</a></li>
