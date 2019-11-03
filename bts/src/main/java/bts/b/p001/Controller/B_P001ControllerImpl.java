@@ -1,23 +1,19 @@
 package bts.b.p001.Controller;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,8 +25,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import bts.b.p001.Service.B_P001Service;
 import bts.b.p001.VO.B_P001VO;
@@ -42,68 +39,110 @@ public class B_P001ControllerImpl implements B_P001Controller {
 	B_P001Service d001Service;
 	@Autowired
 	B_P001VO d001vo;
-//
-//	private final static String K_CLIENT_ID = "6a0602e55acf9e0f00406d7fb1f93b3d";
-//	private final static String K_REDIRECT_URI = "http://localhost:8088/bts/signup/kakaoLogin";
 
-//	public static String getAuthorizationUrl(HttpSession session) {
-//		String kakaoUrl = "https://kauth.kakao.com/oauth/authorize?" + "client_id=" + K_CLIENT_ID + "&redirect_uri="
-//				+ K_REDIRECT_URI + "&response_type=code";
-//		return kakaoUrl;
-//	}
 
-	public static JsonNode getAccessToken(String autorize_code) {
-		final String RequestUrl = "https://kauth.kakao.com/v2/oauth/token";
-		final List<NameValuePair> postParams = new ArrayList<NameValuePair>();
-		postParams.add(new BasicNameValuePair("grant_type", "authorization_code"));
-		postParams.add(new BasicNameValuePair("client_id", "6a0602e55acf9e0f00406d7fb1f93b3d"));// REST API KEY
-		postParams.add(new BasicNameValuePair("redirect_uri", "http://localhost:8088/bts/signup/kakaoLogin"));// redirect uri
-		postParams.add(new BasicNameValuePair("code", autorize_code));// 로그인 과정 중 얻은 code값
-		final HttpClient client = HttpClientBuilder.create().build();
-		final HttpPost post = new HttpPost(RequestUrl);
-		JsonNode returnNode = null;
+	public String getAccessToken(String authorize_code) {
+		String access_Token = "";
+		String refresh_Token = "";
+		String reqURL = "https://kauth.kakao.com/oauth/token";
+
 		try {
-			post.setEntity(new UrlEncodedFormEntity(postParams));
-			final HttpResponse response = client.execute(post);
-			// json 형태 반환값 처리
-			ObjectMapper mapper = new ObjectMapper();
-			returnNode = mapper.readTree(response.getEntity().getContent());
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (ClientProtocolException e) {
-			e.printStackTrace();
+			URL url = new URL(reqURL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+
+			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+			StringBuilder sb = new StringBuilder();
+			sb.append("grant_type=authorization_code");
+			sb.append("&client_id=6a0602e55acf9e0f00406d7fb1f93b3d");
+			sb.append("&redirect_uri=http://localhost:8088/bts/signup/kakaoLogin");
+			sb.append("&code=" + authorize_code);
+			bw.write(sb.toString());
+			bw.flush();
+
+			// 결과 코드가 200이라면 성공
+			int responseCode = conn.getResponseCode();
+			System.out.println("responseCode : " + responseCode);
+
+			// 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line = "";
+			String result = "";
+
+			while ((line = br.readLine()) != null) {
+				result += line;
+			}
+			System.out.println("response body : " + result);
+
+			// Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(result);
+
+			access_Token = element.getAsJsonObject().get("access_token").getAsString();
+			refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
+
+			System.out.println("access_token : " + access_Token);
+			System.out.println("refresh_token : " + refresh_Token);
+
+			br.close();
+			bw.close();
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			// clear resources
 		}
-		return returnNode;
+
+		return access_Token;
 	}
-	
-	public static JsonNode getKakaoUserInfo(JsonNode accessToken) {
-		final String RequestUrl = "https://kapi.kakao.com/v1/user/me";
-		final HttpClient client = HttpClientBuilder.create().build();
-		final HttpPost post = new HttpPost(RequestUrl);
-		//add header
-		post.addHeader("Autorization","Bearer" + accessToken);
-		JsonNode returnNode = null;
+
+	public HashMap<String, Object> getUserInfo(String access_Token) {
+
+		// 요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
+		HashMap<String, Object> userInfo = new HashMap<>();
+		String reqURL = "https://kapi.kakao.com/v2/user/me";
 		try {
-			final HttpResponse response = client.execute(post);
-			//JSON 형태 반환값 처리
-			ObjectMapper mapper = new ObjectMapper();
-			//Json형태 반환값 처리
-			returnNode = mapper.readTree(response.getEntity().getContent());
-		}catch(ClientProtocolException e) {
+			URL url = new URL(reqURL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+
+			// 요청에 필요한 Header에 포함될 내용
+			conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+
+			int responseCode = conn.getResponseCode();
+			System.out.println("responseCode : " + responseCode);
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+			String line = "";
+			String result = "";
+
+			while ((line = br.readLine()) != null) {
+				result += line;
+			}
+			System.out.println("response body : " + result);
+
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(result);
+
+			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+			JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
+
+			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+			String email = kakao_account.getAsJsonObject().get("email").getAsString();
+
+			userInfo.put("nickname", nickname);
+			userInfo.put("email", email);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}catch(IOException e) {
-			e.printStackTrace();
-		}finally {
-			//clear resources
 		}
-		return returnNode;
+
+		return userInfo;
 	}
-	
-	
 
 	@Override
 	@RequestMapping(value = "/signup", method = { RequestMethod.POST, RequestMethod.GET })
@@ -144,22 +183,21 @@ public class B_P001ControllerImpl implements B_P001Controller {
 	}
 
 	@Override
-	@RequestMapping(value = "/login", method = {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value = "/login", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView login(@RequestParam Map<String, String> loginMap, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		
 
 		d001vo = d001Service.login(loginMap);
 		if (d001vo != null && d001vo.getMember_id() != null) {
 			HttpSession session = request.getSession();
 			session = request.getSession();
-			
+
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("memberInfo", d001vo);
 			System.out.println("성공");
 			mav.setViewName("/z/p000/d001");
-			
+
 		} else {
 			String message = "아이디나  비밀번호가 틀립니다. 다시 로그인해주세요";
 			mav.addObject("message", message);
@@ -168,28 +206,61 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		}
 		return mav;
 	}
-	
-//	@RequestMapping(value = "/loginform",method= RequestMethod.GET)
-//	public ModelAndView LoginForm(HttpSession session) {
-//		ModelAndView mav = new ModelAndView();
-//		String kakaoUrl = getAuthorizationUrl(session);	
-//		mav.setViewName("/z/p000/d001");
-//		mav.addObject("kakao_url", kakaoUrl);
-//		return mav;
-//	}
-	
-	
-	
-	@RequestMapping(value = "/kakaoLogin", produces = "application/json", method = {
-			RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView kakaoLogin(@RequestParam("code") String code) {
-		ModelAndView mav = new ModelAndView();
-		System.out.println("kakaologinCode:"+code);
-		JsonNode node = getAccessToken(code);
-		System.out.println("node: "+node);
-		//노드 안에 access_token 값을 문자열로 변환
-		//String token = node.get("access_token").toString();
-		mav.setViewName("/z/p000/d001");
-		return mav;
+
+
+
+	@RequestMapping(value = "/kakaoLogin")
+	public String login(@RequestParam("code") String code, HttpSession session) {
+		String access_Token = getAccessToken(code);
+		HashMap<String, Object> userInfo = getUserInfo(access_Token);
+		System.out.println("login Controller : " + userInfo);
+
+		// 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
+		if (userInfo.get("email") != null) {
+			session.setAttribute("isLogOn", true);
+			session.setAttribute("memberInfo",userInfo);
+			session.setAttribute("userId", userInfo.get("email"));
+			session.setAttribute("access_Token", access_Token);
+		}
+		return "/z/p000/d001";
 	}
+	
+	public void kakaoLogout(String access_Token) {
+	    String reqURL = "https://kapi.kakao.com/v1/user/logout";
+	    try {
+	        URL url = new URL(reqURL);
+	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+	        conn.setRequestMethod("POST");
+	        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+	        
+	        int responseCode = conn.getResponseCode();
+	        System.out.println("responseCode : " + responseCode);
+	        
+	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+	        
+	        String result = "";
+	        String line = "";
+	        
+	        while ((line = br.readLine()) != null) {
+	            result += line;
+	        }
+	        System.out.println(result);
+	    } catch (IOException e) {
+	        // TODO Auto-generated catch block
+	        e.printStackTrace();
+	    }
+	}
+	
+	@RequestMapping(value="/logout")
+	public String logout(HttpSession session) {
+	    kakaoLogout((String)session.getAttribute("access_Token"));
+	    session.removeAttribute("access_Token");
+	    session.removeAttribute("userId");
+	    session.removeAttribute("isLogOn");
+	    session.removeAttribute("memberInfo");
+	    return "/z/p000/d001";
+	}
+	
+
+
 }

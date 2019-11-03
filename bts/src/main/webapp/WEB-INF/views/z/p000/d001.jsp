@@ -127,8 +127,7 @@ h3.title {
 				<c:choose>
 					<c:when test="${isLogOn== true and not empty memberInfo }">
 						<a href="#" class="mypage"><span>마이페이지</span></a>
-						<a href="#" class="logout"><span>로그아웃</span></a>
-
+						<a href="${contextPath }/signup/logout" class="logout"><span>로그아웃</span></a>
 					</c:when>
 					<c:otherwise>
 						<a href="#popup-layer" class="login"><span>LOGIN</span></a>
