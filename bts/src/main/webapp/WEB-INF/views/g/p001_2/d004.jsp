@@ -33,6 +33,15 @@ img.card-img{
 	height : 250px;
 	display : inline-block;
 }
+/*
+#li_image{
+	float : left;
+}
+
+#li_text{
+	display : inline;
+}
+*/
 
 </style>
 </head>
@@ -53,7 +62,9 @@ img.card-img{
       <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
-
+	
+	<hr>
+    
     <!-- Call to Action Well -->
       <div class="card-body" style="background-color:white; padding:0; margin-right:50%; transform:translate(20%);">
        	<div id="map" style="width:900px;height:300px; position:relative;">

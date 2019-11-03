@@ -16,6 +16,7 @@
 	$(document).ready(function(){
 		var id = ${contentid};
 		image_init(id);
+		image_list(id);
 	});
 </script>
 
@@ -26,6 +27,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6b2f7da39af5c9b3e7839e09fedbc28a"></script>
+
+<style>
+#detail_image{
+	width : auto;
+	height : auto;
+	max-width : 250px;
+	max-height : 250px;
+	display : inline-block;
+}
+
+
+
+</style>
+
 </head>
 <body>
 <!-- Page Content -->
@@ -44,6 +59,15 @@
       <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
+	
+	<hr>
+	
+	<div class="image_list">
+	
+	</div>
+	
+	<hr>
+
 
     <!-- Call to Action Well -->
     <div class="card-body" style="background-color:white; padding:0; margin-right:50%; transform:translate(20%);">

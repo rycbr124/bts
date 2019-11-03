@@ -33,21 +33,29 @@ function image_init(idNumber) {
 			var title_text = document.createTextNode(resultArray.title);
 			title.appendChild(title_text);
 			
+			
 			var addr1 = document.createElement('p');
 			$(addr1).prop('class', 'addr');
 			var addr1_text = document.createTextNode(resultArray.addr1);
 			addr1.appendChild(addr1_text);
+			console.log(addr1_text);
+			
+			var h_page = document.createElement('p');
+			$(h_page).prop('class', 'h_page');
+			var page_text = document.createTextNode(resultArray.homepage);
+			$(h_page).html(resultArray.homepage);
+			console.log(page_text);
 			
 			
 			
 			var overview = document.createElement('p');
-			var overview_text = document.createTextNode(resultArray.overview);
 			$(overview).html(resultArray.overview);
 			
 			$('.col-lg-7').append(img_1);
 
 			$('.col-lg-5').append(title);
 			$('.col-lg-5').append(addr1);
+			$('.col-lg-5').append(h_page);
 			$('.content').append(overview);
 			
 			map_print(resultArray.title, resultArray.mapx, resultArray.mapy);
@@ -56,6 +64,44 @@ function image_init(idNumber) {
 			alert("잘못된 접근입니다.")
 		}
 	});
+}
+
+function image_list(idNumber){
+	var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
+	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailImage?ServiceKey=' + serviceKey + '&contentId=' + idNumber + '&imageYN=Y&MobileOS=ETC&MobileApp=AppTest';
+	
+	$.ajax({
+		async : false,
+		url : reqUrl,
+		dataType : 'json',
+		success : function(data, textStatus) {
+			var result_length = data.response.body.items.item.length
+			for(var i = 0; i < result_length; i++){
+				var resultArray = data.response.body.items.item[i];
+				
+				var image = document.createElement('img');
+				$(image).prop('class', 'detail_image_' + i);
+				$(image).prop('id', 'detail_image');
+				$(image).prop('src', resultArray.originimgurl);
+				
+				$('.image_list').append(image);
+			}
+			
+		},
+		error : function(data, textStatus) {
+			alert("잘못된 접근입니다.")
+		}
+	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 
 function map_print(title, mapx, mapy){
