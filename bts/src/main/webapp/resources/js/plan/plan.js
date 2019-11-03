@@ -86,7 +86,10 @@ $(function() {//jquery calendar
 	  		});
 		});
 
-
+//var serviceKey ='dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D';
+//var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey='
+//		   + serviceKey
+//		   + '&contentTypeId=' + contentTypeId + '&areaCode=1&sigunguCode=' + sigungucode + '&MobileOS=ETC&MobileApp=AppTest&arrange=P&numOfRows=9&pageNo=' + pageNo + '&_type=json';
 
 
 
