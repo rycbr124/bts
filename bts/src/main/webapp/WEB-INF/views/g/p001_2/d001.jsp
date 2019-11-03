@@ -114,7 +114,6 @@ $(document).ready(function (){
 		<button type="button" class="btn btn-outline-secondary btn-sm" id="search">검색</button> 
 		 
 	</div>
-
 	<div class="row" id="image_grid">
 		
 		
