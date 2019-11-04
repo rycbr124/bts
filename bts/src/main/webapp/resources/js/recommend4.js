@@ -23,7 +23,7 @@ $("#image_grid").empty();
 			console.log(resultArray)
 			console.log(resultArray.mapx);
 			console.log(resultArray.mapy);
-			console.log("12121212");
+			console.log(resultArray);
 			
 			var img_1 = document.createElement('img');
 			$(img_1).prop('class', 'img-fluid rounded mb-4 mb-lg-0');
@@ -71,17 +71,56 @@ function course_detail(idNumber) {
 				var content_div = document.createElement('div');
 				$(content_div).prop('class', 'content_' + i);
 				
-				var title = document.createElement('strong');
-				var text_title = document.createTextNode(resultArray.subname);
+				var title = document.createElement('h3');
+				$(title).prop('class', 'h3_title');
+				var text_title = document.createTextNode(i+1 + '. ' + resultArray.subname);
 				title.appendChild(text_title);
+				
+				var ul_list = document.createElement('ul');
+				$(ul_list).prop('class', 'course_list_' + i);
+				$(ul_list).prop('id', 'ul_list');
+				
+				var li_content = document.createElement('li');
+				$(li_content).prop('class', 'content_text_' + i);
+				$(li_content).prop('id', 'li_text');
+				
+				var strong = document.createElement('strong');
+				var strong_text = document.createTextNode('<코스개요>');
+				strong.appendChild(strong_text);
+				
+				var li_img = document.createElement('li');
+				$(li_img).prop('class', 'content_img_' + i);
+				$(li_img).prop('id', 'li_image');
+
+				
+				
+				var overview = document.createElement('p');
+				$(overview).html(resultArray.subdetailoverview);
+				
+				
+				
+				
+				
 				
 				var img = document.createElement('img');
 				$(img).prop('src', resultArray.subdetailimg);
 				$(img).prop('class', 'card-img');
 				
+				
+				
+				
 				$('.content').append(content_div);
-				$('.content_' + i).append(img);
 				$('.content_' + i).append(title);
+				$('.content_' + i).append(ul_list);
+				$('.course_list_' + i).append(li_content);
+				$('.content_text_' + i).append(strong);
+				$('.content_text_' + i).append(overview);
+				$('.course_list_' + i).append(li_img);
+				
+				
+				$('.content_img_' + i).append(img);
+				
+				
 			}
 		},
 		error : function(data, textStatus) {
