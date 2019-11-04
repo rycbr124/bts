@@ -16,7 +16,7 @@
 	$(document).ready(function(){
 		var id = ${contentid};
 		image_init(id);
-		image_list(id);
+		//image_list(id);
 	});
 </script>
 
@@ -29,13 +29,56 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6b2f7da39af5c9b3e7839e09fedbc28a"></script>
 
 <style>
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+    font-family: "NanumSquareRoundEB";
+}
+
+@font-face {
+    src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    font-family: "NanumSquareRoundR";
+}
+
+h1{
+	font-family: "NanumSquareRoundEB";
+}
+
+p{
+	font-family: "NanumSquareRoundR";	
+}
+col-lg-7{
+	height:665px;
+	width:580pd;
+}
+.my-5{
+height:600px;
+border-bottom:1px solid rbg(127,127,127);
+
+}
+.mb-lg-0{
+	width:603px;
+	height:480px;
+}
+                                                                                             
+.detail_image_container{
+	width:603px;	
+	height:auto;
+	
+}
 #detail_image{
-	width : auto;
-	height : auto;
-	max-width : 250px;
-	max-height : 250px;
+	width:80px;
+	height:50px;
+}
+
+.title{
+	float : left;
+}
+
+.content{
+	float : right;
 	display : inline-block;
 }
+
 
 
 
@@ -60,13 +103,6 @@
     </div>
     <!-- /.row -->
 	
-	<hr>
-	
-	<div class="image_list">
-	
-	</div>
-	
-	<hr>
 
 
     <!-- Call to Action Well -->
@@ -74,8 +110,17 @@
      	<div id="map" style="width:900px;height:300px; position:relative;">
     </div>
     <!-- Content Row -->
-    <div class="content">
-    	
+    <div>
+    
+	    <div class="title">
+	    	<h1>소개</h1>
+	    </div>
+	    
+	    
+	    <div class="content">
+	    	
+	    	
+	    </div>
     </div>
 
   </div>

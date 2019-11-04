@@ -11,7 +11,7 @@ function result_init(){
 function image_init(idNumber) {
 $("#image_grid").empty();
 	
-	var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
+	var serviceKey = 'lUN5B8XHOdyoYlgxfJqeeTMdZZWYbuV9qc80jLPpilJ%2BYukKsP1%2FvR6W2AJ9UxbCgbUlkVqiN5O3%2FWiHMOyvcw%3D%3D'
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + idNumber + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 	
 	$.ajax({
@@ -20,10 +20,9 @@ $("#image_grid").empty();
 		dataType : 'json',
 		success : function(data, textStatus) {
 			var resultArray = data.response.body.items.item;
-			console.log(resultArray)
+			console.log(resultArray);
 			console.log(resultArray.mapx);
 			console.log(resultArray.mapy);
-			console.log(resultArray);
 			
 			var img_1 = document.createElement('img');
 			$(img_1).prop('class', 'img-fluid rounded mb-4 mb-lg-0');
@@ -43,7 +42,7 @@ $("#image_grid").empty();
 			$('.col-lg-5').append(title);
 			$('.col-lg-5').append(overview);
 			
-			map_print(resultArray.title, resultArray.mapx, resultArray.mapy);
+			
 		},
 		error : function(data, textStatus) {
 			alert("잘못된 접근입니다.")
@@ -64,17 +63,29 @@ function course_detail(idNumber) {
 		dataType : 'json',
 		success : function(data, textStatus) {
 			var result_length = data.response.body.items.item.length
+			var subArray = new Array();
 			for(var i = 0; i < result_length; i++){
 						
 				var resultArray = data.response.body.items.item[i];
-								
+				subArray[i] = resultArray.subcontentid;
+				console.log("111111111 : " + subArray[i]);
+				
+				
 				var content_div = document.createElement('div');
 				$(content_div).prop('class', 'content_' + i);
+				
+				
 				
 				var title = document.createElement('h3');
 				$(title).prop('class', 'h3_title');
 				var text_title = document.createTextNode(i+1 + '. ' + resultArray.subname);
 				title.appendChild(text_title);
+				
+				var href = document.createElement('a');
+				$(href).prop('href', '/bts/recommend/place_detail?contentid=' + resultArray.subcontentid);
+				href.appendChild(title);
+
+				
 				
 				var ul_list = document.createElement('ul');
 				$(ul_list).prop('class', 'course_list_' + i);
@@ -96,21 +107,13 @@ function course_detail(idNumber) {
 				
 				var overview = document.createElement('p');
 				$(overview).html(resultArray.subdetailoverview);
-				
-				
-				
-				
-				
-				
+
 				var img = document.createElement('img');
 				$(img).prop('src', resultArray.subdetailimg);
-				$(img).prop('class', 'card-img');
-				
-				
-				
+				$(img).prop('class', 'card-img');				
 				
 				$('.content').append(content_div);
-				$('.content_' + i).append(title);
+				$('.content_' + i).append(href);
 				$('.content_' + i).append(ul_list);
 				$('.course_list_' + i).append(li_content);
 				$('.content_text_' + i).append(strong);
@@ -122,6 +125,7 @@ function course_detail(idNumber) {
 				
 				
 			}
+			course_map(subArray);
 		},
 		error : function(data, textStatus) {
 			alert("잘못된 접근입니다.")
@@ -129,38 +133,98 @@ function course_detail(idNumber) {
 	});
 }
 
+function course_map(subArray){
+	var serviceKey = 'lUN5B8XHOdyoYlgxfJqeeTMdZZWYbuV9qc80jLPpilJ%2BYukKsP1%2FvR6W2AJ9UxbCgbUlkVqiN5O3%2FWiHMOyvcw%3D%3D';
+	var array_length = subArray.length;
+	var arr_result = new Array();
 
+	for(var i = 0; i < array_length; i++){
+		var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + subArray[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
+		var obj_result = new Object();
+			$.ajax({
+				async : false,
+				url : reqUrl,
+				dataType : 'json',
+				success : function(data, textStatus) {
+					var resultArray = data.response.body.items.item;
+					console.log(resultArray);
+					
+					obj_result['title'] = resultArray.title;
+					obj_result['map_x'] = resultArray.mapx;
+					obj_result['map_y'] = resultArray.mapy;
+					
+					arr_result[i] = obj_result;
+					console.log(arr_result[i]);		
 
+					
+					
+				},
+				error : function(data, textStatus) {
+					alert("잘못된 접근입니다.")
+				}
+				
+			});
+	}
+	console.log(arr_result);
+	map_print(arr_result);
 
-function map_print(title, mapx, mapy){
-	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-	var options = { //지도를 생성할 때 필요한 기본 옵션
-			center: new kakao.maps.LatLng(mapy, mapx), //지도의 중심좌표. //여기에 먼저 좌표 설정
-			level: 6 //지도의 레벨(확대, 축소 정도)
-	};
-	
-	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-	
-	// 마커가 표시될 위치입니다 
-	var markerPosition  = new kakao.maps.LatLng(mapy, mapx);  //여기도 위에 좌표랑 똑같이 입력
-	
-	// 마커를 생성합니다
-	var marker = new kakao.maps.Marker({
-		position: markerPosition
-	});
-	
-	// 마커가 지도 위에 표시되도록 설정합니다
-	marker.setMap(map);
-	
-	var iwContent = '<div style="padding:5px;">' + title + '</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
-    iwPosition = new kakao.maps.LatLng(mapy, mapx); //인포윈도우 표시 위치입니다
-
-// 인포윈도우를 생성합니다
-var infowindow = new kakao.maps.InfoWindow({
-    position : iwPosition, 
-    content : iwContent 
-});
-  
-// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-infowindow.open(map, marker); 
 }
+
+function map_print(arr_result){
+	
+
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+mapOption = { 
+    center: new kakao.maps.LatLng(37.5759947835, 126.9768292386), // 지도의 중심좌표
+    level: 8 // 지도의 확대 레벨
+};
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+//마커를 표시할 위치와 내용을 가지고 있는 객체 배열입니다 
+var arr_length = arr_result.length;
+console.log(arr_length);
+var positions = new Array();
+
+for(var i = 0; i < arr_length; i++){
+	positions[i] = { content: '<div>' + arr_result[i].title + '</div>', latlng: new kakao.maps.LatLng(arr_result[i].map_y, arr_result[i].map_x)}
+	
+}
+console.log(arr_result[1].map_y);
+console.log(positions);
+
+for (var i = 0; i < positions.length; i ++) {
+// 마커를 생성합니다
+var marker = new kakao.maps.Marker({
+    map: map, // 마커를 표시할 지도
+    position: positions[i].latlng // 마커의 위치
+});
+
+// 마커에 표시할 인포윈도우를 생성합니다 
+var infowindow = new kakao.maps.InfoWindow({
+    content: positions[i].content // 인포윈도우에 표시할 내용
+});
+
+// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+// 이벤트 리스너로는 클로저를 만들어 등록합니다 
+// for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+}
+
+//인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+function makeOverListener(map, marker, infowindow) {
+return function() {
+    infowindow.open(map, marker);
+};
+}
+
+//인포윈도우를 닫는 클로저를 만드는 함수입니다 
+function makeOutListener(infowindow) {
+return function() {
+    infowindow.close();
+};
+}
+
+}
+

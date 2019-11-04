@@ -23,7 +23,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
-</head>
+<style>
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+    font-family: "NanumSquareRoundEB";
+}
+
+h5{
+	font-family: "NanumSquareRoundEB";
+}
+</style>
+
+
+
 <script>
 
 $(document).ready(function (){
@@ -67,6 +79,7 @@ $(document).ready(function (){
 
 
 </script>
+</head>
 <body>
 	<div class="container">
 		<h1 class="title">지역별 추천</h1>

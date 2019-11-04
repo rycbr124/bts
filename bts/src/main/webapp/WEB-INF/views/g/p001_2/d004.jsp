@@ -28,24 +28,44 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6b2f7da39af5c9b3e7839e09fedbc28a"></script>
 
 <style>
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+    font-family: "NanumSquareRoundEB";
+}
+
+@font-face {
+    src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    font-family: "NanumSquareRoundR";
+}
+
+@font-face{
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundB.ttf");
+    font-family: "NanumSquareRoundB";
+}
+
+h1{
+	font-family: "NanumSquareRoundEB";
+}
+
+h3{
+	font-family: "NanumSquareRoundB";
+}
+
+p{
+	font-family: "NanumSquareRoundR";
+}
+
 img.card-img{
 	width : 450px;
 	height : 250px;
 	display : inline-block;
 }
-/*
-#li_image{
-	float : left;
-}
-
-#li_text{
-	display : inline;
-}
-*/
 
 </style>
 </head>
 <body>
+<form name="content" method="post">
+
 <!-- Page Content -->
   <div class="container">
 
@@ -78,5 +98,6 @@ img.card-img{
   </div>
   <!-- /.container -->
 </div>
+</form>
 </body>
 </html>

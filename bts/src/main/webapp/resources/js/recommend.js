@@ -43,18 +43,14 @@ function image_init(pageNo) {
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey='
 			+ serviceKey
 			+ '&contentTypeId=' + contentTypeId + '&areaCode=1&sigunguCode=' + sigungucode + '&cat3=' + cat3 + '&MobileOS=ETC&MobileApp=AppTest&arrange=P&numOfRows=9&pageNo=' + pageNo + '&_type=json';
-	console.log(reqUrl);
+	
 	$.ajax({
 		async : false,
 		url : reqUrl,
 		dataType : 'json',
 		success : function(data, textStatus) {
 			var resultArray = data.response.body.items.item;
-			console.log(resultArray)
-			if(resultArray === undefined){
-				var img = document.createElement('img');
-				
-			}
+			console.log(resultArray);
 			if (resultArray instanceof Array) {
 				for ( var i in resultArray) {
 					var col = document.createElement('div');
@@ -98,6 +94,7 @@ function image_init(pageNo) {
 						$(hidden).prop('name', 'contentid');
 						$(hidden).prop('value', resultArray[i].contentid);
 						$(submit).prop('type', 'submit');
+						$(submit).prop('class', 'btn btn-info btn-sm')
 						$(submit).prop('value', '상세보기');
 
 						//대체 이미지 경로 삽입
@@ -119,6 +116,7 @@ function image_init(pageNo) {
 						$(hidden).prop('name', 'contentid');
 						$(hidden).prop('value', resultArray[i].contentid);
 						$(submit).prop('type', 'submit');
+						$(submit).prop('class', 'btn btn-info btn-sm')
 						$(submit).prop('value', '상세보기');
 
 						
@@ -179,6 +177,7 @@ function image_init(pageNo) {
 					$(hidden).prop('name', 'contentid');
 					$(hidden).prop('value', resultArray[i].contentid);
 					$(submit).prop('type', 'submit');
+					$(submit).prop('class', 'btn btn-info btn-sm')
 					$(submit).prop('value', '상세보기');	
 					//대체 이미지 경로 삽입
 				} else {
@@ -199,6 +198,7 @@ function image_init(pageNo) {
 					$(hidden).prop('name', 'contentid');
 					$(hidden).prop('value', resultArray[i].contentid);
 					$(submit).prop('type', 'submit');
+					$(submit).prop('class', 'btn btn-info btn-sm')
 					$(submit).prop('value', '상세보기');	
 
 				}

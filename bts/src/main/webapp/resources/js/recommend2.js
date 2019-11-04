@@ -80,6 +80,7 @@ function image_init(pageNo) {
 						$(hidden).prop('name', 'contentid');
 						$(hidden).prop('value', resultArray[i].contentid);
 						$(submit).prop('type', 'submit');
+						$(submit).prop('class', 'btn btn-info btn-sm');
 						$(submit).prop('value', '상세보기');
 						
 						//대체 이미지 경로 삽입
@@ -100,6 +101,7 @@ function image_init(pageNo) {
 						$(hidden).prop('name', 'contentid');
 						$(hidden).prop('value', resultArray[i].contentid);
 						$(submit).prop('type', 'submit');
+						$(submit).prop('class', 'btn btn-info btn-sm');
 						$(submit).prop('value', '상세보기');
 						
 						
@@ -155,6 +157,7 @@ function image_init(pageNo) {
 					$(hidden).prop('name', 'contentid');
 					$(hidden).prop('value', resultArray[i].contentid);
 					$(submit).prop('type', 'submit');
+					$(submit).prop('class', 'btn btn-info btn-sm');
 					$(submit).prop('value', '상세보기');	
 					//대체 이미지 경로 삽입
 				} else {
@@ -174,6 +177,7 @@ function image_init(pageNo) {
 					$(hidden).prop('name', 'contentid');
 					$(hidden).prop('value', resultArray[i].contentid);
 					$(submit).prop('type', 'submit');
+					$(submit).prop('class', 'btn btn-info btn-sm');
 					$(submit).prop('value', '상세보기');
 				}
 
