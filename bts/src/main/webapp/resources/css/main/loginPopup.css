@@ -61,7 +61,6 @@ h2 {
 	font-family:"binggrae";	
 }
 
-
 .btn-sign a { color:#fff; text-shadow:0 1px 2px #161616; }
 
 #mask {
@@ -79,9 +78,10 @@ h2 {
 	text-align:center;
 	width:600px;
 	height:400px;
+	
 	display:none;
 	background: #333;
-	padding: auto; 	
+	padding:10px; 	
 	border: 2px solid #ddd;
 	font-size: 1.2em;
 	position: fixed;
@@ -94,6 +94,7 @@ h2 {
     -moz-border-radius: 3px; /* Firefox */
     -webkit-border-radius: 3px; /* Safari, Chrome */
 }
+
 #loginbtn{
 	font-family:"binggrae";
 }
@@ -109,10 +110,13 @@ img.btn_close {
 	font-size:3em;	
 	padding-bottom:20px;
 }
+
 fieldset {
+	border:none;
 	padding-top:100px;
-	border:none; 
+	text-align:center; 
 }
+
 
 form.signin .textbox label { 
 	display:block; 

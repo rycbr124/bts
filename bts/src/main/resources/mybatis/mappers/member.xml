@@ -5,7 +5,7 @@
 
 <mapper namespace="mapper.member">
 	<!-- 리절트 맵 정의 -->
-	<resultMap id="memberResult" type="D001VO">
+	<resultMap id="memberResult" type="d001VO">
 		<result property="member_id" column="member_id" />
 		<result property="password" column="password" />
 		<result property="name" column="name" />
@@ -37,14 +37,13 @@
 	, #{tel_no,jdbcType=VARCHAR}, #{nick_name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR})
 	]]>
 	</insert>
-	
+		
 	<!-- 로그인 쿼리문 -->
-	<select id="login" resultType="D001VO" parameterType="java.util.Map"  >
+	<select id="login" resultType="d001VO" parameterType="java.util.Map"  >
 	    <![CDATA[
 			select*from b_member 
 			 where member_id=#{member_id,jdbcType=VARCHAR}
 			 and password=#{password,jdbcType=VARCHAR} 
 		]]>
-	</select>
-	
+	</select>	
 </mapper>
