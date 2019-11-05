@@ -18,9 +18,8 @@
 <div id="content">
     <div class="wrapper-page">
 </div>
-        <div class="container">
+        <div class="package">
             <div class="row">
-
 					<div class="col-md-9 sub-container">
                     <h3 class="space-5">여행자 정보 등록</h3>
                     <form id="frm-profile" autocomplete="off">

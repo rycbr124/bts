@@ -27,6 +27,10 @@ img {
     z-index: 1050;
 }
 
+.package{
+	margin-left:50px;
+}
+
 /* 사진 변경 모델*/
 #modal-set-profile-img {
 }
@@ -56,7 +60,6 @@ img {
 }
 
 .sub-container {
-    border-left: 1px solid rgba(0, 0, 0, 0.03);
     min-height: 500px;
     padding: 50px 40px 0 40px;
 }
