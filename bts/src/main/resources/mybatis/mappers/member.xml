@@ -33,16 +33,15 @@
 	, #{tel_no,jdbcType=VARCHAR}, #{nick_name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR})
 	]]>
 	</insert>
-
+	
 	<!-- 로그인 쿼리문 -->
-	<select id="login" resultType="d001VO"
-		parameterType="java.util.Map">
+	<select id="login" resultType="d001VO" parameterType="java.util.Map"  >
 	    <![CDATA[
 			select*from b_member 
 			 where member_id=#{member_id,jdbcType=VARCHAR}
 			 and password=#{password,jdbcType=VARCHAR} 
 		]]>
-	</select>
+	</select>	
 
 	<!-- 회원정보 조회 -->
 	<select id="selectMember" resultMap="d001VO" parameterType="String">
@@ -68,7 +67,7 @@
 	
 	<!-- 프로필 가져오기 -->
 		<!--select * from b_member where profile_image = #{profileImage}, potoAddr=#{potoAddr}-->
-		 <update id="updateProfile" parameterType="d001VO">
+	<update id="updateProfile" parameterType="d001VO">
       update b_member
       set profile_image = #{profile_image},
          where member_id = #{member_id}
