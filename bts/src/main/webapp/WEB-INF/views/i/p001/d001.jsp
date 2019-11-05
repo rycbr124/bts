@@ -9,6 +9,7 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/planner/planner.css">
 <title>Best Travel Seoul[플래너]</title>
+
 </head>
 <body>
 	<div class="body" id="body">
