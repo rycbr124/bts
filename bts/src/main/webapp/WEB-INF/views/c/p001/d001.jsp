@@ -8,8 +8,8 @@
 <head>
 <meta charset="UTF-8">
 <title>마이페이지 메인</title>
-<link rel="stylesheet" href="/bts/resources/library/bootstrap/css/bootstrap.min.css" />
 <link rel="stylesheet" href="${contextPath}/resources/css/mypage/d001.css">
+<link rel="stylesheet" href="/bts/resources/library/bootstrap/css/bootstrap.min.css" />
 </head>
 <body>
 <!--<div id = "container">
@@ -18,32 +18,38 @@
 <div id="content">
     <div class="wrapper-page">
 </div>
-        <div class="container">
+        <div class="package">
             <div class="row">
 
 					<div class="col-md-9 sub-container">
                     <h3 class="space-5">여행자 정보 등록</h3>
-                    <form id="frm-profile" autocomplete="off">
+                    <form id="frm-profile" autocomplete="off"  method="post" action="${contextPath }/my/update">
                         <input type="hidden" name="email_id" id="email_id">
                         <input type="hidden" name="email_host" id="email_host">
                         <div class="mypage-picture row">
                             <img src="https://d2mgzmtdeipcjp.cloudfront.net/files/member/profile.png" class="user-picture">
-                            <button type="button" data-toggle="modal" data-target="#modal-set-profile-img" class="btn btn-sm btn-default">사진 변경</button>
+                            <input type="file" data-toggle="modal" data-target="#modal-set-profile-img" class="btn btn-sm btn-default" value="사진 변경" />
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <label class="title">이름</label>
-                                <input type="text" id="name" name="name" placeholder="name" class="form-control" onlychar="true" onkeypress="specialCharNotPress();" required="">
+                                <input type="text" value="${sessionScope.memberInfo.name}" id="name" name="name" placeholder="name" class="form-control" onlychar="true" onkeypress="specialCharNotPress();" required>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <label class="title">닉네임</label>
-                                <input type="text" id="nickname" name="nickname" placeholder="닉네임" class="form-control" engonly="true" required="">
+                                <input type="text" id="nick_name" name="nick_name" placeholder="닉네임" class="form-control" engonly="true" required>
                             </div>
                             </div>
+                               <div class="row">
+                            <div class="col-md-6">
+                                <label class="title">비밀번호</label>
+                                <input type="text" id="password" name="password" placeholder="password" class="form-control" onlychar="true" onkeypress="specialCharNotPress();" required>
+                            </div>
+                        </div>
                              <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <label class="title">성별</label>
                                 <!--<input type="text" id="gender" name="gender" value="" class="form-control" engonly="true" required="">-->
                                 <select class="form-control" id="gender" name="gender">
@@ -53,26 +59,26 @@
 							</div>
                         </div>
                          <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <label class="title">생년월일</label>
-                                <input type="text" id="birthday" name="birthday" placeholder="YYYY-MM-DD" class="form-control" engonly="true" required="">
+                                <input type="text" id="birth" name="birth" placeholder="YYYY-MM-DD" class="form-control" engonly="true" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <label class="title">이메일</label>
-                                <input type="email" id="email" name="email" placeholder="email" class="form-control" required="">
+                                <input type="email" id="email" name="email" placeholder="email" class="form-control" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <label class="title">휴대전화번호</label>
-                                <input type="tel" id="tel" name="tel" placeholder="tel" class="form-control" required="" onkeypress="onlyNumOnKeyPress();" numberonly="true">
+                                <input type="tel" id="tel_no" name="tel_no" placeholder="tel" class="form-control" required onkeypress="onlyNumOnKeyPress();" numberonly="true">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-2">
-                                <button type="submit" class="btn btn-form-submit form-control" style="margin-bottom: 40px;">저장</button>
+                                <button type="submit" class="btn btn-form-submit form-control" style="margin-bottom: 40px; background-color:#87ceeb;">저장</button>
                             </div>
                         </div>
                     </form>
@@ -85,6 +91,7 @@
                     </div>
                 </div>
             </div>
+            
         </div>
     </div>
 </body>
