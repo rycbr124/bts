@@ -37,6 +37,13 @@ public class G_P001_2ServiceImpl implements G_P001_2Service{
 		return result;
 	}
 
+	@Override
+	public Map<String, List<String>> insertWishlist() throws Exception {
+		Map<String, String> list = new HashMap<>();
+		
+		return null;
+	}
+
 	
 
 

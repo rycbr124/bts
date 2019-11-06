@@ -1,6 +1,22 @@
 /**
  * 추천(지역별) - 한국관광공사 API 
  */
+$(document).ready(function (){
+
+
+//	$("#toggle-heart").change(function(){
+//		wish_list();
+//		console.log("111111");
+//		if($("#toggle-heart").is(":checked")){
+//			wish_list();
+//		}else{
+//			console.log("해제");
+//		}
+//	});
+	
+		
+});
+
 function result_init(){
 	 var pageNo = 1;
 	 image_init(pageNo);//이미지 삽입
@@ -43,32 +59,36 @@ function image_init(idNumber) {
 			$(h_page).prop('class', 'h_page');
 			$(h_page).html("홈페이지 : " + resultArray.homepage);
 			
-			var form = document.createElement('form');			
+			var form = document.createElement('form');
+			$(form).prop('name', 'wish');
 			$(form).prop('action', '/bts/recommend/insert_wishlist');
 			$(form).prop('method', 'post');
+	
+						
+			var input_heart = document.createElement('input');
+			$(input_heart).prop('id', 'toggle-heart');
+			$(input_heart).prop('type', 'checkbox');
+			$(input_heart).attr('onclick','wish_list()');
+			
+			var label_heart = document.createElement('label');
+			$(label_heart).prop('for', 'toggle-heart');
+			$(label_heart).prop('id', 'heart');
+			var heart = document.createTextNode('♥');
+			label_heart.appendChild(heart);
+			
+			var button = document.createElement('button');
+			$(button).prop('type', 'button');
+			$(button).prop('type', 'button');
+			$(button).attr('onclick','wish_list()');
+			$(button).attr('id', 'wish');
+			$(button).text('위시리스트');
 			
 			var hidden = document.createElement('input');
 			$(hidden).prop('type', 'hidden');
 			$(hidden).prop('name', 'contentid');
-			$(hidden).prop('value', resultArray.contentid);
-			
-			var submit = document.createElement('input');
-			$(submit).prop('type', 'submit');
-			$(submit).prop('class', 'btn btn-info btn-sm')
-			$(submit).prop('value', '상세보기');
+			$(hidden).prop('value', 'id');
 			
 			
-			
-			
-			
-			var input_heart = document.createElement('input');
-			$(input_heart).prop('id', 'toggle-heart');
-			$(input_heart).prop('type', 'checkbox');
-			
-			var label_heart = document.createElement('label');
-			$(label_heart).prop('for', 'toggle-heart');
-			var heart = document.createTextNode('♥');
-			label_heart.appendChild(heart);
 			
 					
 			var overview = document.createElement('p');
@@ -79,8 +99,11 @@ function image_init(idNumber) {
 			$('.col-lg-5').append(title);
 			$('.col-lg-5').append(addr1);
 			$('.col-lg-5').append(h_page);
-			$('.col-lg-5').append(input_heart);
-			$('.col-lg-5').append(label_heart);
+			$('.col-lg-5').append(form);
+			$(form).append(input_heart);
+			$(form).append(label_heart);
+			$(form).append(button);
+			$(form).append(hidden);
 			$('.content').append(overview);
 			
 			map_print(resultArray.title, resultArray.mapx, resultArray.mapy);
@@ -196,3 +219,6 @@ function map_print(title, mapx, mapy){
 	// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
 	infowindow.open(map, marker); 
 }
+
+
+
