@@ -28,6 +28,33 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6b2f7da39af5c9b3e7839e09fedbc28a"></script>
 
 <style>
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+    font-family: "NanumSquareRoundEB";
+}
+
+@font-face {
+    src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    font-family: "NanumSquareRoundR";
+}
+
+@font-face{
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundB.ttf");
+    font-family: "NanumSquareRoundB";
+}
+
+h1{
+	font-family: "NanumSquareRoundEB";
+}
+
+h3{
+	font-family: "NanumSquareRoundB";
+}
+
+p{
+	font-family: "NanumSquareRoundR";
+}
+
 img.card-img{
 	width : 450px;
 	height : 250px;
@@ -37,6 +64,8 @@ img.card-img{
 </style>
 </head>
 <body>
+<form name="content" method="post">
+
 <!-- Page Content -->
   <div class="container">
 
@@ -53,7 +82,9 @@ img.card-img{
       <!-- /.col-md-4 -->
     </div>
     <!-- /.row -->
-
+	
+	<hr>
+    
     <!-- Call to Action Well -->
       <div class="card-body" style="background-color:white; padding:0; margin-right:50%; transform:translate(20%);">
        	<div id="map" style="width:900px;height:300px; position:relative;">
@@ -67,5 +98,6 @@ img.card-img{
   </div>
   <!-- /.container -->
 </div>
+</form>
 </body>
 </html>

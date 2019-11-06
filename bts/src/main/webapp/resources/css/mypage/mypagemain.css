@@ -1,63 +1,45 @@
 @charset "UTF-8";
 
 * {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box
 }
 
 :after, :before {
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box
+   -webkit-box-sizing: border-box;
+   -moz-box-sizing: border-box;
+   box-sizing: border-box
 }
 
-
-#side>.containers{
-	width:1450px;
-	z-index:0;
-	
-}
-
-#content {
-    padding-bottom: 90px;
-    padding-left: 280px;
-}
 
 .wrapper-subheader {
-    position: relative;
     height: 500px;
-    background-color: #fafafa;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
     color: #fff;
-    position: relative;
     margin-top: 5px;
 }
 
-.container-fluid {
-	padding-right: 15px;
-	padding-left: 15px;
-	margin-right: auto;
-	margin-left: auto
-}
-
-
-
 #side {
-	padding-bottom: 30px;
-    padding-light: 300px;
-  	  position: relative;
-        top:-450px;
-        left:150px;
-        float:left;
-        width:100px;
-        z-index:0;
+	display:inline-block;	
+	float:left;
+	width:30%;
 }
 
+#sidebar{
+	
+}
+
+#body{
+    border-left: 1px solid rgba(0, 0, 0, 0.03);
+	display:inline-block;
+	width:70%;
+}
 .submenu {
-    margin: 20px 20px 20px 0;
+	float:right;
+    margin: 5% 5% 0 0;
 }
 
 .submenu li {
@@ -69,7 +51,6 @@
 
 .submenu li:before {
     content: ' ';
-    width: 5px;
     height: 50%;
     display: inline-block;
     float: left;
