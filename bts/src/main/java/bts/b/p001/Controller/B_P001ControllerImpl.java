@@ -11,9 +11,12 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -25,12 +28,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import bts.b.p001.Naver.NaverLoginBO;
 import bts.b.p001.Service.B_P001Service;
 import bts.b.p001.VO.B_P001VO;
 
@@ -42,6 +48,13 @@ public class B_P001ControllerImpl implements B_P001Controller {
 	@Autowired
 	B_P001VO d001vo;
 
+	private NaverLoginBO naverLoginBO;
+	private String apiResult = null;
+	
+	@Autowired
+	private void setNaverLoginBO(NaverLoginBO naverLoginBO) {
+		this.naverLoginBO = naverLoginBO;
+	}
 
 	public String getAccessToken(String authorize_code) {
 		String access_Token = "";
@@ -134,8 +147,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 
 			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
 			String email = kakao_account.getAsJsonObject().get("email").getAsString();
-			
-			
+
 			userInfo.put("nickname", nickname);
 			userInfo.put("email", email);
 
@@ -189,7 +201,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 	@RequestMapping(value = "/login", method = { RequestMethod.POST, RequestMethod.GET })
 	public ModelAndView login(@RequestParam Map<String, String> loginMap, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		
+
 		ModelAndView mav = new ModelAndView();
 		d001vo = d001Service.login(loginMap);
 		if (d001vo != null && d001vo.getMember_id() != null) {
@@ -200,17 +212,15 @@ public class B_P001ControllerImpl implements B_P001Controller {
 			session.setAttribute("memberInfo", d001vo);
 			System.out.println("성공");
 			mav.setViewName("/z/p000/d001");
-			
+
 		} else {
 			String message = "아이디나  비밀번호가 틀립니다. 다시 로그인해주세요";
 			mav.addObject(message);
 			System.out.println("실패:" + message);
-			mav.setViewName("/z/p000/d001");	
+			mav.setViewName("/z/p000/d001");
 		}
 		return mav;
 	}
-
-
 
 	@RequestMapping(value = "/kakaoLogin")
 	public String login(@RequestParam("code") String code, HttpSession session) {
@@ -221,49 +231,71 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		// 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
 		if (userInfo.get("email") != null) {
 			session.setAttribute("isLogOn", true);
-			session.setAttribute("memberInfo",userInfo);
+			session.setAttribute("memberInfo", userInfo);
 			session.setAttribute("userId", userInfo.get("email"));
 			session.setAttribute("access_Token", access_Token);
 		}
 		return "/z/p000/d001";
 	}
-	
+
 	public void kakaoLogout(String access_Token) {
-	    String reqURL = "https://kapi.kakao.com/v1/user/logout";
-	    try {
-	        URL url = new URL(reqURL);
-	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        conn.setRequestMethod("POST");
-	        conn.setRequestProperty("Authorization", "Bearer " + access_Token);
-	        
-	        int responseCode = conn.getResponseCode();
-	        System.out.println("responseCode : " + responseCode);
-	        
-	        BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-	        
-	        String result = "";
-	        String line = "";
-	        
-	        while ((line = br.readLine()) != null) {
-	            result += line;
-	        }
-	        System.out.println(result);
-	    } catch (IOException e) {
-	        // TODO Auto-generated catch block
-	        e.printStackTrace();
-	    }
+		String reqURL = "https://kapi.kakao.com/v1/user/logout";
+		try {
+			URL url = new URL(reqURL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+
+			int responseCode = conn.getResponseCode();
+			System.out.println("responseCode : " + responseCode);
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+			String result = "";
+			String line = "";
+
+			while ((line = br.readLine()) != null) {
+				result += line;
+			}
+			System.out.println(result);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
-	@RequestMapping(value="/logout")
+
+	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {
-	    kakaoLogout((String)session.getAttribute("access_Token"));
-	    session.removeAttribute("access_Token");
-	    session.removeAttribute("userId");
-	    session.removeAttribute("isLogOn");
-	    session.removeAttribute("memberInfo");
-	    return "/z/p000/d001";
+		kakaoLogout((String) session.getAttribute("access_Token"));
+		session.removeAttribute("access_Token");
+		session.removeAttribute("userId");
+		session.removeAttribute("isLogOn");
+		session.removeAttribute("memberInfo");
+		return "/z/p000/d001";
 	}
 	
+	
+	
+	@RequestMapping(value = "/naverLogin", method = RequestMethod.GET)
+	public ModelAndView naverLogin(HttpSession session) {
+		/* 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+		Map<String,Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("naver_url", naverAuthUrl);
+		System.out.println("naverrrrrrrr:" +naverAuthUrl);
+		return new ModelAndView("redirect:"+ naverAuthUrl);
+	}
 
-
+	// 네이버 로그인 성공시 callback호출 메소드
+	@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView callback(@RequestParam String code, @RequestParam String state, HttpSession session) throws IOException {
+		OAuth2AccessToken oauthToken = naverLoginBO.getAccessToken(session, code, state);
+		String apiResult = naverLoginBO.getUserProfile(oauthToken);
+		System.out.println("apiResult"+ apiResult);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/z/p000/d001");
+		session.setAttribute("isLogON", true);
+		session.setAttribute("memberInfo", apiResult);
+		return mav;
+	}
 }
