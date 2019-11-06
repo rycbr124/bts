@@ -79,6 +79,28 @@ border-bottom:1px solid rbg(127,127,127);
 	display : inline-block;
 }
 
+[id='toggle-heart'] {
+  position: absolute;
+  left: -100vw;
+  vertical-align:bottom;
+}
+
+[for='toggle-heart'] {
+  color: #aab8c2;
+}
+
+[id='toggle-heart']:checked + label {
+  color: #e2264d;
+}
+
+[for='toggle-heart'] {
+  font-size: 2em;
+  cursor: pointer;
+}
+
+[for='toggle-heart'] { 
+  align-self: center; 
+}
 
 
 
@@ -88,6 +110,8 @@ border-bottom:1px solid rbg(127,127,127);
 <body>
 <!-- Page Content -->
   <div class="container">
+	${sessionScope.memberInfo.member_id}<br>
+	${contentid}
 
     <!-- Heading Row -->
     <div class="row align-items-center my-5">

@@ -1,12 +1,6 @@
 /**
  * 추천(지역별) - 한국관광공사 API 
  */
-$(document).ready(function (){	
-	
-			
-	
-});
-
 function result_init(){
 	 var pageNo = 1;
 	 image_init(pageNo);//이미지 삽입
@@ -42,18 +36,41 @@ function image_init(idNumber) {
 			
 			var addr1 = document.createElement('p');
 			$(addr1).prop('class', 'addr');
-			var addr1_text = document.createTextNode(resultArray.addr1);
+			var addr1_text = document.createTextNode("주소 : " + resultArray.addr1);
 			addr1.appendChild(addr1_text);
-			console.log(addr1_text);
-			
+						
 			var h_page = document.createElement('p');
 			$(h_page).prop('class', 'h_page');
-			var page_text = document.createTextNode(resultArray.homepage);
-			$(h_page).html(resultArray.homepage);
-			console.log(page_text);
+			$(h_page).html("홈페이지 : " + resultArray.homepage);
+			
+			var form = document.createElement('form');			
+			$(form).prop('action', '/bts/recommend/insert_wishlist');
+			$(form).prop('method', 'post');
+			
+			var hidden = document.createElement('input');
+			$(hidden).prop('type', 'hidden');
+			$(hidden).prop('name', 'contentid');
+			$(hidden).prop('value', resultArray.contentid);
+			
+			var submit = document.createElement('input');
+			$(submit).prop('type', 'submit');
+			$(submit).prop('class', 'btn btn-info btn-sm')
+			$(submit).prop('value', '상세보기');
 			
 			
 			
+			
+			
+			var input_heart = document.createElement('input');
+			$(input_heart).prop('id', 'toggle-heart');
+			$(input_heart).prop('type', 'checkbox');
+			
+			var label_heart = document.createElement('label');
+			$(label_heart).prop('for', 'toggle-heart');
+			var heart = document.createTextNode('♥');
+			label_heart.appendChild(heart);
+			
+					
 			var overview = document.createElement('p');
 			$(overview).html(resultArray.overview);
 			
@@ -62,13 +79,11 @@ function image_init(idNumber) {
 			$('.col-lg-5').append(title);
 			$('.col-lg-5').append(addr1);
 			$('.col-lg-5').append(h_page);
+			$('.col-lg-5').append(input_heart);
+			$('.col-lg-5').append(label_heart);
 			$('.content').append(overview);
 			
 			map_print(resultArray.title, resultArray.mapx, resultArray.mapy);
-			
-			////////////
-	
-	
 			
 		},
 		error : function(data, textStatus) {
@@ -147,13 +162,6 @@ function image_init(idNumber) {
 //			alert("잘못된 접근입니다.")
 //		}
 //	});
-//
-//	
-//	
-//	
-//	
-//	
-//	
 //}
 
 function map_print(title, mapx, mapy){
@@ -179,12 +187,12 @@ function map_print(title, mapx, mapy){
 	var iwContent = '<div style="padding:5px;">' + title + '</div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
     iwPosition = new kakao.maps.LatLng(mapy, mapx); //인포윈도우 표시 위치입니다
 
-// 인포윈도우를 생성합니다
-var infowindow = new kakao.maps.InfoWindow({
-    position : iwPosition, 
-    content : iwContent 
-});
-  
-// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
-infowindow.open(map, marker); 
+	// 인포윈도우를 생성합니다
+	var infowindow = new kakao.maps.InfoWindow({
+	    position : iwPosition, 
+	    content : iwContent 
+	});
+	  
+	// 마커 위에 인포윈도우를 표시합니다. 두번째 파라미터인 marker를 넣어주지 않으면 지도 위에 표시됩니다
+	infowindow.open(map, marker); 
 }
