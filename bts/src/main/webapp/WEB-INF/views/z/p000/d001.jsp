@@ -119,7 +119,7 @@ h3.title {
 </head>
 <body>
 	<div id="header">
-		<a href="index.jsp" class="header_logo"> <img src="${contextPath}/resources/image/logo/흰색/logo_white_all.png" alt="BTS">
+		<a href="${contextPath}/main/main" class="header_logo"> <img src="${contextPath}/resources/image/logo/흰색/logo_white_all.png" alt="BTS">
 		</a>
 		<div class="header_control_container">
 			<ul id="menu" class="menu">
