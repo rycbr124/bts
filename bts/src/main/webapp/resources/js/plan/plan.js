@@ -3,6 +3,7 @@
  */
 
 $(document).ready(function(){
+	kakaoMap();
    var diff;
    document.getElementById('map_controller').style.width = "200px";
    document.getElementById('plan_list_container').style.display = "none";
@@ -99,28 +100,32 @@ $(function() {//jquery calendar
          });  
      });
 });
-             
-//카카오 지도 js
-var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-var options = { //지도를 생성할 때 필요한 기본 옵션
-   center: new kakao.maps.LatLng(37.566826, 126.9786567), //지도의 중심좌표.
-   level: 8//지도의 레벨(확대, 축소 정도)
-};
-var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
-
-   var markerPosition  = new kakao.maps.LatLng(37.566826, 126.9786567); 
-
-   // 마커를 생성합니다
-   var marker = new kakao.maps.Marker({
-       position: markerPosition
-   });
-
-   // 마커가 지도 위에 표시되도록 설정합니다
-   marker.setMap(map);
-
-   // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-   // marker.setMap(null);   
+    
 });
+function kakaoMap(mapx,mapy){
+	//카카오 지도 js
+		console.log(mapx);
+		console.log(mapy);
+	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
+	var options = { //지도를 생성할 때 필요한 기본 옵션
+	   center: new kakao.maps.LatLng(37.566826, 126.9786567), //지도의 중심좌표.
+	   level: 8//지도의 레벨(확대, 축소 정도)
+	};
+	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
+
+	   var markerPosition  = new kakao.maps.LatLng(mapy,mapx); 
+
+	   // 마커를 생성합니다
+	   var marker = new kakao.maps.Marker({
+	       position: markerPosition
+	   });
+
+	   // 마커가 지도 위에 표시되도록 설정합니다
+	   marker.setMap(map);
+
+	   // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
+	   // marker.setMap(null);  
+	}
 function enter_check(e){
 	if(window.event.keyCode == 13){
 		var text= $('.tag').val();
@@ -158,6 +163,7 @@ $('.detail_list_container').empty();
         + serviceKey
         + '&contentTypeId=38&areaCode=1&sigunguCode=' + sigungucode + '&MobileOS=ETC&MobileApp=AppTest&arrange=P&numOfRows=30&pageNo=1&_type=json';
   console.log(reqUrl);
+  var mapx , mapy;
 
   	$.ajax({
   		async : false,
@@ -184,7 +190,8 @@ $('.detail_list_container').empty();
 					$(content_image).prop('class','first_image');
 					$(image).prop('class','image_information');
 					$(image).prop('src', resultArray[i].firstimage);
-					
+					mapx = resultArray[i].mapx;
+					mapy = resultArray[i].mapy;
 					
 					var c_title = document
 						.createTextNode(resultArray[i].title);
@@ -202,8 +209,9 @@ $('.detail_list_container').empty();
 			error : function(data, textStatus) {
 				alert("잘못된 접근입니다.")
 			}
+		
   	});
-
+  	kakaoMap(mapx,mapy);
 } 
 	
 

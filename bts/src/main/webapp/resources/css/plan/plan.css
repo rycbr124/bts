@@ -254,8 +254,9 @@ p .delete_tag{
 }
 .tourist_tab .select_place{
 	position:absolute;
-	margin-left:24.5px;
-	width:200px;
+	margin-left:34.5px;
+	width:230px;
+	
 }
 .detail_list_container{
 	position:absolute;
