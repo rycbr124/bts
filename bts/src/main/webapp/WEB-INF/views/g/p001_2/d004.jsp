@@ -55,16 +55,19 @@ p{
 	font-family: "NanumSquareRoundR";
 }
 
+.card-body{
+	width : 900px;
+}
+
 img.card-img{
 	width : 450px;
 	height : 250px;
-	display : inline-block;
+
 }
 
 </style>
 </head>
 <body>
-<form name="content" method="post">
 
 <!-- Page Content -->
   <div class="container">
@@ -98,6 +101,6 @@ img.card-img{
   </div>
   <!-- /.container -->
 </div>
-</form>
+
 </body>
 </html>

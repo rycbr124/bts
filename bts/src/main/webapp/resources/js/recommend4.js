@@ -13,6 +13,9 @@ $("#image_grid").empty();
 	
 	var serviceKey = 'lUN5B8XHOdyoYlgxfJqeeTMdZZWYbuV9qc80jLPpilJ%2BYukKsP1%2FvR6W2AJ9UxbCgbUlkVqiN5O3%2FWiHMOyvcw%3D%3D'
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + idNumber + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
+	var map_array = new Array();
+	var map_x;
+	var map_y;
 	
 	$.ajax({
 		async : false,
@@ -23,6 +26,12 @@ $("#image_grid").empty();
 			console.log(resultArray);
 			console.log(resultArray.mapx);
 			console.log(resultArray.mapy);
+			map_x = resultArray.mapx;
+			map_y = resultArray.mapy;
+			map_array[0] = map_x;
+			map_array[1] = map_y;
+			
+			
 			
 			var img_1 = document.createElement('img');
 			$(img_1).prop('class', 'img-fluid rounded mb-4 mb-lg-0');
@@ -48,10 +57,10 @@ $("#image_grid").empty();
 			alert("잘못된 접근입니다.")
 		}
 	});
-	course_detail(idNumber);
+	course_detail(idNumber, map_array);
 }
 
-function course_detail(idNumber) {
+function course_detail(idNumber, map_array) {
 	$("#image_grid").empty();
 	
 	var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
@@ -73,7 +82,7 @@ function course_detail(idNumber) {
 				
 				var content_div = document.createElement('div');
 				$(content_div).prop('class', 'content_' + i);
-				
+				$('content_'+i).prop('style','width:1000px; height:600px')
 				
 				
 				var title = document.createElement('h3');
@@ -125,7 +134,7 @@ function course_detail(idNumber) {
 				
 				
 			}
-			course_map(subArray);
+			course_map(subArray, map_array);
 		},
 		error : function(data, textStatus) {
 			alert("잘못된 접근입니다.")
@@ -133,7 +142,7 @@ function course_detail(idNumber) {
 	});
 }
 
-function course_map(subArray){
+function course_map(subArray, map_array){
 	var serviceKey = 'lUN5B8XHOdyoYlgxfJqeeTMdZZWYbuV9qc80jLPpilJ%2BYukKsP1%2FvR6W2AJ9UxbCgbUlkVqiN5O3%2FWiHMOyvcw%3D%3D';
 	var array_length = subArray.length;
 	var arr_result = new Array();
@@ -166,16 +175,16 @@ function course_map(subArray){
 			});
 	}
 	console.log(arr_result);
-	map_print(arr_result);
+	map_print(arr_result, map_array);
 
 }
 
-function map_print(arr_result){
+function map_print(arr_result, map_array){
 	
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
 mapOption = { 
-    center: new kakao.maps.LatLng(37.5759947835, 126.9768292386), // 지도의 중심좌표
+    center: new kakao.maps.LatLng(map_array[1], map_array[0]), // 지도의 중심좌표
     level: 8 // 지도의 확대 레벨
 };
 

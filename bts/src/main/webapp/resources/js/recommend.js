@@ -51,6 +51,7 @@ function image_init(pageNo) {
 		success : function(data, textStatus) {
 			var resultArray = data.response.body.items.item;
 			console.log(resultArray);
+			console.log("total 값 : " + data.response.body.totalCount);
 			if (resultArray instanceof Array) {
 				for ( var i in resultArray) {
 					var col = document.createElement('div');

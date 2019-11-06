@@ -81,7 +81,7 @@ $(document).ready(function (){
 </script>
 </head>
 <body>
-	<div class="container">
+	<div class="container">	
 		<h1 class="title">지역별 추천</h1>
 		<strong>지역선택 : </strong>
 		<select class="form-control" id="sigungucode" style="display:inline-block;">
@@ -133,6 +133,8 @@ $(document).ready(function (){
 	</div>
 	
 	<div class="container">
+	
+
 	<div id="pagination">
 		<ul class="pagination justify-content-center">
 			<li class="page-item"><span class="page-link">Prev</span></li>
@@ -145,6 +147,10 @@ $(document).ready(function (){
 			
 		</ul>
 	</div>
+
+	
+	
+	
 	</div>
 </body>
 </html>
