@@ -43,12 +43,17 @@ function image_init(idNumber) {
 			$(h_page).prop('class', 'h_page');
 			$(h_page).html("홈페이지 : " + resultArray.homepage);
 			
-			var form = document.createElement('form');
+
+			var form = document.createElement('form');			
 			$(form).prop('action', '/bts/recommend/insert_wishlist');
 			$(form).prop('method', 'post');
+			
+			var hidden = document.createElement('input');
 			$(hidden).prop('type', 'hidden');
 			$(hidden).prop('name', 'contentid');
-			$(hidden).prop('value', resultArray[i].contentid);
+			$(hidden).prop('value', resultArray.contentid);
+			
+			var submit = document.createElement('input');
 			$(submit).prop('type', 'submit');
 			$(submit).prop('class', 'btn btn-info btn-sm')
 			$(submit).prop('value', '상세보기');

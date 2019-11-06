@@ -78,12 +78,12 @@ border-bottom:1px solid rbg(127,127,127);
 	float : right;
 	display : inline-block;
 }
-
 [id='toggle-heart'] {
   position: absolute;
   left: -100vw;
   vertical-align:bottom;
 }
+
 [for='toggle-heart'] {
   color: #aab8c2;
 }
@@ -91,10 +91,12 @@ border-bottom:1px solid rbg(127,127,127);
 [id='toggle-heart']:checked + label {
   color: #e2264d;
 }
+
 [for='toggle-heart'] {
   font-size: 2em;
   cursor: pointer;
 }
+
 [for='toggle-heart'] { 
   align-self: center; 
 }
