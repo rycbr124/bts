@@ -58,13 +58,6 @@
 	
 	</update>
 
-	<!-- 회원 탈퇴 -->
-	<delete id="deleteMember" parameterType="String">
-		delete
-		from b_member
-		where member_id = #{memberId}
-	</delete>
-	
 	<!-- 프로필 가져오기 -->
 		<!--select * from b_member where profile_image = #{profileImage}, potoAddr=#{potoAddr}-->
 	<update id="updateProfile" parameterType="d001VO">
@@ -72,5 +65,14 @@
       set profile_image = #{profile_image},
          where member_id = #{member_id}
    </update>
+
+	<!-- 회원 탈퇴 -->
+	<delete id="deleteMember" parameterType="String">
+		delete
+		from b_member
+		where member_id = #{memberId}
+	</delete>
+	
+	
 	
 </mapper>
