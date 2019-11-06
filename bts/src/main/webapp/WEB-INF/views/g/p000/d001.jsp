@@ -30,12 +30,15 @@ h4{
 	color : black;
 }
 
+.btn btn-info btn-sm{
+	float : right;
+}
 
 </style>
 
 </head>
 <body>
-	<div class="row">
+	<div class="container">
 	    <div class="col-md-8">
 	        <div class="row">
 	            <div class="col-md-6 zero_mp">
@@ -78,6 +81,7 @@ h4{
 	        </div>
 	        <!--End of row-->
 	    </div>
+	    
 	    <!--End of col-md-8-->
 	    <div class="col-md-4">
 	        <div class="event_news">
@@ -116,6 +120,8 @@ h4{
 
 
 	    <!--End of col-md-4-->
+    </div>
+    
     </div>
 </body>
 </html>

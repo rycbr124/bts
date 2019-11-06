@@ -1,167 +1,314 @@
 @charset "UTF-8";
 body{
-	margin:0;
-	overflow:hidden;
+   margin:0;
+   overflow:hidden;
 }
 
 .map_controller{
-	position:relative;
-	width:200px;
-	float:left;
-	margin-top:0px;
-	margin-left:0px;
-	background:rgb(100,100,100);
-	height:100vh;
-	border:1px solid lightgray;
+   position:relative;
+   float:left;
+   margin-top:0px;
+   margin-left:0px;
+   background:#fff;
+   width:760px;
+   height:100vh;
+   border:1px solid lightgray;
+   display:inline-block;
+   border-top:0;
 }
-.plan_tab{
-	border:1px solid rgb(127,127,127);
-	padding-top:5px;
-	background-size:auto;
-	background-position-x:initial;
-	background-image:initial;
-	background-position-y:initial;
-	line-height:20px;
-	box-sizing:border-box;
-	display:block;
-	font-size:14px;
-	border-left:0;
-	border-right:0;
-	border-top:0;
+#map{
+   position:relative;
+   display:inline-block;
+   width:100%;
+   height:auto;
+   left:0;
 }
-.plan_tab img{
-	width:130px;
-	height:70px;
-	
+.map_controller .select_date{
+   width:200px;
+   background-color:rgb(100,100,100);
+   border-right:1px solid #fff;
 }
-.calendar{
-	border-bottom:1px solid white;
-	margin:10px;
-	margin-top:20px;
-	height:25px;
+.map_controller .select_date .title_write{
+	margin-left: 15px;
 }
-.calendar img{
-	width:18px;
-	height:18px;
-	margin-bottom:-3px;
-}
-.calendar input{
-	background-color:transparent;
-	border:0;
-	cursor:pointer;
-	font-size:13px;
-	font-color:rgb(200,200,200);
-	transform:translate(15%,-120%);
-}
-.calendar input:focus{
+.map_controller .select_date .title_write input[type=text]{
 	outline:none;
-}
-.content_container{
-	height:100vh;
-	width:100%;
-	max-height:800px;
-	overflow-y:auto;
-}
-.content_container #day_list{
-	width:100%;
-	height:50px;
-	border:1px solid white;
-	border-top:0;
-	border-right:0;
-	border-left:0;
-	font-size:20px;
-	text-align:center;
-	background-color:rgb(127,127,127);
+	border:0;
+	border-bottom:1px solid #fff;
 	color:#fff;
-	padding-top:20px;
+	background-color:transparent;
+	padding-left:5px;
+	margin-bottom:10px;
+	margin-top:10px;
 	
-}
-#day_list .date_dtw{
-	position:relatuve;
-	margin:0;
-	font-size:12px;
-	border:1px solid #fff;
-	width:20px;
-	float:right;
-	border-radius:100%;
-	background-color:gray;
-	border:block;
-	margin-right:5px;
-	top:0;
 }
 
-.day_list .day{
-	position:relatuve;
-	font-size:15px;
-	transform:translate(0,-60%);
+.map_controller .select_date .title_write .tag_write .tag_value{
+	font-size:13px;
+	height:auto;
 }
-.content_container #day_list:hover{
-	background-color:rgb(160,160,160);
-	color:black;
+.map_controller .select_date .title_write .tag_write .tag_value p{
+	color:white;
+	margin:0;
+	margin-left:5px;
+	padding-left:5px;
+	padding-right:10px;
+	border:1px solid #fff;
+	border-radius:9px;
 }
-.plan_list_container{
-	display:inline-block;
-	border:1px solid lightgray;
-	border-left:0;
-	height:100vh;
-	width:260px;
+p .delete_tag{
+	position:absolute;
+	cursor:pointer; 
+	color:hotpink;
+}
+.map_controller .select_date .title_write input::placeholder{
+	color:#fff;
+	opacity:0.5;
+}
+.map_controller .plan_list_container{
+   position:absolute;
+   display:inline-block;
+   border:1px solid lightgray;
+   border-left:0;
+   border-top:0;
+   height:100vh;
+   width:260px;
+   right:0;
+   top:0;
+   float:left;
 }
 .plan_list_container .plan_list_header{
-	float:top;
-	boder:1px solid gray;
-	background-color:rgb(100,100,100);
-	width:100%;
-	height:45px;
-	margin:0;
-	
+   float:top;
+   boder:1px solid gray;
+   background-color:rgb(100,100,100);
+   width:100%;
+   height:45px;
+   margin:0;
+   
 }
+.plan_tab{
+   border:1px solid rgb(127,127,127);
+   padding-top:5px;
+   background-size:auto;
+   background-color:rgb(100,100,100);
+   background-position-x:initial;
+   background-image:initial;
+   background-position-y:initial;
+   line-height:20px;
+   box-sizing:border-box;
+   display:block;
+   font-size:14px;
+   border-left:0;
+   border-right:0;
+   border-top:0;
+}
+.plan_tab img{
+   width:130px;
+   height:70px;
+   
+}
+.calendar{
+   border-bottom:1px solid white;
+   margin:10px;
+   margin-top:20px;
+   height:25px;
+}
+.calendar img{
+   width:18px;
+   height:18px;
+   margin-bottom:-3px;
+}
+.calendar input{
+   background-color:transparent;
+   border:0;
+   cursor:pointer;
+   font-size:13px;
+   font-color:rgb(200,200,200);
+   transform:translate(15%,-120%);
+}
+.calendar input:focus{
+   outline:none;
+}
+.content_container{
+   height:100vh;
+   width:100%;
+   max-height:800px;
+   overflow-y:auto;
+}
+.content_container #day_list{
+   width:100%;
+   height:50px;
+   border:1px solid white;
+   border-top:0;
+   border-right:0;
+   border-left:0;
+   font-size:20px;
+   text-align:center;
+   background-color:rgb(127,127,127);
+   color:#fff;
+   padding-top:20px;
+   
+}
+#day_list .date_dtw{
+   position:relatuve;
+   margin:0;
+   font-size:12px;
+   border:1px solid #fff;
+   width:20px;
+   float:right;
+   border-radius:100%;
+   background-color:gray;
+   border:block;
+   margin-right:5px;
+   top:0;
+}
+
+#day_list .day{
+   position:relatuve;
+   font-size:15px;
+   transform:translate(0,-60%);
+}
+.content_container #day_list:hover{
+   background-color:rgb(160,160,160);
+   color:black;
+}
+
 #date{
-	margin:0;
+   margin:0;
 }
 .date_value{
-	margin:0;
-	margin-right:0;
-	width:40%;
-	height:30px;
-	color:#fff;
-	font-size:20px;
-	padding-top:7px;
-	padding-left:10px;
-	padding-bottom:7px;
+   margin:0;
+   margin-right:0;
+   width:40%;
+   height:30px;
+   color:#fff;
+   font-size:20px;
+   padding-top:7px;
+   padding-left:10px;
+   padding-bottom:7px;
 }
 .day_value{
-	border-left:1px solid #fff;
-	color:#fff;
-	transform:translate(100%,-150%);
-	width:70px;
-	height:15px;
-	margin:0;
-	text-align:center;
-	padding-bottom:8px;
+   border-left:1px solid #fff;
+   color:#fff;
+   transform:translate(100%,-150%);
+   width:70px;
+   height:15px;
+   margin:0;
+   margin-left:10px;
+   text-align:center;
+   padding-bottom:8px;
 }
-.plan_reset{
+
+.plan_list_container ul{
+   list-style:none;
+   width:auto;
+   height:100vh;
+   padding:0;
+   margin:0;
+   overflow-y:auto;
+   max-height:893px;
+}
+.plan_list li{
+   border:0.5px solid navy;
+   width:auto;
+   height:60px;
+   border-left:0;
+   border-right:0;
+   border-top:0;
+}
+.tourist{
+	position:relative;
+   display:inline-block;
+   border:1px solid lightgray;
+   border-left:0;
+   border-top:0;
+   height:100vh;
+   width:299px;
+   right:0;
+   top:0;
+   border-left:0;
+}
+.tourist .tourist_header{
+   float:top;
+   boder:1px solid gray;
+   background-color:rgb(100,100,100);
+   width:100%;
+   height:45px;
+   margin:0;
+}
+.tourist .tourist_tab{
+	position:relative;
+	border:1px solid #fff; 
+	width:100%; 
+	height:100px;
+}
+.select_icon{
+	margin:0 auto;
+	margin-top:30px;
+	width:250px;
+}
+.select_icon img{
+	margin-left:10px;
+	width:25px;
+	height:25px;
+}
+.tourist_tab .select_place{
+	position:absolute;
+	margin-left:24.5px;
+	width:200px;
+}
+.detail_list_container{
+	position:absolute;
+	width:100%;
+	height:78.5vh;
+	margin:0;
+	padding:0;
+	overflow-y:auto;
 	
 }
-.plan_box{
-	list-style:none;
-	width:auto;
-	height:100vh;
-	padding:0;
-	margin:0;
-	overflow-y:auto;
-	max-height:893px;
-}
-.plan_box li{
-	border:0.5px solid navy;
+
+.detail_list_container .detail_information{
+	position:relative;
 	width:auto;
 	height:60px;
-	border-left:0;
-	border-right:0;
-	border-top:0;
+	border-bottom:1px solid lightgray;
+	padding:15px;
+}
+.detail_list_container .detail_information .first_image{
+	display:block;
+	width:50px;
+	height:50px;
+	margin:0 auto;
+	margin-left:0;
+	margin-right:0;
+}
+.detail_list_container .detail_information .first_image img{
+	width:50px;
+	height:50px;
+}
+.detail_list_container .detail_information h2{
+	position:absolute;
+	display:block;
+	top:15px;
+	left:85px;
+	font-size:13px;	
+	margin:0;
+	
+}
+.detail_list_container .detail_information p{
+	position:absolute;
+	dosplay:inline-block;
+	width:200px;
+	bottom:20px;
+	left:85px;
+	margin:0 auto;
+	font-size:12px;
 }
 .map_area{
-	display:inline-block;
-	height:100vh;
-	width:1457px;
-	float:right;
+	position:absolute;
+   display:inline-block;
+   float:right;
+   height:100vh;
+   width:1456px;
+	border-left:0;
 }
