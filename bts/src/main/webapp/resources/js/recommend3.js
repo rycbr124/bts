@@ -74,7 +74,7 @@ function image_init(idNumber) {
          $(label_heart).prop('for', 'toggle-heart');
          $(label_heart).prop('id', 'heart');
          var heart = document.createTextNode('♥');
-         label_heart.appendChild(하트);
+         label_heart.appendChild(heart);
          
          var hidden = document.createElement('input');
          $(hidden).prop('type', 'hidden');
