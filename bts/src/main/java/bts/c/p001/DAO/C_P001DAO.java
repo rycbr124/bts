@@ -9,7 +9,7 @@ import bts.b.p001.VO.B_P001VO;
 public interface C_P001DAO {
 
 	//회원정보
-		B_P001VO selectMember(String memberId) throws DataAccessException;
+	//	B_P001VO selectMember(String memberId) throws DataAccessException;
 	
 	//회원정보 수정
 		void updateMember(B_P001VO d001VO) throws DataAccessException;

@@ -15,11 +15,11 @@ public class C_P001DAOImpl implements C_P001DAO{
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@Override
-	public B_P001VO selectMember(String memberId) throws DataAccessException {
-		B_P001VO d001VO = (B_P001VO)sqlSession.selectOne("mapper.member.seleteMember",memberId);
-		return d001VO;
-	}
+//	@Override
+//	public B_P001VO selectMember(String memberId) throws DataAccessException {
+//		B_P001VO d001VO = (B_P001VO)sqlSession.selectOne("mapper.member.seleteMember",memberId);
+//		return d001VO;
+//	}
 	
 	@Override
 	public void updateMember(B_P001VO d001vo) throws DataAccessException {
@@ -35,9 +35,9 @@ public class C_P001DAOImpl implements C_P001DAO{
 	
 	//찾아봐 sqlSession.delete 
 	@Override
-	public String deleteMember(String memberId) throws DataAccessException {
+	public String deleteMember(String member_id) throws DataAccessException {
 		//String test = sqlSession.delete("mapper.member.deleteMember", memberId);
-		int  test = sqlSession.delete("mapper.member.deleteMember", memberId);
+		int  test = sqlSession.delete("mapper.member.deleteMember", member_id);
 		
 		return null;
 	}

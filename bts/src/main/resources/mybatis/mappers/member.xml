@@ -10,12 +10,16 @@
 		<result property="password" column="password" />
 		<result property="name" column="name" />
 		<result property="gender" column="gender" />
-		<result property="birth" column="birth" />
-		<result property="tel_no" column="tel_no" />
-		<result property="nick_name" column="nick_name" />
-		<result property="email" column="email" />
-	</resultMap>
 
+		<result property="birth" column="birth" />
+
+		<result property="tel_no" column="tel_no" />
+
+		<result property="nick_name" column="nick_name" />
+
+		<result property="email" column="email" />
+
+	</resultMap>
 	<!-- 회원가입 ID 중복검사 -->
 	<select id="selectOverlappedID" parameterType="String"
 		resultType="String">
@@ -33,7 +37,7 @@
 	, #{tel_no,jdbcType=VARCHAR}, #{nick_name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR})
 	]]>
 	</insert>
-	
+		
 	<!-- 로그인 쿼리문 -->
 	<select id="login" resultType="d001VO" parameterType="java.util.Map"  >
 	    <![CDATA[
@@ -41,38 +45,35 @@
 			 where member_id=#{member_id,jdbcType=VARCHAR}
 			 and password=#{password,jdbcType=VARCHAR} 
 		]]>
-	</select>	
-
-	<!-- 회원정보 조회 -->
-	<select id="selectMember" resultMap="d001VO" parameterType="String">
-		select * from b_member where member_id =#{memberId}
 	</select>
 	
-	<!-- 회원정보 수정 -->
+		<!-- 회원정보 수정 -->
 	<update id="updateMember" parameterType="d001VO">
-		update b_memeber set
+	<![CDATA[
+		update b_member set
 		name = #{name},password = #{password}, gender = #{gender}, birth =
 		#{birth}, tel_no = #{tel_no}, nick_name = #{nick_name}, email = #{email}
-		, 
-		where memeber_id = #{memberId}
-	
+		where member_id = #{member_id}	
+     ]]>
 	</update>
-
-	<!-- 프로필 가져오기 -->
+	
+		<!-- 프로필 가져오기 -->
 		<!--select * from b_member where profile_image = #{profileImage}, potoAddr=#{potoAddr}-->
 	<update id="updateProfile" parameterType="d001VO">
+    <![CDATA[
       update b_member
       set profile_image = #{profile_image},
          where member_id = #{member_id}
+           ]]>
    </update>
 
 	<!-- 회원 탈퇴 -->
 	<delete id="deleteMember" parameterType="String">
+	<![CDATA[
 		delete
 		from b_member
 		where member_id = #{memberId}
+		 ]]>
 	</delete>
-	
-	
-	
+		
 </mapper>
