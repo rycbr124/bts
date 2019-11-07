@@ -82,6 +82,7 @@ function course_detail(idNumber, map_array) {
 				
 				var content_div = document.createElement('div');
 				$(content_div).prop('class', 'content_' + i);
+				$(content_div).prop('id','content_list');
 				$('content_'+i).prop('style','width:1000px; height:600px')
 				
 				
@@ -124,10 +125,11 @@ function course_detail(idNumber, map_array) {
 				$('.content').append(content_div);
 				$('.content_' + i).append(href);
 				$('.content_' + i).append(ul_list);
+				$('.course_list_' + i).append(li_img);
 				$('.course_list_' + i).append(li_content);
 				$('.content_text_' + i).append(strong);
 				$('.content_text_' + i).append(overview);
-				$('.course_list_' + i).append(li_img);
+				
 				
 				
 				$('.content_img_' + i).append(img);

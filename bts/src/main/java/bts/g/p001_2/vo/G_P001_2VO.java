@@ -25,8 +25,6 @@ public class G_P001_2VO {
 	}
 	public void setUpper_category_cd(String upper_category_cd) {
 		this.upper_category_cd = upper_category_cd;
-	}
-	
-	
+	}	
 
 }

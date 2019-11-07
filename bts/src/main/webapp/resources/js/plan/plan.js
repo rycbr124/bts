@@ -3,7 +3,6 @@
  */
 
 $(document).ready(function(){
-	kakaoMap();
    var diff;
    document.getElementById('map_controller').style.width = "200px";
    document.getElementById('plan_list_container').style.display = "none";
@@ -25,7 +24,6 @@ $(function() {//jquery calendar
            picker.endDate._d.setHours(0,0,0,0);
            diff = picker.endDate._d - picker.startDate._d;
            diff = diff/(1000*60*60*24)+1;
-           
            //요일 반환 코드
            var week = ['일', '월', '화', '수', '목', '금', '토'];
            //일자선택을 초기화 해준다
@@ -71,7 +69,9 @@ $(function() {//jquery calendar
                 * */
                var ul = document.createElement('ul');
                $(ul).addClass("DAY"+(i+1));
+               $(ul).prop('id','dropContainer');
                $(ul).css('display','none');
+               $(ul).attr('ondragover','allowDrop(event)');
                
             
                //li 붙이기
@@ -90,7 +90,7 @@ $(function() {//jquery calendar
                document.getElementById('plan_list_container').style.display="inline-block";
                document.getElementById('tourist').style.display = "inline-block";
                document.getElementById('map_area').style.width = '1457px';
-               document.getElementById('map').style.width = '1157px';
+               document.getElementById('map').style.width = '1117px';
                document.getElementById('map').style.float = 'right';
                var date = $(this).children('p');
                var day = $(this).children('blockquote');
@@ -100,32 +100,21 @@ $(function() {//jquery calendar
          });  
      });
 });
-    
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+mapOption = { 
+    center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+    level: 9 // 지도의 확대 레벨
+};
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
 });
-function kakaoMap(mapx,mapy){
-	//카카오 지도 js
-		console.log(mapx);
-		console.log(mapy);
-	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-	var options = { //지도를 생성할 때 필요한 기본 옵션
-	   center: new kakao.maps.LatLng(37.566826, 126.9786567), //지도의 중심좌표.
-	   level: 8//지도의 레벨(확대, 축소 정도)
-	};
-	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
-	   var markerPosition  = new kakao.maps.LatLng(mapy,mapx); 
+		
 
-	   // 마커를 생성합니다
-	   var marker = new kakao.maps.Marker({
-	       position: markerPosition
-	   });
 
-	   // 마커가 지도 위에 표시되도록 설정합니다
-	   marker.setMap(map);
 
-	   // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-	   // marker.setMap(null);  
-	}
+
 function enter_check(e){
 	if(window.event.keyCode == 13){
 		var text= $('.tag').val();
@@ -151,47 +140,63 @@ function enter_check(e){
 	});
 	}
 //관광지 리스트 출력 함수
-function searchContentType(){
+function searchContentType(contentTypeId){
 $('.detail_list_container').empty();
-
-
-	var sigungucode = $('.select_place option:selected').val();	
 	
- 
+	$('.select_place').attr('onchange','searchContentType('+ contentTypeId +')');
 	var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
-  var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey='
-        + serviceKey
-        + '&contentTypeId=38&areaCode=1&sigunguCode=' + sigungucode + '&MobileOS=ETC&MobileApp=AppTest&arrange=P&numOfRows=30&pageNo=1&_type=json';
-  console.log(reqUrl);
-  var mapx , mapy;
+	var sigungucode = $('.select_place option:selected').val();
+	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey='
+	        + serviceKey
+	        + '&contentTypeId='+ contentTypeId +'&areaCode=1&sigunguCode='+sigungucode+'&MobileOS=ETC&MobileApp=AppTest&arrange=P&numOfRows=100&pageNo=1&_type=json';
+	
 
+	console.log(reqUrl);
+  var arr_result = new Array();
+  var resultArray;
+  var array = [];
   	$.ajax({
   		async : false,
 		url : reqUrl,
 		dataType : 'json',
 		success : function(data, textStatus) {
-			var resultArray = data.response.body.items.item;
+			 resultArray = data.response.body.items.item;
 			
 			if(resultArray instanceof Array){
 				for(var i in resultArray){
+					var obj_result = new Object();
 					var container = document.createElement('div');
 					var content_image = document.createElement('div');
+					var information_container = document.createElement('div');
 					var image = document.createElement('img');
+					var image_button = document.createElement('img');
 					var title = document.createElement('h2');
 					var address = document.createElement('p');
+					var add = document.createElement('a');
 					$('.detail_list_container').append(container);
+					$(container).append(information_container);
 					$(container).prop('class','detail_information');
-					$(container).append(content_image);
-					$(container).append(title);
-					$(container).append(address);
+					$(information_container).append(content_image);
+					$(information_container).append(title);
+					$(information_container).append(address);
 					$(content_image).append(image);
+					$(container).append(add);
+					$(add).append(image_button);
 					$(title).prop('class','title_infomation');
 					$(address).prop('class','address_information');
 					$(content_image).prop('class','first_image');
 					$(image).prop('class','image_information');
 					$(image).prop('src', resultArray[i].firstimage);
-					mapx = resultArray[i].mapx;
-					mapy = resultArray[i].mapy;
+					$(image_button).prop('src','/bts/resources/image/icon/plus.png');
+					$(add).prop('class','add_button');
+					$(add).prop('style','cursor:pointer;')
+					$(image_button).prop('class','button_icon');
+					obj_result['title'] = resultArray[i].title;
+					obj_result['map_x'] = resultArray[i].mapx;
+					obj_result['map_y'] = resultArray[i].mapy;
+					obj_result['first_image'] = resultArray[i].firstimage;
+					obj_result['address'] = resultArray[i].addr1;
+					arr_result[i] = obj_result;
 					
 					var c_title = document
 						.createTextNode(resultArray[i].title);
@@ -202,16 +207,143 @@ $('.detail_list_container').empty();
 					address.appendChild(c_addr1);
 					
 					
-					
 				}
 			}
 			},
 			error : function(data, textStatus) {
 				alert("잘못된 접근입니다.")
 			}
-		
+			
   	});
-  	kakaoMap(mapx,mapy);
+  	map_marker(arr_result);
+  	$('.add_button').on('click',function(){
+  		
+  		var arr_index = $(this).parent().index();
+  		var li = document.createElement('li');
+  		var image_container = document.createElement('div');
+  		var add_image = document.createElement('img');
+  		var add_title = document.createElement('h3');
+  		var add_address = document.createElement('p');
+  		var trashcan = document.createElement('a');
+  		var trashcan_img = document.createElement('img');
+  		var text = $('.plan_list_header>h1').text();
+  		var add_list = document.getElementsByClassName(text)[0]
+  		add_list.appendChild(li);
+  		$(li).prop('class','add_list');
+  		$(li).append(image_container);
+  		$(li).append(add_title);
+  		$(li).append(add_address);
+  		$(li).append(trashcan);
+  		$(trashcan).append(trashcan_img);
+  		$(trashcan).prop('class','trashcan');
+  		$(trashcan_img).prop('class','trashcan_img');
+  		$(trashcan_img).attr('src','/bts/resources/image/icon/garbage.png');
+  		$(image_container).append(add_image);
+  		$(image_container).prop('class','image_container');
+  		$(add_image).prop('class','add_image');
+  		$(add_image).attr('src',arr_result[arr_index].first_image);
+  		$(add_title).prop('class','add_title')
+  		$(add_title).text(arr_result[arr_index].title);
+  		$(add_address).prop('class','add_address');
+  		$(add_address).text(arr_result[arr_index].address);
+  		var mapx = arr_result[arr_index].map_x;
+  		var mapy = arr_result[arr_index].map_y;
+  		add_marker(mapy,mapx);
+  		
+  	});
 } 
-	
+function add_marker(mapy,mapx){
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+  		mapOption = { 
+  		    center: new kakao.maps.LatLng(37.5759947835, 126.9768292386), // 지도의 중심좌표
+  		    level: 8 // 지도의 확대 레벨
+  		};
 
+  		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+  		kakao.maps.event.addListener(map, function(mapy,mapx) {        
+  		    // 클릭한 위치에 마커를 표시합니다 
+  		    addMarker(mapy,mapx);             
+  		});
+
+  		// 지도에 표시된 마커 객체를 가지고 있을 배열입니다
+  		var markers = [];
+
+  		// 마커 하나를 지도위에 표시합니다 
+  		addMarker(new kakao.maps.LatLng(mapy, mapx));
+
+  		// 마커를 생성하고 지도위에 표시하는 함수입니다
+  		function addMarker(position) {
+  		    
+  		    // 마커를 생성합니다
+  		    var marker = new kakao.maps.Marker({
+  		        position: position
+  		    });
+
+  		    // 마커가 지도 위에 표시되도록 설정합니다
+  		    marker.setMap(map);
+  		    
+  		    // 생성된 마커를 배열에 추가합니다
+  		    markers.push(marker);
+  		}
+
+  		// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+  		function setMarkers(map) {
+  		    for (var i = 0; i < markers.length; i++) {
+  		        markers[i].setMap(map);
+  		    }            
+  		}
+
+  	
+}
+
+function map_marker(arr_result){
+	$('#map').empty();
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+	mapOption = { 
+	    center: new kakao.maps.LatLng(37.5759947835, 126.9768292386), // 지도의 중심좌표
+	    level: 8 // 지도의 확대 레벨
+	};
+
+	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	
+	var arr_length = arr_result.length;
+	var positions = new Array();
+
+	for(var i = 0; i < arr_length; i++){
+	   positions[i] = { content: '<div>' + arr_result[i].title + '</div>', latlng: new kakao.maps.LatLng(arr_result[i].map_y, arr_result[i].map_x)}
+	   
+}
+
+	for (var i = 0; i < positions.length; i ++) {
+	// 마커를 생성합니다
+	var marker = new kakao.maps.Marker({
+	    map: map, // 마커를 표시할 지도
+	    position: positions[i].latlng // 마커의 위치
+	});
+
+	 //마커에 표시할 인포윈도우를 생성합니다 
+	var infowindow = new kakao.maps.InfoWindow({
+	    content: positions[i].content // 인포윈도우에 표시할 내용
+	});
+
+	// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+	 //이벤트 리스너로는 클로저를 만들어 등록합니다 
+	 //for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+	kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+	kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+	}
+
+	//인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+	function makeOverListener(map, marker, infowindow) {
+	return function() {
+	    infowindow.open(map, marker);
+	};
+	}
+
+	//인포윈도우를 닫는 클로저를 만드는 함수입니다 
+	function makeOutListener(infowindow) {
+	return function() {
+	    infowindow.close();
+	};
+	}
+}
