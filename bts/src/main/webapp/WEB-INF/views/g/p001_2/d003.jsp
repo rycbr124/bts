@@ -122,12 +122,7 @@ border-bottom:1px solid rbg(127,127,127);
 <body>
 <!-- Page Content -->
   <div class="container">
-<<<<<<< HEAD
-${sessionScope.memberInfo.member_id}<br>
-${contentid}
-=======
 
->>>>>>> refs/remotes/origin/master
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
       <div class="col-lg-7">

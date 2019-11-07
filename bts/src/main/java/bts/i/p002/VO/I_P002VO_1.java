@@ -4,7 +4,7 @@ import java.util.Date;
 
 import org.springframework.stereotype.Component;
 
-@Component("i_p002vo_1")
+@Component("i_p002VO_1")
 public class I_P002VO_1 {
 	private String paln_no;
 	private String member_id;
