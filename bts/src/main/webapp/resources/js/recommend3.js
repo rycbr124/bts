@@ -76,13 +76,6 @@ function image_init(idNumber) {
 			var heart = document.createTextNode('♥');
 			label_heart.appendChild(heart);
 			
-			var button = document.createElement('button');
-			$(button).prop('type', 'button');
-			$(button).prop('type', 'button');
-			$(button).attr('onclick','wish_list()');
-			$(button).attr('id', 'wish');
-			$(button).text('위시리스트');
-			
 			var hidden = document.createElement('input');
 			$(hidden).prop('type', 'hidden');
 			$(hidden).prop('name', 'contentid');
@@ -102,7 +95,6 @@ function image_init(idNumber) {
 			$('.col-lg-5').append(form);
 			$(form).append(input_heart);
 			$(form).append(label_heart);
-			$(form).append(button);
 			$(form).append(hidden);
 			$('.content').append(overview);
 			

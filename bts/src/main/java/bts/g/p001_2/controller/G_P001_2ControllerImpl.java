@@ -9,15 +9,16 @@ import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import bts.b.p001.VO.B_P001VO;
 import bts.g.p001_2.service.G_P001_2Service;
+import bts.g.p001_2.vo.G_P001_2VO;
 
 
 @Controller("g_p001_2")
@@ -28,6 +29,9 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
 	
 	@Autowired
 	B_P001VO b_p001VO;
+	
+	@Autowired
+	G_P001_2VO g_p001_2VO;
 
 	@Override
 	@RequestMapping(value="/recommend_place" ,method={RequestMethod.POST,RequestMethod.GET})
@@ -68,17 +72,40 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
 	}
 
 	@Override
-	@RequestMapping(value="/insert_wishlist" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ResponseEntity wishList(@RequestParam("contentid") String contentid, HttpServletRequest request, HttpServletResponse response)
+	@RequestMapping(value="/insert_wishlist" ,method={RequestMethod.POST,RequestMethod.GET}, produces = "text/html; charset=utf8")
+	public @ResponseBody String wishList(@RequestParam("contentid") String contentid, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		System.out.println("111111111112222222222222 Id값 : " + contentid);
-		HttpSession session = request.getSession();
 		
+		
+		String message = null;
+		HttpSession session = request.getSession();
 		b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
 		String member_id = b_p001VO.getMember_id();
-		System.out.println("33333333333344444444444 Id값 : " + member_id);
+
+		g_p001_2VO.setMember_id(member_id);
+		g_p001_2VO.setContent_id(contentid);
 		
-		return null;
+		boolean command = g_p001_2Service.findWishlist(g_p001_2VO);
+		
+		if(command == true) {
+			//message = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";	
+			message += "<script>";
+			message += "alert('이미 존재하는 명소입니다.');";
+			message += "location.href='" + request.getContextPath() + "/recommend/place_detail?contentid=" + contentid + "';";
+			message += "</script>";
+			
+			return message;
+		}else {
+			g_p001_2Service.insertWishlist(g_p001_2VO);
+			//message = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";	
+			message += "<script>";
+			message += "alert('위시리스트에 추가하였습니다.');";
+			message += "location.href='" + request.getContextPath() + "/recommend/place_detail?contentid=" + contentid + "';";
+			message += "</script>";
+			
+			return message;
+			
+		}
 	}
 	
 	

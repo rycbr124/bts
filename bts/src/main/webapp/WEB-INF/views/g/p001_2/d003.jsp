@@ -123,8 +123,6 @@ border-bottom:1px solid rbg(127,127,127);
 <body>
 <!-- Page Content -->
   <div class="container">
-	${sessionScope.memberInfo.member_id}<br>
-	${contentid}
 
     <!-- Heading Row -->
     <div class="row align-items-center my-5">

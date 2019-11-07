@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import bts.g.p001_2.dao.G_P001_2DAO;
+import bts.g.p001_2.vo.G_P001_2VO;
 
 @Service("g_p001_2Service")
 public class G_P001_2ServiceImpl implements G_P001_2Service{
@@ -36,12 +37,17 @@ public class G_P001_2ServiceImpl implements G_P001_2Service{
 		
 		return result;
 	}
+	
+	@Override
+	public boolean findWishlist(G_P001_2VO g_p001_2VO) throws Exception {
+		
+		return g_p001_2DAO.findWishlist(g_p001_2VO);
+	}
 
 	@Override
-	public Map<String, List<String>> insertWishlist() throws Exception {
-		Map<String, String> list = new HashMap<>();
-		
-		return null;
+	public void insertWishlist(G_P001_2VO g_p001_2VO) throws Exception {
+		g_p001_2DAO.insertWishlist(g_p001_2VO);
+			
 	}
 
 	
