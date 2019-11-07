@@ -39,6 +39,8 @@ import com.google.gson.JsonParser;
 import bts.b.p001.Naver.NaverLoginBO;
 import bts.b.p001.Service.B_P001Service;
 import bts.b.p001.VO.B_P001VO;
+import bts.b.p001.VO.KakaoVO;
+import bts.b.p001.VO.NaverVO;
 
 @Controller("b_p001")
 @RequestMapping(value = "/signup")
@@ -112,17 +114,19 @@ public class B_P001ControllerImpl implements B_P001Controller {
 
 		return access_Token;
 	}
-
-	public HashMap<String, Object> getUserInfo(String access_Token) {
+	
+	public HashMap<String, String> getUserInfo(String access_Token) throws Exception{
 
 		// 요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
-		HashMap<String, Object> userInfo = new HashMap<>();
+		HashMap<String, String> userInfo = new HashMap<>();
+		KakaoVO kakaoInfo = new KakaoVO();
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
 		try {
 			URL url = new URL(reqURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestProperty("charset","utf-8");
 			conn.setRequestMethod("POST");
-
+			
 			// 요청에 필요한 Header에 포함될 내용
 			conn.setRequestProperty("Authorization", "Bearer " + access_Token);
 
@@ -141,21 +145,37 @@ public class B_P001ControllerImpl implements B_P001Controller {
 
 			JsonParser parser = new JsonParser();
 			JsonElement element = parser.parse(result);
+			
 
 			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
 			JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-
+			
+			String id = element.getAsJsonObject().get("id").getAsString();
 			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
 			String email = kakao_account.getAsJsonObject().get("email").getAsString();
-
-			userInfo.put("nickname", nickname);
+			String profile_image = properties.getAsJsonObject().get("profile_image").getAsString();
+			String member_type = "kakao";
+			
+			userInfo.put("member_id", id);
+			userInfo.put("nick_name", nickname);
 			userInfo.put("email", email);
-
+			userInfo.put("profile_image", profile_image);
+		
+			System.out.println("user Info : " + userInfo);
+			
+			if(d001Service.overlapped(id).equals("false")) {
+				System.out.println("13131313131313131313131313131");
+				kakaoInfo.setMember_Id(id);
+				kakaoInfo.setNick_name(nickname);
+				kakaoInfo.setProfile_image(profile_image);
+				kakaoInfo.setEmail(email);
+				kakaoInfo.setMember_type(member_type);
+				d001Service.kakaoInsert(kakaoInfo);
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 		return userInfo;
 	}
 
@@ -179,7 +199,6 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		System.out.println("sql : " + member);
 		try {
-
 			d001Service.addMember(member);
 			message = "<script>";
 			message += " alert('회원 가입을 마쳤습니다.메인페이지로 이동합니다.');";
@@ -223,17 +242,17 @@ public class B_P001ControllerImpl implements B_P001Controller {
 	}
 
 	@RequestMapping(value = "/kakaoLogin")
-	public String login(@RequestParam("code") String code, HttpSession session) {
+	public String login(@RequestParam("code") String code, HttpSession session) throws Exception{
 		String access_Token = getAccessToken(code);
-		HashMap<String, Object> userInfo = getUserInfo(access_Token);
+		HashMap<String, String> userInfo = getUserInfo(access_Token);
 		System.out.println("login Controller : " + userInfo);
-
 		// 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
 		if (userInfo.get("email") != null) {
+			//d001Service.kakaoInsert(userInfo);
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("memberInfo", userInfo);
-			session.setAttribute("userId", userInfo.get("email"));
-			session.setAttribute("access_Token", access_Token);
+			session.setAttribute("userId", userInfo.get("id"));
+			session.setAttribute("access_Token", access_Token);	
 		}
 		return "/z/p000/d001";
 	}
@@ -288,12 +307,41 @@ public class B_P001ControllerImpl implements B_P001Controller {
 
 	// 네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView callback(@RequestParam String code, @RequestParam String state, HttpSession session) throws IOException {
+	public ModelAndView callback(@RequestParam String code, @RequestParam String state, HttpSession session) throws Exception {
 		OAuth2AccessToken oauthToken = naverLoginBO.getAccessToken(session, code, state);
 		String apiResult = naverLoginBO.getUserProfile(oauthToken);
 		System.out.println("apiResult"+ apiResult);
 		ModelAndView mav = new ModelAndView();
+		NaverVO naverInfo = new NaverVO();
 		mav.setViewName("/z/p000/d001");
+		JsonParser parser = new JsonParser();
+		JsonElement element = parser.parse(apiResult);
+		JsonObject naver_account = element.getAsJsonObject().get("response").getAsJsonObject();
+		
+		String id = naver_account.getAsJsonObject().get("id").getAsString();
+		String nickname = naver_account.getAsJsonObject().get("nickname").getAsString();
+		String gender = naver_account.getAsJsonObject().get("gender").getAsString();
+		String email = naver_account.getAsJsonObject().get("email").getAsString();
+		String name = naver_account.getAsJsonObject().get("name").getAsString();
+		String birthday = naver_account.getAsJsonObject().get("birthday").getAsString();
+		String member_type = "naver";
+		
+		if(d001Service.overlapped(id).equals("false")) {
+			try {
+				naverInfo.setMember_id(id);
+				naverInfo.setNick_name(nickname);
+				naverInfo.setGender(gender);
+				naverInfo.setEmail(email);
+				naverInfo.setName(name);
+				naverInfo.setBirth(birthday);
+				naverInfo.setMember_type(member_type);
+				d001Service.naverInsert(naverInfo);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		mav.addObject("isLogOn", true);
+		mav.addObject("memberInfo");
 		session.setAttribute("isLogON", true);
 		session.setAttribute("memberInfo", apiResult);
 		return mav;

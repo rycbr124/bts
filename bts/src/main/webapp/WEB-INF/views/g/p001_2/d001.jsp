@@ -29,8 +29,17 @@
     font-family: "NanumSquareRoundEB";
 }
 
+@font-face {
+    src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    font-family: "NanumSquareRoundR";
+}
+
 h5{
 	font-family: "NanumSquareRoundEB";
+}
+
+p{
+	font-family: "NanumSquareRoundR";	
 }
 </style>
 
@@ -42,6 +51,7 @@ $(document).ready(function (){
 	var catArray = ${result};
 
 	optionInit(catArray);
+	result_init();
 	
 	$("#contenttypeid").change(function(){
 		$("#cat3").empty();
@@ -75,6 +85,7 @@ $(document).ready(function (){
 		}
 	};
 	
+	
 });
 
 
@@ -83,6 +94,8 @@ $(document).ready(function (){
 <body>
 	<div class="container">	
 		<h1 class="title">지역별 추천</h1>
+		<p>서울 내 명소들을 지역별로 추천</p>
+		<hr>
 		<strong>지역선택 : </strong>
 		<select class="form-control" id="sigungucode" style="display:inline-block;">
 			<option value="" <c:if test="${sigungucode==''}"> selected </c:if>>지역선택</option>

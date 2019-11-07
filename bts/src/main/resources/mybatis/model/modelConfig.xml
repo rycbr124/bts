@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE configuration 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
-	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!DOCTYPE configuration    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-	<typeAliases>
-		<typeAlias type="bts.b.p001.VO.B_P001VO" alias="d001VO" />
-		<typeAlias type="bts.g.p001_2.vo.G_P001_2VO"  alias="g_p001_2VO" />
-		<typeAlias type="bts.i.p002.VO.I_P002VO_1" alias="i_p002VO_1" />
-		<typeAlias type="bts.i.p002.VO.I_P002VO_2" alias="i_p002VO_2" />
-	</typeAliases>
+   <typeAliases>
+      <typeAlias type="bts.b.p001.VO.B_P001VO" alias="d001VO" />
+      <typeAlias type="bts.g.p001_2.vo.G_P001_2VO"  alias="g_p001_2VO" />
+      <typeAlias type="bts.b.p001.VO.KakaoVO" alias="kakaoVO" />
+      <typeAlias type="bts.b.p001.VO.NaverVO" alias="naverVO" />
+      <typeAlias type="bts.i.p002.VO.I_P002VO_1" alias="i_p002VO_1" />
+	  <typeAlias type="bts.i.p002.VO.I_P002VO_2" alias="i_p002VO_2" />
+   </typeAliases>
 </configuration>

@@ -38,5 +38,23 @@
 			WHERE upper_category_cd IS NOT NULL			 
 		]]>	
 	</select>
+	
+	<!-- 위시리스트 조회 -->
+	<select id="findWishlist" resultType="String" parameterType="g_p001_2VO">
+		<![CDATA[
+			SELECT DECODE(COUNT(*), 0, 'false', 'true')
+			FROM recommend_wish_list
+			WHERE content_id = #{content_id}
+			AND member_id = #{member_id}
+		]]>
+	</select>
+	
+	<!-- 위시리스트 추가 -->
+	<insert id="insertWishlist" parameterType="g_p001_2VO">
+		<![CDATA[
+			INSERT INTO recommend_wish_list(content_id, member_id)
+			VALUES (#{content_id}, #{member_id})
+		]]>
+	</insert>
 
 </mapper>
