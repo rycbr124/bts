@@ -43,7 +43,7 @@ import bts.b.p001.VO.KakaoVO;
 import bts.b.p001.VO.NaverVO;
 
 @Controller("b_p001")
-@RequestMapping(value = "/signup")
+@RequestMapping(value = "/signup" )
 public class B_P001ControllerImpl implements B_P001Controller {
 	@Autowired
 	B_P001Service d001Service;
@@ -125,6 +125,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 			URL url = new URL(reqURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestProperty("charset","utf-8");
+			
 			conn.setRequestMethod("POST");
 			
 			// 요청에 필요한 Header에 포함될 내용
@@ -164,7 +165,6 @@ public class B_P001ControllerImpl implements B_P001Controller {
 			System.out.println("user Info : " + userInfo);
 			
 			if(d001Service.overlapped(id).equals("false")) {
-				System.out.println("13131313131313131313131313131");
 				kakaoInfo.setMember_Id(id);
 				kakaoInfo.setNick_name(nickname);
 				kakaoInfo.setProfile_image(profile_image);

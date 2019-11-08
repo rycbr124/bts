@@ -65,4 +65,18 @@
 	values(#{member_id,jdbcType=VARCHAR},#{nick_name,jdbcType=VARCHAR},#{gender,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{birth,jdbcType=VARCHAR}
 	,#{member_type, jdbcType=VARCHAR})]]>
 	</select>
+	
+	<!-- 아이디 찾기 쿼리 -->
+	<select id="find_id" parameterType="String" resultType="String">
+	select member_id from b_member where email = #{email, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 비밀번호 찾기 쿼리 -->
+	<select id="find_pw" parameterType="member">
+	<![CDATA[
+	update b_member set password = #{password, jdbcType=VARCHAR}
+	where member_id = #{member_id, jdbcType=VARCHAR}
+	]]>
+	</select>
+	
 </mapper>
