@@ -76,7 +76,6 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
    public @ResponseBody String wishList(@RequestParam("contentid") String contentid, HttpServletRequest request, HttpServletResponse response)
          throws Exception {
       
-      
       String message = null;
       HttpSession session = request.getSession();
       b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
@@ -88,17 +87,15 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
       boolean command = g_p001_2Service.findWishlist(g_p001_2VO);
       
       if(command == true) {
-         //message = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";   
-         message += "<script>";
+         message = "<script>";
          message += "alert('이미 존재하는 명소입니다.');";
          message += "location.href='" + request.getContextPath() + "/recommend/place_detail?contentid=" + contentid + "';";
          message += "</script>";
-         
+          
          return message;
       }else {
          g_p001_2Service.insertWishlist(g_p001_2VO);
-         //message = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";   
-         message += "<script>";
+         message = "<script>";
          message += "alert('위시리스트에 추가하였습니다.');";
          message += "location.href='" + request.getContextPath() + "/recommend/place_detail?contentid=" + contentid + "';";
          message += "</script>";
@@ -107,7 +104,4 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
          
       }
    }
-   
-   
-
 }

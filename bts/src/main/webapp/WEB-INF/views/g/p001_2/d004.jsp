@@ -86,11 +86,15 @@ img.card-img{
 display:inline-block;
 width:500px;
 rigth:0;
+margin-left : 100px;
 }
 #content_list #ul_list #li_image{
 	display:inline-block;
 	width:450px;
 	margin:0;
+}
+.content{
+	margin-left : 80px;
 }
 </style>
 </head>

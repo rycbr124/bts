@@ -114,8 +114,6 @@ border-bottom:1px solid rbg(127,127,127);
   align-self: center; 
 }
 
-
-
 </style>
 
 </head>
@@ -139,6 +137,7 @@ border-bottom:1px solid rbg(127,127,127);
 
 
     <!-- Call to Action Well -->
+    <hr>
     <div class="card-body" style="background-color:white; padding:0; margin-right:50%; transform:translate(20%);">
      	<div id="map" style="width:900px;height:300px; position:relative;">
     </div>
