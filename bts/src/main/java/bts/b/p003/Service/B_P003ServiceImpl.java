@@ -29,7 +29,7 @@ public class B_P003ServiceImpl implements B_P003Service{
 			return null;
 		}else {
 			out.print("<script>");
-			out.print("alert('ID는 "+id+" 입니다.');");
+			out.print("alert('BTS : ID는 "+id+" 입니다.');");
 			out.print("history.go(-1);");
 			out.print("</script>");
 			out.close();

@@ -93,7 +93,7 @@
 	</select>
 	
 	<!-- 비밀번호 찾기 쿼리 -->
-	<select id="find_pw" parameterType="member">
+	<select id="find_pw" parameterType="String">
 	<![CDATA[
 	update b_member set password = #{password, jdbcType=VARCHAR}
 	where member_id = #{member_id, jdbcType=VARCHAR}
