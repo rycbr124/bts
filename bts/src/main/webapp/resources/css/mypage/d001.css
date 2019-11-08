@@ -132,5 +132,11 @@ footer {
     color: #FFFFFF;
 }
 
+#profImg{
+	border-radius:25em;
+	width:170px;
+	height:170px;
+	padding:15px;
+}
 
 

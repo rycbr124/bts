@@ -16,11 +16,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import bts.b.p001.VO.B_P001VO;
 import bts.c.p001.service.C_P001Service;
+
 
 
 
@@ -62,27 +65,7 @@ public class C_P001ControllerImpl implements C_P001Controller{
 		return resEnt;
 	}
 
-//	@Controller
-//	public class FileUploadController {
-//		@Autowired
-//		FileUploadService fileUploadService;
-//		
-//		@RequestMapping("/form")
-//		public Stringform() {
-//			return "form";
-//		}
-//		
-//		@RequestMapping("/upload")
-//		public String upload(
-//				Model model,
-//				@RequestParam("email")String email,
-//				@RequestParam("file1")MultipartFile file) {
-//			
-//			String url = fileUploadService.restore(file);
-//			model.addAttribute("url", url);
-//			return "result";
-//		}
-//	}
+	
 	//이미지 저장 경로
 //	private Map<String, String> upload(HttpServletRequest request, HttpServletResponse response) {
 //		
