@@ -131,6 +131,7 @@ h3.title {
 			</ul>
 			<div class="member_menu">
 				<c:choose>
+				
 					<c:when test="${isLogOn== true and not empty memberInfo }">
 						<a href="${contextPath }/my/profile" class="mypage"><span>마이페이지</span></a>
 						<a href="${contextPath }/signup/logout" class="logout"><span>로그아웃</span></a>
@@ -158,8 +159,8 @@ h3.title {
 				</label> <label class="password"> <span>Password</span> <input id="password" name="password" type="password" placeholder="Password">
 				</label> <input type="submit" value="LOGIN" class="submit button" type="button" id="button">
 				<p>
-					<a class="forgotpw" href="#" style="color:white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp;
-					<a class="forgotid" href="#" style="color:white">아이디 찾기</a>
+					<a class="forgotpw" href="${contextPath }/find/findPwMain" style="color:white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp;
+					<a class="forgotid" href="${contextPath }/find/findIdMain" style="color:white">아이디 찾기</a>
 				</p>
 				<div id="kakao_id_login" style="text-align: center">
 					<a href="https://kauth.kakao.com/oauth/authorize?client_id=6a0602e55acf9e0f00406d7fb1f93b3d&redirect_uri=http://localhost:8088/bts/signup/kakaoLogin&response_type=code"> 

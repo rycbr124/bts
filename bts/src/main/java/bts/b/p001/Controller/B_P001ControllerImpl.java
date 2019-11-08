@@ -43,7 +43,7 @@ import bts.b.p001.VO.KakaoVO;
 import bts.b.p001.VO.NaverVO;
 
 @Controller("b_p001")
-@RequestMapping(value = "/signup")
+@RequestMapping(value = "/signup" )
 public class B_P001ControllerImpl implements B_P001Controller {
 	@Autowired
 	B_P001Service d001Service;
@@ -115,16 +115,17 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		return access_Token;
 	}
 	
-	public HashMap<String, String> getUserInfo(String access_Token) throws Exception{
+	public HashMap<String, Object> getUserInfo(String access_Token) throws Exception{
 
 		// 요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
-		HashMap<String, String> userInfo = new HashMap<>();
+		HashMap<String, Object> userInfo = new HashMap<>();
 		KakaoVO kakaoInfo = new KakaoVO();
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
 		try {
 			URL url = new URL(reqURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestProperty("charset","utf-8");
+			
 			conn.setRequestMethod("POST");
 			
 			// 요청에 필요한 Header에 포함될 내용
@@ -164,7 +165,6 @@ public class B_P001ControllerImpl implements B_P001Controller {
 			System.out.println("user Info : " + userInfo);
 			
 			if(d001Service.overlapped(id).equals("false")) {
-				System.out.println("13131313131313131313131313131");
 				kakaoInfo.setMember_Id(id);
 				kakaoInfo.setNick_name(nickname);
 				kakaoInfo.setProfile_image(profile_image);
@@ -244,7 +244,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 	@RequestMapping(value = "/kakaoLogin")
 	public String login(@RequestParam("code") String code, HttpSession session) throws Exception{
 		String access_Token = getAccessToken(code);
-		HashMap<String, String> userInfo = getUserInfo(access_Token);
+		HashMap<String, Object> userInfo = getUserInfo(access_Token);
 		System.out.println("login Controller : " + userInfo);
 		// 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
 		if (userInfo.get("email") != null) {
@@ -252,6 +252,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("memberInfo", userInfo);
 			session.setAttribute("userId", userInfo.get("id"));
+			session.setAttribute("profile_image", userInfo.get("profile_image"));
 			session.setAttribute("access_Token", access_Token);	
 		}
 		return "/z/p000/d001";
