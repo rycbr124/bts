@@ -42,6 +42,7 @@ $(document).ready(function (){
 	var catArray = ${result};
 
 	optionInit(catArray);
+	result_init();
 	
 	$("#contenttypeid").change(function(){
 		$("#cat3").empty();
@@ -74,6 +75,7 @@ $(document).ready(function (){
 			$("#contenttypeid").append(option);
 		}
 	};
+	
 	
 });
 

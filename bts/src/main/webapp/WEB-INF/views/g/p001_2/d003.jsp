@@ -16,8 +16,21 @@
 	$(document).ready(function(){
 		var id = ${contentid};
 		image_init(id);
-		//image_list(id);
 	});
+	
+	function wish_list(){
+		
+		var contentid = ${contentid};
+		
+		console.log(contentid);
+		
+		console.log("성공 !");
+		var frmWish = document.wish;
+		
+		frmWish.action = "/bts/recommend/insert_wishlist";
+		frmWish.contentid.value = contentid;
+		frmWish.submit();
+	};
 </script>
 
 <!-- 부트스트랩 -->
@@ -110,8 +123,6 @@ border-bottom:1px solid rbg(127,127,127);
 <body>
 <!-- Page Content -->
   <div class="container">
-	${sessionScope.memberInfo.member_id}<br>
-	${contentid}
 
     <!-- Heading Row -->
     <div class="row align-items-center my-5">

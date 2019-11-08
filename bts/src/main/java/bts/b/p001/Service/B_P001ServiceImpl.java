@@ -1,6 +1,7 @@
 package bts.b.p001.Service;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -12,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import bts.b.p001.DAO.B_P001DAO;
 import bts.b.p001.VO.B_P001VO;
+import bts.b.p001.VO.KakaoVO;
+import bts.b.p001.VO.NaverVO;
 
 @Service("b_p001Service")
 @Transactional(propagation = Propagation.REQUIRED)
@@ -35,5 +38,19 @@ public class B_P001ServiceImpl implements B_P001Service {
 	public B_P001VO login(Map loginMap) throws Exception {		
 		return d001DAO.login(loginMap);
 	}
+
+	@Override
+	public void kakaoInsert(KakaoVO kakaoVO) throws Exception {
+
+		d001DAO.kakaoNewMember(kakaoVO);
+		
+	}
+
+	@Override
+	public void naverInsert(NaverVO naverVO) throws Exception {
+		d001DAO.naverNewMember(naverVO);
+		
+	}
+
 
 }

@@ -31,6 +31,11 @@ img {
 	margin-left:50px;
 }
 
+#profImg{
+	max-width:400px;
+	max-height:400px;
+}
+
 /* 사진 변경 모델*/
 #modal-set-profile-img {
 }

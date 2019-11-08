@@ -29,6 +29,7 @@ $(document).ready(function (){
 	var catArray = ${course};
 
 	optionInit(catArray);
+	result_init();
 
 	function optionInit(catArray){
 		for(var i in catArray.course){

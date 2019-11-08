@@ -18,7 +18,8 @@
 		<result property="nick_name" column="nick_name" />
 
 		<result property="email" column="email" />
-
+		
+		<result property="profile_image" column="profile_image" />
 	</resultMap>
 	<!-- 회원가입 ID 중복검사 -->
 	<select id="selectOverlappedID" parameterType="String"
@@ -37,9 +38,10 @@
 	, #{tel_no,jdbcType=VARCHAR}, #{nick_name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR})
 	]]>
 	</insert>
-		
+
 	<!-- 로그인 쿼리문 -->
-	<select id="login" resultType="d001VO" parameterType="java.util.Map"  >
+	<select id="login" resultType="d001VO"
+		parameterType="java.util.Map">
 	    <![CDATA[
 			select*from b_member 
 			 where member_id=#{member_id,jdbcType=VARCHAR}
@@ -76,4 +78,21 @@
 		 ]]>
 	</delete>
 		
+	<!-- 카카오 로그인 회원 db 저장 쿼리 -->
+	<select id="kakaoInsert" parameterType="kakaoVO">
+	<![CDATA[
+	insert into b_member(member_id,nick_name,profile_image,email,member_type)
+	values(#{member_id ,jdbcType=VARCHAR},#{nick_name,jdbcType=VARCHAR} ,#{profile_image,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR}
+	,#{member_type ,jdbcType=VARCHAR})
+	]]>
+	</select>
+	
+	<!-- 네이버 로그인 회원 db 저장 쿼리 -->
+	<select id="naverInsert" parameterType="naverVO">
+	<![CDATA[
+	insert into b_member(member_id, nick_name, gender, email, name, birth, member_type)
+	values(#{member_id,jdbcType=VARCHAR},#{nick_name,jdbcType=VARCHAR},#{gender,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{birth,jdbcType=VARCHAR}
+	,#{member_type, jdbcType=VARCHAR})]]>
+	</select>
+
 </mapper>
