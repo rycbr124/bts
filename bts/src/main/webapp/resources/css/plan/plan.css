@@ -10,7 +10,7 @@ body{
    margin-top:0px;
    margin-left:0px;
    background:#fff;
-   width:760px;
+   width:720px;
    height:100vh;
    border:1px solid lightgray;
    display:inline-block;
@@ -208,6 +208,53 @@ p .delete_tag{
    overflow-y:auto;
    max-height:893px;
 }
+.plan_list_container ul .add_list{
+	position:relative;
+	list-style:none;
+	width:100%;
+	height:70px;
+	border-bottom:1px solid lightgray;
+}
+.add_list .image_container{
+	position:absolute;
+	width:70px;
+	height:70px;
+	margin:auto 0;
+}
+.add_list .image_container .add_image{
+	position:absolute;
+	width:70px;
+	height:70px;
+}
+.add_list .add_title{
+	position:absolute;
+	font-size:12px;
+	display:inline-block;
+	left:70px;
+	top:0;
+	margin:0;
+}
+.add_list .add_address{
+	position:absolute;
+	font-size:12px;
+	left:70px;
+	top:20px;
+	
+}
+.add_list .trashcan{
+	position:absolute;
+	width:15px;
+	height:15px;
+	right:3px;
+	bottom:3px;
+}
+.add_list .trashcan .trashcan_img{
+	position:absolute;
+	width:15px;
+	height:15px;
+	right:3px;
+	bottom:3px;
+}
 .plan_list li{
    border:0.5px solid navy;
    width:auto;
@@ -223,7 +270,7 @@ p .delete_tag{
    border-left:0;
    border-top:0;
    height:100vh;
-   width:299px;
+   width:339px;
    right:0;
    top:0;
    border-left:0;
@@ -254,8 +301,10 @@ p .delete_tag{
 }
 .tourist_tab .select_place{
 	position:absolute;
-	margin-left:24.5px;
-	width:200px;
+	margin-left:34.5px;
+	width:230px;
+	margin-top:20px;
+	
 }
 .detail_list_container{
 	position:absolute;
@@ -264,7 +313,7 @@ p .delete_tag{
 	margin:0;
 	padding:0;
 	overflow-y:auto;
-	
+	display:block;
 }
 
 .detail_list_container .detail_information{
@@ -273,6 +322,8 @@ p .delete_tag{
 	height:60px;
 	border-bottom:1px solid lightgray;
 	padding:15px;
+	list-style:none;
+	
 }
 .detail_list_container .detail_information .first_image{
 	display:block;
@@ -290,7 +341,7 @@ p .delete_tag{
 	position:absolute;
 	display:block;
 	top:15px;
-	left:85px;
+	left:75px;
 	font-size:13px;	
 	margin:0;
 	
@@ -298,9 +349,9 @@ p .delete_tag{
 .detail_list_container .detail_information p{
 	position:absolute;
 	dosplay:inline-block;
-	width:200px;
-	bottom:20px;
-	left:85px;
+	width:230px;
+	bottom:30px;
+	left:75px;
 	margin:0 auto;
 	font-size:12px;
 }
@@ -309,6 +360,15 @@ p .delete_tag{
    display:inline-block;
    float:right;
    height:100vh;
-   width:1456px;
+   width:1476px;
 	border-left:0;
+}
+.add_button{
+	position:absolute;
+	right:5px;
+	bottom:5px;
+}
+.add_button .button_icon{
+	width:28px;
+	height:28px;
 }

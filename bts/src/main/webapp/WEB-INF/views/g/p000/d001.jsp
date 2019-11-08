@@ -9,119 +9,87 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-<!-- 부트스트랩 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <style>
-img{
-	width : 375px;
-	height : 279px;
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+    font-family: "NanumSquareRoundEB";
 }
 
-img.mini{
-	width : 95px;
-	height : 90px;
+@font-face {
+    src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    font-family: "NanumSquareRoundR";
 }
 
-h4{
-	color : black;
+
+#content{
+	width : 1200px;
+	height : 800px;
+	margin : 0 auto;
+	margin-top : 100px;
+	
+}
+.main_img{
+	width : 600px;
+	height : 350px;
+	display : inline-block;
+	float : left;
 }
 
-.btn btn-info btn-sm{
+.main_img2{
+	width : 600px;
+	height : 350px;
+	display : inline-block;
 	float : right;
+	
 }
+
+a{
+	display : inline-block;
+	text-align : center;
+	text-decoration : none;
+}
+
+h1{
+	font-family: "NanumSquareRoundEB";
+}
+
+p{
+	font-family: "NanumSquareRoundR";	
+}
+
+#recommend{
+	width : 1200px;
+	height : 350px;
+	border : 1px solid #bcbcbc;
+}
+
+#text{
+	display : inline-block;
+	width : 350px;
+	margin : 100px 100px 100px 100px;
+	text-align : center;
+}
+
 
 </style>
-
 </head>
 <body>
-	<div class="container">
-	    <div class="col-md-8">
-	        <div class="row">
-	            <div class="col-md-6 zero_mp">
-	                <div class="event_item">
-	                    <div class="event_img">
-	                        <img src="${contextPath}/resources/image/recommend/main_image_1.jpg" alt="">
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="col-md-6 zero_mp">
-	                <div class="event_item">
-	                    <div class="event_text text-center">
-	                        <a href="${contextPath}/recommend/recommend_place"><h4>지역별 추천</h4></a>
-	                        <h6>15-16 May in Dhaka</h6>
-	                        <p>Lorem ipsum dolor sit amet, consectetur adip scing elit. Lorem ipsum dolor sit amet,consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-	                        <a href="" class="event_btn">read more</a>
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	        <!--End of row-->
-	        <div class="row">
-	            <div class="col-md-6 zero_mp">
-	                <div class="event_item">
-	                    <div class="event_text text-center">
-	                        <a href="${contextPath}/recommend/recommend_course"><h4>코스별 추천</h4></a>
-	                        <h6>15-16 May in Dhaka</h6>
-	                        <p>Lorem ipsum dolor sit amet, consectetur adip scing elit. Lorem ipsum dolor sit amet,consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-	                        <a href="" class="event_btn">read more</a>
-	                    </div>
-	                </div>
-	            </div>
-	            <div class="col-md-6 zero_mp">
-	                <div class="event_item">
-	                    <div class="event_img">
-	                        <img src="${contextPath}/resources/image/recommend/main_image_1.jpg" alt="">
-	                    </div>
-	                </div>
-	            </div>
-	        </div>
-	        <!--End of row-->
-	    </div>
-	    
-	    <!--End of col-md-8-->
-	    <div class="col-md-4">
-	        <div class="event_news">
-	            <div class="event_single_item fix">
-	                <div class="event_news_img floatleft">
-	                    <img src="${contextPath}/resources/image/recommend/main_image_1.jpg" alt="" class="mini">
-	                </div>
-	                <div class="event_news_text">
-	                    <a href="#"><strong>Let’s plant 200 tree each...</strong></a>
-	                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, veniam.</p>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="event_news">
-	            <div class="event_single_item fix">
-	                <div class="event_news_img floatleft">
-	                    <img src="${contextPath}/resources/image/recommend/main_image_1.jpg" alt="" class="mini">
-	                </div>
-	                <div class="event_news_text">
-	                    <a href="#"><strong>Keep your house envirome..</strong></a>
-	                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, veniam.</p>
-	                </div>
-	            </div>
-	        </div>
-	        <div class="event_news">
-	            <div class="event_single_item fix">
-	                <div class="event_news_img floatleft">
-	                    <img src="${contextPath}/resources/image/recommend/main_image_1.jpg" alt="" class="mini">
-	                </div>
-	                <div class="event_news_text">
-	                    <a href="#"><strong>Urgent Clothe Needed Needed</strong></a>
-	                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid, veniam.</p>
-	                </div>
-	            </div>
-	        </div>
-
-
-	    <!--End of col-md-4-->
-    </div>
-    
-    </div>
+	<div id="content">
+		<div id="recommend">
+			<img class="main_img" src="${contextPath}/resources/image/recommend/main_image_2.jpg">
+			<div id="text">
+				<a href="${contextPath}/recommend/recommend_place"><h1>지역별 추천</h1></a>
+				<p>서울 내 명소들을 지역별로 추천</p>
+			</div>
+		</div>
+		
+		<div id="recommend">
+			<div id="text">
+				<a href="${contextPath}/recommend/recommend_course"><h1>코스별 추천</h1></a>
+				<p>서울 내 명소들을 코스별로 추천</p>			
+			</div>
+			<img class="main_img2" src="${contextPath}/resources/image/recommend/main_image_3.jpg">
+		</div>
+	</div>
 </body>
 </html>

@@ -91,7 +91,6 @@ border-bottom:1px solid rbg(127,127,127);
 	float : right;
 	display : inline-block;
 }
-
 [id='toggle-heart'] {
   position: absolute;
   left: -100vw;
@@ -123,7 +122,6 @@ border-bottom:1px solid rbg(127,127,127);
 <body>
 <!-- Page Content -->
   <div class="container">
-
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
       <div class="col-lg-7">

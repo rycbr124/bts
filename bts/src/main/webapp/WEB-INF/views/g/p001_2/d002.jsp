@@ -51,8 +51,17 @@ $(document).ready(function (){
     font-family: "NanumSquareRoundEB";
 }
 
+@font-face {
+    src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    font-family: "NanumSquareRoundR";
+}
+
 h5{
 	font-family: "NanumSquareRoundEB";
+}
+
+p{
+	font-family: "NanumSquareRoundR";	
 }
 </style>
 
@@ -60,6 +69,8 @@ h5{
 <body>
 	<div class="container">
 		<h1 class="title">코스별 추천</h1>
+		<p>서울 내 명소들을 코스별로 추천</p>
+		<hr>
 	
 		<strong>코스타입 : </strong>
 		<select class="form-control" id="cat3" style="display:inline-block;">
