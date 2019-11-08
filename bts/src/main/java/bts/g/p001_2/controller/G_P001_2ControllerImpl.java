@@ -24,90 +24,90 @@ import bts.g.p001_2.vo.G_P001_2VO;
 @Controller("g_p001_2")
 @RequestMapping(value="/recommend")
 public class G_P001_2ControllerImpl implements G_P001_2Controller{
-	@Autowired
-	G_P001_2Service g_p001_2Service;
-	
-	@Autowired
-	B_P001VO b_p001VO;
-	
-	@Autowired
-	G_P001_2VO g_p001_2VO;
+   @Autowired
+   G_P001_2Service g_p001_2Service;
+   
+   @Autowired
+   B_P001VO b_p001VO;
+   
+   @Autowired
+   G_P001_2VO g_p001_2VO;
 
-	@Override
-	@RequestMapping(value="/recommend_place" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView P001_D001(HttpServletRequest request, HttpServletResponse response) throws Exception {		
-		Map<String, List<String>> searchResult = g_p001_2Service.searchCategory();
-		JSONObject totaObject = new JSONObject(searchResult);
-		ModelAndView mav = new ModelAndView("/g/p001_2/d001");
-		mav.addObject("result", totaObject.toJSONString());
-		return mav;
-	}
+   @Override
+   @RequestMapping(value="/recommend_place" ,method={RequestMethod.POST,RequestMethod.GET})
+   public ModelAndView P001_D001(HttpServletRequest request, HttpServletResponse response) throws Exception {      
+      Map<String, List<String>> searchResult = g_p001_2Service.searchCategory();
+      JSONObject totaObject = new JSONObject(searchResult);
+      ModelAndView mav = new ModelAndView("/g/p001_2/d001");
+      mav.addObject("result", totaObject.toJSONString());
+      return mav;
+   }
 
-	@Override
-	@RequestMapping(value="/recommend_course" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView P001_D002(HttpServletRequest request, HttpServletResponse response) throws Exception {	
-		Map<String, List<String>> searchResult = g_p001_2Service.courseCategory();
-		JSONObject totaObject = new JSONObject(searchResult);
-		ModelAndView mav = new ModelAndView("/g/p001_2/d002");
-		mav.addObject("course", totaObject.toJSONString());	
-		return mav;
-	}
+   @Override
+   @RequestMapping(value="/recommend_course" ,method={RequestMethod.POST,RequestMethod.GET})
+   public ModelAndView P001_D002(HttpServletRequest request, HttpServletResponse response) throws Exception {   
+      Map<String, List<String>> searchResult = g_p001_2Service.courseCategory();
+      JSONObject totaObject = new JSONObject(searchResult);
+      ModelAndView mav = new ModelAndView("/g/p001_2/d002");
+      mav.addObject("course", totaObject.toJSONString());   
+      return mav;
+   }
 
-	@Override
-	@RequestMapping(value="/place_detail" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView P001_D003(@RequestParam("contentid") String contentid, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("place param 값 : " + contentid);
-		ModelAndView mav = new ModelAndView("/g/p001_2/d003");
-		mav.addObject("contentid", contentid);
-		return mav;
-	}
+   @Override
+   @RequestMapping(value="/place_detail" ,method={RequestMethod.POST,RequestMethod.GET})
+   public ModelAndView P001_D003(@RequestParam("contentid") String contentid, HttpServletRequest request, HttpServletResponse response) throws Exception {
+      System.out.println("place param 값 : " + contentid);
+      ModelAndView mav = new ModelAndView("/g/p001_2/d003");
+      mav.addObject("contentid", contentid);
+      return mav;
+   }
 
-	@Override
-	@RequestMapping(value="/course_detail" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView P001_D004(@RequestParam("contentid") String contentid, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		System.out.println("course param 값 : " + contentid);
-		ModelAndView mav = new ModelAndView("/g/p001_2/d004");
-		mav.addObject("contentid", contentid);
-		return mav;
-	}
+   @Override
+   @RequestMapping(value="/course_detail" ,method={RequestMethod.POST,RequestMethod.GET})
+   public ModelAndView P001_D004(@RequestParam("contentid") String contentid, HttpServletRequest request, HttpServletResponse response) throws Exception {
+      System.out.println("course param 값 : " + contentid);
+      ModelAndView mav = new ModelAndView("/g/p001_2/d004");
+      mav.addObject("contentid", contentid);
+      return mav;
+   }
 
-	@Override
-	@RequestMapping(value="/insert_wishlist" ,method={RequestMethod.POST,RequestMethod.GET}, produces = "text/html; charset=utf8")
-	public @ResponseBody String wishList(@RequestParam("contentid") String contentid, HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		
-		
-		String message = null;
-		HttpSession session = request.getSession();
-		b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
-		String member_id = b_p001VO.getMember_id();
+   @Override
+   @RequestMapping(value="/insert_wishlist" ,method={RequestMethod.POST,RequestMethod.GET}, produces = "text/html; charset=utf8")
+   public @ResponseBody String wishList(@RequestParam("contentid") String contentid, HttpServletRequest request, HttpServletResponse response)
+         throws Exception {
+      
+      
+      String message = null;
+      HttpSession session = request.getSession();
+      b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
+      String member_id = b_p001VO.getMember_id();
 
-		g_p001_2VO.setMember_id(member_id);
-		g_p001_2VO.setContent_id(contentid);
-		
-		boolean command = g_p001_2Service.findWishlist(g_p001_2VO);
-		
-		if(command == true) {
-			//message = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";	
-			message += "<script>";
-			message += "alert('이미 존재하는 명소입니다.');";
-			message += "location.href='" + request.getContextPath() + "/recommend/place_detail?contentid=" + contentid + "';";
-			message += "</script>";
-			
-			return message;
-		}else {
-			g_p001_2Service.insertWishlist(g_p001_2VO);
-			//message = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";	
-			message += "<script>";
-			message += "alert('위시리스트에 추가하였습니다.');";
-			message += "location.href='" + request.getContextPath() + "/recommend/place_detail?contentid=" + contentid + "';";
-			message += "</script>";
-			
-			return message;
-			
-		}
-	}
-	
-	
+      g_p001_2VO.setMember_id(member_id);
+      g_p001_2VO.setContent_id(contentid);
+      
+      boolean command = g_p001_2Service.findWishlist(g_p001_2VO);
+      
+      if(command == true) {
+         //message = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";   
+         message += "<script>";
+         message += "alert('이미 존재하는 명소입니다.');";
+         message += "location.href='" + request.getContextPath() + "/recommend/place_detail?contentid=" + contentid + "';";
+         message += "</script>";
+         
+         return message;
+      }else {
+         g_p001_2Service.insertWishlist(g_p001_2VO);
+         //message = "<meta http-equiv='Content-Type' content='text/html; charset=utf-8'>";   
+         message += "<script>";
+         message += "alert('위시리스트에 추가하였습니다.');";
+         message += "location.href='" + request.getContextPath() + "/recommend/place_detail?contentid=" + contentid + "';";
+         message += "</script>";
+         
+         return message;
+         
+      }
+   }
+   
+   
 
 }

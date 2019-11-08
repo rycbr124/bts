@@ -21,7 +21,7 @@
 		</div>
 		
 		<div class="wrapper-subheader headimage" id="privacy"
-			style="background-image: url(/bts/resources/image/myimage.jpg)"></div>
+			style="background-image: url(/bts/resources/image/mypage/myimage.jpg)"></div>
 			
 		<div id="side">
 			<tiles:insertAttribute name="side" />

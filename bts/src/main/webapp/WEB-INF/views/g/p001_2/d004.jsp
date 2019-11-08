@@ -42,7 +42,21 @@
 	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundB.ttf");
     font-family: "NanumSquareRoundB";
 }
-
+.container{
+	top:0;
+}
+.body_content{
+	position:relative;
+	margin:0 auto;
+	width:1300px;
+}
+.my-5{
+	position:relative;
+}
+col-lg-5{
+	position:absolute;
+	top:0;
+}
 h1{
 	font-family: "NanumSquareRoundEB";
 }
@@ -54,20 +68,36 @@ h3{
 p{
 	font-family: "NanumSquareRoundR";
 }
-
+#map{
+margin:0 auto;
+}
+.card-body{
+	margin:0 auto;
+}
 img.card-img{
 	width : 450px;
 	height : 250px;
-	display : inline-block;
 }
-
+#ul_list{
+	width:100%;
+	height:auto;
+}
+#content_list #ul_list #li_text{
+display:inline-block;
+width:500px;
+rigth:0;
+}
+#content_list #ul_list #li_image{
+	display:inline-block;
+	width:450px;
+	margin:0;
+}
 </style>
 </head>
 <body>
-<form name="content" method="post">
 
 <!-- Page Content -->
-  <div class="container">
+  <div class="body_content">
 
     <!-- Heading Row -->
     <div class="row align-items-center my-5">
@@ -86,7 +116,7 @@ img.card-img{
 	<hr>
     
     <!-- Call to Action Well -->
-      <div class="card-body" style="background-color:white; padding:0; margin-right:50%; transform:translate(20%);">
+      <div class="card-body" >
        	<div id="map" style="width:900px;height:300px; position:relative;">
       </div>
     <!-- Content Row -->
@@ -98,6 +128,6 @@ img.card-img{
   </div>
   <!-- /.container -->
 </div>
-</form>
+
 </body>
 </html>

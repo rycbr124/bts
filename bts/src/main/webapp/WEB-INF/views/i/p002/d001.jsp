@@ -10,8 +10,8 @@
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/plan/plan.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/js/recommend.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6b2f7da39af5c9b3e7839e09fedbc28a"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -74,14 +74,14 @@
    		<div class="tourist_header">서울</div>
    		<div class="tourist_tab" style="border:1px solid #fff; width:100%; height:150px;">
    			<div class="select_icon">
-   				<a href="javascript:searchContentType()" id="touristDestination"><img src="${contextPath}/resources/image/icon/map.png"/></a>
-   				<a href="javascript:searchContentType()" id="restaurant"><img src="${contextPath}/resources/image/icon/fork.png"/></a>
-   				<a href="javascript:searchContentType()" id="shopping"><img src="${contextPath}/resources/image/icon/shopping-bag.png"/></a>
-   				<a href="javascript:searchContentType()" id="hotel"><img src="${contextPath}/resources/image/icon/hotel.png"/></a>
-   				<a href="javascript:searchContentType()" id="museum"><img src="${contextPath}/resources/image/icon/canvas.png"/></a>
+   				<a href="javascript:searchContentType(12);" id="touristDestination"><img src="${contextPath}/resources/image/icon/map.png"/></a>
+   				<a href="javascript:searchContentType(39);" id="restaurant"><img src="${contextPath}/resources/image/icon/fork.png"/></a>
+   				<a href="javascript:searchContentType(38);" id="shopping"><img src="${contextPath}/resources/image/icon/shopping-bag.png"/></a>
+   				<a href="javascript:searchContentType(32)" id="hotel"><img src="${contextPath}/resources/image/icon/hotel.png"/></a>
+   				<a href="javascript:searchContentType(14);" id="museum"><img src="${contextPath}/resources/image/icon/canvas.png"/></a>
    				<a href="javascript:searchContentType()" id="wishList"><img src="${contextPath}/resources/image/icon/paperclip.png"/></a>
    			</div>
-   			<select class="select_place" id="sigungu" onchange="searchContentType()">
+   			<select class="select_place" id="sigungu">
    				<option value=''>지역선택</option>
    				<option value='1'>강남구</option>
    				<option value='15'>서초구</option>

@@ -29,8 +29,17 @@
     font-family: "NanumSquareRoundEB";
 }
 
+@font-face {
+    src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    font-family: "NanumSquareRoundR";
+}
+
 h5{
 	font-family: "NanumSquareRoundEB";
+}
+
+p{
+	font-family: "NanumSquareRoundR";	
 }
 </style>
 
@@ -83,8 +92,10 @@ $(document).ready(function (){
 </script>
 </head>
 <body>
-	<div class="container">
+	<div class="container">	
 		<h1 class="title">지역별 추천</h1>
+		<p>서울 내 명소들을 지역별로 추천</p>
+		<hr>
 		<strong>지역선택 : </strong>
 		<select class="form-control" id="sigungucode" style="display:inline-block;">
 			<option value="" <c:if test="${sigungucode==''}"> selected </c:if>>지역선택</option>
@@ -135,6 +146,8 @@ $(document).ready(function (){
 	</div>
 	
 	<div class="container">
+	
+
 	<div id="pagination">
 		<ul class="pagination justify-content-center">
 			<li class="page-item"><span class="page-link">Prev</span></li>
@@ -147,6 +160,10 @@ $(document).ready(function (){
 			
 		</ul>
 	</div>
+
+	
+	
+	
 	</div>
 </body>
 </html>

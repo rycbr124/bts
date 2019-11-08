@@ -131,6 +131,7 @@ h3.title {
 			</ul>
 			<div class="member_menu">
 				<c:choose>
+				
 					<c:when test="${isLogOn== true and not empty memberInfo }">
 						<a href="${contextPath }/my/profile" class="mypage"><span>마이페이지</span></a>
 						<a href="${contextPath }/signup/logout" class="logout"><span>로그아웃</span></a>
