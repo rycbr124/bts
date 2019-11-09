@@ -77,26 +77,18 @@ img{
 			<th>글번호</th>
 			<th>제목</th>
 			<th>작성자</th>
-			<th>조회수</th>
+			<th>작성일</th>
 		</tr>
+		
+		<c:forEach var="article" items="${listArticle}">
 		<tr>
-			<td>001</td>
-			<td>제목</td>
-			<td>주희</td>
-			<td>2</td>
+			<td>${article.article_no}</td>
+			<td>${article.title}</td>
+			<td>${article.member_id}</td>
+			<td>${article.register_date}</td>
 		</tr>
-		<tr>
-			<td>002</td>
-			<td>제목</td>
-			<td>주희</td>
-			<td>2</td>
-		</tr>
-		<tr>
-			<td>003</td>
-			<td>제목</td>
-			<td>주희</td>
-			<td>2</td>
-		</tr>
+		</c:forEach>
+
 	</table>
 
 
