@@ -1,9 +1,11 @@
 package bts.b.p001.Service;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -50,6 +52,25 @@ public class B_P001ServiceImpl implements B_P001Service {
 	public void naverInsert(NaverVO naverVO) throws Exception {
 		d001DAO.naverNewMember(naverVO);
 		
+	}
+
+	@Override
+	public B_P001VO overlappedEmail(Map emailMap) throws Exception {
+		return d001DAO.selectOverlappedEmail(emailMap);
+	}
+
+	@Override
+	public void check_id(String id, HttpServletResponse response) throws Exception {
+		PrintWriter out = response.getWriter();
+		out.println(d001DAO.check_id(id));
+		out.close();	
+	}
+
+	@Override
+	public void check_email(String email, HttpServletResponse response) throws Exception {
+		PrintWriter out = response.getWriter();
+		out.println(d001DAO.check_email(email));
+		out.close();	
 	}
 
 
