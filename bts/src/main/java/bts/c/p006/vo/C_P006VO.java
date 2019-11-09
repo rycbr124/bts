@@ -2,13 +2,15 @@ package bts.c.p006.vo;
 
 import java.sql.Date;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component("c_p006VO")
+@Scope("prototype")
 public class C_P006VO {
 	private int item_no;
-	private String receiver;
 	private String sender;
+	private String receiver;
 	private String contents;
 	private Date writing_date;
 	private String me_at;

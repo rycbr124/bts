@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="mapper.message">
+	<resultMap id="messagesResult" type="c_p006VO">
+		<result property="item_no" column="item_no" />
+		<result property="sender" column="sender" />
+		<result property="receiver" column="receiver" />
+		<result property="contents" column="contents" />
+		<result property="writing_date" column="writing_date" />
+		<result property="me_at" column="me_at" />		
+	</resultMap>
+	<resultMap id="membersResult" type="d001VO">
+		<result property="member_id" column="member_id" />
+		<result property="name" column="name" />
+		<result property="nick_name" column="nick_name" />
+		<result property="gender" column="gender" />
+		<result property="birth" column="birth" />
+		<result property="member_type" column="member_type" />
+		<result property="profile_image" column="profile_image" />
+	</resultMap>
+	
+	<select id="selectMemberList" parameterType="string" resultMap="membersResult">
+	    <![CDATA[
+			SELECT  member_id, name, nick_name, gender, birth, member_type, profile_image
+			FROM b_member b1,
+			(
+			    SELECT other_id,MAX(item_no) max_no
+			    FROM
+			    (
+			        SELECT sender other_id, item_no
+			        FROM chat_list
+			        WHERE receiver=#{id}
+			        UNION ALL
+			        SELECT receiver other_id, item_no
+			        FROM chat_list
+			        WHERE sender=#{id}
+			    )
+			    GROUP BY other_id
+			)  b2
+			WHERE b1.member_id=b2.other_id
+			ORDER BY max_no DESC
+	    ]]>
+	</select>
+
+	<select id="selectMessageList" parameterType="c_p006VO" resultMap="messagesResult">
+	    <![CDATA[
+			SELECT t.*
+			FROM
+			(
+			    SELECT item_no,sender,receiver,contents,writing_date,'true' me_at
+			    FROM chat_list
+			    WHERE sender=#{sender}
+			    AND receiver=#{receiver}
+			    UNION ALL
+			    SELECT item_no,sender,receiver,contents,writing_date,'false' me_at
+			    FROM chat_list
+			    WHERE sender=#{receiver}
+			    AND receiver=#{sender}
+			) t
+			ORDER BY item_no
+	    ]]>
+	</select>
+</mapper>

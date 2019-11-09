@@ -31,11 +31,11 @@
 					<c:choose>
 						<c:when test="${not empty sessionScope.memberInfo.profile_image }">
 						<img src="${sessionScope.memberInfo.profile_image }" id="profImg">
-						<div>${sessionScope.memberInfo.profile_image }</div>
+						
 						</c:when>
 						
 							<c:otherwise>
-								<img src="https://d2mgzmtdeipcjp.cloudfront.net/files/member/profile.png" class="user-picture">
+								<img src="https://d2mgzmtdeipcjp.cloudfront.net/files/member/profile.png" class="user-picture" id="profImg">
 							</c:otherwise>
 					</c:choose>
 							<input type="file" data-toggle="modal"
