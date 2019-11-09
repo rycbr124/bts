@@ -28,6 +28,15 @@
 		from b_member
 		where member_id = #{id}
 	</select>
+	
+	<!-- 아이디 중복 검사 -->
+	<select id = "check_id" parameterType="String" resultType="int">
+	select count(*) from b_member where member_id = #{member_id}
+	</select>
+	<!-- 이메일 중복 검사 -->
+	<select id = "check_email" parameterType="String" resultType="int">
+	select count(*) from b_member where email = #{email}
+	</select>
 
 	<!-- 회원가입 insert문 -->
 	<insert id="insertNewMember" parameterType="d001VO">
@@ -92,12 +101,12 @@
 	select member_id from b_member where email = #{email, jdbcType=VARCHAR}
 	</select>
 	
-	<!-- 비밀번호 찾기 쿼리 -->
-	<select id="find_pw" parameterType="String">
+	<!-- 비밀번호 변경 쿼리 -->
+	<update id="find_pw" parameterType="d001VO">
 	<![CDATA[
 	update b_member set password = #{password, jdbcType=VARCHAR}
 	where member_id = #{member_id, jdbcType=VARCHAR}
 	]]>
-	</select>
+	</update>
 	
 </mapper>
