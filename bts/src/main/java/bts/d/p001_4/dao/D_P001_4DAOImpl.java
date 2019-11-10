@@ -16,7 +16,11 @@ public class D_P001_4DAOImpl implements D_P001_4DAO{
 
 	@Override
 	public List<D_P001_4VO> searchArticle() throws DataAccessException {
-		
 		return sqlSession.selectList("d.p001_4.searchArticle");
+	}
+
+	@Override
+	public List<D_P001_4VO> contentsArticle(String article_no) throws DataAccessException {
+		return sqlSession.selectList("d.p001_4.contentsArticle", article_no);
 	}
 }

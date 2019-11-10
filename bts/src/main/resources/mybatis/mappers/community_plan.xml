@@ -11,7 +11,10 @@
 		<result property="title" column="title" />
 		<result property="contents" column="contents" />
 		<result property="member_id" column="member_id" />
-		<result property="article_cd" column="article_cd" />		
+		<result property="article_cd" column="article_cd" />
+		<result property="item_no" column="item_no" />
+		<result property="file_path" column="file_path" />
+		<result property="file_name" column="file_name" />		
 	</resultMap>
 
 	<!-- 게시글 조회 -->
@@ -19,6 +22,16 @@
 		<![CDATA[
 			SELECT article_no, register_date, title, member_id
 			FROM article		
+		]]>	
+	</select>
+	
+	<!-- 게시글 상세 조회 -->
+	<select id="contentsArticle" resultMap="articleResult" parameterType="String">
+		<![CDATA[
+			SELECT title, member_id, contents, register_date, file_path, file_name, i.article_no
+			FROM article a, image_article i		
+			WHERE a.article_no = #{article_no}
+			AND #{article_no} = i.article_no
 		]]>	
 	</select>
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import bts.d.p001_4.service.D_P001_4Service;
@@ -32,6 +33,22 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 		mav.addObject("listArticle", listArticle);
 		return mav;
 		
+	}
+
+	@Override
+	@RequestMapping(value="/plan_contents" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView contentsArticle(@RequestParam String article_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		List<D_P001_4VO> result = d_p001_4Service.contentsArticle(article_no);
+		ModelAndView mav = new ModelAndView("/d/p001_4/d002");
+		mav.addObject("result", result);
+		return mav;
+	}
+
+	@Override
+	@RequestMapping(value="/plan_write" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView writeArticle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/d/p001_4/d003");
+		return mav;
 	}
 
 }

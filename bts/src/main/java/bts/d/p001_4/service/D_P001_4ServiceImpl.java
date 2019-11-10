@@ -14,9 +14,13 @@ public class D_P001_4ServiceImpl implements D_P001_4Service{
 	D_P001_4DAO d_p001_4DAO;
 
 	@Override
-	public List<D_P001_4VO> searchArticle() throws Exception {
-		
+	public List<D_P001_4VO> searchArticle() throws Exception {	
 		return d_p001_4DAO.searchArticle();
+	}
+
+	@Override
+	public List<D_P001_4VO> contentsArticle(String article_no) throws Exception {
+		return d_p001_4DAO.contentsArticle(article_no);
 	}
 
 }

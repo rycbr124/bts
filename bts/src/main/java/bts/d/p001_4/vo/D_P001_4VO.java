@@ -10,6 +10,28 @@ public class D_P001_4VO {
 	private String contents;
 	private String member_id;
 	private String article_cd;
+	private String item_no;
+	private String file_path;
+	private String file_name;	
+	
+	public String getItem_no() {
+		return item_no;
+	}
+	public void setItem_no(String item_no) {
+		this.item_no = item_no;
+	}
+	public String getFile_path() {
+		return file_path;
+	}
+	public void setFile_path(String file_path) {
+		this.file_path = file_path;
+	}
+	public String getFile_name() {
+		return file_name;
+	}
+	public void setFile_name(String file_name) {
+		this.file_name = file_name;
+	}
 	public String getArticle_no() {
 		return article_no;
 	}

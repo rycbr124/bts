@@ -80,16 +80,18 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
       HttpSession session = request.getSession();
       b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
       String member_id = b_p001VO.getMember_id();
-
+      
       g_p001_2VO.setMember_id(member_id);
       g_p001_2VO.setContent_id(contentid);
+      
+      
       
       boolean command = g_p001_2Service.findWishlist(g_p001_2VO);
       
       if(command == true) {
          message = "<script>";
          message += "alert('이미 존재하는 명소입니다.');";
-         message += "location.href='" + request.getContextPath() + "/recommend/place_detail?contentid=" + contentid + "';";
+         message += "history.go(-1)";
          message += "</script>";
           
          return message;
@@ -97,7 +99,7 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
          g_p001_2Service.insertWishlist(g_p001_2VO);
          message = "<script>";
          message += "alert('위시리스트에 추가하였습니다.');";
-         message += "location.href='" + request.getContextPath() + "/recommend/place_detail?contentid=" + contentid + "';";
+         message += "history.go(-1)";
          message += "</script>";
          
          return message;

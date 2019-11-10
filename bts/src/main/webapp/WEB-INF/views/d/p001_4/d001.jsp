@@ -26,12 +26,19 @@
     font-family: "NanumSquareRoundR";
 }
 
+table{
+	text-align : center;
+	width:100%;
+}
+
 th{
 	font-family: "NanumSquareRoundEB";
+	
 }
 
 td{
-	font-family: "NanumSquareRoundR";	
+	font-family: "NanumSquareRoundR";
+		
 }
 
 h2{
@@ -41,14 +48,10 @@ p {
 	font-family: "NanumSquareRoundR";	
 }
 
-
-table{
-	text-align : center;
-}
-
 img{
 	width : 1110px;
 	height : 400px;
+	margin-bottom : 50px;
 }
 
 </style>
@@ -59,19 +62,20 @@ img{
 
 <div class="container">
 	<h2>커뮤니티</h2>
-  <p>BTS와 함께 나만의 여행을 공유하세요!</p>
+  <p>BTS와 함께 나만의 여행계획을 공유하세요!</p>
+  <img src="${contextPath}/resources/image/community/community_main.jpg">
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link active" href="#">계획</a>
+      <a class="nav-link active" href="${contextPath}/community/plan_list">계획</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">후기</a>
+      <a class="nav-link" href="${contextPath}/community/review_list">후기</a>
     </li>
     
   </ul>
 
 
-	<img src="${contextPath}/resources/image/community/community_main.jpg">
+	
 	<table class="table table-striped">
 		<tr>
 			<th>글번호</th>
@@ -83,13 +87,15 @@ img{
 		<c:forEach var="article" items="${listArticle}">
 		<tr>
 			<td>${article.article_no}</td>
-			<td>${article.title}</td>
+			<td><a href='${contextPath}/community/plan_contents?article_no=${article.article_no}'>${article.title}</a></td>
 			<td>${article.member_id}</td>
 			<td>${article.register_date}</td>
 		</tr>
 		</c:forEach>
 
 	</table>
+	<input type="button" value="글쓰기" class="btn btn-outline-secondary btn-sm" onClick="location.href='${contextPath}/community/plan_write'">
+
 
 
 </div>
