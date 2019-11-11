@@ -99,6 +99,7 @@ border-bottom:1px solid rbg(127,127,127);
 .content{
 	float : right;
 	display : inline-block;
+	float : right;
 }
 [id='toggle-heart'] {
   position: absolute;
@@ -153,9 +154,9 @@ border-bottom:1px solid rbg(127,127,127);
     <!-- Content Row -->
     <div>
     
-	    <div class="title">
+	    
 	    	<h1>소개</h1>
-	    </div>
+	    
 	    
 	    
 	    <div class="content">

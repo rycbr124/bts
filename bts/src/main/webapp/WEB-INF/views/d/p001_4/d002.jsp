@@ -29,32 +29,60 @@
 h1{
 	font-family : "NanumSquareRoundEB";
 	display : inline-block;
-	margin-left : 30px;
+	margin-left : 30px;	
 }
 
-p{
+h2{
+	font-family : "NanumSquareRoundEB";
+}
+
+*{
 	font-family: "NanumSquareRoundR";
 }
 
+
 img.thumb_nail{
-	width : 600px;
+	width : 1110px;
+	height : 400px;
+}
+
+div.title{
+	width : 1000px;
+	height : 200px;
+	margin-left : 55px;
+	background-color : white;
+	opacity : 0.5;
+	position : relative;
+	top : -200px;
+}
+
+img.content_image{
+	width : 500px;
 	height : 300px;
 }
 
 </style>
 </head>
 <body>
-<div class="container">
-<c:forEach var="article" items="${result}">
-<div>
-<img class="thumb_nail" src='${article.file_path }'>
-<h1>${article.title}</h1>
-</div>
-<p>${article.contents}</p>
-<p>${article.member_id}</p>
-<p>${article.register_date}</p>
-<p>${article.file_name}</p>
-</c:forEach>
-</div>
+	<div class="container">
+		<c:forEach var="article" items="${result}">
+			<img class="thumb_nail" src='${article.file_path }'>
+			<div class="title">
+				<h1>${article.title}</h1>
+				<strong>등록일. ${article.register_date}</strong>
+				<strong>작성자. ${article.member_id}</strong>
+			</div>
+		</c:forEach>
+		
+		<!-- javascript로 처리할 부분 -->
+		<div class="content" id="day1">
+			<h2>DAY1</h2>
+			<hr>
+			<div>
+				<img class="content_image" src="${contextPath}/resources/image/itaewon.jpg">
+			</div>
+		</div>
+	
+	</div>
 </body>
 </html>

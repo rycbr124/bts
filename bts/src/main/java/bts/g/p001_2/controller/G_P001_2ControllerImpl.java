@@ -75,35 +75,44 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
    @RequestMapping(value="/insert_wishlist" ,method={RequestMethod.POST,RequestMethod.GET}, produces = "text/html; charset=utf8")
    public @ResponseBody String wishList(@RequestParam("contentid") String contentid, HttpServletRequest request, HttpServletResponse response)
          throws Exception {
+	   String message = null;
+	   String member_id = null;
+	   
+	   try {
+		   HttpSession session = request.getSession();
+		   b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
+		   member_id = b_p001VO.getMember_id();
+		   
+		   g_p001_2VO.setMember_id(member_id);
+		   g_p001_2VO.setContent_id(contentid);
+
+		   boolean command = g_p001_2Service.findWishlist(g_p001_2VO);
+		   
+		   if(command == true) {
+			   message = "<script>";
+			   message += "alert('이미 존재하는 명소입니다.');";
+			   message += "history.go(-1)";
+			   message += "</script>";
+			   
+			   return message;
+		   }else {
+			   g_p001_2Service.insertWishlist(g_p001_2VO);
+			   message = "<script>";
+			   message += "alert('위시리스트에 추가하였습니다.');";
+			   message += "history.go(-1)";
+			   message += "</script>";
+			   
+			   return message;
+			   
+		   }
+	   }catch(Exception e){
+		   message = "<script>";
+		   message += "alert('로그인 후 이용가능합니다.');";
+		   message += "history.go(-1)";
+		   message += "</script>";
+		   
+		   return message;
+	   }
       
-      String message = null;
-      HttpSession session = request.getSession();
-      b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
-      String member_id = b_p001VO.getMember_id();
-      
-      g_p001_2VO.setMember_id(member_id);
-      g_p001_2VO.setContent_id(contentid);
-      
-      
-      
-      boolean command = g_p001_2Service.findWishlist(g_p001_2VO);
-      
-      if(command == true) {
-         message = "<script>";
-         message += "alert('이미 존재하는 명소입니다.');";
-         message += "history.go(-1)";
-         message += "</script>";
-          
-         return message;
-      }else {
-         g_p001_2Service.insertWishlist(g_p001_2VO);
-         message = "<script>";
-         message += "alert('위시리스트에 추가하였습니다.');";
-         message += "history.go(-1)";
-         message += "</script>";
-         
-         return message;
-         
-      }
    }
 }
