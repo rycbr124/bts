@@ -11,6 +11,23 @@
 	href="${contextPath}/resources/css/mypage/d001.css">
 <link rel="stylesheet"
 	href="/bts/resources/library/bootstrap/css/bootstrap.min.css" />
+<script src="${contextPath }/resources/js/c/p001/c_d001.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+	
+	$('#btn-form-submit').click(function(){
+		var profile = $('#frm-profile')[0];
+		profile.action="${contextPath }/my/update";
+		profile.submit();
+		/*
+		console.log(profile);
+		console.log(profile.profile_image);
+		*/
+	});
+	
+})
+</script>
 </head>
 <body>
 	<!--<div id = "container">
@@ -22,25 +39,31 @@
 			<div class="row">
 				<div class="col-md-9 sub-container">
 					<h3 class="space-5">여행자 정보 등록</h3>
-					<form id="frm-profile" autocomplete="off" method="post"
-						action="${contextPath }/my/update">
-						<input type="hidden" name="email_id" id="email_id"> 
-						<input type="hidden" name="email_host" id="email_host">
+					<form id="frm-profile" autocomplete="off" method="post">
+						<input type="hidden" name="email_id" id="email_id"> <input
+							type="hidden" name="email_host" id="email_host">
 						<div class="mypage-picture row" action="${contextPath}/my/image">
-							
-					<c:choose>
-						<c:when test="${not empty sessionScope.memberInfo.profile_image }">
-						<img src="${sessionScope.memberInfo.profile_image }" id="profImg">
-						
-						</c:when>
-						
-							<c:otherwise>
-								<img src="https://d2mgzmtdeipcjp.cloudfront.net/files/member/profile.png" class="user-picture" id="profImg">
-							</c:otherwise>
-					</c:choose>
-							<input type="file" data-toggle="modal"
+
+							<c:choose>
+								<c:when test="${not empty sessionScope.memberInfo.profile_image }">
+									<c:if test="${sessionScope.memberInfo.member_type =='kakao' }">
+										<img src="${sessionScope.memberInfo.profile_image }" id="profImg">
+									</c:if>
+									<c:if test="${sessionScope.memberInfo.member_type !='kakao' }">
+										<img src="${contextPath}/${sessionScope.memberInfo.profile_image }" id="profImg">									
+									</c:if>
+								</c:when>
+
+								<c:otherwise>
+									<img
+										src="https://d2mgzmtdeipcjp.cloudfront.net/files/member/profile.png"
+										class="user-picture" id="profImg">
+								</c:otherwise>
+							</c:choose>
+
+							<input type="file" data-toggle="modal" name="profile_image"
 								data-target="#modal-set-profile-img"
-								class="btn btn-sm btn-default" value="사진 변경" />
+								class="btn btn-sm btn-default" value="사진 올리기" id="input_img" />
 						</div>
 						<div class="row">
 							<div class="col-md-6">
@@ -107,8 +130,10 @@
 						</div>
 						<div class="row">
 							<div class="col-md-2">
-								<button type="submit" class="btn btn-form-submit form-control"
-									style="margin-bottom: 40px; background-color: #A5FECB;">저장</button>
+								<button type="button" id="btn-form-submit" class="btn btn-form-submit form-control"
+									style="margin-bottom: 40px; background: #ec008c;  /* fallback for old browsers */
+										background: -webkit-linear-gradient(to right, #fc6767, #ec008c);  /* Chrome 10-25, Safari 5.1-6 */
+										background: linear-gradient(to right, #fc6767, #ec008c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */">저장</button>
 							</div>
 						</div>
 					</form>
@@ -117,8 +142,9 @@
 							<div style="margin: auto;">
 								<div data-toggle="modal" data-target="#modal-out-agreement"
 									class="btn-out"
-									style="cursor: pointer; color: lightgrey; text-decoration: underline;">회원
-									탈퇴</div>
+									style="cursor: pointer; color: lightgrey; text-decoration: underline;">
+									<a href="${contextPath }/my/exitMain">회원탈퇴</a>
+								</div>
 							</div>
 						</div>
 					</div>

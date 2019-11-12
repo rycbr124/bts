@@ -1,5 +1,7 @@
 package bts.c.p001.DAO;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -26,20 +28,38 @@ public class C_P001DAOImpl implements C_P001DAO{
 		sqlSession.update("mapper.member.updateMember",d001vo);
 		
 	}
-
+	//포로필 사진 업로드
 	@Override
-	public void updateProfile(B_P001VO d001vo) throws DataAccessException {
-		sqlSession.update("mapper.Profile.updateProfile", d001vo);
-		
+	public void updateImage(B_P001VO d001vo) throws DataAccessException {
+		sqlSession.update("mapper.member.updateProfile",d001vo );	
 	}
 	
-	//찾아봐 sqlSession.delete 
-	@Override
-	public String deleteMember(String member_id) throws DataAccessException {
-		//String test = sqlSession.delete("mapper.member.deleteMember", memberId);
-		int  test = sqlSession.delete("mapper.member.deleteMember", member_id);
+//	//찾아봐 sqlSession.delete 
+//	@Override
+//	public String deleteMember(String member_id) throws DataAccessException {
+//		//String test = sqlSession.delete("mapper.member.deleteMember", memberId);
+//		int  test = sqlSession.delete("mapper.member.deleteMember", member_id);
+//		
+//		return null;
+//	}
+	
 		
-		return null;
+		//패스워드 체크
+		public String passCheck(String password) {
+			String result=sqlSession.selectOne("mapper.member.passwordCheck",password);
+
+			return result;
+		}
+		
+		//회원탈퇴
+		public void secession(B_P001VO d001vo,HttpSession session) {
+			
+			sqlSession.delete("mapper.member.secession",d001vo);
+			//세션 삭제
+			session.invalidate();
+		}
+
+		
 	}
 
-}
+

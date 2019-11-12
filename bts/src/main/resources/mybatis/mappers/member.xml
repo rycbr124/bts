@@ -18,7 +18,7 @@
 		<result property="nick_name" column="nick_name" />
 
 		<result property="email" column="email" />
-		
+
 		<result property="profile_image" column="profile_image" />
 	</resultMap>
 	<!-- 회원가입 ID 중복검사 -->
@@ -27,6 +27,17 @@
 		select decode(count(*),1, 'true', 0, 'false')
 		from b_member
 		where member_id = #{id}
+	</select>
+
+	<!-- 회원탈퇴 중복검사 -->
+	<select id="passwordCheck" parameterType="String"
+		resultType="String">
+		<![CDATA[
+		select decode(count(*),1, 'true', 0, 'false')
+		from b_member
+		where password =
+		#{password , jdbcType=VARCHAR} and member_id = #{member_id, jdbcType=VARCHAR}
+        ]]>
 	</select>
 
 	<!-- 회원가입 insert문 -->
@@ -48,8 +59,7 @@
 			 and password=#{password,jdbcType=VARCHAR} 
 		]]>
 	</select>
-	
-		<!-- 회원정보 수정 -->
+	<!-- 회원정보 수정 -->
 	<update id="updateMember" parameterType="d001VO">
 	<![CDATA[
 		update b_member set
@@ -58,16 +68,24 @@
 		where member_id = #{member_id}	
      ]]>
 	</update>
-	
-		<!-- 프로필 가져오기 -->
-		<!--select * from b_member where profile_image = #{profileImage}, potoAddr=#{potoAddr}-->
+
+	<!-- 프로필 가져오기 -->
+	<!--select * from b_member where profile_image = #{profileImage}, potoAddr=#{potoAddr} -->
 	<update id="updateProfile" parameterType="d001VO">
     <![CDATA[
       update b_member
-      set profile_image = #{profile_image},
+      set profile_image = #{profile_image}
          where member_id = #{member_id}
            ]]>
-   </update>
+	</update>
+
+	<!-- 회원 탈퇴 -->
+	<delete id="secession" parameterType="d001VO">
+		<![CDATA[
+			DELETE b_member
+			WHERE member_id=#{member_id} and password=#{password}
+		]]>
+	</delete>
 
 	<!-- 카카오 로그인 회원 db 저장 쿼리 -->
 	<select id="kakaoInsert" parameterType="kakaoVO">
@@ -77,7 +95,7 @@
 	,#{member_type ,jdbcType=VARCHAR})
 	]]>
 	</select>
-	
+
 
 	<!-- 네이버 로그인 회원 db 저장 쿼리 -->
 	<select id="naverInsert" parameterType="naverVO">
@@ -86,12 +104,13 @@
 	values(#{member_id,jdbcType=VARCHAR},#{nick_name,jdbcType=VARCHAR},#{gender,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{birth,jdbcType=VARCHAR}
 	,#{member_type, jdbcType=VARCHAR})]]>
 	</select>
-	
+
 	<!-- 아이디 찾기 쿼리 -->
 	<select id="find_id" parameterType="String" resultType="String">
-	select member_id from b_member where email = #{email, jdbcType=VARCHAR}
+		select
+		member_id from b_member where email = #{email, jdbcType=VARCHAR}
 	</select>
-	
+
 	<!-- 비밀번호 찾기 쿼리 -->
 	<select id="find_pw" parameterType="String">
 	<![CDATA[
@@ -99,5 +118,5 @@
 	where member_id = #{member_id, jdbcType=VARCHAR}
 	]]>
 	</select>
-	
+
 </mapper>
