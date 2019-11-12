@@ -46,4 +46,21 @@ public class B_P001DAOImpl implements B_P001DAO{
 		
 	}
 
+	@Override
+	public B_P001VO selectOverlappedEmail(Map emailMap) throws DataAccessException {
+		B_P001VO d001VO = (B_P001VO)sqlSession.selectOne("mapper.member.selectOverlappedEmail",emailMap);
+		return d001VO;
+	}
+
+	@Override
+	public int check_id(String id) throws Exception {
+		return sqlSession.selectOne("mapper.member.check_id",id);
+	}
+
+	@Override
+	public int check_email(String email) throws Exception {
+		return sqlSession.selectOne("mapper.member.check_email",email);
+	}
+
+
 }

@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="${contextPath }/resources/css/b/p003/d001.css" />
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </head>
 <body>
 	<div>
@@ -20,7 +21,7 @@
 	<br>
 	<br>
 	<div class="container">
-		<form class="form-horizontal" role="form" method="post" action="#">
+		<form class="form-horizontal" role="form" method="post" action="${contextPath }/find/findPw">
 			<h3>가입한 이메일로 비밀번호를 보내드립니다.</h3>
 			<div class="form-group" id="divEmail">
 				<label for="inputID" class="col-lg-2 control-label">ID</label>

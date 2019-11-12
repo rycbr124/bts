@@ -43,6 +43,7 @@
 			value="org.springframework.web.servlet.view.tiles2.TilesView" />
 		<beans:property name="order" value="1" />
 	</beans:bean>
+
 	<beans:bean id="naverLoginBO"
 		class="bts.b.p001.Naver.NaverLoginBO" />
 
@@ -55,7 +56,7 @@
 	<!-- 이미지 업로드 경로 설정 -->
 	<beans:bean id="uploadPath" class="java.lang.String">
 		<beans:constructor-arg
-			value="C:\Users\안민형\git\bts\bts\src\main\webapp\resources\image\mypage\profileImage">
+			value="resources\image\mypage\profileImage">
 		</beans:constructor-arg>
 	</beans:bean>
 

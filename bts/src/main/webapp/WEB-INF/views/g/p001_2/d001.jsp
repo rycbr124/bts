@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="${contextPath}/resources/library/bootstrap/css/bootstrap-grid.min.css">
 
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script> <!-- jQuery -->
-<script type="text/javascript" src="${contextPath}/resources/js/recommend.js"></script> <!-- 커스텀 js -->
+<script type="text/javascript" src="${contextPath}/resources/js/recommend/recommend.js"></script> <!-- 커스텀 js -->
 
 
 <!-- 부트스트랩 -->
@@ -139,16 +139,12 @@ $(document).ready(function (){
 		</select>
 		<button type="button" class="btn btn-outline-secondary btn-sm" id="search">검색</button> 
 		 
-	</div>
-	<div class="row" id="image_grid">
+		<div class="row" id="image_grid">
+			
+			
+		</div>
 		
-		
-	</div>
-	
-	<div class="container">
-	
-
-	<div id="pagination">
+		<div id="pagination">
 		<ul class="pagination justify-content-center">
 			<li class="page-item"><span class="page-link">Prev</span></li>
 			<li class="page-item"><span class="page-link">1</span></li>
@@ -160,10 +156,8 @@ $(document).ready(function (){
 			
 		</ul>
 	</div>
-
-	
-	
-	
 	</div>
+	
+	
 </body>
 </html>

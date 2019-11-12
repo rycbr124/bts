@@ -61,6 +61,7 @@ p{
 	width : 1200px;
 	height : 350px;
 	border : 1px solid #bcbcbc;
+	margin-bottom : 30px;
 }
 
 #text{

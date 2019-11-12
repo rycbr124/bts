@@ -11,11 +11,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script> <!-- jQuery -->
-<script type="text/javascript" src="${contextPath}/resources/js/recommend3.js"></script>  <!-- 커스텀 js --> 
+<script type="text/javascript" src="${contextPath}/resources/js/recommend/recommend3.js"></script>  <!-- 커스텀 js --> 
+
+
+
+
 <script>
 	$(document).ready(function(){
 		var id = ${contentid};
 		image_init(id);
+
 	});
 	
 	function wish_list(){
@@ -40,6 +45,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6b2f7da39af5c9b3e7839e09fedbc28a"></script>
+
+
+<!-- Magnific Popup core CSS file -->
+<link rel="stylesheet" href="magnific-popup/magnific-popup.css">
 
 <style>
 @font-face {
@@ -90,6 +99,7 @@ border-bottom:1px solid rbg(127,127,127);
 .content{
 	float : right;
 	display : inline-block;
+	float : right;
 }
 [id='toggle-heart'] {
   position: absolute;
@@ -114,8 +124,6 @@ border-bottom:1px solid rbg(127,127,127);
   align-self: center; 
 }
 
-
-
 </style>
 
 </head>
@@ -139,15 +147,16 @@ border-bottom:1px solid rbg(127,127,127);
 
 
     <!-- Call to Action Well -->
+    <hr>
     <div class="card-body" style="background-color:white; padding:0; margin-right:50%; transform:translate(20%);">
      	<div id="map" style="width:900px;height:300px; position:relative;">
     </div>
     <!-- Content Row -->
     <div>
     
-	    <div class="title">
+	    
 	    	<h1>소개</h1>
-	    </div>
+	    
 	    
 	    
 	    <div class="content">
