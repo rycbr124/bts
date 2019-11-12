@@ -16,6 +16,12 @@
 		<result property="file_path" column="file_path" />
 		<result property="file_name" column="file_name" />		
 	</resultMap>
+	
+	<resultMap id="detailResult" type="d_p001_4VO_2">
+		<result property="content_id" column="content_id" />
+		<result property="plan_no" column="plan_no" />
+		<result property="day_no" column="day_no" />
+	</resultMap>
 
 	<!-- 게시글 조회 -->
 	<select id="searchArticle" resultMap="articleResult">
@@ -34,4 +40,21 @@
 			AND #{article_no} = i.article_no
 		]]>	
 	</select>
+	
+	<!-- 플래너 연동 조회-->
+	<select id="plannerDetail" resultMap="detailResult">
+		<![CDATA[
+			SELECT content_id, day_no
+			FROM planner_detail			
+		]]>
+	</select>
+	
+	<!-- 플래너 내용 추가 -->
+	<insert id="insertDesc" parameterType="String">
+		<![CDATA[
+			INSERT INTO planner_detail(plan_desc)
+			VALUES (#{plan_desc})
+		]]>
+	</insert>
+	
 </mapper>
