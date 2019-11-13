@@ -29,7 +29,7 @@
 			<li><a href="coupon.html"> <i class="icon icon-wishlist"></i>
 					<span>위시리스트 관리</span>
 			</a></li>
-			<li><a href="point.html"> <i class="icon icon-message"></i>
+			<li><a href="${contextPath}/my/message/main"> <i class="icon icon-message"></i>
 					<span>쪽지 관리</span>
 			</a></li>
 			<li><a href="point.html"> <i class="icon icon-matching"></i>

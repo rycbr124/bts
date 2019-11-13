@@ -22,9 +22,13 @@ public class C_P006ServiceImpl implements C_P006Service{
 	}
 	
 	@Override
-	public List<C_P006VO> selectMessageList(C_P006VO c_p001vo) throws DataAccessException{
-		List<C_P006VO> list=c_p006DAO.selectMessageList(c_p001vo);
+	public List<C_P006VO> selectMessageList(C_P006VO c_p006VO) throws DataAccessException{
+		List<C_P006VO> list=c_p006DAO.selectMessageList(c_p006VO);
 		return list;
+	}
+	
+	public void insertMessage(C_P006VO c_p006VO) throws DataAccessException{
+		c_p006DAO.insertMessage(c_p006VO);
 	}
 	
 }

@@ -22,9 +22,14 @@ public class C_P006DAOImpl implements C_P006DAO{
 	}
 	
 	@Override
-	public List<C_P006VO> selectMessageList(C_P006VO c_p006vo) throws DataAccessException{
-		List<C_P006VO> list = sqlSession.selectList("mapper.message.selectMessageList", c_p006vo);
-		return list;
+	public List<C_P006VO> selectMessageList(C_P006VO c_p006VO) throws DataAccessException{
+		List<C_P006VO> list = sqlSession.selectList("mapper.message.selectMessageList", c_p006VO);
+		return list;	
 	}
+	
+	public void insertMessage(C_P006VO c_p006VO) throws DataAccessException{
+		sqlSession.insert("mapper.message.insertMessage",c_p006VO);
+	}
+	
 }
 	

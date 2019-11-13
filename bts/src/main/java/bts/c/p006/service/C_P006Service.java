@@ -9,5 +9,6 @@ import bts.c.p006.vo.C_P006VO;
 
 public interface C_P006Service {
 	public List<B_P001VO> selectMemberList(String id) throws DataAccessException;
-	public List<C_P006VO> selectMessageList(C_P006VO c_p001vo) throws DataAccessException;
+	public List<C_P006VO> selectMessageList(C_P006VO c_p006VO) throws DataAccessException;
+	public void insertMessage(C_P006VO c_p006VO) throws DataAccessException;
 }

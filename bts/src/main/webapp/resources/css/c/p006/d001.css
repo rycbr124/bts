@@ -1,4 +1,9 @@
 @charset "UTF-8";
+
+@font-face{
+	src:url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+	font-family:"nanumEB";	
+}
 	
 	.msg-container,.msg-container *{
 		box-sizing: border-box;
@@ -58,7 +63,7 @@
 
    }
  	/*people-list*/  
-   #people-list{
+   #people-list,#search-list{
       height:90%;
       overflow:auto;
    }
@@ -68,17 +73,17 @@
       padding:20px;
    }
 
-	#people-list .clicked{
+	#people-list .clicked,#search-list .clicked{
 		background:#8FA4E1;
 		border-right:5px solid #C1CEF3
 	}
 
-	.discussion .info{
-		margin-left:5%;
+	#search-list{
+		display:none;
 	}
 	
 	/*user-info*/
-	.discussion>*,#user-info>*{
+	.discussion>*,#user-info>*,.pop-member>*{
 		width:initial;
 		height:initial;
 		display:inline-block;
@@ -96,12 +101,16 @@
 		color:#6e6e6e;
 	}
 	
-	.discussion>img,#user-info>img{
+	.discussion>img,#user-info>img,.pop-member>img{
 		width:45px;
 		height:45px;
 		background:#E6E7ED;
 		border-radius:50px;
 	}
+
+   .info{
+      margin-left:10px;
+   }
 
    /*chat*/   
    #chat{
@@ -112,6 +121,7 @@
    /*chat-header*/
    #chat-header{
       display:flex;
+      justify-content : space-between;
       align-items:center;   
    }
    
@@ -121,9 +131,17 @@
       height:initial;   
    }
    
-   #user-info .info{
-      margin-left:10px;
-   }
+	#chat-header>i{
+		width:initial;
+		height:initial;
+		margin-right:15px;
+		color:#8da5ee;
+		border-radius:50%;
+	}
+	
+	#chat-header>i:hover{
+		color:#6780cc;	
+	}
    
    /*chat-message*/
    #chat-message{
@@ -132,6 +150,17 @@
       overflow:auto;
       height:80%;   
    }
+   
+   	#chat-main{
+		width:100%;
+		height:100% !important;
+		display:flex;
+		justify-content : center;
+		align-items:center;
+		font-family : nanumEB;
+		font-size:1.5em;
+		color:grey;
+	}
    
    #chat-message>*{
       float:left;
@@ -196,3 +225,121 @@
        background: #F2F5F8;
        font-size:20px;
    }
+   
+   /*pop-up*/
+   	#user-add{
+	  background: rgba(0, 0, 0, 0.3);
+	  position: fixed;
+	  top: 0;
+	  left: 0;
+	  bottom: 0;
+	  right: 0;
+	  width: 100%;
+	  height: 100%;
+	  display:none;
+	  z-index:150;
+	}
+	
+	#pop-up{
+	  margin: 100px auto;
+	  padding:20px;
+	  background: #fff;
+	  border-radius: 5px;
+	  width: 50%;
+	  position: relative;
+	}
+	
+	/*pop-header*/
+	#pop-header{
+		width:100%;
+		height:50px;
+		text-align:center;
+		vertical-align:middle;
+		/*
+		border-bottom : 1px solid #C1CEF3;
+		*/
+	}
+	
+	#pop-header>div{
+		display:inline-block;
+		width:initial;
+		font-family : nanumEB;
+		font-size:1.5em;	
+	}
+	
+	#pop-close {
+	  float:right;	
+	  font-size: 30px;
+	  font-weight: bold;
+	  text-decoration: none;
+	  color: #333;
+	}
+	
+	/*pop-search*/
+	#pop-search{
+		display:flex;
+		width:100%;
+		justify-content:center;
+		padding-bottom:10px;
+		border-bottom : 1px solid rgba(0, 0, 0, 0.1);
+	}
+	
+	#pop-search>input[type=text]{
+		padding:5px;
+		width:70%;
+		height:30px;
+		border : none;
+		background-color : rgba(100, 100, 100, 0.1);
+		border-radius:5px;
+	}
+
+	#pop-search>input[type=button]{
+		width : 50px;
+		margin-left: 10px;
+		border-radius : 20px;
+		border :none;
+		background-color:#B9C9F8;
+	}
+	
+	#pop-search>input[type=button]:hover,#pop-footer>input:hover{
+		background-color:#8da5ee;	
+	}	
+		
+	/*pop-list*/
+	#pop-list>.no-result{
+		margin-top:10	px;
+		text-align:center;
+		font-family : nanumEB;
+		font-size:1.5em;
+		color:grey
+	}
+
+	.pop-member{
+		padding:10px;
+		width:100%;
+		margin-top : 10px;
+		display:inline-block;
+	}
+	
+	.pop-member:hover{
+		background-color : rgba(100, 100, 100, 0.1);	
+	}
+	
+	#pop-list .selected{
+		background-color : rgba(185, 201, 248, 0.5);
+	}	
+	
+	/*pop-fooer*/
+	#pop-footer{
+		display:flex;
+		flex-flow:row-reverse;
+		margin-top : 10px;
+	}
+	
+	#pop-footer>input{
+		border :none;
+		width:20%;
+		height:35px;
+		border-radius:5px;
+		background-color:#B9C9F8;
+	}	

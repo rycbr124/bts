@@ -1,5 +1,7 @@
 package bts.c.p006.vo;
 
+import java.util.HashMap;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -7,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class C_P006FormVO {
 	private String header;
-	private Object body;
+	private HashMap<String,Object> body;
 	
 	public String getHeader() {
 		return header;
@@ -15,10 +17,10 @@ public class C_P006FormVO {
 	public void setHeader(String header) {
 		this.header = header;
 	}
-	public Object getBody() {
+	public HashMap<String,Object> getBody() {
 		return body;
 	}
-	public void setBody(Object body) {
+	public void setBody(HashMap<String,Object> body) {
 		this.body = body;
 	}
 	
