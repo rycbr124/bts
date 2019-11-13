@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -43,13 +43,14 @@ import bts.b.p001.VO.KakaoVO;
 import bts.b.p001.VO.NaverVO;
 
 @Controller("b_p001")
-@RequestMapping(value = "/signup")
+@RequestMapping(value = "/signup" )
 public class B_P001ControllerImpl implements B_P001Controller {
 	@Autowired
 	B_P001Service d001Service;
 	@Autowired
 	B_P001VO d001vo;
-
+	
+	
 	private NaverLoginBO naverLoginBO;
 	private String apiResult = null;
 	
@@ -115,16 +116,16 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		return access_Token;
 	}
 	
-	public HashMap<String, String> getUserInfo(String access_Token) throws Exception{
+	public B_P001VO getUserInfo(String access_Token) throws Exception{
 
 		// 요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
-		HashMap<String, String> userInfo = new HashMap<>();
-		KakaoVO kakaoInfo = new KakaoVO();
+		B_P001VO userInfo = new B_P001VO();
 		String reqURL = "https://kapi.kakao.com/v2/user/me";
 		try {
 			URL url = new URL(reqURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestProperty("charset","utf-8");
+			
 			conn.setRequestMethod("POST");
 			
 			// 요청에 필요한 Header에 포함될 내용
@@ -156,21 +157,16 @@ public class B_P001ControllerImpl implements B_P001Controller {
 			String profile_image = properties.getAsJsonObject().get("profile_image").getAsString();
 			String member_type = "kakao";
 			
-			userInfo.put("member_id", id);
-			userInfo.put("nick_name", nickname);
-			userInfo.put("email", email);
-			userInfo.put("profile_image", profile_image);
-		
-			System.out.println("user Info : " + userInfo);
+			userInfo.setMember_id(id);
+			userInfo.setNick_name(nickname);
+			userInfo.setProfile_image(profile_image);
+			userInfo.setEmail(email);
+			userInfo.setMember_type(member_type);
+			
 			
 			if(d001Service.overlapped(id).equals("false")) {
-				System.out.println("13131313131313131313131313131");
-				kakaoInfo.setMember_Id(id);
-				kakaoInfo.setNick_name(nickname);
-				kakaoInfo.setProfile_image(profile_image);
-				kakaoInfo.setEmail(email);
-				kakaoInfo.setMember_type(member_type);
-				d001Service.kakaoInsert(kakaoInfo);
+				System.out.println("user Info : " + userInfo);
+				d001Service.kakaoInsert(userInfo);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -226,7 +222,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		if (d001vo != null && d001vo.getMember_id() != null) {
 			HttpSession session = request.getSession();
 			session = request.getSession();
-
+			session.setMaxInactiveInterval(30*60);
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("memberInfo", d001vo);
 			System.out.println("성공");
@@ -244,15 +240,17 @@ public class B_P001ControllerImpl implements B_P001Controller {
 	@RequestMapping(value = "/kakaoLogin")
 	public String login(@RequestParam("code") String code, HttpSession session) throws Exception{
 		String access_Token = getAccessToken(code);
-		HashMap<String, String> userInfo = getUserInfo(access_Token);
+		B_P001VO userInfo = getUserInfo(access_Token);
+		System.out.println("emailllll: " + userInfo.getEmail());
 		System.out.println("login Controller : " + userInfo);
 		// 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
-		if (userInfo.get("email") != null) {
-			//d001Service.kakaoInsert(userInfo);
+		if (userInfo.getEmail() != null) {
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("memberInfo", userInfo);
-			session.setAttribute("userId", userInfo.get("id"));
+			session.setAttribute("userId", userInfo.getMember_id());
+			session.setAttribute("profile_image", userInfo.getProfile_image());
 			session.setAttribute("access_Token", access_Token);	
+			System.out.println("ccccc: " + userInfo);
 		}
 		return "/z/p000/d001";
 	}
@@ -282,7 +280,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 			e.printStackTrace();
 		}
 	}
-
+	
 	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {
 		kakaoLogout((String) session.getAttribute("access_Token"));
@@ -326,15 +324,16 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		String birthday = naver_account.getAsJsonObject().get("birthday").getAsString();
 		String member_type = "naver";
 		
+		naverInfo.setMember_id(id);
+		naverInfo.setNick_name(nickname);
+		naverInfo.setGender(gender);
+		naverInfo.setEmail(email);
+		naverInfo.setName(name);
+		naverInfo.setBirth(birthday);
+		naverInfo.setMember_type(member_type);
+		
 		if(d001Service.overlapped(id).equals("false")) {
 			try {
-				naverInfo.setMember_id(id);
-				naverInfo.setNick_name(nickname);
-				naverInfo.setGender(gender);
-				naverInfo.setEmail(email);
-				naverInfo.setName(name);
-				naverInfo.setBirth(birthday);
-				naverInfo.setMember_type(member_type);
 				d001Service.naverInsert(naverInfo);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -342,8 +341,11 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		}
 		mav.addObject("isLogOn", true);
 		mav.addObject("memberInfo");
+		session.setMaxInactiveInterval(30*60);
 		session.setAttribute("isLogON", true);
-		session.setAttribute("memberInfo", apiResult);
+		session.setAttribute("memberInfo", naverInfo);
+		System.out.println("naverInfo : " + naverInfo);
+		System.out.println("naverInfo id:" + naverInfo.getMember_id());
 		return mav;
 	}
 }

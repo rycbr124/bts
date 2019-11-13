@@ -62,7 +62,7 @@ html .member_menu a:hover{color:rgb(127,127,127);}
             <a href="#">동행</a>
          </li>
          <li class="menu_community">
-            <a href="#">커뮤니티</a>
+            <a href="${contextPath}/community/plan_list">커뮤니티</a>
          </li>
          <li class="menu_planner">
             <a href="${contextPath}/planner/planner">플래너</a>

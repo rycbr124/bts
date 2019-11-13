@@ -18,7 +18,8 @@
 		<result property="nick_name" column="nick_name" />
 
 		<result property="email" column="email" />
-
+		
+		<result property="profile_image" column="profile_image" />
 	</resultMap>
 	<!-- 회원가입 ID 중복검사 -->
 	<select id="selectOverlappedID" parameterType="String"
@@ -26,6 +27,15 @@
 		select decode(count(*),1, 'true', 0, 'false')
 		from b_member
 		where member_id = #{id}
+	</select>
+	
+	<!-- 아이디 중복 검사 -->
+	<select id = "check_id" parameterType="String" resultType="int">
+	select count(*) from b_member where member_id = #{member_id}
+	</select>
+	<!-- 이메일 중복 검사 -->
+	<select id = "check_email" parameterType="String" resultType="int">
+	select count(*) from b_member where email = #{email}
 	</select>
 
 	<!-- 회원가입 insert문 -->
@@ -47,9 +57,29 @@
 			 and password=#{password,jdbcType=VARCHAR} 
 		]]>
 	</select>
+	
+		<!-- 회원정보 수정 -->
+	<update id="updateMember" parameterType="d001VO">
+	<![CDATA[
+		update b_member set
+		name = #{name},password = #{password}, gender = #{gender}, birth =
+		#{birth}, tel_no = #{tel_no}, nick_name = #{nick_name}, email = #{email}
+		where member_id = #{member_id}	
+     ]]>
+	</update>
+	
+		<!-- 프로필 가져오기 -->
+		<!--select * from b_member where profile_image = #{profileImage}, potoAddr=#{potoAddr}-->
+	<update id="updateProfile" parameterType="d001VO">
+    <![CDATA[
+      update b_member
+      set profile_image = #{profile_image},
+         where member_id = #{member_id}
+           ]]>
+   </update>
 
 	<!-- 카카오 로그인 회원 db 저장 쿼리 -->
-	<select id="kakaoInsert" parameterType="kakaoVO">
+	<select id="kakaoInsert" parameterType="d001VO">
 	<![CDATA[
 	insert into b_member(member_id,nick_name,profile_image,email,member_type)
 	values(#{member_id ,jdbcType=VARCHAR},#{nick_name,jdbcType=VARCHAR} ,#{profile_image,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR}
@@ -65,4 +95,18 @@
 	values(#{member_id,jdbcType=VARCHAR},#{nick_name,jdbcType=VARCHAR},#{gender,jdbcType=VARCHAR},#{email,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{birth,jdbcType=VARCHAR}
 	,#{member_type, jdbcType=VARCHAR})]]>
 	</select>
+	
+	<!-- 아이디 찾기 쿼리 -->
+	<select id="find_id" parameterType="String" resultType="String">
+	select member_id from b_member where email = #{email, jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 비밀번호 변경 쿼리 -->
+	<update id="find_pw" parameterType="d001VO">
+	<![CDATA[
+	update b_member set password = #{password, jdbcType=VARCHAR}
+	where member_id = #{member_id, jdbcType=VARCHAR}
+	]]>
+	</update>
+	
 </mapper>

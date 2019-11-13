@@ -14,7 +14,16 @@ public class B_P001VO {
 	private String tel_no;
 	private String nick_name;
 	private String email;
+	private String profile_image;
+	private String member_type;
 	
+	
+	public String getMember_type() {
+		return member_type;
+	}
+	public void setMember_type(String member_type) {
+		this.member_type = member_type;
+	}
 	public String getBirth() {
 		return birth;
 	}
@@ -64,6 +73,12 @@ public class B_P001VO {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getProfile_image() {
+		return profile_image;
+	}
+	public void setProfile_image(String profile_image) {
+		this.profile_image = profile_image;
 	}
 	
 }

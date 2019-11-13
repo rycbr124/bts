@@ -41,5 +41,6 @@ xmlns="http://www.springframework.org/schema/mvc"
 		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles2.TilesView" />
 		<beans:property name="order" value="1" /> 
 	</beans:bean>
-	<beans:bean id="naverLoginBO" class="bts.b.p001.Naver.NaverLoginBO" />		
+	<beans:bean id="naverLoginBO" class="bts.b.p001.Naver.NaverLoginBO" />	
+		
 </beans:beans>
