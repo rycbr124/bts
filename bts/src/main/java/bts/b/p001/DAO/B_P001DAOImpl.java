@@ -36,7 +36,7 @@ public class B_P001DAOImpl implements B_P001DAO{
 	}
 
 	@Override
-	public void kakaoNewMember(KakaoVO kakaoVO) throws DataAccessException {
+	public void kakaoNewMember(B_P001VO kakaoVO) throws DataAccessException {
 		sqlSession.insert("mapper.member.kakaoInsert",kakaoVO);
 	}
 

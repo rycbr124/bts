@@ -13,9 +13,10 @@ public interface B_P001Service {
 	public void addMember(B_P001VO d001VO) throws Exception;
 	public String overlapped(String id) throws Exception;
 	public B_P001VO login(Map  loginMap) throws Exception;
-	public void kakaoInsert(KakaoVO kakaoVO) throws Exception;
+	public void kakaoInsert(B_P001VO kakaoVO) throws Exception;
 	public void naverInsert(NaverVO naverVO) throws Exception;
 	public B_P001VO overlappedEmail(Map emailMap) throws Exception;
 	public void check_id(String id, HttpServletResponse response) throws Exception;
 	public void check_email(String email, HttpServletResponse response) throws Exception;
+	
 }
