@@ -87,22 +87,27 @@ public class B_P003ServiceImpl implements B_P003Service {
 		// Mail Server 설정
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";
-		String hostSMTPid = "whdvud1213@naver.com";
-		String hostSMTPpwd = "ehfvm4862";
+		String hostSMTPid = "florida223@naver.com";
+		String hostSMTPpwd = "ijhwngml1231";
 
 		// 보내는 사람 EMail, 제목, 내용
-		String fromEmail = "whdvud1213@naver.com";
+		String fromEmail = "florida223@naver.com";
 		String fromName = "BTS";
 		String subject = "";
 		String msg = "";
 
 		if (div.equals("find_pw")) {
 			subject = "BTS 임시 비밀번호 입니다.";
-			msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
-			msg += "<h3 style='color: blue;'>";
-			msg += p001vo.getMember_id() + "님의 임시 비밀번호 입니다. 비밀번호를 변경하여 사용하세요.</h3>";
-			msg += "<p>임시 비밀번호 : ";
-			msg += p001vo.getPassword() + "</p></div>";
+			msg += "<body style='background-color:#D5D5D5;'>";
+			msg += "<div style='background-color:#D5D5D5; width:500px; margin:auto; height:500px;font-family: '돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;'>";
+			msg += "<img src='http://localhost:8088/bts/resources/image/BTS_logo_black.png' width='200' height='100px'><br>";
+			msg += "<h1 style='text-align:center;'>Best Travel Seoul</h1><br><br>";
+			msg += "<div style='padding-left:10px;padding-bottom:10px;'>";
+			msg += "<h2>BTS에서 보낸 메일입니다.</h2><br><br>";
+			msg += "<p> 회원님의 임시 비밀번호를 발송했습니다.</p>";
+			msg += "<p>"+p001vo.getMember_id() +"님의 임시 비밀번호는 :" + p001vo.getPassword()+" 입니다.</p>";
+			msg += "<p> 마이페이지에서 비밀번호를 변경해주세요.</p>";
+			msg += "</div></div></body>";
 		}
 		// 받는 사람 E-Mail 주소
 		String mail = p001vo.getEmail();
