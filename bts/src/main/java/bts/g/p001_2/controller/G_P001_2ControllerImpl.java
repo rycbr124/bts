@@ -30,7 +30,7 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
    @Autowired
    B_P001VO b_p001VO;
    
-   @Autowired
+   @Autowired 
    G_P001_2VO g_p001_2VO;
 
    @Override

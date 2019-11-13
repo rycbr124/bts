@@ -8,7 +8,7 @@
 <head>
 <style></style>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="${contextPath}/resources/css/plan/plan.css">
+<link rel="stylesheet"  href="${contextPath}/resources/css/plan/plan.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/js/recommend.js"></script>
@@ -23,6 +23,7 @@
 
 </head>
 <body>
+ <form action="/bts/plan/insert_plan" name="plan" onsubmit="return false">
 <div class="map_controller" id="map_controller">
  <div class="select_date" id="select_date">
    <div class="plan_tab" id="plan_tab">
@@ -31,16 +32,18 @@
           <div class="title_write">
          	<input type="text" class="title" name="title" placeholder="제목을 입력해주세요"/>
          	<div class="tag_write">
-         	<input type="text" name="tag" class="tag" placeholder="태그를 입력해주세요." onkeyup="enter_check();"/>
-         	<div class="tag_value" name="tag_value"></div>
+         	<input type="text" name="tag" class="tag" placeholder="태그를 입력해주세요." onkeydown="enter_check();"/>
+         	<div class="tag_value" ></div>
+         	<input type="hidden" name="tag_value" value=""/>
          	</div>
-         	<select name="personnel" class="personnel" style="height:30px; margin-top:10px; margin-bottom:10px;">
+         	<select class="personnel" style="height:30px; margin-top:10px; margin-bottom:10px;">
          		<option value=''>타입선택</option>
          		<option value='혼자'>혼자</option>
          		<option value='친구'>친구</option>
          		<option value='커플/신혼'>커플/신혼</option>
          		<option value='가족'>가족</option>
          	</select>
+         	<input type="hidden" name="personnel" value=""/>
          </div>
          <div class="calendar" id="calendar" style="margin-top:0;">
             <img src="${contextPath}/resources/image/icon/calendar.png">
@@ -53,6 +56,7 @@
    
    
    <div class="plan_list_container" id="plan_list_container">
+   <input type="hidden" name="detail_information" value=""/>
       <div class="plan_list_header" id="plan_list_header">
          <h1 class="date_value">
          </h1>
@@ -71,14 +75,16 @@
 
 <div class="map_area" id="map_area">
  <div class="tourist" id="tourist">
-   		<div class="tourist_header">서울</div>
+   		<div class="tourist_header">서울
+   		<button onclick="save_plan()" class="save_plan" style="position:absolute;right:0;width:60px;height:45px;">저장</button> 
+   		</div>
    		<div class="tourist_tab" style="border:1px solid #fff; width:100%; height:150px;">
    			<div class="select_icon">
-   				<a href="javascript:searchContentType(12);" id="touristDestination"><img src="${contextPath}/resources/image/icon/map.png"/></a>
-   				<a href="javascript:searchContentType(39);" id="restaurant"><img src="${contextPath}/resources/image/icon/fork.png"/></a>
-   				<a href="javascript:searchContentType(38);" id="shopping"><img src="${contextPath}/resources/image/icon/shopping-bag.png"/></a>
+   				<a href="javascript:searchContentType(12)" id="touristDestination"><img src="${contextPath}/resources/image/icon/map.png"/></a>
+   				<a href="javascript:searchContentType(39)" id="restaurant"><img src="${contextPath}/resources/image/icon/fork.png"/></a>
+   				<a href="javascript:searchContentType(38)" id="shopping"><img src="${contextPath}/resources/image/icon/shopping-bag.png"/></a>
    				<a href="javascript:searchContentType(32)" id="hotel"><img src="${contextPath}/resources/image/icon/hotel.png"/></a>
-   				<a href="javascript:searchContentType(14);" id="museum"><img src="${contextPath}/resources/image/icon/canvas.png"/></a>
+   				<a href="javascript:searchContentType(14)" id="museum"><img src="${contextPath}/resources/image/icon/canvas.png"/></a>
    				<a href="javascript:searchContentType()" id="wishList"><img src="${contextPath}/resources/image/icon/paperclip.png"/></a>
    			</div>
    			<select class="select_place" id="sigungu">
@@ -112,12 +118,12 @@
    		
    		</div>
    		<div class="detail_list_container"></div>
+   		
    </div>
 <div id="map" style="width:100%;height:100vh;">
-
+<button onclick="save_plan()" class="save_plan" value="" style="position:absolute;">저장</button> 
 </div>
 </div>
-
-
+</form>
 </body>
 </html>
