@@ -59,10 +59,13 @@ $(document).ready(function(){
 					messageAdd(recMessage[i].contents,new Date(recMessage[i].writing_date),recMessage[i].me_at);					
 				}
 			}else if(recData.header=="send_message"){
-				updateChat(recMessage);
-				messageAdd(recMessage.contents,new Date(recMessage.writing_date),recMessage.me_at);					
+				updateChat(recData);
+				var nowId=$('#chat-header .member-id').text();
+				if(nowId==recMessage.sender || nowId==recMessage.receiver){					
+					messageAdd(recMessage.contents,new Date(recMessage.writing_date),recMessage.me_at);					
+				}
 			}else if(recData.header=='search_member'){
-			
+				popSearchMember(recMessage);
 			}
 			
 		}
@@ -126,54 +129,108 @@ $(document).ready(function(){
 		//팝업 검색
 		$("#pop-search>input[type=text]").on("keydown",function(event){
 			if(event.keyCode==13){
-				popSearch();
+				popSearch(ws);
 			}
 		});		
-		$("#pop-search>input[type=button]").on("click",popSearch);	
+		$("#pop-search>input[type=button]").on("click",function(){
+			popSearch(ws);
+		});	
 		
 		//팝업 검색결과 클릭
-		$(".pop-member").on("click",function(){
+		$(document).on("click",".pop-member",function(){
 			$('.pop-member').removeClass("selected");
 			$(this).addClass("selected");
 		});
 		
 		$("#pop-footer>input").on("click",function(){
+			var selected = $('.selected').toArray()[0];
+			var selectedSrc=$(selected).find('img').prop('src');
+			var selectedNick=$(selected).find('.nick-name').text();
+			var selectedid=$(selected).find('.member-id').text();
+			
+			var divForm = new memberDivForm('discussion',selectedSrc,selectedNick,selectedid);
+			prependMember(divForm);
+			
 			closePopup();
 		});
 		
 	}//end init
 	
-	function updateChat(res){
-		var updateId;
-		//var nowId=$('#chat-header .member-id').text();
-		
-		if(res.me_at=='true'){//보낸사람이 나면
-			updateId=res.receiver;
-		}else{
-			updateId=res.sender;
+	function memberDivForm(desc,imgSrc,nick,id){
+		var result={
+			"desc" : desc,
+			"imgSrc" : imgSrc,
+			"nick" : nick,
+			"id" : id
 		}
+		return result;
+	}
+	
+	function makeMemberDiv(/*memberDivForm object*/data){
+		var container = document.createElement('div');
+		var imgDiv=document.createElement('img');
+		var infoDiv=document.createElement('div');
+		var nickDiv=document.createElement('div');
+		var idDiv=document.createElement('div');
 		
+		$(imgDiv).prop('src',data.imgSrc);
+		$(container).addClass(data.desc);
+		$(infoDiv).addClass('info');
+		$(nickDiv).addClass('nick-name');
+		$(idDiv).addClass('member-id');
+		$(nickDiv).text(data.nick);
+		$(idDiv).text(data.id);
+		
+		container.append(imgDiv);
+		container.append(infoDiv);
+		infoDiv.append(nickDiv);
+		infoDiv.append(idDiv);
+		return container;
+	};
+	
+	function prependMember(/*memberDivForm*/ data){	
 		var userList=$('#people-list>.discussion').toArray();
+		
 		for(var i in userList){
-			if($(userList[i]).find('.member-id').text()==updateId){
+			if($(userList[i]).find('.member-id').text()==data.id){
 				$('#people-list').prepend(userList[i]);
 				return;
 			}
 		}
 		
-		var newDiscussion = document.createElement('div');
-		var newImg=document.createElement('div');
-		var newInfo=document.createElement('div');
-		var newNick=document.createElement('div');
-		var newMember=document.createElement('div');
-		
-		newDiscussion.addClass('discussion');
-		if(res)
+		var newDiscussion=makeMemberDiv(data);
+		$('#people-list').prepend(newDiscussion);
 	}
 	
-	function popSearch(){
+	function updateChat(recData){
+		var res = recData.body.result;
+		var divData;
+		
+		if(res.me_at=='true'){//보낸사람이 나면
+			divData = new memberDivForm('discussion',null,null,res.receiver);
+		}else{
+			var imgSrc=recData.body.sender_info.profile_image;
+			if(imgSrc==null){
+				imgSrc='${contextPath}/resources/image/no_img.jpg';
+			}else{
+				if(recData.body.sender_info.member_type!='kakao' && recData.body.sender_info.member_type!='naver'){
+					imgSrc='${contextPath}/'+imgSrc;
+				}
+			}
+			divData = new memberDivForm('discussion',imgSrc,recData.body.sender_info.nick_name,res.sender);
+		}
+		
+		prependMember(divData);
+	}
+	
+	function popSearch(/*웹소켓 객체*/ws){
 		$('#pop-footer>input').prop('disabled',false);
-		//입력값으로 select날려서 결과받아 뿌리기		
+		var input=$('#pop-search>input[type=text]').toArray()[0];
+		//입력값으로 select날려서 결과받아 뿌리기
+		var contents={
+			keyword : $(input).val()
+		}
+		sendText(ws,"search_member",contents);
 	}
 	
 	function showPopup(){
@@ -193,6 +250,33 @@ $(document).ready(function(){
 		}
 		result=JSON.stringify(result);
 		ws.send(result);
+	}
+	
+	function popSearchMember(/*회원 정보 객체 배열*/members){
+		$('#pop-list').empty();
+		if(members.length==0){
+			var noResult=document.createElement('div');
+			$(noResult).addClass('no-result');
+			$(noResult).text('검색된 유저가 없습니다.');
+			$('#pop-list').append(noResult);
+		}else{
+			for(var k in members){
+				var	mem = members[k];
+				
+				var imgSrc=mem.profile_image;
+				if(imgSrc==null){
+					imgSrc='${contextPath}/resources/image/no_img.jpg';
+				}else{
+					if(mem.member_type!='kakao' && mem.member_type!='naver'){
+						imgSrc='${contextPath}/'+imgSrc;
+					}
+				}
+
+				var divData = new memberDivForm('pop-member',imgSrc,mem.nick_name,mem.member_id);
+				var popContainer = makeMemberDiv(divData);
+				$('#pop-list').append(popContainer);
+			}
+		}
 	}
 	
 	function searchMember(){
@@ -300,6 +384,7 @@ $(document).ready(function(){
 				<input type="button" value="검색">
 			</div>
 			<div id="pop-list">
+			<!-- 
 				<div class="pop-member">
 					<img>
 					<div class="info">
@@ -314,7 +399,6 @@ $(document).ready(function(){
 	        			<div class="member-id">testId2</div>
 	         		</div>
 				</div>
-			<!-- 
 			 <div class="no-result">			 
 				 검색된 유저가 없습니다.
 			 </div>

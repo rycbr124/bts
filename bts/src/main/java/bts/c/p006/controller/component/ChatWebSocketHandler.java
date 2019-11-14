@@ -27,11 +27,14 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	Provider<C_P006VO> c_p006Provider;
 	
 	@Autowired
+	Provider<B_P001VO> b_p001Provider;
+	
+	@Autowired
 	Provider<C_P006FormVO> formProvider;
 	
 	@Autowired
 	C_P006Service c_p006Service;
-	
+
 	private static final Map<WebSocketSession,B_P001VO> sessionList = new HashMap<>();
 	
 	@Override
@@ -105,9 +108,14 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 			if(recVO.getMember_id().equals(receiver)) {
 				c_p006VO.setMe_at("false");				
 				body.clear();
+				
+				B_P001VO senderVO = b_p001Provider.get();
+				senderVO.setProfile_image(b_p001VO.getProfile_image());
+				senderVO.setMember_type(b_p001VO.getMember_type());
+				senderVO.setNick_name(b_p001VO.getNick_name());
+				
 				body.put("result", c_p006VO);
-				body.put("sender_info", b_p001VO.getProfile_image());
-				//body.put("member_type", b_p001VO)
+				body.put("sender_info", senderVO);
 				String result=mapper.writeValueAsString(c_p006FormVO);
 				recSession.sendMessage(new TextMessage(result));
 			}
@@ -122,7 +130,16 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	
 	private void searchMember(C_P006FormVO c_p006FormVO,WebSocketSession session,B_P001VO b_p001VO,ObjectMapper mapper) throws Exception {
 		HashMap<String,Object> body = c_p006FormVO.getBody();
-		System.out.println("33333333333333 "+body);
+		String keyword= (String) body.get("keyword");
+		
+		Map<String,String> searchMap = new HashMap<>();
+		searchMap.put("keyword", keyword);
+		searchMap.put("member_id", b_p001VO.getMember_id());
+		List<B_P001VO> searchResult = c_p006Service.selectSearchList(searchMap);
+		body.clear();
+		body.put("result",searchResult);
+		String result=mapper.writeValueAsString(c_p006FormVO);
+		session.sendMessage(new TextMessage(result));
 	}
 	
 	

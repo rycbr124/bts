@@ -14,11 +14,11 @@
 		resize:none;
 	}
 	
-	.msg-container ::-webkit-scrollbar {
+	.msg-container ::-webkit-scrollbar ,#pop-list::-webkit-scrollbar{
 		width: 5px;
 	}
 	 
-	.msg-container ::-webkit-scrollbar-thumb {
+	.msg-container ::-webkit-scrollbar-thumb,#pop-list::-webkit-scrollbar-thumb {
 		background: #8da5ee; 
 	}
 	
@@ -306,6 +306,12 @@
 	}	
 		
 	/*pop-list*/
+	
+	#pop-list{
+		max-height:500px;
+		overflow:auto;
+	}
+	
 	#pop-list>.no-result{
 		margin-top:10	px;
 		text-align:center;

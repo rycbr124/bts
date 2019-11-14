@@ -70,4 +70,13 @@
 		VALUES (#{contents}, #{receiver}, #{sender}, #{writing_date}, chat_list_seq.nextval)
 	    ]]>
 	</insert>
+	
+	<select id="selectSearchList" parameterType="map" resultMap="membersResult">
+	    <![CDATA[
+	    	SELECT member_id, name, nick_name, gender, birth, member_type, profile_image
+			FROM b_member
+			WHERE member_id != #{member_id}
+			AND ( member_id LIKE '%'||#{keyword}||'%' OR nick_name LIKE '%'||#{keyword}||'%' )
+	    ]]>
+	</select>
 </mapper>

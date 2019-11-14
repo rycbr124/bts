@@ -1,6 +1,7 @@
 package bts.c.p006.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,16 @@ public class C_P006DAOImpl implements C_P006DAO{
 		List<C_P006VO> list = sqlSession.selectList("mapper.message.selectMessageList", c_p006VO);
 		return list;	
 	}
-	
+
+	@Override
 	public void insertMessage(C_P006VO c_p006VO) throws DataAccessException{
 		sqlSession.insert("mapper.message.insertMessage",c_p006VO);
 	}
 	
+	@Override
+	public List<B_P001VO> selectSearchList(Map<String,String> searchMap) throws DataAccessException{
+		List<B_P001VO> list=sqlSession.selectList("mapper.message.selectSearchList", searchMap);
+		return list;
+	}
 }
 	
