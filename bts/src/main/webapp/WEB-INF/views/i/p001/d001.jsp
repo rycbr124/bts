@@ -8,8 +8,26 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/planner/planner.css">
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="${contextPath}/resources/js/plan/planner.js"></script>
 <title>Best Travel Seoul[플래너]</title>
+<script>
+<!--
+$(document).ready(function(){
+	var planList = ${list};
+	var length = planList.plan_no.length;
+for(var i=0; i<length;i++){
+	var map = planList.plan_no[i];
+	console.log(map.content_id);
+}
+for(var j in map){
+	var plan_info = map[j];
+console.log(plan_info);
+}
 
+});
+-->
+</script>
 </head>
 <body>
 	<div class="body" id="body">

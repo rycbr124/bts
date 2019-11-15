@@ -7,7 +7,14 @@ public class I_P002VO_2 {
 	private String plan_no;
 	private String day_no;
 	private String content_id;
+	private String detail_no;
 	
+	public String getDetail_no() {
+		return detail_no;
+	}
+	public void setDetail_no(String detail_no) {
+		this.detail_no = detail_no;
+	}
 	public String getPlan_no() {
 		return plan_no;
 	}

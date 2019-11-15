@@ -1,7 +1,9 @@
 package bts.i.p002.service;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,7 +17,16 @@ import bts.i.p002.dao.I_P002DAO;
 public class I_P002ServiceImpl implements I_P002Service{
 	@Autowired
 	I_P002DAO i_p002DAO;
-
+	
+	@Override
+	public Map<String,List<String>> planList()throws Exception{
+		Map<String, List<String>> result = new HashMap<>();
+		List<String> planList = i_p002DAO.planList();
+		
+		result.put("plan_no", planList);
+		
+		return result;
+	}
 	@Override
 	public void insertPlan(I_P002VO_1 i_p002VO_1,List<I_P002VO_2>contentVO , List<I_P002VO_3> list)throws Exception{
 		String seq = i_p002DAO.selectSeq(i_p002VO_1, contentVO, list);

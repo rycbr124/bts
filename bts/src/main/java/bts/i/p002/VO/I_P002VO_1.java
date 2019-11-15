@@ -12,7 +12,14 @@ public class I_P002VO_1 {
 	private String register_date;
 	private String person_se; 
 	private String range_date;
+	private String open_val;
 	
+	public String getOpen_val() {
+		return open_val;
+	}
+	public void setOpen_val(String open_val) {
+		this.open_val = open_val;
+	}
 	public String getPlan_no() {
 		return plan_no;
 	}

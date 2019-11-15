@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,8 +76,7 @@ public class I_P002ControllerImpl implements I_P002Controller {
 			voArray.add(i, i_p002VO_3);
 		}
 		String contentid = result.get("detail_information");
-		HashMap<String,ArrayList<Integer>> contentArray = mapper.readValue(contentid, HashMap.class);
-		
+		TreeMap<String,ArrayList<Integer>> contentArray = mapper.readValue(contentid, TreeMap.class);
 		List<I_P002VO_2> contentVO = new ArrayList<>();
 		for(Map.Entry<String, ArrayList<Integer>> entry : contentArray.entrySet()) {
 			System.out.println("[key] :" + entry.getKey() + "[value] :" + entry.getValue());
@@ -100,9 +100,7 @@ public class I_P002ControllerImpl implements I_P002Controller {
 		i_p002Service.insertPlan(i_p002VO_1,contentVO,voArray);
 		
 
-		return mav;
-			
+		return mav;		
 	}
-
 
 }

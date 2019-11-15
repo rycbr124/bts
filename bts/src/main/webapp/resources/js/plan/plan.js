@@ -66,12 +66,6 @@ $(function() {// jquery calendar
                $(blockquote).text(resultDay);
            
                
-               // div 생성
-               /*
-				 * var listDiv = document.createElement('ul');
-				 * $(listDiv).addClass('plan_list_content');
-				 * $('.plan_list_container').append(listDiv);
-				 */
                var ul = document.createElement('ul');
                $(ul).addClass("DAY"+(i+1));
                $(ul).prop('id','dropContainer');
@@ -79,7 +73,6 @@ $(function() {// jquery calendar
                $(ul).attr('ondragover','allowDrop(event)');
                
             
-               // li 붙이기
                
                $('.plan_list_container').append(ul);
            }
@@ -103,18 +96,19 @@ $(function() {// jquery calendar
          });  
      });
 });
-$(function map(){
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-mapOption = { 
-	center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-	level: 8 // 지도의 확대 레벨
-	
-};
 
-var map = new kakao.maps.Map(mapContainer, mapOption);
-});// 지도를 생성합니다
 });
+var map_produce = $(function(){
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+	mapOption = { 
+		center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+		level: 8 // 지도의 확대 레벨
+		
+	};
 
+	var map = new kakao.maps.Map(mapContainer, mapOption);
+
+	});// 지도를 생성합니다	
 function enter_check(event){
 	if(window.event.keyCode == 13){
 			var text= $('.tag').val();
@@ -146,7 +140,7 @@ function enter_check(event){
 function searchContentType(contentTypeId){
 $('.detail_list_container').empty();// 맵을 리셋 시킵니다.
 	$('.select_place').attr('onchange','searchContentType('+ contentTypeId +')');
-	var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
+	var serviceKey = 'lUN5B8XHOdyoYlgxfJqeeTMdZZWYbuV9qc80jLPpilJ%2BYukKsP1%2FvR6W2AJ9UxbCgbUlkVqiN5O3%2FWiHMOyvcw%3D%3D'
 	var sigungucode = $('.select_place option:selected').val();
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey='
 	        + serviceKey
@@ -218,8 +212,7 @@ $('.detail_list_container').empty();// 맵을 리셋 시킵니다.
 			
   	});
   	map_marker(arr_result);
-  	var mapx;
-  	var mapy;
+  	
   	$('.add_button').on('click',function(){
   		var arr_index = $(this).parent().index();
   		var li = document.createElement('li');
@@ -250,16 +243,17 @@ $('.detail_list_container').empty();// 맵을 리셋 시킵니다.
   		$(add_title).text(arr_result[arr_index].title);
   		$(add_address).prop('class','add_address');
   		$(add_address).text(arr_result[arr_index].address);
-  		
-  		 mapx = arr_result[arr_index].map_x;
-  		 mapy = arr_result[arr_index].map_y;
+ 
+  	 	var mapx = arr_result[arr_index].map_x;
+  		var mapy = arr_result[arr_index].map_y;
   		var contentid = arr_result[arr_index].contentid;
   		$(li).attr('data-value',contentid);
   		add_marker(mapy,mapx);
-
   	});
+ 
 } 
 function add_marker(mapy,mapx){
+	
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div
   		mapOption = { 
   		    center: new kakao.maps.LatLng(mapy,mapx), // 지도의 중심좌표
@@ -267,11 +261,7 @@ function add_marker(mapy,mapx){
   		};
 
   		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-	
-  		kakao.maps.event.addListener(map, function(mapy,mapx) {        
-  		    // 클릭한 위치에 마커를 표시합니다
-  		    addMarker(mapy,mapx);             
-  		});
+  		
   		// 지도에 표시된 마커 객체를 가지고 있을 배열입니다
   		var markers = [];
 
