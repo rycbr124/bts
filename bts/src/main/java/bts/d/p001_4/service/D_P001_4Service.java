@@ -10,7 +10,8 @@ import bts.d.p001_4.vo.D_P001_4VO_2;
 @Service("d_p001_4Service")
 public interface D_P001_4Service {
 	public List<D_P001_4VO> searchArticle() throws Exception;
-	public List<D_P001_4VO> contentsArticle(String article_no) throws Exception;
-	public List<D_P001_4VO_2> detailPlanner() throws Exception;
-
+	public List<D_P001_4VO> contentsArticle(String plan_no) throws Exception;
+	public List<D_P001_4VO_2> detailPlanner(String plan_no) throws Exception;
+	public void insertContent(List<D_P001_4VO_2> voList) throws Exception;
+	public List<D_P001_4VO> selectMyplan(String member_id) throws Exception;
 }

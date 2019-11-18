@@ -6,55 +6,78 @@
 <mapper namespace="d.p001_4">
 	<!-- 리절트 맵 정의 -->
 	<resultMap id="articleResult" type="d_p001_4VO">
-		<result property="article_no" column="article_no" />
-		<result property="register_date" column="register_date" />
-		<result property="title" column="title" />
-		<result property="contents" column="contents" />
 		<result property="member_id" column="member_id" />
-		<result property="article_cd" column="article_cd" />
-		<result property="item_no" column="item_no" />
-		<result property="file_path" column="file_path" />
-		<result property="file_name" column="file_name" />		
+		<result property="title" column="title" />
+		<result property="plan_no" column="plan_no" />
+		<result property="register_date" column="register_date" />
+		<result property="person_se" column="person_se" />
+		<result property="range_date" column="range_date" />
+		<result property="open_val" column="open_val" />		
 	</resultMap>
 	
 	<resultMap id="detailResult" type="d_p001_4VO_2">
 		<result property="content_id" column="content_id" />
 		<result property="plan_no" column="plan_no" />
 		<result property="day_no" column="day_no" />
+		<result property="plan_desc" column="plan_desc" />
 	</resultMap>
 
 	<!-- 게시글 조회 -->
 	<select id="searchArticle" resultMap="articleResult">
 		<![CDATA[
-			SELECT article_no, register_date, title, member_id
-			FROM article		
+			SELECT plan_no, register_date, title, member_id
+			FROM planner
+			WHERE open_val = 'Y'		
 		]]>	
 	</select>
 	
 	<!-- 게시글 상세 조회 -->
 	<select id="contentsArticle" resultMap="articleResult" parameterType="String">
 		<![CDATA[
-			SELECT title, member_id, contents, register_date, file_path, file_name, i.article_no
-			FROM article a, image_article i		
-			WHERE a.article_no = #{article_no}
-			AND #{article_no} = i.article_no
+			SELECT title, member_id, register_date
+			FROM planner
+			WHERE plan_no = #{plan_no}
 		]]>	
 	</select>
 	
+	
 	<!-- 플래너 연동 조회-->
-	<select id="plannerDetail" resultMap="detailResult">
+	<select id="plannerDetail" resultMap="detailResult" parameterType="String">
 		<![CDATA[
-			SELECT content_id, day_no
-			FROM planner_detail			
+			SELECT content_id, day_no, plan_desc
+			FROM planner_detail
+			WHERE plan_no = #{plan_no}		
 		]]>
 	</select>
 	
-	<!-- 플래너 내용 추가 -->
-	<insert id="insertDesc" parameterType="String">
+	<!-- 본인 플래너 글 조회 -->
+	<select id="selectMyplan" resultMap="articleResult" parameterType="String">
 		<![CDATA[
-			INSERT INTO planner_detail(plan_desc)
-			VALUES (#{plan_desc})
+			SELECT plan_no, title, member_id, register_date
+			FROM planner
+			WHERE member_id = #{member_id}	
 		]]>
-	</insert>
+	
+	</select>
+	
+	
+	<!-- 플래너 내용 추가 -->
+	<update id="insertDesc" parameterType="list">
+		<foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+		UPDATE planner_detail
+		SET plan_desc = #{item.plan_desc}
+		WHERE plan_no = #{item.plan_no}
+		AND content_id = #{item.content_id}
+		</foreach>
+	</update>
+	
+	<!-- 플래너 추가시 open_val 변경 -->
+	<update id="updateOpen" parameterType="d_p001_4VO_2">
+		<![CDATA[
+			UPDATE planner
+			SET open_val = 'Y'
+			WHERE plan_no = #{plan_no}		
+		]]>
+	</update>
 	
 </mapper>

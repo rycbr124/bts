@@ -15,20 +15,136 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
+/* 팝업 js */
 	$(document).ready(function (){
-		var arr_content = new Array();
-		var arr_day = new Array();
-		<c:forEach var="planner" items="${detailPlanner}" varStatus="status">
-			arr_content[${status.index}] = "${planner.content_id}";
-			arr_day[${status.index}] = "${planner.day_no}";
-		</c:forEach>
-		console.log(arr_content);
-		console.log(arr_day);
+		$('.btn-example').click(function(){
+	        var $href = $(this).attr('href');
+	        layer_popup($href);
+	    });
+	    function layer_popup(el){
 
-		for(var i in arr_content){
-			console.log("1111 : " + arr_content[i]);
+	        var $el = $(el);		//레이어의 id를 $el 변수에 저장
+	        var isDim = $el.prev().hasClass('dimBg');	//dimmed 레이어를 감지하기 위한 boolean 변수
+
+	        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
+
+	        var $elWidth = ~~($el.outerWidth()),
+	            $elHeight = ~~($el.outerHeight()),
+	            docWidth = $(document).width(),
+	            docHeight = $(document).height();
+
+	        // 화면의 중앙에 레이어를 띄운다.
+	        if ($elHeight < docHeight || $elWidth < docWidth) {
+	            $el.css({
+	                marginTop: -$elHeight /2,
+	                marginLeft: -$elWidth/2
+	            })
+	        } else {
+	            $el.css({top: 0, left: 0});
+	        }
+
+	        $el.find('a.btn-layerClose').click(function(){
+	            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
+	            return false;
+	        });
+
+	        $('.layer .dimBg').click(function(){
+	            $('.dim-layer').fadeOut();
+	            return false;
+	        });
+
+	    }
+		
+	    /* 팝업 안 내용 */
+	    var arr_title = new Array();
+	    var arr_no = new Array();
+	    var arr_register = new Array();
+	    <c:forEach var="myPlan" items="${myPlan}" varStatus="status">
+			arr_title[${status.index}] = "${myPlan.title}";
+			arr_no[${status.index}] = "${myPlan.plan_no}";
+			arr_register[${status.index}] = "${myPlan.register_date}";
+		</c:forEach>
+		
+		
+		for(var i in arr_title){
+			
+			var tr = document.createElement('tr');
+			$(tr).prop('class', 'content_' + i);
+			var td_no = document.createElement('td');
+			var td_title = document.createElement('td');
+			var td_register = document.createElement('td');
+			
+			var c_no = document.createTextNode(arr_no[i]);
+			var c_title = document.createTextNode(arr_title[i]);
+			var c_register = document.createTextNode(arr_register[i]);
+			var a = document.createElement('a');
+			$(a).prop("href", "javascript:load_plan(" + arr_no[i] + ")");
+			
+
+			
+			td_no.appendChild(c_no);
+			td_title.appendChild(c_title);
+			td_register.appendChild(c_register);
+			$(tr).append(td_no);
+			$(a).append(td_title);
+			$(tr).append(a);
+			$(tr).append(td_register);
+			
+			$('.table_content').append(tr);
+			
+		}
+			
+		var div = document.createElement('div');
+		$(div).prop('class', 'btn-r');
+		$('.pop-conts').append(div);
+		
+		var href = document.createElement('a');
+		$(href).prop('href', '#');
+		$(href).prop('class', 'btn-layerClose');
+		var close = document.createTextNode('Close');
+		href.appendChild(close);
+		$('.btn-r').append(href);
+	});
+
+
+	$(document).on('click', '#btnSave', function(){
+		var length = $('.content_div').length;
+		console.log(length);
+		var frmSave = document.form;
+		frmSave.action="${contextPath}/community/plan_save";
+		frmSave.length.value=length;		
+		frmSave.submit();
+	});
+	
+	function load_plan(plan_no){
+		console.log(plan_no);
+		var plan_content = new Array();
+		var plan_day = new Array();
+		$.ajax({
+			type : "post",
+			async : false,
+			url : "${contextPath}/community/load_plan",
+			data : {
+				plan_no:plan_no
+			},
+			dataType : 'json',
+			success : function(data, textStatus){
+				$('.dim-layer').fadeOut();
+				for(var i in data){
+					plan_content[i] = data[i].content_id;
+					plan_day[i] = data[i].day_no;
+				}
+			},
+			error : function(data, textStatus) {
+		         alert("잘못된 접근입니다.")
+		    }
+			
+		});
+
+		for(var i in plan_content){
+			console.log("1111 : " + plan_content[i]);
 			var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
-			var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + arr_content[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
+			var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + plan_content[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 			
 			$.ajax({
 			      async : false,
@@ -53,36 +169,29 @@
 			         var text = document.createElement('textarea');
 			         $(text).prop('class', 'form-control');
 			         $(text).prop('rows', '10');
-			         $(text).prop('name', 'content');
-			         $(text).prop('id', 'content');
-			         $(text).prop('placeholder', arr_day[i] + '의 내용을 입력해 주세요');
+			         $(text).prop('name', 'content' + i);
+			         $(text).prop('id', 'content' + i);
+			         $(text).prop('placeholder', plan_day[i] + '의 내용을 입력해 주세요');
 			         
-			         var hr = document.createElement('hr');
-			         
-			         
-			         
+			         var hidden = document.createElement('input');
+			         $(hidden).prop('type', 'hidden');
+			         $(hidden).prop('name', 'content_id' + i);
+			         $(hidden).prop('value', plan_content[i]);
+			         			         
+
 			         $('.planner_detail').append(div);
 			         $('#content_div' + i).append(title);
 			         $('#content_div' + i).append(img);
 			         $('#content_div' + i).append(text);
-			         $('#content_div' + i).append(hr);
+			         $('#content_div' + i).append(hidden);
 			         
-
 			      },
 			      error : function(data, textStatus) {
 			         alert("잘못된 접근입니다.")
 			      }
 			   });
 		}
-		
-		
-		
-	});
-
-
-	$(document).on('click', '#btnSave', function(){
-		$("#form").submit();
-	});
+	};
 </script>
 <style>
 @font-face {
@@ -117,7 +226,91 @@ img.content_image{
 div.content_div{
 	padding-right : 70px;
 	padding-left : 70px;
+	padding-top : 30px;
 	background-color : #F6F6F6;
+}
+
+strong{
+	display : block;
+}
+
+table.table_content{
+	align : center;
+	width : 100%;
+}
+
+/*팝업 css*/
+.pop-layer .pop-container {
+  padding: 20px 25px;
+}
+
+.pop-layer p.ctxt {
+  color: #666;
+  line-height: 25px;
+}
+
+.pop-layer .btn-r {
+  width: 100%;
+  margin: 10px 0 20px;
+  padding-top: 10px;
+  border-top: 1px solid #DDD;
+  text-align: right;
+}
+
+.pop-layer {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: auto;
+  background-color: #fff;
+  border: 5px solid #3571B5;
+  z-index: 10;
+  text-align: center;
+}
+
+.dim-layer {
+  display: none;
+  position: fixed;
+  _position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999999;
+}
+
+.dim-layer .dimBg {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: .5;
+  filter: alpha(opacity=50);
+}
+
+.dim-layer .pop-layer {
+  display: block;
+}
+
+a.btn-layerClose {
+  display: inline-block;
+  height: 25px;
+  padding: 0 14px 0;
+  border: 1px solid #304a8a;
+  background-color: #3f5a9d;
+  font-size: 13px;
+  color: #fff;
+  line-height: 25px;
+}
+
+a.btn-layerClose:hover {
+  border: 1px solid #091940;
+  background-color: #1f326a;
+  color: #fff;
 }
 
 </style>
@@ -125,7 +318,7 @@ div.content_div{
 </head>
 <body>
 	<div class="container">
-		<form name="form" id="form" method="post" action="${contextPath}/community/plan_list">
+		<form name="form" id="form" method="post" action="${contextPath}/community/plan_save">
 			<div class="mb-3">
 				<label for="title">제목</label>
 				<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
@@ -141,9 +334,39 @@ div.content_div{
 				<label for="tag">TAG</label>
 				<input type="text" class="form-control" name="tag" id="tag" placeholder="태그를 입력해 주세요">
 			</div>
+			<input type="hidden" name="length" value="">
 		</form>
 	<div>
 		<button type="button" class="btn btn-sm btn-primary" id="btnSave">저장</button>
+		<button type="button" class="btn btn-sm btn-primary" id="btnLoad">불러오기</button>
+		
+		
+		
+		<!-- 딤처리 팝업 -->
+		
+		<a href="#layer2" class="btn-example">딤처리 팝업레이어 1</a>
+		<div class="dim-layer">
+		    <div class="dimBg"></div>
+		    <div id="layer2" class="pop-layer">
+		        <div class="pop-container">
+		            <div class="pop-conts">
+		            	<strong>내가 작성한 플래너 목록</strong>
+		            	<table class="table_content">
+		            	<tr>
+		            	<th>글번호</th>
+		            	<th>제목</th>
+		            	<th>등록일</th>
+		            	</tr>
+		            
+		            	</table>
+		                <!--content //-->
+
+		                <!--// content-->
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		
 	</div>
 	</div>
 

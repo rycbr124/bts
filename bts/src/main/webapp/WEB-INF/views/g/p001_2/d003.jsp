@@ -47,9 +47,6 @@
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6b2f7da39af5c9b3e7839e09fedbc28a"></script>
 
 
-<!-- Magnific Popup core CSS file -->
-<link rel="stylesheet" href="magnific-popup/magnific-popup.css">
-
 <style>
 @font-face {
 	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");

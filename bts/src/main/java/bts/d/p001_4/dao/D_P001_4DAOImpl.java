@@ -19,14 +19,26 @@ public class D_P001_4DAOImpl implements D_P001_4DAO{
 	public List<D_P001_4VO> searchArticle() throws DataAccessException {
 		return sqlSession.selectList("d.p001_4.searchArticle");
 	}
-
+	
 	@Override
-	public List<D_P001_4VO> contentsArticle(String article_no) throws DataAccessException {
-		return sqlSession.selectList("d.p001_4.contentsArticle", article_no);
+	public List<D_P001_4VO> contentsArticle(String plan_no) throws DataAccessException {
+		return sqlSession.selectList("d.p001_4.contentsArticle", plan_no);
+	}
+	
+	@Override
+	public List<D_P001_4VO_2> detailPlanner(String plan_no) throws DataAccessException {
+		return sqlSession.selectList("d.p001_4.plannerDetail", plan_no);
 	}
 
 	@Override
-	public List<D_P001_4VO_2> detailPlanner() throws DataAccessException {
-		return sqlSession.selectList("d.p001_4.plannerDetail");
+	public void insertContent(List<D_P001_4VO_2> voList) throws DataAccessException {
+		sqlSession.insert("d.p001_4.insertDesc", voList);
+		sqlSession.insert("d.p001_4.updateOpen", voList);
+		
+	}
+
+	@Override
+	public List<D_P001_4VO> selectMyplan(String member_id) throws DataAccessException {
+		return sqlSession.selectList("d.p001_4.selectMyplan", member_id);
 	}
 }

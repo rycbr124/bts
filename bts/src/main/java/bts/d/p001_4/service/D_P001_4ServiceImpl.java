@@ -18,15 +18,25 @@ public class D_P001_4ServiceImpl implements D_P001_4Service{
 	public List<D_P001_4VO> searchArticle() throws Exception {	
 		return d_p001_4DAO.searchArticle();
 	}
-
+	
 	@Override
-	public List<D_P001_4VO> contentsArticle(String article_no) throws Exception {
-		return d_p001_4DAO.contentsArticle(article_no);
+	public List<D_P001_4VO> contentsArticle(String plan_no) throws Exception {
+		return d_p001_4DAO.contentsArticle(plan_no);
+	}
+	
+	@Override
+	public List<D_P001_4VO_2> detailPlanner(String plan_no) throws Exception {
+		return d_p001_4DAO.detailPlanner(plan_no);
 	}
 
 	@Override
-	public List<D_P001_4VO_2> detailPlanner() throws Exception {
-		return d_p001_4DAO.detailPlanner();
+	public void insertContent(List<D_P001_4VO_2> voList) throws Exception {
+		d_p001_4DAO.insertContent(voList);
+	}
+
+	@Override
+	public List<D_P001_4VO> selectMyplan(String member_id) throws Exception {
+		return d_p001_4DAO.selectMyplan(member_id);
 	}
 
 }

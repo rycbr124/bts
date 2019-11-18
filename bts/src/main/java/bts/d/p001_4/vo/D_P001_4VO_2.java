@@ -1,12 +1,16 @@
 package bts.d.p001_4.vo;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component("d_p001_4VO_2")
+@Scope("prototype")
 public class D_P001_4VO_2 {
 	private String content_id;
 	private String plan_no;
 	private String day_no;
+	private String plan_desc;	
+	
 	public String getContent_id() {
 		return content_id;
 	}
@@ -25,6 +29,11 @@ public class D_P001_4VO_2 {
 	public void setDay_no(String day_no) {
 		this.day_no = day_no;
 	}
+	public String getPlan_desc() {
+		return plan_desc;
+	}
+	public void setPlan_desc(String plan_desc) {
+		this.plan_desc = plan_desc;
+	}
 	
-
 }
