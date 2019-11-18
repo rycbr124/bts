@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.SystemPropertyUtils;
 
 import bts.i.p002.VO.I_P002VO_1;
 import bts.i.p002.VO.I_P002VO_2;
@@ -28,6 +29,15 @@ public class I_P002ServiceImpl implements I_P002Service{
 		return result;
 	}
 	@Override
+	public Map<String, List<String>> planRoot(String plan_no)throws Exception{
+		Map<String, List<String>> resultRoot = new HashMap<>();
+		List<String> planRoot = i_p002DAO.planRoot(plan_no);
+		
+		resultRoot.put("plan_root", planRoot);
+		
+		return resultRoot;
+	}
+	@Override
 	public void insertPlan(I_P002VO_1 i_p002VO_1,List<I_P002VO_2>contentVO , List<I_P002VO_3> list)throws Exception{
 		String seq = i_p002DAO.selectSeq(i_p002VO_1, contentVO, list);
 		i_p002VO_1.setPlan_no(seq);
@@ -39,8 +49,6 @@ public class I_P002ServiceImpl implements I_P002Service{
 		}
 		i_p002DAO.insertPlan(i_p002VO_1,contentVO,list);
 	}
-
-
 
 
 }

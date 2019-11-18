@@ -33,6 +33,7 @@ $(function() {// jquery calendar
            var week = ['일', '월', '화', '수', '목', '금', '토'];
            // 일자선택을 초기화 해준다
            $("#content_container").empty(); // 초기화
+           $('#dropContainer').empty();
            var nowDate = picker.startDate._d;// 선택한 출발날자
            for(var i=0, j=nowDate.getDay(); i<diff; i++,j++){
             var div = document.createElement("div");
@@ -233,6 +234,7 @@ $('.detail_list_container').empty();// 맵을 리셋 시킵니다.
   		$(li).append(trashcan);
   		$(trashcan).append(trashcan_img);
   		$(trashcan).prop('class','trashcan');
+  		$(trashcan).prop('href','#');
   		$(trashcan_img).prop('class','trashcan_img');
   		$(trashcan_img).attr('src','/bts/resources/image/icon/garbage.png');
   		$(image_container).append(add_image);
@@ -249,9 +251,16 @@ $('.detail_list_container').empty();// 맵을 리셋 시킵니다.
   		var contentid = arr_result[arr_index].contentid;
   		$(li).attr('data-value',contentid);
   		add_marker(mapy,mapx);
+  		
+  		$('.trashcan').on('click',function(){
+  			$(this).parent().remove();
+  		});
   	});
- 
 } 
+
+
+	
+
 function add_marker(mapy,mapx){
 	
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div

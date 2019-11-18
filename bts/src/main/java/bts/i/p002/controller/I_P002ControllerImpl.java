@@ -7,10 +7,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,11 +54,12 @@ public class I_P002ControllerImpl implements I_P002Controller {
 		return mav;
 	}
 
-	@Override
+	
+	
 	@RequestMapping(value = "/insert_plan", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody ModelAndView planInsert(@RequestParam Map<String, String> result , HttpServletRequest request,HttpServletResponse response) throws Exception {
+	public @ResponseBody void planInsert(@RequestParam Map<String, String> result , HttpServletRequest request,HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
-		ModelAndView mav = new ModelAndView("/i/p001/d001");
+		//ModelAndView mav = new ModelAndView("/i/p001/d001");
 		b_p001VO = (B_P001VO) session.getAttribute("memberInfo");
 		String member_id = b_p001VO.getMember_id();
 		i_p002VO_1.setMember_id(member_id);
@@ -79,7 +82,6 @@ public class I_P002ControllerImpl implements I_P002Controller {
 		TreeMap<String,ArrayList<Integer>> contentArray = mapper.readValue(contentid, TreeMap.class);
 		List<I_P002VO_2> contentVO = new ArrayList<>();
 		for(Map.Entry<String, ArrayList<Integer>> entry : contentArray.entrySet()) {
-			System.out.println("[key] :" + entry.getKey() + "[value] :" + entry.getValue());
 			for(int j=0; j<entry.getValue().size();j++) {
 				System.out.println(entry.getValue().getClass().getName());
 				I_P002VO_2 i_p002VO_2 = new I_P002VO_2();
@@ -89,18 +91,12 @@ public class I_P002ControllerImpl implements I_P002Controller {
 				contentVO.add(i_p002VO_2);
 			}
 		}
-		
 		i_p002VO_1.setTitle(titleId);
 		i_p002VO_1.setPerson_se(personnel);
 		i_p002VO_1.setRange_date(daterange);
-		
-		
-
-		
 		i_p002Service.insertPlan(i_p002VO_1,contentVO,voArray);
-		
-
-		return mav;		
+	
+		response.sendRedirect("/bts/planner/planner");
 	}
 
 }

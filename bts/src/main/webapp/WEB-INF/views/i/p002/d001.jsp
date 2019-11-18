@@ -38,10 +38,10 @@
          	</div>
          	<select class="personnel" style="height:30px; margin-top:10px; margin-bottom:10px;">
          		<option value=''>타입선택</option>
-         		<option value='혼자'>혼자</option>
-         		<option value='친구'>친구</option>
-         		<option value='커플/신혼'>커플/신혼</option>
-         		<option value='가족'>가족</option>
+         		<option value='혼자'>나홀로 여행</option>
+         		<option value='친구'>친구와 함께</option>
+         		<option value='커플/신혼'>커플/신혼 여행</option>
+         		<option value='가족'>가족 여행</option>
          	</select>
          	<input type="hidden" name="personnel" value=""/>
          </div>

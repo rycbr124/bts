@@ -74,6 +74,14 @@
 	) t
 	WHERE p.plan_no = pd.plan_no
 	AND t.dt = pd.detail_no
+	ORDER BY p.plan_no desc
+</select>
+
+<select id="planRoot" parameterType="String" resultType="Map">
+	SELECT *
+    FROM planner_detail 
+    WHERE plan_no = #{plan_no,jdbcType=VARCHAR}
+    ORDER BY detail_no asc
 </select>
 
 </mapper>

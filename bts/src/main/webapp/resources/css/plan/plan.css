@@ -1,6 +1,7 @@
 @charset "UTF-8";
 body{
    margin:0;
+   width:100%;
    overflow:hidden;
 }
 
@@ -130,7 +131,7 @@ p .delete_tag{
    outline:none;
 }
 .content_container{
-   height:74.5vh;
+   height:80vh;
    width:100%;
    max-height:800px;
    overflow-y:auto;
