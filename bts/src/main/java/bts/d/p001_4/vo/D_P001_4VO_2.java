@@ -6,11 +6,18 @@ import org.springframework.stereotype.Component;
 @Component("d_p001_4VO_2")
 @Scope("prototype")
 public class D_P001_4VO_2 {
+	private String title;
 	private String content_id;
 	private String plan_no;
 	private String day_no;
 	private String plan_desc;	
 	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	public String getContent_id() {
 		return content_id;
 	}

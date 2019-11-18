@@ -65,7 +65,6 @@
 			arr_register[${status.index}] = "${myPlan.register_date}";
 		</c:forEach>
 		
-		
 		for(var i in arr_title){
 			
 			var tr = document.createElement('tr');
@@ -81,7 +80,6 @@
 			$(a).prop("href", "javascript:load_plan(" + arr_no[i] + ")");
 			
 
-			
 			td_no.appendChild(c_no);
 			td_title.appendChild(c_title);
 			td_register.appendChild(c_register);
@@ -120,6 +118,8 @@
 		console.log(plan_no);
 		var plan_content = new Array();
 		var plan_day = new Array();
+		var title = null;
+		var p_no = null;
 		$.ajax({
 			type : "post",
 			async : false,
@@ -130,9 +130,16 @@
 			dataType : 'json',
 			success : function(data, textStatus){
 				$('.dim-layer').fadeOut();
+				$('.planner_detail').empty();
 				for(var i in data){
 					plan_content[i] = data[i].content_id;
 					plan_day[i] = data[i].day_no;
+					title = data[i].title;
+					p_no = data[i].plan_no;
+					
+					$('#title').prop('value', title);
+					$('#p_no').prop('value', p_no);
+					
 				}
 			},
 			error : function(data, textStatus) {
@@ -142,7 +149,6 @@
 		});
 
 		for(var i in plan_content){
-			console.log("1111 : " + plan_content[i]);
 			var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
 			var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + plan_content[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 			
@@ -152,11 +158,12 @@
 			      dataType : 'json',
 			      success : function(data, textStatus) {
 			         var resultArray = data.response.body.items.item;
+			         
 			         var div = document.createElement('div');
 			         $(div).prop('class', 'content_div');
 			         $(div).prop('id', 'content_div' + i);
 
-			         var title = document.createElement('h3');
+			         var title = document.createElement('h5');
 			         $(title).prop('class', 'font-weight-light');
 			         var title_text = document.createTextNode(resultArray.title);
 			         title.appendChild(title_text);
@@ -164,7 +171,6 @@
 			         var img= document.createElement('img');
 			         $(img).prop('class', 'content_image');
 			         $(img).prop('src', resultArray.firstimage);
-			         
 			         
 			         var text = document.createElement('textarea');
 			         $(text).prop('class', 'form-control');
@@ -182,6 +188,7 @@
 			         $('.planner_detail').append(div);
 			         $('#content_div' + i).append(title);
 			         $('#content_div' + i).append(img);
+			         
 			         $('#content_div' + i).append(text);
 			         $('#content_div' + i).append(hidden);
 			         
@@ -237,6 +244,10 @@ strong{
 table.table_content{
 	align : center;
 	width : 100%;
+}
+
+input#title{
+	width : 500px;
 }
 
 /*팝업 css*/
@@ -319,6 +330,7 @@ a.btn-layerClose:hover {
 <body>
 	<div class="container">
 		<form name="form" id="form" method="post" action="${contextPath}/community/plan_save">
+		<h1>글쓰기</h1>
 			<div class="mb-3">
 				<label for="title">제목</label>
 				<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
@@ -327,18 +339,15 @@ a.btn-layerClose:hover {
 				<label for="content">내용</label>
 				<div class="planner_detail">
 				
-				</div>
-				
+				</div>	
 			</div>
-			<div class="mb-3">
-				<label for="tag">TAG</label>
-				<input type="text" class="form-control" name="tag" id="tag" placeholder="태그를 입력해 주세요">
-			</div>
+			
 			<input type="hidden" name="length" value="">
+			<input type="hidden" name="p_no" id="p_no" value="">
 		</form>
 	<div>
 		<button type="button" class="btn btn-sm btn-primary" id="btnSave">저장</button>
-		<button type="button" class="btn btn-sm btn-primary" id="btnLoad">불러오기</button>
+		<button type="button" class="btn btn-sm btn-primary" id="btnLoad" onclick="location.href='#layer2'">불러오기</button>
 		
 		
 		

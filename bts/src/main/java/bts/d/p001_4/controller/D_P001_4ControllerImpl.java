@@ -80,8 +80,10 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 	@RequestMapping(value="/load_plan" ,method={RequestMethod.POST,RequestMethod.GET})
 	public @ResponseBody String loadPlanner(@RequestParam("plan_no") String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<D_P001_4VO_2> detailPlanner = d_p001_4Service.detailPlanner(plan_no);
+		//List<D_P001_4VO_3> searchTag = d_p001_4Service.searchTag(plan_no);
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonResult = mapper.writeValueAsString(detailPlanner);
+		//String jsonTag = mapper.writeValueAsString(searchTag);
 		
 		System.out.println("플랜넘버 : " + plan_no);
 		System.out.println("결과값 : " + jsonResult);
@@ -104,10 +106,10 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 			desc.add(i, result.get("content" + i));
 			id.add(i, result.get("content_id" + i));
 		};
-		
+		System.out.println("p_no : " + result.get("p_no"));
 		for(int i = 0; i < desc.size(); i++) {
 			D_P001_4VO_2 vo = d_p001_4VO_2.get(); 
-			vo.setPlan_no("83");
+			vo.setPlan_no(result.get("p_no"));
 			vo.setContent_id(id.get(i));
 			vo.setPlan_desc(desc.get(i));
 			

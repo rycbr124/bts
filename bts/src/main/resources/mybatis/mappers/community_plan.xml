@@ -16,10 +16,16 @@
 	</resultMap>
 	
 	<resultMap id="detailResult" type="d_p001_4VO_2">
+		<result property="title" column="title" />
 		<result property="content_id" column="content_id" />
 		<result property="plan_no" column="plan_no" />
 		<result property="day_no" column="day_no" />
 		<result property="plan_desc" column="plan_desc" />
+	</resultMap>
+	
+	<resultMap id="tagResult" type="d_p001_4VO_3">
+		<result property="tag_name" column="tag_name" />
+		<result property="plan_no" column="plan_no" />
 	</resultMap>
 
 	<!-- 게시글 조회 -->
@@ -40,13 +46,14 @@
 		]]>	
 	</select>
 	
-	
 	<!-- 플래너 연동 조회-->
 	<select id="plannerDetail" resultMap="detailResult" parameterType="String">
-		<![CDATA[
-			SELECT content_id, day_no, plan_desc
-			FROM planner_detail
-			WHERE plan_no = #{plan_no}		
+		<![CDATA[		
+			SELECT DISTINCT(title), content_id, p.plan_no, plan_desc, day_no
+			FROM planner p, planner_detail pd
+			WHERE p.plan_no = pd.plan_no
+			AND p.plan_no = #{plan_no}
+			ORDER BY day_no
 		]]>
 	</select>
 	
@@ -59,7 +66,6 @@
 		]]>
 	
 	</select>
-	
 	
 	<!-- 플래너 내용 추가 -->
 	<update id="insertDesc" parameterType="list">
@@ -79,5 +85,14 @@
 			WHERE plan_no = #{plan_no}		
 		]]>
 	</update>
+	
+	<!-- 태그 조회 -->
+	<select id="searchTag" resultMap="tagResult" parameterType="String">
+		<![CDATA[
+			SELECT tag_name
+			FROM tag_planner
+			WHERE plan_no = #{plan_no}
+		]]>
+	</select>
 	
 </mapper>

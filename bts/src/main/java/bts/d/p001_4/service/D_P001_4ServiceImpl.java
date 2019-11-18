@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import bts.d.p001_4.dao.D_P001_4DAO;
 import bts.d.p001_4.vo.D_P001_4VO;
 import bts.d.p001_4.vo.D_P001_4VO_2;
+import bts.d.p001_4.vo.D_P001_4VO_3;
 
 @Service("d_p001_4Service")
 public class D_P001_4ServiceImpl implements D_P001_4Service{
@@ -30,6 +31,10 @@ public class D_P001_4ServiceImpl implements D_P001_4Service{
 	}
 
 	@Override
+	public List<D_P001_4VO_3> searchTag(String plan_no) throws Exception {
+		return d_p001_4DAO.searchTag(plan_no);
+	}
+	@Override
 	public void insertContent(List<D_P001_4VO_2> voList) throws Exception {
 		d_p001_4DAO.insertContent(voList);
 	}
@@ -38,5 +43,6 @@ public class D_P001_4ServiceImpl implements D_P001_4Service{
 	public List<D_P001_4VO> selectMyplan(String member_id) throws Exception {
 		return d_p001_4DAO.selectMyplan(member_id);
 	}
+
 
 }
