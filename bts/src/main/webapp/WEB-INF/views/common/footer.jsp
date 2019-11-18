@@ -10,7 +10,7 @@ list-style: none;
 }
 
 #footer {width: 100%;padding: 0 0 60px;position:relative; background: #fff;z-index:100;}
-.footer_inner {max-width: 1200px;margin: 0 auto;position: relative;}
+.footer_inner {max-width: 1200px;margin: 0 auto;position: absolute;}
 /*.footer_logo {position:absolute;right: 70px;width: 51px;height: 81px;} */
 
 /* top */

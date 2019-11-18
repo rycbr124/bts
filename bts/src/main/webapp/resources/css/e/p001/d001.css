@@ -1,0 +1,285 @@
+@charset "UTF-8";
+
+@font-face{
+	src:url("/resources/fonts/Binggrae/Binggrae-Bold.ttf");
+	font-family:"binggrae";	
+}
+
+.carousel-caption{
+	font-size:25px;
+	color:#666699;
+	font-family:"binggrae";
+}
+
+.carousel-inner{
+	margin-right:100px;
+}
+
+#mainsubject{
+	font-family:"binggrae";
+}
+
+#crsImg1{
+	width:800px;
+	height:400px;
+}
+#crsImg2{
+	width:800px;
+	height:400px;
+}
+#crsImg3{
+	width:800px;
+	height:400px;
+}
+
+[id='toggle-heart'] {
+  position: absolute;
+  left: -100vw;
+  vertical-align:bottom;
+}
+[for='toggle-heart'] {
+  color: #aab8c2;
+}
+
+[id='toggle-heart']:checked + label {
+  color: #e2264d;
+}
+[for='toggle-heart'] {
+  font-size: 2em;
+  cursor: pointer;
+}
+[for='toggle-heart'] { 
+  align-self: center; 
+}
+
+
+[id='toggle-heart2'] {
+  position: absolute;
+  left: -100vw;
+  vertical-align:bottom;
+}
+[for='toggle-heart2'] {
+  color: #aab8c2;
+}
+
+[id='toggle-heart2']:checked + label {
+  color: #e2264d;
+}
+[for='toggle-heart2'] {
+  font-size: 2em;
+  cursor: pointer;
+}
+[for='toggle-heart2'] { 
+  align-self: center; 
+}
+
+[id='toggle-heart3'] {
+  position: absolute;
+  left: -100vw;
+  vertical-align:bottom;
+}
+[for='toggle-heart3'] {
+  color: #aab8c2;
+}
+
+[id='toggle-heart3']:checked + label {
+  color: #e2264d;
+}
+[for='toggle-heart3'] {
+  font-size: 2em;
+  cursor: pointer;
+}
+[for='toggle-heart3'] { 
+  align-self: center; 
+}
+
+[id='toggle-heart4'] {
+  position: absolute;
+  left: -100vw;
+  vertical-align:bottom;
+}
+[for='toggle-heart4'] {
+  color: #aab8c2;
+}
+
+[id='toggle-heart4']:checked + label {
+  color: #e2264d;
+}
+[for='toggle-heart4'] {
+  font-size: 2em;
+  cursor: pointer;
+}
+[for='toggle-heart4'] { 
+  align-self: center; 
+}
+
+[id='toggle-heart5'] {
+  position: absolute;
+  left: -100vw;
+  vertical-align:bottom;
+}
+[for='toggle-heart5'] {
+  color: #aab8c2;
+}
+
+[id='toggle-heart5']:checked + label {
+  color: #e2264d;
+}
+[for='toggle-heart5'] {
+  font-size: 2em;
+  cursor: pointer;
+}
+[for='toggle-heart5'] { 
+  align-self: center; 
+}
+
+[id='toggle-heart6'] {
+  position: absolute;
+  left: -100vw;
+  vertical-align:bottom;
+}
+[for='toggle-heart6'] {
+  color: #aab8c2;
+}
+
+[id='toggle-heart6']:checked + label {
+  color: #e2264d;
+}
+[for='toggle-heart6'] {
+  font-size: 2em;
+  cursor: pointer;
+}
+[for='toggle-heart6'] { 
+  align-self: center; 
+}
+body {
+  display: flex;
+  justify-content: center; /* horizontal alignment */
+  margin: 0;
+  height: 100vh; /* the viewport height */
+}
+
+/* vertical alignment, needs the height of 
+   the body to be equal to that of the 
+   viewport if we want it in the middle */
+
+
+.card-title{
+	font-color:#999999;
+}
+
+.container{
+	margin-top:60px;
+	margin-bottom:60px;
+	margin-left:400px;
+
+}
+body > .container{
+	
+}
+#centerimg{
+	width:500px;
+	height:300px;
+	border-radius:1em;	
+}
+#centercardText{
+	inherit:none;
+	position:relative;
+	font-family:"binggrae";
+}
+.row{
+	padding:0px;
+	margin-top:20px;
+	
+}
+
+#center{font-family:"nanum"}	
+
+.card-image-top{
+	width:200px;
+	height:100px;
+	max-width:100%;
+	max-height:100%;
+}
+#content-img1{
+	width:350px;
+	height:350px;
+	max-width:100%;
+	max-height:100%;
+	border-radius:1em;
+}
+#content-img2{
+	width:350px;
+	height:350px;
+	max-width:100%;
+	max-height:100%;
+	border-radius:1em;
+}
+#content-img3{
+	width:350px;
+	height:350px;
+	max-width:100%;
+	max-height:100%;
+	border-radius:1em;
+}
+#content-img4{
+	width:350px;
+	height:350px;
+	max-width:100%;
+	max-height:100%;
+	border-radius:1em;
+}
+#content-img5{
+	width:350px;
+	height:350px;
+	max-width:100%;
+	max-height:100%;
+	border-radius:1em;
+}
+#content-img6{
+	width:350px;
+	height:350px;
+	max-width:100%;
+	max-height:100%;
+	border-radius:1em;
+}
+#accTitle{
+	color:#FF6699;
+}
+#content1{
+	width:260px;
+	heigth:370px;
+}
+#content2{
+    width:260px;
+	heigth:370px;
+}
+#content3{
+    width:260px;
+	heigth:370px;
+}
+#content4{
+    width:260px;
+	heigth:370px;
+}
+#content5{
+    width:260px;
+	heigth:370px;
+}
+#content6{
+    width:260px;
+	heigth:425px;
+}
+
+.pagination{
+	display:block;
+	text-align:center;
+	margin-top:10px;
+}
+.pagination >li > a{
+	float:none;
+	color:#999999;
+}
+#pagination{
+	padding-right:388px;
+}

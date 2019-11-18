@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.accompany">
+	<resultMap id="accompanyResult" type="e_p001VO">
+		<result property="register_date" column="register_date" />
+		<result property="article_no" column="article_no" />
+		<result property="article_cd" column="article_cd" />
+		<result property="memeber_id" column="member_id" />
+	</resultMap>
+	
+	<!-- 페이징 처리 쿼리 -->
+	<select id="selectAccompany" resultMap="pagingResult">
+	<![CDATA[
+	select * from(select ROWNUM RN, A.*FROM(select * from accompany_list
+	order by article_no desc)A) where RN between #{start} and #{end}
+	]]>	
+	</select>
+	
+	<select id="countBoard" resultType="int">
+	<![CDATA[
+	select count(*) from accompany_list
+	]]>
+	</select>
+	
+	
+</mapper>	
+	

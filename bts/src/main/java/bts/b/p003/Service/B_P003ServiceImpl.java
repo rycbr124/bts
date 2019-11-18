@@ -1,6 +1,7 @@
 package bts.b.p003.Service;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -29,6 +30,7 @@ public class B_P003ServiceImpl implements B_P003Service {
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		String id = p003DAO.find_id(email);
+		
 		if (id == null) {
 			out.print("<script>");
 			out.print("alert('가입된 아이디가 없습니다.');");
@@ -44,7 +46,7 @@ public class B_P003ServiceImpl implements B_P003Service {
 			out.close();
 			return id;
 		}
-
+	
 	}
 
 	@Override

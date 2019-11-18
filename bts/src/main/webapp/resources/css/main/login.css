@@ -1,0 +1,41 @@
+@charset "UTF-8";
+@font-face{
+	src:url("/bts/resources/fonts/Binggrae-Bold.ttf");
+	font-family:"binggrae";	
+}
+
+#popUpWindow{
+	text-align:center;
+	font-family:"binggrae";
+}
+.modal-title{
+	color:#FFFFFF;
+}
+.modal-dialog{
+	padding-top:200px;
+	text-align:center;
+}
+.modal-content{
+	background:#828282;
+	width:700px;
+	height:400px;
+	text-align:center;
+	display:inline-block;
+}
+
+#loginbutton{
+	background:#FFFFFF;
+	font-color:#000000;
+	width:120px;
+	border-radius:1em;
+}
+#findId_Pw{
+	padding-right:248px;
+}
+#member_id{
+	width:300px;
+}
+#password{
+	width:300px;
+	font-color:#000000;
+}
