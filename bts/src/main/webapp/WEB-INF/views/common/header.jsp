@@ -13,13 +13,13 @@ body{margin:0;}
 -webkit-transition:background 300ms, height 200ms; 
 transition: background 300ms, height 200ms; }
 /*LOGO*/
-.header_logo img{width:130px;height:70px; position:absolute; left:0;top:20px;
+.header_logo img{width:130px;height:70px; position:absolute; left:0;top:10px;
 z-index:2;margin-left:40px;}
-.header_logo img:hover{width:130px; height:70px;content:url(/bts/resources/image/BTS_logo_black_all.png);}
+.header_logo img:hover{width:130px; height:70px;content:url(/bts/resources/image/logo/검정/logo_black.png);}
 
 /*MENU*/
-.menu_container {width: 100%;position: relative;font-size:0;line-height: 1;text-align: center;z-index: 1;}
-#menu {margin-top: 20px;text-align:center; -webkit-transition: all 0.3s; transition:all 300ms;}
+.menu_container {width: 100%;position: absolute;font-size:0;line-height: 1;text-align: center;z-index: 1;}
+#menu {margin-top: 20px;text-align:center;}
 #menu:after {content: '';display: table;clear: both;}
 #menu a {display: block;line-height: 1.7;text-decoration:none;}
 
@@ -33,7 +33,7 @@ html #menu > li:hover > a,#menu > li.active > a{color:white;}
 #menu > li > a:after {width:100%;content: attr(data-hover);position: absolute;top: -30px;left:0;transform: translate3d(0,0,0);-moz-transform: translate3d(0,0,0);-webkit-transform: translate3d(0,0,0);}
 
 /*MEMBER*/
-.member_menu{position:absolute;right:70px;top:50px;}
+.member_menu{position:absolute;right:70px;top:20px;}
 .member_menu a{padding-left:27px; margin-right:20px;font-size:12px;
 font-weight:600; line-height:20px; letter-spacing:0.025em; color:black;font-family:'Binggrae-bold',sans-serif;position:relative; display:inline-block;vertical-align:middle;
 -webkit-transition:all 0.25s;transition:all 0.25s;}
@@ -48,7 +48,7 @@ html .member_menu a:hover{color:rgb(127,127,127);}
 <body>
 <div id="header">
       <a href="${contextPath}/main/main" class="header_logo">
-         <img src="${contextPath}/resources/image/BTS_logo_black.png" alt="BTS">
+         <img src="${contextPath}/resources/image/logo/검정/logo_black_all.png" alt="BTS">
       </a>
    <div class="header_control_container">
       <ul id="menu" class="menu">

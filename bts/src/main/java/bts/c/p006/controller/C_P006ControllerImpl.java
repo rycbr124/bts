@@ -30,9 +30,7 @@ public class C_P006ControllerImpl implements C_P006Controller{
 		B_P001VO memberInfo = (B_P001VO) request.getSession().getAttribute("memberInfo");
 		String id = memberInfo.getMember_id();
 		List<B_P001VO> initList = new ArrayList<>();
-		initList = c_p006Service.selectMemberList(id);
-		System.out.println("11111111111111111111111  "+initList);
-		
+		initList = c_p006Service.selectMemberList(id);		
 		ModelAndView mav = new ModelAndView("/c/p006/d001");
 		mav.addObject("memberList",initList);
 		

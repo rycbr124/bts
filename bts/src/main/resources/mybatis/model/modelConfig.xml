@@ -10,9 +10,11 @@
       <typeAlias type="bts.b.p001.VO.NaverVO" alias="naverVO" />
       <typeAlias type="bts.i.p002.VO.I_P002VO_1" alias="i_p002VO_1" />
 	  <typeAlias type="bts.i.p002.VO.I_P002VO_2" alias="i_p002VO_2" />
+	  <typeAlias type="bts.i.p002.VO.I_P002VO_3" alias="i_p002VO_3" />
 	  <typeAlias type="bts.c.p006.vo.C_P006VO" alias="c_p006VO" /> 
 	  <typeAlias type="bts.d.p001_4.vo.D_P001_4VO" alias="d_p001_4VO" />
 	  <typeAlias type="bts.d.p001_4.vo.D_P001_4VO_2" alias="d_p001_4VO_2" />      
 	  <typeAlias type="bts.c.p001.vo.C_P001VO" alias="c_p001vo" />  
+	  <typeAlias type="bts.d.p001_4.vo.D_P001_4VO_3" alias="d_p001_4VO_3" />      
    </typeAliases>
 </configuration>

@@ -3,12 +3,17 @@
  */
 
 $(document).ready(function(){
+	$('input[type="text"]').keydown(function() {
+		  if (event.keyCode === 13) {
+		    event.preventDefault();
+		  };
+		});
    var diff;
    document.getElementById('map_controller').style.width = "200px";
    document.getElementById('plan_list_container').style.display = "none";
    document.getElementById('tourist').style.display = "none";
    document.getElementById('map_area').style.width = '1717px';
-$(function() {//jquery calendar
+$(function() {// jquery calendar
      $('input[name="daterange"]').daterangepicker({
        opens: 'right',
        autoUpdateInput: true,
@@ -19,19 +24,20 @@ $(function() {//jquery calendar
      });
    
      $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
-        //시작일과 마지막일의 차수를 구해 정수로 반환해주는 코드
+        // 시작일과 마지막일의 차수를 구해 정수로 반환해주는 코드
            picker.startDate._d.setHours(0,0,0,0);
            picker.endDate._d.setHours(0,0,0,0);
            diff = picker.endDate._d - picker.startDate._d;
            diff = diff/(1000*60*60*24)+1;
-           //요일 반환 코드
+           // 요일 반환 코드
            var week = ['일', '월', '화', '수', '목', '금', '토'];
-           //일자선택을 초기화 해준다
-           $("#content_container").empty(); //초기화
-           var nowDate = picker.startDate._d;//선택한 출발날자
+           // 일자선택을 초기화 해준다
+           $("#content_container").empty(); // 초기화
+           $('#dropContainer').empty();
+           var nowDate = picker.startDate._d;// 선택한 출발날자
            for(var i=0, j=nowDate.getDay(); i<diff; i++,j++){
             var div = document.createElement("div");
-            if(j==7){//토요일 에서 일요일로 배열을 초기화해준다
+            if(j==7){// 토요일 에서 일요일로 배열을 초기화해준다
                j=0;
             }
             var dayOfWeek = week[j];
@@ -61,12 +67,6 @@ $(function() {//jquery calendar
                $(blockquote).text(resultDay);
            
                
-               //div 생성
-               /*
-               var listDiv = document.createElement('ul');
-               $(listDiv).addClass('plan_list_content');
-               $('.plan_list_container').append(listDiv);
-                * */
                var ul = document.createElement('ul');
                $(ul).addClass("DAY"+(i+1));
                $(ul).prop('id','dropContainer');
@@ -74,9 +74,6 @@ $(function() {//jquery calendar
                $(ul).attr('ondragover','allowDrop(event)');
                
             
-               //li 붙이기
-              
-             
                
                $('.plan_list_container').append(ul);
            }
@@ -100,59 +97,59 @@ $(function() {//jquery calendar
          });  
      });
 });
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
-mapOption = { 
-    center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
-    level: 9 // 지도의 확대 레벨
-};
-
-var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
 });
-
+var map_produce = $(function(){
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+	mapOption = { 
+		center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+		level: 8 // 지도의 확대 레벨
 		
+	};
 
+	var map = new kakao.maps.Map(mapContainer, mapOption);
 
-
-
-function enter_check(e){
+	});// 지도를 생성합니다	
+function enter_check(event){
 	if(window.event.keyCode == 13){
-		var text= $('.tag').val();
-		var p = document.createElement('p');
-		var a = document.createElement('a');
-		var length = $('.tag_value').children().length;
-		if(length >= 5){
-			alert('태그는 5개까지만 추가할수있습니다.')
-			
-		}else{
-			$('.tag_value').append(p);
-			$(p).prop('class','tag_name');
-			$(p).prop('style','display:inline-block;');
-			$(p).text('#'+text);
-			$('.tag_name').append(a);
-			$(a).prop('class','delete_tag');
-			$('.delete_tag').text('x');
+			var text= $('.tag').val();
+			var p = document.createElement('p');
+			var a = document.createElement('a');
+			var length = $('.tag_value').children().length;
+			if(length >= 5){
+				alert('태그는 5개까지만 추가할수있습니다.')
+				
+			}else{
+				$('.tag_value').append(p);
+				$(p).prop('class','tag_name');
+				$(p).prop('style','display:inline-block;');
+				$(p).text('#'+text);
+				$('.tag_name').append(a);
+				$(a).prop('class','delete_tag');
+				$('.delete_tag').text('x');
+			}
+			$('.tag').val('');
 		}
-		$('.tag').val('');
-		}
+	
 	$('.delete_tag').on('click',function(){
 		$(this).parent().remove();
 	});
-	}
-//관광지 리스트 출력 함수
-function searchContentType(contentTypeId){
-$('.detail_list_container').empty();
 	
+	}
+// 관광지 리스트 출력 함수
+
+function searchContentType(contentTypeId){
+$('.detail_list_container').empty();// 맵을 리셋 시킵니다.
 	$('.select_place').attr('onchange','searchContentType('+ contentTypeId +')');
-	var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
+	var serviceKey = 'lUN5B8XHOdyoYlgxfJqeeTMdZZWYbuV9qc80jLPpilJ%2BYukKsP1%2FvR6W2AJ9UxbCgbUlkVqiN5O3%2FWiHMOyvcw%3D%3D'
 	var sigungucode = $('.select_place option:selected').val();
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey='
 	        + serviceKey
 	        + '&contentTypeId='+ contentTypeId +'&areaCode=1&sigunguCode='+sigungucode+'&MobileOS=ETC&MobileApp=AppTest&arrange=P&numOfRows=100&pageNo=1&_type=json';
-	
-
 	console.log(reqUrl);
+
   var arr_result = new Array();
+
   var resultArray;
   var array = [];
   	$.ajax({
@@ -196,8 +193,8 @@ $('.detail_list_container').empty();
 					obj_result['map_y'] = resultArray[i].mapy;
 					obj_result['first_image'] = resultArray[i].firstimage;
 					obj_result['address'] = resultArray[i].addr1;
+					obj_result['contentid'] = resultArray[i].contentid;
 					arr_result[i] = obj_result;
-					
 					var c_title = document
 						.createTextNode(resultArray[i].title);
 					var c_addr1 = document
@@ -216,8 +213,8 @@ $('.detail_list_container').empty();
 			
   	});
   	map_marker(arr_result);
+  	
   	$('.add_button').on('click',function(){
-  		
   		var arr_index = $(this).parent().index();
   		var li = document.createElement('li');
   		var image_container = document.createElement('div');
@@ -228,14 +225,16 @@ $('.detail_list_container').empty();
   		var trashcan_img = document.createElement('img');
   		var text = $('.plan_list_header>h1').text();
   		var add_list = document.getElementsByClassName(text)[0]
+  		var length =$(add_list).children().length;
   		add_list.appendChild(li);
-  		$(li).prop('class','add_list');
+  		$(li).prop('id','add_list');
   		$(li).append(image_container);
   		$(li).append(add_title);
   		$(li).append(add_address);
   		$(li).append(trashcan);
   		$(trashcan).append(trashcan_img);
   		$(trashcan).prop('class','trashcan');
+  		$(trashcan).prop('href','#');
   		$(trashcan_img).prop('class','trashcan_img');
   		$(trashcan_img).attr('src','/bts/resources/image/icon/garbage.png');
   		$(image_container).append(add_image);
@@ -246,29 +245,36 @@ $('.detail_list_container').empty();
   		$(add_title).text(arr_result[arr_index].title);
   		$(add_address).prop('class','add_address');
   		$(add_address).text(arr_result[arr_index].address);
-  		var mapx = arr_result[arr_index].map_x;
+ 
+  	 	var mapx = arr_result[arr_index].map_x;
   		var mapy = arr_result[arr_index].map_y;
+  		var contentid = arr_result[arr_index].contentid;
+  		$(li).attr('data-value',contentid);
   		add_marker(mapy,mapx);
   		
+  		$('.trashcan').on('click',function(){
+  			$(this).parent().remove();
+  		});
   	});
 } 
+
+
+	
+
 function add_marker(mapy,mapx){
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+	
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div
   		mapOption = { 
-  		    center: new kakao.maps.LatLng(37.5759947835, 126.9768292386), // 지도의 중심좌표
+  		    center: new kakao.maps.LatLng(mapy,mapx), // 지도의 중심좌표
   		    level: 8 // 지도의 확대 레벨
   		};
 
   		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-  		kakao.maps.event.addListener(map, function(mapy,mapx) {        
-  		    // 클릭한 위치에 마커를 표시합니다 
-  		    addMarker(mapy,mapx);             
-  		});
-
+  		
   		// 지도에 표시된 마커 객체를 가지고 있을 배열입니다
   		var markers = [];
 
-  		// 마커 하나를 지도위에 표시합니다 
+  		// 마커 하나를 지도위에 표시합니다
   		addMarker(new kakao.maps.LatLng(mapy, mapx));
 
   		// 마커를 생성하고 지도위에 표시하는 함수입니다
@@ -298,9 +304,10 @@ function add_marker(mapy,mapx){
 
 function map_marker(arr_result){
 	$('#map').empty();
-	var mapContainer = document.getElementById('map'), // 지도를 표시할 div  
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 	mapOption = { 
-	    center: new kakao.maps.LatLng(37.5759947835, 126.9768292386), // 지도의 중심좌표
+	    center: new kakao.maps.LatLng(37.5759947835, 126.9768292386), // 지도의
+																		// 중심좌표
 	    level: 8 // 지도의 확대 레벨
 	};
 
@@ -312,7 +319,7 @@ function map_marker(arr_result){
 	for(var i = 0; i < arr_length; i++){
 	   positions[i] = { content: '<div>' + arr_result[i].title + '</div>', latlng: new kakao.maps.LatLng(arr_result[i].map_y, arr_result[i].map_x)}
 	   
-}
+    }
 
 	for (var i = 0; i < positions.length; i ++) {
 	// 마커를 생성합니다
@@ -321,29 +328,71 @@ function map_marker(arr_result){
 	    position: positions[i].latlng // 마커의 위치
 	});
 
-	 //마커에 표시할 인포윈도우를 생성합니다 
+	 // 마커에 표시할 인포윈도우를 생성합니다
 	var infowindow = new kakao.maps.InfoWindow({
 	    content: positions[i].content // 인포윈도우에 표시할 내용
 	});
 
 	// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
-	 //이벤트 리스너로는 클로저를 만들어 등록합니다 
-	 //for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+	 // 이벤트 리스너로는 클로저를 만들어 등록합니다
+	 // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
 	kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
 	kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
 	}
 
-	//인포윈도우를 표시하는 클로저를 만드는 함수입니다 
+	// 인포윈도우를 표시하는 클로저를 만드는 함수입니다
 	function makeOverListener(map, marker, infowindow) {
 	return function() {
 	    infowindow.open(map, marker);
 	};
 	}
 
-	//인포윈도우를 닫는 클로저를 만드는 함수입니다 
+	// 인포윈도우를 닫는 클로저를 만드는 함수입니다
 	function makeOutListener(infowindow) {
 	return function() {
 	    infowindow.close();
 	};
 	}
+}
+
+
+function save_plan(){
+	
+	var data_obj = new Object();
+	var result_arr = new Array();
+	var title = $('.title').val();
+	console.log(title);
+	var tag = $('.tag_value').text();
+	var str = tag.substring(0,tag.length-1);
+	console.log(str);
+	var tag_name = str.split('x');
+	console.log(tag_name);
+	var personnel = $('.personnel').val();
+	console.log(personnel);
+	if(confirm("저장하시겠습니까?") === true){
+		var frm_plan = document.plan;
+	
+	var resultData = {};
+	var ulLength = $('.plan_list_container>ul').length;
+		for(var i=0; i<ulLength; i++){
+			var liLength = $('.DAY'+(i+1)).children().length;
+			 var arr_test = new Array();
+			for(var j=0; j<liLength; j++){
+				 var $data =$('.DAY'+(i+1)+'>li');
+				 var test = $data.eq(j).data('value');
+				 arr_test[j] = test;
+				
+			}
+			resultData["DAY"+(i+1)] = arr_test;
+			var result = JSON.stringify(resultData);
+		}
+		frm_plan.action = "/bts/plan/insert_plan";
+		frm_plan.method = "get";
+		frm_plan.tag_value.value = tag_name;
+		frm_plan.personnel.value = personnel;
+		frm_plan.detail_information.value = result;
+		frm_plan.submit();
+}else{
+	
+}
 }

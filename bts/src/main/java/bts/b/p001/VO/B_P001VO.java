@@ -1,10 +1,10 @@
 package bts.b.p001.VO;
 
-import java.sql.Date;
-
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component("b_p001VO")
+@Scope("prototype")
 public class B_P001VO {
 	private String member_id;
 	private String password;
@@ -16,8 +16,6 @@ public class B_P001VO {
 	private String email;
 	private String profile_image;
 	private String member_type;
-	
-	
 	
 	public String getMember_type() {
 		return member_type;

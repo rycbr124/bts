@@ -42,7 +42,7 @@ public class B_P001ServiceImpl implements B_P001Service {
 	}
 
 	@Override
-	public void kakaoInsert(KakaoVO kakaoVO) throws Exception {
+	public void kakaoInsert(B_P001VO kakaoVO) throws Exception {
 
 		d001DAO.kakaoNewMember(kakaoVO);
 		
@@ -72,6 +72,8 @@ public class B_P001ServiceImpl implements B_P001Service {
 		out.println(d001DAO.check_email(email));
 		out.close();	
 	}
+	
+
 
 
 }
