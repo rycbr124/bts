@@ -138,5 +138,17 @@ footer {
 	height:170px;
 	padding:15px;
 }
-
-
+.check{
+	width:100%;
+	height:auto;
+}
+.btn-group-toggle{
+	width:100%;
+}
+.btn-lg{
+	display:inline-block;
+	width:50%;	
+}
+.btn-lg input[type=raius]{
+	font-size:13px;
+}

@@ -27,7 +27,7 @@
 				<td><input type="password" name="passwdCheck" id="passwdCheck"></td>
 			</tr>
 			<tr>
-				<td colspan=2 align="center"><a href="${contextPath}/my/passCheck" id="secession">탈퇴하기</a></td>
+				<td colspan=2 align="center"><a id="secession">탈퇴하기</a></td>
 			</tr>
 		</table>
 	</form>
@@ -62,16 +62,20 @@
 				type: "POST",
 				data: $('#delFrm').serializeArray(),
 				success: function(data){
-					if(data==null){
+					if(data=='false'){
 						alert("패스워드가 틀렸습니다.");
-						return;
+						window.location.href = '${contextPath}/my/exitMain';
 					}else{
 						//탈퇴
 						var result = confirm('정말 탈퇴 하시겠습니까?');
-						if(result){
+						if(result==true){
 							$('#delFrm').submit();
+							alert("회원탈퇴가 완료되었습니다.");
+						}else{
+							alert("회원탈퇴가 취소되었습니다.");
+							window.location.href = '${contextPath}/my/exitMain';
 						}
-					}	alert("회원탈퇴가 완료되었습니다.");
+					}	
 				},
 				error: function(){
 					alert("서버 에러.");

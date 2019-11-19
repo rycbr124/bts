@@ -1,18 +1,16 @@
 package bts.c.p001.service;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import bts.b.p001.VO.B_P001VO;
 import bts.c.p001.DAO.C_P001DAO;
+import bts.c.p001.vo.C_P001VO;
 
 @Service("c_p001Service")
 public class C_P001Servicelmpl implements C_P001Service{
@@ -40,12 +38,15 @@ public class C_P001Servicelmpl implements C_P001Service{
 	}
 	
 	@Override
-	public String passCheck(String password) {
-		String result = c_p001DAO.passCheck(d001vo.getPassword());
+	public String passCheck(Map<String,String> searchData) {
+		String result = c_p001DAO.passCheck(searchData);
 		return result;
 	}
 
-	
+	public List<C_P001VO> selectInclnList(){
+		List<C_P001VO> list = c_p001DAO.selectInclnList();
+		return list;
+	}
 
 	
 	

@@ -39,7 +39,7 @@
 	</select>
 
 	<!-- 회원탈퇴 중복검사 -->
-	<select id="passwordCheck" parameterType="String"
+	<select id="passwordCheck" parameterType="map"
 		resultType="String">
 		<![CDATA[
 		select decode(count(*),1, 'true', 0, 'false')
@@ -116,27 +116,17 @@
 
 	<!-- 아이디 찾기 쿼리 -->
 	<select id="find_id" parameterType="String" resultType="String">
-		select
-		member_id from b_member where email = #{email, jdbcType=VARCHAR}
+		<![CDATA[
+	select member_id from b_member where email = #{email, jdbcType=VARCHAR}
+	]]>	
 	</select>
-<<<<<<< HEAD
 
-	<!-- 비밀번호 찾기 쿼리 -->
-	<select id="find_pw" parameterType="String">
-=======
-	
+
 	<!-- 비밀번호 변경 쿼리 -->
 	<update id="find_pw" parameterType="d001VO">
->>>>>>> refs/remotes/origin/master
 	<![CDATA[
 	update b_member set password = #{password, jdbcType=VARCHAR}
 	where member_id = #{member_id, jdbcType=VARCHAR}
 	]]>
-<<<<<<< HEAD
-	</select>
-
-=======
 	</update>
-	
->>>>>>> refs/remotes/origin/master
 </mapper>

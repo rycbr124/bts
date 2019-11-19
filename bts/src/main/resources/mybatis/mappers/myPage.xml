@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="mapper.myPage">
+	<resultMap id="inclnResult" type="c_p001vo">
+		<result property="incln_cd" column="incln_cd" />
+		<result property="name" column="name" />
+		<result property="group_name" column="group_name" />
+		<result property="group_desc" column="group_desc" />
+	</resultMap>
+
+	<select id="selectInclnList" resultMap="inclnResult">
+	  <![CDATA[
+			SELECT *
+			FROM incln_list
+			ORDER BY TO_NUMBER(incln_cd)
+	    ]]>
+	</select>
+</mapper>

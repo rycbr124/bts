@@ -1,5 +1,8 @@
 package bts.c.p001.DAO;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.ibatis.session.SqlSession;
@@ -10,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import bts.b.p001.VO.B_P001VO;
+import bts.c.p001.vo.C_P001VO;
 
 
 @Repository("c_p001DAO")
@@ -45,8 +49,8 @@ public class C_P001DAOImpl implements C_P001DAO{
 	
 		
 		//패스워드 체크
-		public String passCheck(String password) {
-			String result=sqlSession.selectOne("mapper.member.passwordCheck",password);
+		public String passCheck(Map<String,String> searchData) {
+			String result=sqlSession.selectOne("mapper.member.passwordCheck",searchData);
 
 			return result;
 		}
@@ -59,7 +63,11 @@ public class C_P001DAOImpl implements C_P001DAO{
 			session.invalidate();
 		}
 
-		
+	
+		public List<C_P001VO> selectInclnList() throws DataAccessException {
+			List<C_P001VO> list = sqlSession.selectList("mapper.myPage.selectInclnList");
+			return list;
+		}
 	}
 
 

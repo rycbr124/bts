@@ -1,6 +1,9 @@
 package bts.c.p001.controller;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -9,11 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,13 +24,13 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import bts.b.p001.VO.B_P001VO;
 import bts.c.p001.service.C_P001Service;
+import bts.c.p001.vo.C_P001VO;
 
 @Controller("c_p001")
 @RequestMapping(value = "/my")
@@ -45,8 +46,10 @@ public class C_P001ControllerImpl implements C_P001Controller {
 	@RequestMapping(value = "/profile")
 	public ModelAndView pageInit(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-
+		List<C_P001VO> result = c_p001Service.selectInclnList();
+		System.out.println(result);
 		ModelAndView mav = new ModelAndView("/c/p001/d001");
+		mav.addObject("incln",result);
 		return mav;
 	}
 
@@ -100,9 +103,17 @@ public class C_P001ControllerImpl implements C_P001Controller {
 	// 패스워드 체크
 	@RequestMapping(value = "/passCheck")
 	@ResponseBody
-	public String passCheck(String password) {
-
-		String result = c_p001Service.passCheck(password);
+	public String passCheck(String password, HttpServletRequest request,
+			HttpServletResponse response) {
+		HttpSession session = request.getSession();
+		b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
+		
+		Map<String,String> searchData = new HashMap<>();
+		searchData.put("password", password);
+		searchData.put("member_id", b_p001VO.getMember_id());
+		
+		//searchData.put("member_id", )
+		String result = c_p001Service.passCheck(searchData);
 		//
 		return result;
 	}

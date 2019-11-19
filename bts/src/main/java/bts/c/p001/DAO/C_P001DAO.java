@@ -1,5 +1,6 @@
 package bts.c.p001.DAO;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -7,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.dao.DataAccessException;
 
 import bts.b.p001.VO.B_P001VO;
+import bts.c.p001.vo.C_P001VO;
 
 public interface C_P001DAO {
 
@@ -20,12 +22,13 @@ public interface C_P001DAO {
 		void updateImage(B_P001VO d001VO) throws DataAccessException;
 
 		//탈퇴
-		String passCheck(String password)throws DataAccessException;
+		String passCheck(Map<String,String> searchData)throws DataAccessException;
 
 		void secession(B_P001VO d001vo, HttpSession session)throws DataAccessException;
 	
 	//회원탈퇴
 //		String deleteMember(String memberId) throws DataAccessException;
 		
+		public List<C_P001VO> selectInclnList() throws DataAccessException;
 	
 }
