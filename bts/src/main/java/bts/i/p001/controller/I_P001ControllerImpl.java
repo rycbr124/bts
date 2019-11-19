@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import bts.b.p001.VO.B_P001VO;
@@ -36,12 +37,22 @@ public class I_P001ControllerImpl implements I_P001Controller {
 	@Override
 	@RequestMapping(value="/planner" , method = {RequestMethod.POST , RequestMethod.GET})
 	public ModelAndView I_P001_D001(HttpServletRequest request, HttpServletResponse response)throws Exception{
-		b_p001VO.getMember_id();
+//		b_p001VO.getMember_id();
 		Map<String,List<String>> searchPlan = i_p002Service.planList();
 		JSONObject totalObject = new JSONObject(searchPlan);
 		ModelAndView mav = new ModelAndView("/i/p001/d001");
 		mav.addObject("list", totalObject.toJSONString());
-		return mav;
+		return mav; 
 	}
-	
+	@Override
+	@RequestMapping(value="/delete_plan", method= {RequestMethod.POST, RequestMethod.GET})
+	public void deletePlan(@RequestParam(value="plan_no",required=false) String plan_no, HttpServletRequest request, HttpServletResponse response)throws Exception {
+		HttpSession session = request.getSession();
+		b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
+		String member_id = b_p001VO.getMember_id();
+		i_p002VO_1.setMember_id(member_id);
+		i_p002Service.delPlan(plan_no);
+		
+		response.sendRedirect("/bts/planner/planner");
+	}
 }
