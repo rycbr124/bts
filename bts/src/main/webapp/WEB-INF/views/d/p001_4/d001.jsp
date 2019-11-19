@@ -86,8 +86,8 @@ img{
 		
 		<c:forEach var="article" items="${listArticle}">
 		<tr>
-			<td>${article.article_no}</td>
-			<td><a href='${contextPath}/community/plan_contents?article_no=${article.article_no}'>${article.title}</a></td>
+			<td>${article.plan_no}</td>
+			<td><a href='${contextPath}/community/plan_contents?plan_no=${article.plan_no}'>${article.title}</a></td>
 			<td>${article.member_id}</td>
 			<td>${article.register_date}</td>
 		</tr>
