@@ -120,7 +120,6 @@
 						<div class="row">
 							<div class="col-md-6">
 								<label class="title">성별</label>
-								<!--<input type="text" id="gender" name="gender" value="" class="form-control" engonly="true" required="">-->
 								<select class="form-control" id="gender" name="gender">
 									<c:if test="${sessionScope.memberInfo.gender =='M'}">
 										<option value="M" selected>남</option>

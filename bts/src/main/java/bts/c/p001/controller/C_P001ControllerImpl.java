@@ -59,7 +59,6 @@ public class C_P001ControllerImpl implements C_P001Controller {
 		b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
 		
 		List<C_P001VO> result5 = c_p001Service.selectCheckBoxList(b_p001VO.getMember_id());
-		System.out.println(result5+"<===============================");
 		
 		Map<String,List<C_P001VO>> resultMap = new TreeMap<>();
 		for(int i=0;i<result.size();i++) {
@@ -79,7 +78,6 @@ public class C_P001ControllerImpl implements C_P001Controller {
 		ModelAndView mav = new ModelAndView("/c/p001/d001");
 		mav.addObject("incln",resultMap);
 		mav.addObject("selected",tagResult);
-		System.out.println("==============>"+tagResult);
 		return mav;
 	}
 
@@ -95,7 +93,6 @@ public class C_P001ControllerImpl implements C_P001Controller {
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		try {
 			String test = member.getProfile_image();
-			System.out.println("111111111111111111111111111111111111  "+test);
 			HttpSession session = request.getSession();
 			String id = ((B_P001VO) session.getAttribute("memberInfo")).getMember_id();
 			member.setMember_id(id);
@@ -105,10 +102,8 @@ public class C_P001ControllerImpl implements C_P001Controller {
 			List<C_P001VO> searchList = new ArrayList<>();
 			List<C_P001VO> groupList = c_p001Service.selectCheckList();
 			
-			System.out.println("===============>"+request.getParameter("security"));
 			for(int i=0;i<groupList.size();i++) {
 				String group_name = request.getParameter(groupList.get(i).getGroup_name());
-				System.out.println("==================>"+groupList.get(i).getGroup_name());
 				if(group_name!=null) {
 					C_P001VO vo = c_p001Provider.get();
 					vo.setMember_id(id);
@@ -118,10 +113,6 @@ public class C_P001ControllerImpl implements C_P001Controller {
 			}
 			
 
-			for(int i=0;i<searchList.size();i++) {
-				System.out.println("======="+i+"=======>"+searchList.get(i).getMember_id());
-				System.out.println("======="+i+"======>"+searchList.get(i).getIncln_cd());
-			}
 			c_p001Service.deleteMemberList(id);
 			c_p001Service.insertCheckMemberList(searchList);
 			
@@ -217,7 +208,6 @@ public class C_P001ControllerImpl implements C_P001Controller {
 			vo.setMember_id(id.getMember_id());
 			logger.info("file name : " + user_imgPath);
 			c_p001Service.updateimage(vo);
-			System.out.println("vooooooooooooooooooo:" + vo);
 			return user_imgPath;
 	}
 	
