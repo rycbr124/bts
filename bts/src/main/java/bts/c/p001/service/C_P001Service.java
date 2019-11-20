@@ -19,6 +19,16 @@ public interface C_P001Service {
 		
 		//회원 탈퇴
 		public void secession(B_P001VO d001vo,HttpSession session);
-		
+		//성향 체크
 		public List<C_P001VO> selectInclnList();
+
+		public List<C_P001VO> selectCheckList();
+
+		public void deleteMemberList(String member_id) throws Exception;
+
+		public void insertCheckMemberList(List<C_P001VO> member_id) throws Exception;
+
+
+
+		public List<C_P001VO> selectCheckBoxList(String string);
 }

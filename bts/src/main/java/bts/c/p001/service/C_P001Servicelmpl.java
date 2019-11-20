@@ -48,8 +48,24 @@ public class C_P001Servicelmpl implements C_P001Service{
 		return list;
 	}
 
+	public List<C_P001VO> selectCheckList() {
+		List<C_P001VO> list = c_p001DAO.selectCheckList();
+		return list;
+	}
+
+	public void deleteMemberList(String member_id) throws Exception {
+		 c_p001DAO.deleteMemberList(member_id);
 	
-	
+	}
+	public void insertCheckMemberList(List<C_P001VO> member_id) throws Exception {
+		  c_p001DAO.insertCheckMemberList(member_id);
+		
+	}
+
+	public List<C_P001VO> selectCheckBoxList(String member_id) {
+		List<C_P001VO> list = c_p001DAO.selectCheckBoxList(member_id);
+		return list;
+	}
 	
 	
 }

@@ -9,7 +9,9 @@
 		<result property="name" column="name" />
 		<result property="group_name" column="group_name" />
 		<result property="group_desc" column="group_desc" />
+		<result property="member_id" column="member_id" />
 	</resultMap>
+
 
 	<select id="selectInclnList" resultMap="inclnResult">
 	  <![CDATA[
@@ -18,4 +20,42 @@
 			ORDER BY TO_NUMBER(incln_cd)
 	    ]]>
 	</select>
+
+	<select id="selectCheckList" resultMap="inclnResult">
+	  <![CDATA[
+			SELECT group_name,MIN(incln_cd) incln_cd,MAX(group_desc) group_desc
+			FROM incln_list
+			GROUP BY group_name
+			ORDER BY TO_NUMBER(incln_cd)
+	    ]]>
+	</select>
+	
+	<select id="deleteMemberList" parameterType="String">
+	  <![CDATA[
+		DELETE FROM incln_member
+		WHERE member_id=#{member_id}
+	    ]]>
+	</select>
+	
+	<select id="insertCheckMemberList" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+	  <!-- 
+		INSERT INTO incln_member(member_id,incln_cd)
+		VALUES (#{member_id},#{incln_cd})
+	   -->
+	  <![CDATA[
+	   		INTO incln_member(member_id,incln_cd)
+	   		VALUES (#{item.member_id},#{item.incln_cd})
+   		]]>
+		</foreach>
+	</select>
+	
+		<select id="selectCheckBoxList" parameterType="String" resultMap="inclnResult">
+	  <![CDATA[
+		SELECT incln_cd
+		FROM incln_member
+		WHERE member_id=#{member_id}
+		]]>
+	</select>
+	
 </mapper>

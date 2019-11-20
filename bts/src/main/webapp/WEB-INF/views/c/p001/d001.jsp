@@ -15,7 +15,8 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <script>
 	$(document).ready(function() {
-
+		tagInit();
+		
 		$('#btn-form-submit').click(function() {
 			var profile = $('#frm-profile')[0];
 			profile.action = "${contextPath }/my/update";
@@ -33,6 +34,23 @@
 		})
 		*/
 	})
+	
+	function tagInit(){
+		var input = ${selected};
+		var radioList = $('input[type=radio]').toArray();
+		console.log(radioList);
+		for(var i in input){
+			var cd = input[i].incln_cd;
+			for(var j in radioList){
+				var value = $(radioList[j]).prop('value')
+				if(cd==value){
+					$(radioList[j]).prop('checked',true);
+					$(radioList[j]).parent().addClass('active');
+					break;
+				}
+			}
+		}
+	}
 </script>
 <body>
 	<!--<div id = "container">
@@ -143,108 +161,17 @@
 							<label class="title">여행 성향 체크</label>
 								<br><hr>
 								<c:forEach var="data" items="${incln}">
-									<font size="3.5em" color="green">${data.group_desc}</font><br>
+									<font size="3.5em" color="green">${data.key}</font><br>
 									<div class="btn-group btn-group-toggle" data-toggle="buttons">
-										<label class="btn btn-info btn-lg" >
-											<input type="radio" name="${data.group_name}" value="탕진">여행은 탕진! 내가 만수르~!
-										</label>
-										<label class="btn btn-info btn-lg">
-											<input type="radio" name="${data.group_name}" value="알뜰">정해진 돈만 쓰면서 아낀다 알뜰살뜰!
-										</label>
+										<c:forEach var="data2" items="${data.value}">
+											<label class="btn btn-info btn-lg" >
+												<input type="radio" name="${data2.group_name}" value="${data2.incln_cd}">${data2.name}
+											</label>
+										</c:forEach>
 									</div>
 									<hr>
 								</c:forEach>
-								<font size="3.5em" color="green">경비</font><br>
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn btn-info btn-lg" >
-										<input type="radio" name="security" value="탕진">여행은 탕진! 내가 만수르~!
-									</label>
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="security" value="알뜰">정해진 돈만 쓰면서 아낀다 알뜰살뜰!
-									</label>
-								</div>
-								<hr>
-								<font size="3.5em" color="green">계획</font><br>
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="plan" value="즉흥">발길 닿는대로 운명에 길찾기!
-									</label>
-									
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="plan" value="계획">계획한대로 정해서 다니기 내가 바로 이 구역에 가이드
-									</label>
-								</div>
-								<hr>
-								<font size="3.5em" color="green">음식</font><br>
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="food" value="최대">유명 맛집 탐방!유명한 음식 최대한 많이 먹기
-									</label>
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="food" value="최소">최소한으로 대표적인,익숙한 음식만 먹기
-									</label>
-								</div>
-								<hr>
-								<font size="3.5em" color="green">사람</font><br>
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="friend" value="단체">여행은 많이가면 갈수록 좋지! 최대인원
-									</label>
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="friend" value="소수">소수정예!! 소수 인원으로 추억쌓기 
-									</label>
-								</div>
-								<hr>
-								<font size="3.5em" color="green">안전</font><br>
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="safety" value="안전">안전제일! 정해진 장소, 대표적인 장소 여행
-									</label>
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="safety" value="모험">내가 바로 콜롬버스! 모르는 여행지 탐험!
-									</label>
-								</div>
-								<hr>
-								<font size="3.5em" color="green">풍경</font><br>
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="scenery" value="도시">도시의 화려함,야경 그 지역에 색다른 도시 풍경
-									</label>
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="scenery" value="자연">여행은 힐링이지 도심을 벗어나 자연속으로...
-									</label>
-								</div>
-								<hr>
-								<font size="3.5em" color="green">시간</font><br>
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="time" value="낮">밤에는 다음날을 위해 휴식이지!!
-									</label>
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="time" value="밤">여행은 철야지 자는시간도 아끼면서 놀자!!
-									</label>
-								</div>
-								<hr>
-								<font size="3.5em" color="green">스타일</font><br>
-								<div class="btn-group btn-group-toggle" data-toggle="buttons">
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="theme" value="액티비티">여행은 많이보고 느끼고 경험해야한다!
-									</label>
-									<label class="btn btn-info btn-lg">
-										<input type="radio" name="theme" value="힐링">여행은 곧 휴식 여유로움을 즐겨야한다!
-									</label>
-								</div>
-								<hr>
-								<!-- 
-								<div class="btn-group" data-toggle="buttons" id="check">
-										<label class="btn btn-primary"> 
-										<input type="radio" name="options" id="option1" autocomplete="off"> Radio1 
-										</label> 
-										<label class="btn btn-primary"> 
-										<input type="radio" name="options" id="option2" autocomplete="off"> Radio2
-										</label>
-								</div>
-								 -->
+
 							</div>
 						</div>
 						<div class="row">

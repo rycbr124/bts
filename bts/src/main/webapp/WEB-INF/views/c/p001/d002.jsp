@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원탈퇴 페이지</title>
 <link rel="stylesheet"
 	href="${contextPath}/resources/css/mypage/d001.css">
 

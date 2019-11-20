@@ -30,5 +30,13 @@ public interface C_P001DAO {
 //		String deleteMember(String memberId) throws DataAccessException;
 		
 		public List<C_P001VO> selectInclnList() throws DataAccessException;
+
+		public List<C_P001VO> selectCheckList() throws DataAccessException;
+
+		public void deleteMemberList(String member_id) throws DataAccessException;
+
+		public void insertCheckMemberList(List<C_P001VO> member_id) throws DataAccessException;
+
+		public List<C_P001VO> selectCheckBoxList(String member_id)throws DataAccessException;
 	
 }

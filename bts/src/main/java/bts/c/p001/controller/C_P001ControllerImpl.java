@@ -1,13 +1,15 @@
 package bts.c.p001.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.UUID;
 
 import javax.annotation.Resource;
-import javax.servlet.RequestDispatcher;
+import javax.inject.Provider;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -28,6 +30,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import bts.b.p001.VO.B_P001VO;
 import bts.c.p001.service.C_P001Service;
 import bts.c.p001.vo.C_P001VO;
@@ -39,17 +43,43 @@ public class C_P001ControllerImpl implements C_P001Controller {
 	B_P001VO b_p001VO;
 	@Autowired
 	C_P001Service c_p001Service;
-
+	@Autowired
+	Provider<C_P001VO> c_p001Provider;
+	
+	
 	private static final Logger logger = LoggerFactory.getLogger(C_P001ControllerImpl.class);
 
 	@Override
 	@RequestMapping(value = "/profile")
 	public ModelAndView pageInit(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		request.setCharacterEncoding("utf-8");
-		List<C_P001VO> result = c_p001Service.selectInclnList();
-		System.out.println(result);
+		List<C_P001VO> result = c_p001Service.selectCheckList();
+		List<C_P001VO> result2 = c_p001Service.selectInclnList();
+		HttpSession session = request.getSession();
+		b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
+		
+		List<C_P001VO> result5 = c_p001Service.selectCheckBoxList(b_p001VO.getMember_id());
+		System.out.println(result5+"<===============================");
+		
+		Map<String,List<C_P001VO>> resultMap = new TreeMap<>();
+		for(int i=0;i<result.size();i++) {
+			List<C_P001VO> inputList = new ArrayList<>();
+			String name = result.get(i).getGroup_name();
+			resultMap.put(result.get(i).getGroup_desc(),inputList );
+			for(int j=0;j<result2.size();j++) {
+				if(result2.get(j).getGroup_name().equals(name)) {
+					inputList.add(result2.get(j));
+				}
+			}
+		}
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String tagResult = mapper.writeValueAsString(result5);
+		
 		ModelAndView mav = new ModelAndView("/c/p001/d001");
-		mav.addObject("incln",result);
+		mav.addObject("incln",resultMap);
+		mav.addObject("selected",tagResult);
+		System.out.println("==============>"+tagResult);
 		return mav;
 	}
 
@@ -65,18 +95,38 @@ public class C_P001ControllerImpl implements C_P001Controller {
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 		try {
 			String test = member.getProfile_image();
-			System.out.println("1`11111111111111111111111111111111111  "+test);
+			System.out.println("111111111111111111111111111111111111  "+test);
 			HttpSession session = request.getSession();
 			String id = ((B_P001VO) session.getAttribute("memberInfo")).getMember_id();
 			member.setMember_id(id);
 			c_p001Service.updateMember(member);
 			session.setAttribute("memberInfo", member);
-			RequestDispatcher dispatch = request.getRequestDispatcher("/my/profile");
-			dispatch.forward(request, response);
-//			out.print("<script>");
-//			out.print("alert('수정이 완료되었습니다')");
-//			out.print("history.go(-1)");
-//			out.print("</script>");
+			
+			List<C_P001VO> searchList = new ArrayList<>();
+			List<C_P001VO> groupList = c_p001Service.selectCheckList();
+			
+			System.out.println("===============>"+request.getParameter("security"));
+			for(int i=0;i<groupList.size();i++) {
+				String group_name = request.getParameter(groupList.get(i).getGroup_name());
+				System.out.println("==================>"+groupList.get(i).getGroup_name());
+				if(group_name!=null) {
+					C_P001VO vo = c_p001Provider.get();
+					vo.setMember_id(id);
+					vo.setIncln_cd(group_name);
+					searchList.add(vo);
+				}
+			}
+			
+
+			for(int i=0;i<searchList.size();i++) {
+				System.out.println("======="+i+"=======>"+searchList.get(i).getMember_id());
+				System.out.println("======="+i+"======>"+searchList.get(i).getIncln_cd());
+			}
+			c_p001Service.deleteMemberList(id);
+			c_p001Service.insertCheckMemberList(searchList);
+			
+			
+			response.sendRedirect("/bts/my/profile");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -117,33 +167,6 @@ public class C_P001ControllerImpl implements C_P001Controller {
 		//
 		return result;
 	}
-
-	// 이미지 저장 경로
-//	private Map<String, String> upload(HttpServletRequest request, HttpServletResponse response) {
-//		
-//				private static String ARTICLE_IMAGE_REPO = "C:\\image_file";
-//				Map <String, String> articleMap = upload(request, response);
-//				String imageFileName = articleMap.get("profile_image");
-//				B_P001VO.setImageFileName(profile_image)
-//				File currentDirPath = new File(ARTICLE_IMAGE_REPO);
-//				FileItem fileItem = (FileItem) items.get(i);
-//				
-//				articleMap.put(fileItem.profile_image(), image_file());
-//				if(fileItem.getSize() > 0)
-//				{
-//					int idx = fileItem.profile_image().lastIndexIf("\\");
-//					if(idx == -1)
-//					{
-//						idx = fileItem.profile_image().lastIndexOf("/");
-//					}
-//					
-//					String fileName = fileItem.profile_image().substring(idx + 1);
-//					File uploadFile = new File(currentDirPath + "\\" + fileName);
-//					fileItem.write(uploadFile);
-//				} 
-//		return null;
-//	}
-	
 
 	@Resource(name = "uploadPath")
 	private String uploadPath;

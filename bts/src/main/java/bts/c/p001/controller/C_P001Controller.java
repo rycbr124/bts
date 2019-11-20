@@ -19,4 +19,6 @@ public interface C_P001Controller {
 	
 	// 패스워드 체크
 	public String passCheck(String password, HttpServletRequest request, HttpServletResponse response);
+
+	
 }

@@ -9,8 +9,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import bts.b.p001.VO.B_P001VO;
 import bts.c.p001.vo.C_P001VO;
@@ -66,6 +64,24 @@ public class C_P001DAOImpl implements C_P001DAO{
 	
 		public List<C_P001VO> selectInclnList() throws DataAccessException {
 			List<C_P001VO> list = sqlSession.selectList("mapper.myPage.selectInclnList");
+			return list;
+		}
+		public List<C_P001VO> selectCheckList() throws DataAccessException {
+			List<C_P001VO> list = sqlSession.selectList("mapper.myPage.selectCheckList");
+			return list;
+		}
+		public void deleteMemberList(String member_id) throws DataAccessException {
+			//String result = sqlSession.selectList("mapper.myPage.deleteMemberList",member_id);
+			sqlSession.delete("mapper.myPage.deleteMemberList",member_id);
+			//return result;
+		}
+		public void insertCheckMemberList(List<C_P001VO> member_id) throws DataAccessException {
+//			String result = sqlSession.selectList("mapper.myPage.insertCheckMemberList",member_id);
+			sqlSession.insert("mapper.myPage.insertCheckMemberList",member_id);
+//			return result;
+		}
+		public List<C_P001VO> selectCheckBoxList(String member_id) throws DataAccessException {
+			List<C_P001VO> list = sqlSession.selectList("mapper.myPage.selectCheckBoxList",member_id);
 			return list;
 		}
 	}
