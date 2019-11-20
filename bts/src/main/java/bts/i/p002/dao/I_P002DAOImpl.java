@@ -25,7 +25,14 @@ public class I_P002DAOImpl implements I_P002DAO{
 	public List<String> planRoot(String plan_no)throws Exception{
 		List<String> planRoot = new ArrayList<>();
 		planRoot = sqlSession.selectList("i.p002.planRoot",plan_no);
+				 
 		return planRoot;
+	}
+	@Override
+	public List<String> planner(String plan_no)throws Exception{
+		List<String> planner_val = new ArrayList<>();
+		planner_val = sqlSession.selectList("i.p002.planNo", plan_no);
+		return planner_val;
 	}
 	@Override
 	public void insertPlan(I_P002VO_1 i_p002VO_1,List<I_P002VO_2> contentVO,List<I_P002VO_3> list)throws DataAccessException{
@@ -40,5 +47,17 @@ public class I_P002DAOImpl implements I_P002DAO{
 		String sequence = sqlSession.selectOne("i.p002.seq");
 		return sequence;
 	}
-
+	@Override
+	public void delPlan(String plan_no)throws Exception{
+		sqlSession.delete("i.p002.deletePlanner",plan_no);
+		sqlSession.delete("i.p002.deletePlanner_detail",plan_no);
+		sqlSession.delete("i.p002.deleteTag_planner",plan_no);
+	}
+	@Override
+	public List<String> wishList(String member_id)throws Exception{
+		List<String> wishList = new ArrayList<>();
+		wishList = sqlSession.selectList("i.p002.wishList",member_id);
+		
+		return wishList;
+	}
 }

@@ -23,7 +23,10 @@
 		<result property="plan_no" column="plan_no"/>
 		<result property="tag_name" column="tag_name"/>
 	</resultMap>
-
+	<resultMap id="wishList" type="g_p001_2VO">
+		<result property="member_id" column="member_id"/>
+		<result property="content_id" column="content_id"/>
+	</resultMap>
 
 <insert id="addPlan" parameterType="i_p002VO_1">
 	<![CDATA[
@@ -74,7 +77,7 @@
 	) t
 	WHERE p.plan_no = pd.plan_no
 	AND t.dt = pd.detail_no
-	ORDER BY p.plan_no desc
+	ORDER BY TO_NUMBER(p.plan_no) desc
 </select>
 
 <select id="planRoot" parameterType="String" resultType="Map">
@@ -84,4 +87,28 @@
     ORDER BY detail_no asc
 </select>
 
+<select id="planNo" parameterType="i_p002VO_2" resultType="Map">
+	SELECT *
+	FROM planner
+	WHERE plan_no = #{plan_no,jdbcType=VARCHAR}
+</select>
+<select id="wishList" parameterType="g_p001_2VO" resultType="Map">
+	SELECT content_id
+	FROM recommend_wish_list
+	WHERE member_id = #{member_id}  
+</select>
+
+
+<delete id="deletePlanner" parameterType="String">
+	DELETE FROM planner
+	WHERE plan_no = #{plan_no,jdbcType=VARCHAR}
+</delete>
+<delete id="deletePlanner_detail" parameterType="String">
+	DELETE FROM planner_detail
+	WHERE plan_no = #{plan_no,jdbcType=VARCHAR}
+</delete>
+<delete id="deleteTag_planner" parameterType="String">
+	DELETE FROM tag_planner
+	WHERE plan_no = #{plan_no,jdbcType=VARCHAR}
+</delete>
 </mapper>

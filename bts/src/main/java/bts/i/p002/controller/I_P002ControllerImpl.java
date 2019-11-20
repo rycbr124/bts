@@ -24,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bts.b.p001.VO.B_P001VO;
+import bts.g.p001_2.vo.G_P001_2VO;
 import bts.i.p002.VO.I_P002VO_1;
 import bts.i.p002.VO.I_P002VO_2;
 import bts.i.p002.VO.I_P002VO_3;
@@ -40,6 +41,8 @@ public class I_P002ControllerImpl implements I_P002Controller {
 	I_P002VO_2 i_p002VO_2;
 	@Autowired
 	I_P002VO_3 i_p002VO_3;
+	@Autowired
+	G_P001_2VO g_p001_2VO; 
 	@Autowired
 	I_P002Service i_p002Service;
 
@@ -59,7 +62,6 @@ public class I_P002ControllerImpl implements I_P002Controller {
 	@RequestMapping(value = "/insert_plan", method = { RequestMethod.POST, RequestMethod.GET })
 	public @ResponseBody void planInsert(@RequestParam Map<String, String> result , HttpServletRequest request,HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
-		//ModelAndView mav = new ModelAndView("/i/p001/d001");
 		b_p001VO = (B_P001VO) session.getAttribute("memberInfo");
 		String member_id = b_p001VO.getMember_id();
 		i_p002VO_1.setMember_id(member_id);
@@ -98,5 +100,19 @@ public class I_P002ControllerImpl implements I_P002Controller {
 	
 		response.sendRedirect("/bts/planner/planner");
 	}
-
+	@Override
+	@RequestMapping(value="/select_wishList",method= {RequestMethod.POST, RequestMethod.GET})
+	public @ResponseBody String selectWishList(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		HttpSession session = request.getSession();
+		b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
+		String member_id = b_p001VO.getMember_id();
+		g_p001_2VO.setMember_id(member_id);
+		i_p002Service.wishList(member_id);
+		Map<String,List<String>> wishList = i_p002Service.wishList(member_id);
+		JSONObject wishListObj = new JSONObject(wishList);
+		String wish = wishListObj.toJSONString();
+		System.out.println(wish);
+		return wish;
+	}
+	
 }
