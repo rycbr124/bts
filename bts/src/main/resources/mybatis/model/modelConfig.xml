@@ -14,5 +14,8 @@
 	  <typeAlias type="bts.c.p006.vo.C_P006VO" alias="c_p006VO" /> 
 	  <typeAlias type="bts.d.p001_4.vo.D_P001_4VO" alias="d_p001_4VO" />
 	  <typeAlias type="bts.d.p001_4.vo.D_P001_4VO_2" alias="d_p001_4VO_2" />      
+	  <typeAlias type="bts.f.p001_3.vo.F_P001_3VO" alias="f_p001_3VO" /> 
+	  <typeAlias type="bts.f.p001_3.vo.F_P001_3VO_2" alias="f_p001_3VO_2" />	  
+	  <typeAlias type="bts.common.PagingVO" alias="pagingVO" />	  
    </typeAliases>
 </configuration>

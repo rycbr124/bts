@@ -65,6 +65,11 @@
 	</select>
 	
 	<insert id="insertMessage" parameterType="c_p006VO">
+		<selectKey resultType="java.sql.Timestamp" keyProperty="writing_date" order="BEFORE">
+			<![CDATA[
+			SELECT systimestamp FROM dual
+		    ]]>
+		</selectKey>
 	    <![CDATA[
 		INSERT INTO chat_list (CONTENTS, RECEIVER, SENDER, WRITING_DATE, ITEM_NO) 
 		VALUES (#{contents}, #{receiver}, #{sender}, #{writing_date}, chat_list_seq.nextval)

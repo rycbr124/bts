@@ -9,7 +9,7 @@ ul{
 list-style: none;
 }
 
-#footer {width: 100%;padding: 0 0 60px;position:relative; background: #fff;z-index:100;}
+#footer {width: 100%;padding: 0 0 60px;position:relative; background: #fff;}
 .footer_inner {max-width: 1200px;margin: 0 auto;position: relative;}
 /*.footer_logo {position:absolute;right: 70px;width: 51px;height: 81px;} */
 
@@ -42,7 +42,7 @@ html:not(.mobile) .footer_menu > li.footer_menu_privacy > a:hover { background:#
 .footer_info ul li span:after {width:1px;height: 13px;background: #ed4043;content:'';display:block;-webkit-transform: rotateZ(30deg);-ms-transform: rotate(30deg);transform: rotateZ(30deg);position:absolute;top:4px;right: 7px;}
 .footer_info ul li  a { color:#888;}
 
-</style>
+</style> 
 <meta charset="UTF-8">
 <title>하단</title>
 </head>

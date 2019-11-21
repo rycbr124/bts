@@ -9,17 +9,17 @@
 <head>
 <style>
 body{margin:0;}
-#header{width:100%; height:100px; position:relative; z-index:200;top:0;
+#header{width:100%; height:100px; position:relative;top:0;
 -webkit-transition:background 300ms, height 200ms; 
 transition: background 300ms, height 200ms; }
 /*LOGO*/
-.header_logo img{width:130px;height:70px; position:absolute; left:0;top:20px;
+.header_logo img{width:130px;height:70px; position:absolute; left:0;top:10px;
 z-index:2;margin-left:40px;}
-.header_logo img:hover{width:130px; height:70px;content:url(/bts/resources/image/BTS_logo_black_all.png);}
+.header_logo img:hover{width:130px; height:70px;content:url(/bts/resources/image/logo/검정/logo_black.png);}
 
 /*MENU*/
-.menu_container {width: 100%;position: relative;font-size:0;line-height: 1;text-align: center;z-index: 1;}
-#menu {margin-top: 20px;text-align:center; -webkit-transition: all 0.3s; transition:all 300ms;}
+.menu_container {width: 100%;position: absolute;font-size:0;line-height: 1;text-align: center;z-index: 1;}
+#menu {margin-top: 20px;text-align:center;}
 #menu:after {content: '';display: table;clear: both;}
 #menu a {display: block;line-height: 1.7;text-decoration:none;}
 
@@ -33,7 +33,7 @@ html #menu > li:hover > a,#menu > li.active > a{color:white;}
 #menu > li > a:after {width:100%;content: attr(data-hover);position: absolute;top: -30px;left:0;transform: translate3d(0,0,0);-moz-transform: translate3d(0,0,0);-webkit-transform: translate3d(0,0,0);}
 
 /*MEMBER*/
-.member_menu{position:absolute;right:70px;top:50px;}
+.member_menu{position:absolute;right:70px;top:20px;}
 .member_menu a{padding-left:27px; margin-right:20px;font-size:12px;
 font-weight:600; line-height:20px; letter-spacing:0.025em; color:black;font-family:'Binggrae-bold',sans-serif;position:relative; display:inline-block;vertical-align:middle;
 -webkit-transition:all 0.25s;transition:all 0.25s;}
@@ -43,12 +43,12 @@ html .member_menu a:hover{color:rgb(127,127,127);}
 </style>
 <meta charset="UTF-8">
 <title>상단</title>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
 </head>
 <body>
 <div id="header">
       <a href="${contextPath}/main/main" class="header_logo">
-         <img src="${contextPath}/resources/image/BTS_logo_black.png" alt="BTS">
+         <img src="${contextPath}/resources/image/logo/검정/logo_black_all.png" alt="BTS">
       </a>
    <div class="header_control_container">
       <ul id="menu" class="menu">
@@ -76,12 +76,43 @@ html .member_menu a:hover{color:rgb(127,127,127);}
 				<a href="${contextPath }/signup/logout" class="logout"><span>로그아웃</span></a>			 		
 			</c:when>
 			<c:otherwise>
-				<a href="#popup-layer" class="login"><span>LOGIN</span></a>
+				<a href="#popUpWindow" class="signup" data-toggle="modal"><span>LOGIN</span></a>
 				<a href="${contextPath }/signup/signup" class="signup"><span>SIGN UP</span></a>
 			</c:otherwise>
 		</c:choose>
    </div><!-- member_menu -->
    </div><!-- header -->
-   
+    <div class="modal fade" id="popUpWindow">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="modal-title">BTS Login</h3>
+				</div>
+				<!-- body -->
+				<div class="modal-header">
+					<form role="form" method="post" action="${contextPath}/signup/login">
+						<div class="form-group">
+							<label class="member_id"> <span>ID</span> <input type="text" class="form-control" id="member_id" name="member_id" placeholder="ID" /></label> <br> <label class="password"> <span>Password</span> 
+							<input type="password" class="form-control" id="password" name="password" placeholder="Password" /></label> <br> 
+							<br><input type="submit" value="LOGIN" class="submit button" type="button" id="loginbutton">
+						</div>
+					</form>
+				</div>
+				<!-- footer -->
+				<div class="modal-footer">
+
+					<p id="findId_Pw">
+						<a class="forgotpw" href="${contextPath }/find/findPwMain" style="color: white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp; <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>
+					</p>
+				</div>
+
+				<div id="kakao_id_login" style="text-align: center">
+					<a href="https://kauth.kakao.com/oauth/authorize?client_id=6a0602e55acf9e0f00406d7fb1f93b3d&redirect_uri=http://localhost:8088/bts/signup/kakaoLogin&response_type=code"> <img width="223" src="${contextPath}/resources/image/main/kakao_login.png" /></a> <a href="${contextPath}/signup/naverLogin"> <img width="223" src="${contextPath}/resources/image/main/naver_login.PNG" /></a>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

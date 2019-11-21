@@ -69,7 +69,7 @@ img{
       <a class="nav-link active" href="${contextPath}/community/plan_list">계획</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="${contextPath}/community/review_list">후기</a>
+      <a class="nav-link" href="${contextPath}/community/review/list">후기</a>
     </li>
     
   </ul>
@@ -86,8 +86,8 @@ img{
 		
 		<c:forEach var="article" items="${listArticle}">
 		<tr>
-			<td>${article.article_no}</td>
-			<td><a href='${contextPath}/community/plan_contents?article_no=${article.article_no}'>${article.title}</a></td>
+			<td>${article.plan_no}</td>
+			<td><a href='${contextPath}/community/plan_contents?plan_no=${article.plan_no}'>${article.title}</a></td>
 			<td>${article.member_id}</td>
 			<td>${article.register_date}</td>
 		</tr>

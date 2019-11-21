@@ -1,6 +1,6 @@
 package bts.c.p006.vo;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -12,7 +12,7 @@ public class C_P006VO {
 	private String sender;
 	private String receiver;
 	private String contents;
-	private Date writing_date;
+	private Timestamp writing_date;
 	private String me_at;
 	
 	public C_P006VO(){
@@ -36,7 +36,7 @@ public class C_P006VO {
 	public String getReceiver() {
 		return receiver;
 	}
-	public void setReceiver(String receiver) {
+	public void setReceiver(String receiver) {	
 		this.receiver = receiver;
 	}
 	public String getSender() {
@@ -51,10 +51,10 @@ public class C_P006VO {
 	public void setContents(String contents) {
 		this.contents = contents;
 	}
-	public Date getWriting_date() {
+	public Timestamp getWriting_date() {
 		return writing_date;
 	}
-	public void setWriting_date(Date writing_date) {
+	public void setWriting_date(Timestamp writing_date) {
 		this.writing_date = writing_date;
 	}		
 	
