@@ -76,34 +76,7 @@ $(document).ready(function(){
 	    
 		//유저목록 클릭이벤트
 		$(document).on("click",".discussion",function(){
-			if(!$(this).hasClass("clicked")){
-				//채팅 header에 유저 정보 표시
-				$('#user-info').empty();
-				var information = $(this).children();
-				for(var i=0; i<information.length; i++){
-					$('#user-info').append(information[i].cloneNode(true));
-				}
-				
-			    $("#chat-footer>input[type=button]").prop('disabled',false);//전송버튼 사용가능
-				$('#chat-message').empty();//메시지 창 비우기
-				$('.discussion').removeClass("clicked");//이전에 선택된 노드의 클래스 제거
-				$(this).addClass('clicked');//클래스 붙이기
-
-				if($(this).parent().is('#search-list')){//search의 discuss일경우 people-list에서도 변경
-					var people=$('#people-list>.discussion .member-id').toArray();
-					for(var i in people){						
-						if($(people[i]).text()===$(this).find('div.member-id').text()){
-							$(people[i]).parent().parent().addClass('clicked');
-							break;
-						}				
-					}//end for
-				}//end inner if
-				
-				var contents = {
-					member_id:$(this).find('div.member-id').text()
-				}
-				sendText(ws,"chat_list",contents);
-			}//end if
+			memberClick(this);
 		});//end discussion event
 		
 		//유저 검색
@@ -149,12 +122,44 @@ $(document).ready(function(){
 			var selectedid=$(selected).find('.member-id').text();
 			
 			var divForm = new memberDivForm('discussion',selectedSrc,selectedNick,selectedid);
-			prependMember(divForm);
+			var resultForm = prependMember(divForm);
+			memberClick(resultForm);
 			
 			closePopup();
 		});
 		
+		function memberClick(clickNode){
+			if(!$(clickNode).hasClass("clicked")){
+				//채팅 header에 유저 정보 표시
+				$('#user-info').empty();
+				var information = $(clickNode).children();
+				for(var i=0; i<information.length; i++){
+					$('#user-info').append(information[i].cloneNode(true));
+				}
+				
+			    $("#chat-footer>input[type=button]").prop('disabled',false);//전송버튼 사용가능
+				$('#chat-message').empty();//메시지 창 비우기
+				$('.discussion').removeClass("clicked");//이전에 선택된 노드의 클래스 제거
+				$(clickNode).addClass('clicked');//클래스 붙이기
+	
+				if($(clickNode).parent().is('#search-list')){//search의 discuss일경우 people-list에서도 변경
+					var people=$('#people-list>.discussion .member-id').toArray();
+					for(var i in people){						
+						if($(people[i]).text()===$(clickNode).find('div.member-id').text()){
+							$(people[i]).parent().parent().addClass('clicked');
+							break;
+						}				
+					}//end for
+				}//end inner if
+				
+				var contents = {
+					member_id:$(clickNode).find('div.member-id').text()
+				}
+				sendText(ws,"chat_list",contents);
+			}//end if
+		}
 	}//end init
+	
 	
 	function memberDivForm(desc,imgSrc,nick,id){
 		var result={
@@ -194,12 +199,13 @@ $(document).ready(function(){
 		for(var i in userList){
 			if($(userList[i]).find('.member-id').text()==data.id){
 				$('#people-list').prepend(userList[i]);
-				return;
+				return userList[i];
 			}
 		}
 		
 		var newDiscussion=makeMemberDiv(data);
 		$('#people-list').prepend(newDiscussion);
+		return newDiscussion;
 	}
 	
 	function updateChat(recData){
@@ -383,27 +389,7 @@ $(document).ready(function(){
 				<input type="text" placeholder="새로운 유저 검색"/>
 				<input type="button" value="검색">
 			</div>
-			<div id="pop-list">
-			<!-- 
-				<div class="pop-member">
-					<img>
-					<div class="info">
-	         			<div class="nick-name">닉네임</div>
-	        			<div class="member-id">testId</div>
-	         		</div>
-				</div>
-				<div class="pop-member">
-					<img>
-					<div class="info">
-	         			<div class="nick-name">닉네임2</div>
-	        			<div class="member-id">testId2</div>
-	         		</div>
-				</div>
-			 <div class="no-result">			 
-				 검색된 유저가 없습니다.
-			 </div>
-			 -->
-			</div>
+			<div id="pop-list"></div>
 			<div id="pop-footer">
 				<input type="button" value="선택">			
 			</div>

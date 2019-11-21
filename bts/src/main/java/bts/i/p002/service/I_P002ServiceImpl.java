@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.SystemPropertyUtils;
 
 import bts.i.p002.VO.I_P002VO_1;
 import bts.i.p002.VO.I_P002VO_2;
@@ -69,5 +68,13 @@ public class I_P002ServiceImpl implements I_P002Service{
 		selectWishList.put("wishList", wishList);
 		
 		return selectWishList;
+	}
+	@Override
+	public Map<String,List<String>> tagList(String plan_no)throws Exception{
+		Map<String,List<String>> tagList = new HashMap<>();
+		List<String> tag = i_p002DAO.tagList(plan_no);
+		
+		tagList.put("tagList", tag);
+		return tagList;
 	}
 }

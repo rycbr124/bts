@@ -10,7 +10,9 @@ public class D_P001_4VO_2 {
 	private String content_id;
 	private String plan_no;
 	private String day_no;
-	private String plan_desc;	
+	private String plan_desc;
+	private String detail_no;
+	private String range_date;
 	
 	public String getTitle() {
 		return title;
@@ -41,6 +43,18 @@ public class D_P001_4VO_2 {
 	}
 	public void setPlan_desc(String plan_desc) {
 		this.plan_desc = plan_desc;
+	}
+	public String getDetail_no() {
+		return detail_no;
+	}
+	public void setDetail_no(String detail_no) {
+		this.detail_no = detail_no;
+	}
+	public String getRange_date() {
+		return range_date;
+	}
+	public void setRange_date(String range_date) {
+		this.range_date = range_date;
 	}
 	
 }

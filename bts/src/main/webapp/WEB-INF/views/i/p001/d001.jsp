@@ -58,7 +58,7 @@ function plan_list(planList){
 		var plan_no =plan['PLAN_NO'];
 		var person_se = plan['PERSON_SE'];
 		
-		var serviceKey = 'lUN5B8XHOdyoYlgxfJqeeTMdZZWYbuV9qc80jLPpilJ%2BYukKsP1%2FvR6W2AJ9UxbCgbUlkVqiN5O3%2FWiHMOyvcw%3D%3D'
+		var serviceKey = 'cYcvlZ9yaPE20UToWcxr8bpZJbItY6rEa3kIxGzSd3N4e3R1kmaERDblD3vpL6zg3bM76YmVcfip6YU83Nc4CA%3D%3D'
 		var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey='
 					+ serviceKey + '&contentId='+ contentid +'&defaultYN=Y&firstImageYN=Y&overviewYN=Y&mapinfoYN=Y&MobileOS=ETC&MobileApp=AppTest';
 		$.ajax({

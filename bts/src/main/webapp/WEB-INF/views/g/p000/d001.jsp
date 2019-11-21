@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>추천</title>
 <style>
 @font-face {
 	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");

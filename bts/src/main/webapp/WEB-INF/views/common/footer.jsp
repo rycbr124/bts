@@ -44,7 +44,7 @@ html:not(.mobile) .footer_menu > li.footer_menu_privacy > a:hover { background:#
 
 </style> 
 <meta charset="UTF-8">
-<title>하단</title>
+
 </head>
 <body>
 	    <div class="footer_inner">

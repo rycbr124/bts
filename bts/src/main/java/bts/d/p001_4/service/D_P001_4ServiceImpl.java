@@ -44,5 +44,10 @@ public class D_P001_4ServiceImpl implements D_P001_4Service{
 		return d_p001_4DAO.selectMyplan(member_id);
 	}
 
+	@Override
+	public void deletePlan(String plan_no) throws Exception {
+		d_p001_4DAO.deletePlan(plan_no);		
+	}
+
 
 }

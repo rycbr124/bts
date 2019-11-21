@@ -59,7 +59,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		this.naverLoginBO = naverLoginBO;
 	}
 
-	public String getAccessToken(String authorize_code) {
+	public String getAccessToken(String authorize_code,HttpServletRequest request) {
 		String access_Token = "";
 		String refresh_Token = "";
 		String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -72,12 +72,15 @@ public class B_P001ControllerImpl implements B_P001Controller {
 			conn.setRequestMethod("POST");
 			conn.setDoOutput(true);
 
+			String httpUrl = request.getRequestURL().toString();
+			String reqUrl = httpUrl.substring(0,(httpUrl.indexOf(request.getContextPath())+request.getContextPath().length()));
+			
 			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
 			sb.append("&client_id=6a0602e55acf9e0f00406d7fb1f93b3d");
-			sb.append("&redirect_uri=http://localhost:8088/bts/signup/kakaoLogin");
+			sb.append("&redirect_uri="+reqUrl+"/signup/kakaoLogin");
 			sb.append("&code=" + authorize_code);
 			bw.write(sb.toString());
 			bw.flush();
@@ -237,7 +240,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 
 		} else {
 			String message = "아이디나  비밀번호가 틀립니다. 다시 로그인해주세요";
-			mav.addObject(message);
+			mav.addObject("message",message);
 			System.out.println("실패:" + message);
 			mav.setViewName("/z/p000/d001");
 		}
@@ -245,8 +248,8 @@ public class B_P001ControllerImpl implements B_P001Controller {
 	}
 
 	@RequestMapping(value = "/kakaoLogin")
-	public String login(@RequestParam("code") String code, HttpSession session) throws Exception{
-		String access_Token = getAccessToken(code);
+	public String login(@RequestParam("code") String code, HttpSession session,HttpServletRequest request) throws Exception{
+		String access_Token = getAccessToken(code,request);
 		B_P001VO userInfo = getUserInfo(access_Token);
 		System.out.println("emailllll: " + userInfo.getEmail());
 		System.out.println("login Controller : " + userInfo);
@@ -301,9 +304,9 @@ public class B_P001ControllerImpl implements B_P001Controller {
 	
 	
 	@RequestMapping(value = "/naverLogin", method = RequestMethod.GET)
-	public ModelAndView naverLogin(HttpSession session) {
+	public ModelAndView naverLogin(HttpSession session,HttpServletRequest request) {
 		/* 네아로 인증 URL을 생성하기 위하여 getAuthorizationUrl을 호출 */
-		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session);
+		String naverAuthUrl = naverLoginBO.getAuthorizationUrl(session,request);
 		Map<String,Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("naver_url", naverAuthUrl);
 		System.out.println("naverrrrrrrr:" +naverAuthUrl);
@@ -312,9 +315,9 @@ public class B_P001ControllerImpl implements B_P001Controller {
 
 	// 네이버 로그인 성공시 callback호출 메소드
 	@RequestMapping(value = "/callback", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView callback(@RequestParam String code, @RequestParam String state, HttpSession session) throws Exception {
-		OAuth2AccessToken oauthToken = naverLoginBO.getAccessToken(session, code, state);
-		String apiResult = naverLoginBO.getUserProfile(oauthToken);
+	public ModelAndView callback(@RequestParam String code, @RequestParam String state, HttpSession session,HttpServletRequest request) throws Exception {
+		OAuth2AccessToken oauthToken = naverLoginBO.getAccessToken(session, code, state,request);
+		String apiResult = naverLoginBO.getUserProfile(oauthToken,request);
 		System.out.println("apiResult"+ apiResult);
 		ModelAndView mav = new ModelAndView();
 		NaverVO naverInfo = new NaverVO();
