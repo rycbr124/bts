@@ -171,17 +171,25 @@ p {
 		})
 		
 		$('a.page-link').on('click',function(){
-			var nowPage=${paging.curPage}
+			var nowPage=${paging.curPage};
+			var startPage=${paging.startPage};
+			var endPage=${paging.endPage};
+			var rangePage=${paging.rangePage};
+			
 			var paging=$(this).text();
 			if(paging==$('a.page-link:first').text()){
-				paging=nowPage-1;
+				paging=startPage-rangePage;
 			}else if(paging==$('a.page-link:last').text()){
-				paging=nowPage+1;				
+				paging=endPage+1;				
 			}
 			document.frmContents.curPage.value=paging;
 			document.frmContents.action="${contextPath}/community/review/list";
 			document.frmContents.method="post";
 			document.frmContents.submit();
+		});
+		
+		$('#write_review').on('click',function(){
+			window.location.href="${contextPath}/community/review/write";
 		});
 	});
 </script>
@@ -235,6 +243,10 @@ p {
 		    </c:forEach>
 		    <li class="page-item"><a class="page-link">Next</a></li>
 		</ul>
+		
+		<div class="row justify-content-md-end">
+			<input type="button" id="write_review" class="btn btn-outline-secondary" value="글쓰기">
+		</div>
   </div>
 	<form name="frmContents">
 		<input type="hidden" name="curPage">

@@ -11,7 +11,7 @@ function result_init(){
 function image_init(idNumber) {
 $("#image_grid").empty();
 	
-	var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D'
+	var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + idNumber + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 	var map_array = new Array();
 	var map_x;
@@ -63,7 +63,7 @@ $("#image_grid").empty();
 function course_detail(idNumber, map_array) {
 	$("#image_grid").empty();
 
-	var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D'
+	var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo?ServiceKey=' + serviceKey + '&contentTypeId=25&contentId=' + idNumber + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&listYN=Y';
 	
 	$.ajax({
@@ -145,7 +145,7 @@ function course_detail(idNumber, map_array) {
 }
 
 function course_map(subArray, map_array){
-	var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D';
+	var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D';
 	var array_length = subArray.length;
 	var arr_result = new Array();
 

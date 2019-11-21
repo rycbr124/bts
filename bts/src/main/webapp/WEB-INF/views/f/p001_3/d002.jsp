@@ -37,5 +37,10 @@ ${result.member_id}
 ${result.register_date}
 <c:forEach var="tag_name" items="${result.tag_list}" varStatus="status">#${tag_name}</c:forEach>
  -->
+	<div class="container">
+		<div id="review-header">
+			<img class="thumb_nail" src="${contextPath}${result.tag_list}">
+		</div>
+	</div>
 </body>
 </html>

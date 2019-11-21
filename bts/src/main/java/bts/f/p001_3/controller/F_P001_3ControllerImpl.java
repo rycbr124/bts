@@ -52,7 +52,8 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 	private static final String metaUrl = "D:\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\bts\\resources\\image\\board";
 	private static final String mappingUrl = "/resources/image/board";
 	private static final String article_cd="3";
-	private static final int rangePage = 6;
+	private static final int rangeRow = 6;
+	private static final int rangePage = 5;
 	
 	@Override
 	@RequestMapping(value="/list" ,method={RequestMethod.POST,RequestMethod.GET})
@@ -72,7 +73,8 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		
 		int totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal());
 		PagingVO pvo = pagingProvider.get();
-		pvo.calTotalPage(totalCount, rangePage);
+		pvo.setRangePage(rangePage);
+		pvo.calTotalPage(totalCount, rangeRow);
 		
 		if(curPage<=0) {
 			curPage=1;
@@ -83,8 +85,8 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		pvo.setCurPage(curPage);
 		pvo.calStartEndPage();
 		
-		int endRow = curPage*rangePage;
-		int startRow = (endRow-rangePage)+1;		
+		int endRow = curPage*rangeRow;
+		int startRow = (endRow-rangeRow)+1;		
 		Map<String,Integer> searchMap = new HashMap<>();
 		searchMap.put("startRow", startRow);
 		searchMap.put("endRow", endRow);
@@ -214,8 +216,8 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		vo.setContents(request.getParameter("editor"));
 		vo.setThumbnail_img(thumb);
 		
-		f_p001_3Service.insertArticle(vo);
 		ArrayList tagList = mapper.readValue(request.getParameter("tagList"), ArrayList.class);
+		f_p001_3Service.insertArticle(vo);
 		List<F_P001_3VO_2> insertTagList = new ArrayList<>();
 		for(int i=0; i<tagList.size();i++) {
 			F_P001_3VO_2 tagVO = tagProvider.get();
@@ -224,7 +226,9 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 			tagVO.setTag_name((String) tagList.get(i));
 			insertTagList.add(tagVO);
 		}
-		f_p001_3Service.insertTagList(insertTagList);
+		if(!insertTagList.isEmpty()) {
+			f_p001_3Service.insertTagList(insertTagList);			
+		}
 		response.sendRedirect("/bts/community/review/list");
 	}
 	

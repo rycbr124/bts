@@ -8,10 +8,18 @@ import org.springframework.stereotype.Component;
 public class PagingVO {
 	private int totalCount;//전체 열
 	private int totalPage;//전체 페이지
-	private int rangePage;//페이지당 열수
+	private int rangeRow;//페이지당 열수
+	private int rangePage;//보여줄 페이지범위
 	private int curPage;//현재 페이지
 	private int startPage;//현재 시작 페이지
 	private int endPage;//현재 끝 페이지
+	
+	public int getRangeRow() {
+		return rangeRow;
+	}
+	public void setRangeRow(int rangeRow) {
+		this.rangeRow = rangeRow;
+	}
 	
 	public int getTotalCount() {
 		return totalCount;
@@ -50,14 +58,13 @@ public class PagingVO {
 		this.totalPage = totalPage;
 	}
 	
-	public void calTotalPage(int totalCount,int rangePage) {
-		int totalPage = totalCount/rangePage;
-		
-		if(totalPage%rangePage>0) {
+	public void calTotalPage(int totalCount,int rangeRow) {
+		int totalPage = totalCount/rangeRow;
+		if(totalCount%rangeRow>0) {
 			totalPage=totalPage+1;
 		}
 		this.totalCount=totalCount;
-		this.rangePage=rangePage;
+		this.rangeRow=rangeRow;
 		this.totalPage=totalPage;
 	}
 	
