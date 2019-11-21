@@ -16,7 +16,6 @@ $(document).ready(function(){
 	var planList = ${list};
 	plan_list(planList);
 });
-
 </script>
 </head>
 <body>

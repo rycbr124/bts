@@ -4,6 +4,8 @@
 function planRoot(plan_root,planner){
 	var plan_detail = plan_root.plan_root;
 	var plan_info = planner.planner;
+	var planNo = plan_detail[0];
+	var plan_no = planNo['PLAN_NO']; 
 	var resultArray;
 	var array = new Array();
 	var arr_location = new Array();
@@ -76,7 +78,7 @@ function planRoot(plan_root,planner){
 	$(personType).text('('+person_se+')');
 	$('.plan_information').append(modified);
 	$(modified).prop('class','modify');
-	$(modified).attr('onclick','location="/bts/plan/plan?"');
+	$(modified).attr('onclick','location.href="/bts/plan_detail/plan_modify?plan_no=' + plan_no + '"');
 	$(modified).text('수정하기');
 	
 }

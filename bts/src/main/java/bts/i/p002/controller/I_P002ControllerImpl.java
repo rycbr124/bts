@@ -114,5 +114,4 @@ public class I_P002ControllerImpl implements I_P002Controller {
 		System.out.println(wish);
 		return wish;
 	}
-	
 }
