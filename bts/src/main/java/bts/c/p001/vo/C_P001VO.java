@@ -3,7 +3,7 @@ package bts.c.p001.vo;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component("c_p001VO")
+@Component("c_p001vo")
 @Scope("prototype")
 public class C_P001VO {
 	private String member_id;
@@ -43,7 +43,5 @@ public class C_P001VO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
 	
 }

@@ -2,6 +2,7 @@ package bts.e.p001.Controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,4 +17,6 @@ public interface E_P001Controller {
 //	         HttpServletResponse response) throws Exception;
 	public ModelAndView selectAccompanyList(PagingVO pagingVO, @RequestParam(value="nowPage", required=false)String nowPage
 			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) throws Exception;
+	
+	public ModelAndView accView(@RequestParam int article_no, HttpSession session) throws Exception;
 }

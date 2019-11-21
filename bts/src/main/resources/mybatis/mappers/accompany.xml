@@ -18,6 +18,7 @@
 		<result property="member_id" column="member_id" />
 		<result property="content" column="content" />
 		<result property="incln_cd" column="incln_cd" />
+		<result property="viewcnt" column="viewcnt" />
 	</resultMap>
 
 
@@ -26,6 +27,19 @@
 	<![CDATA[
 	select * from(select ROWNUM RN, A.*FROM(select * from accompany_list
 	order by article_no desc)A) where RN between #{start} and #{end}
+	]]>
+	</select>
+	
+	<!-- 조회수 증가  -->
+	<update id="updateViewcnt">
+	update accompany set viewcnt = viewcnt+1 where article_no = #{article_no}
+	</update>
+	
+	<!-- 동행 게시글 상세 조회 -->
+	<select id="accView" resultType="e_p001VO">
+	<![CDATA[
+	select * from accompany
+	where article_no = #{article_no}
 	]]>
 	</select>
 	

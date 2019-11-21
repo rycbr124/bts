@@ -16,6 +16,27 @@
 				+ sel;
 	}
 </script>
+<style>
+   .hit {
+      animation-name: blink;
+      animation-duration: 1.5s;
+      animation-timing-function: ease;
+      animation-iteration-count: infinite;
+      /* 위 속성들을 한 줄로 표기하기 */
+      /* -webkit-animation: blink 1.5s ease infinite; */
+    }
+     
+    /* 애니메이션 지점 설정하기 */
+    /* 익스플로러 10 이상, 최신 모던 브라우저에서 지원 */
+    @keyframes blink {
+      from {color: white;}
+      30% {color: yellow;}
+      to {color: red; font-weight: bold;}
+      /* 0% {color:white;}
+      30% {color: yellow;}
+      100% {color:red; font-weight: bold;} */
+    }
+</style>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap/bootstrap.css" />
 <link rel="stylesheet" href="${contextPath}/resources/css/e/p001/accompanyMain.css" />
@@ -40,15 +61,20 @@
 						<th>제목</th>
 						<th>아이디</th>
 						<th>날짜</th>
+						<th>조회수</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="result" items="${accList}" varStatus="status">
 						<tr>
 							<td><c:out value="${result.article_no}" /></td>
-							<td><a href="#" id="acc_title"><c:out value="${result.acc_title}" /></a></td>
+							<td><a href="#" id="acc_title"><c:out value="${result.acc_title}" /></a> 
+							<c:if test="${result.viewcnt >= 100}">
+									<span class="hit">&nbsp;&nbsp;Hit!</span>
+								</c:if></td>
 							<td><c:out value="${result.member_id }" /></td>
 							<td><c:out value="${result.register_date }" /></td>
+							<td><c:out value="${result.viewcnt }" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>

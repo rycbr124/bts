@@ -38,4 +38,9 @@ public class E_P001ServiceImpl implements E_P001Service {
 	public Integer listCount() {
 		return e_p001DAO.pageCount();
 	}
+
+	@Override
+	public E_P001VO accView(int article_no) throws Exception {
+		return e_p001DAO.accView(article_no);
+	}
 }

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,31 +59,15 @@ public class E_P001ControllerImpl implements E_P001Controller {
 		return mav;
 	}
 
-//	@Override
-//	@RequestMapping(value = "/paging", method = { RequestMethod.GET, RequestMethod.POST })
-//	public ModelAndView listEvent(PagingVO vo, @RequestParam(value = "nowPage", required = false) String nowPage,
-//			@RequestParam(value = "cntPerPage", required = false) String cntPerPage, HttpServletRequest request,
-//			HttpServletResponse response) throws Exception {
-//		String viewName = "event";
-//
-//		int total = e_p001Service.countBoard();
-//		System.out.println("33333333333333333333333333333333333333333" + total);
-//		if (nowPage == null && cntPerPage == null) {
-//			nowPage = "1";
-//			cntPerPage = "5";
-//		} else if (nowPage == null) {
-//			nowPage = "1";
-//		} else if (cntPerPage == null) {
-//			cntPerPage = "5";
-//		}
-//		vo = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-//
-//		//List eventList = eventService.listEvent(vo);
-//		ModelAndView mav = new ModelAndView(viewName);
-//		mav.addObject("paging", vo);
-//		//mav.addObject("eventList", eventList);
-//		return mav;
-//	}
+	@Override
+	public ModelAndView accView(@RequestParam int article_no, HttpSession session) throws Exception {
+		e_p001Service.listCount();
+		ModelAndView mav = new ModelAndView("/e/p001/d002");
+		mav.addObject("article_no", e_p001Service.accView(article_no));
+		return mav;
+	}
+
+
 
 
 }

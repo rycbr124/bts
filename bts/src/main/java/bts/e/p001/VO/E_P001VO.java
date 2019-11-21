@@ -19,11 +19,19 @@ public class E_P001VO {
 	private String content;
 	private String incln_cd;
 	private Date register_date;
+	private int viewcnt;
 	public String getGender() {
 		return gender;
 	}
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	public int getViewcnt() {
+		return viewcnt;
+	}
+	public void setViewcnt(int viewcnt) {
+		this.viewcnt = viewcnt;
 	}
 	public int getAge() {
 		return age;

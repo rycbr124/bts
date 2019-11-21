@@ -27,4 +27,14 @@ public class E_P001DAOImpl implements E_P001DAO{
 		return sqlSession.selectOne("mapper.accompany.listCount");
 	}
 
+	@Override
+	public void updateViewcnt(Integer article_no) throws Exception {
+		sqlSession.update("mapper.accompany.updateViewcnt");
+	}
+
+	@Override
+	public E_P001VO accView(int article_no) throws Exception {
+		return sqlSession.selectOne("mapper.accompany.accView");
+	}
+
 }
