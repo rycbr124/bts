@@ -1,0 +1,72 @@
+@charset "UTF-8";
+body{
+	margin:0 auto;
+}
+.plan_detail_header{
+	width:100%;
+	max-height:400px;
+}
+.plan_detail_header .thumbnail_image{
+	position:relative;
+	width:1110px;
+	max-height:400px;
+	left:50%;
+	transform:translate(-50%,0);
+}
+.plan_detail_header .plan_information{
+	position:relative;
+	width:1070px;
+	height:200px;
+	margin:0 auto;
+	background-color:rgba(130,130,130,0);
+	background-image: linear-gradient(rgba(100%,100%,100%,0), rgba(100,100,100));
+	color:#fff;
+	top:-245px;
+	padding:20px;
+}
+.plan_information .title{
+	position:absolute;
+	width:auto;
+	margin:0;
+}
+.plan_information .rangeDate{
+	position:absolute;
+	width:200px;
+	top:120px;
+}
+.plan_information .profile_image{
+	display:inline-block;
+	position:absolute;
+	top:70px;
+}
+.plan_information .member{
+	display:inline-block;
+	position:absolute;
+	top:70px;
+	left:60px;
+	font-size:20px;
+	margin:auto 0;
+}
+.plan_information .modify{
+	position:absolute;
+	display:block;
+	width:100px;
+	height:40px;
+	font-size:15px;
+	bottom:30px;
+	background-color:#203341;
+	text-decoration: none;	
+	border: none;
+	cursor:pointer;
+	color:#fff;
+}
+.plan_information .person_type{
+	position:relative;
+	top:100px;
+	left:195px;
+}
+#map{
+	position:relative;
+	margin:0 auto;
+	left:0;
+}

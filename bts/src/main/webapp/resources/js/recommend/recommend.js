@@ -4,9 +4,38 @@
 $(document).ready(function (){
 	
 	$('#search').on('click', result_init);
+
+	var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=' + serviceKey + '&areaCode=1&numOfRows=25&MobileOS=ETC&MobileApp=AppTest'
+		
+		$.ajax({
+			async : false,
+			url : reqUrl,
+			dataType : 'json',
+			success : function(data, textStatus) {
+				var resultArray = data.response.body.items.item;
+				console.log("11111111 : " + resultArray);
+				if (resultArray instanceof Array) {
+					for ( var i in resultArray) {
+						console.log("222 : " + resultArray[i].code + " 333 : " + resultArray[i].name);
+						var option = document.createElement('option');
+						$(option).prop('value', resultArray[i].code);
+						var name = document.createTextNode(resultArray[i].name);
+						option.appendChild(name);
+						
+						$('#sigungucode').append(option);
+	
+					}
+				}
+						
+			},
+			error : function(data, textStatus) {
+				alert("잘못된 접근입니다.")
+			}
+		});
+	
 });
 
-	 
  ////////////////
  function result_init(){
 	 var pageNo = 1;
@@ -14,7 +43,6 @@ $(document).ready(function (){
 	 //paging 뿌리는 메소드
 	 $('.page-item').on('click',paging_click) //뿌린 버튼에 클릭이벤트 달아주는 메소드
  }
-
  
  function paging_click(){//페이징 버튼 눌렀을 때
 	 var pageNo = $(this).text();//자식노드중에 텍스트노드만 가져온다.

@@ -74,7 +74,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		PagingVO pvo = pagingProvider.get();
 		pvo.calTotalPage(totalCount, rangePage);
 		
-		if(curPage<0) {
+		if(curPage<=0) {
 			curPage=1;
 		}else if(curPage>pvo.getTotalPage()) {
 			curPage=pvo.getTotalPage();			
@@ -215,7 +215,6 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		vo.setThumbnail_img(thumb);
 		
 		f_p001_3Service.insertArticle(vo);
-		System.out.println("==================>"+vo.getArticle_no());
 		ArrayList tagList = mapper.readValue(request.getParameter("tagList"), ArrayList.class);
 		List<F_P001_3VO_2> insertTagList = new ArrayList<>();
 		for(int i=0; i<tagList.size();i++) {

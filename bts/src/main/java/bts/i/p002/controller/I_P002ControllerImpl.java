@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bts.b.p001.VO.B_P001VO;
+import bts.g.p001_2.vo.G_P001_2VO;
 import bts.i.p002.VO.I_P002VO_1;
 import bts.i.p002.VO.I_P002VO_2;
 import bts.i.p002.VO.I_P002VO_3;
@@ -38,6 +42,8 @@ public class I_P002ControllerImpl implements I_P002Controller {
 	@Autowired
 	I_P002VO_3 i_p002VO_3;
 	@Autowired
+	G_P001_2VO g_p001_2VO; 
+	@Autowired
 	I_P002Service i_p002Service;
 
 	@Override
@@ -51,11 +57,11 @@ public class I_P002ControllerImpl implements I_P002Controller {
 		return mav;
 	}
 
-	@Override
+	
+	
 	@RequestMapping(value = "/insert_plan", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody ModelAndView planInsert(@RequestParam Map<String, String> result , HttpServletRequest request,HttpServletResponse response) throws Exception {
+	public @ResponseBody void planInsert(@RequestParam Map<String, String> result , HttpServletRequest request,HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
-		ModelAndView mav = new ModelAndView("/i/p001/d001");
 		b_p001VO = (B_P001VO) session.getAttribute("memberInfo");
 		String member_id = b_p001VO.getMember_id();
 		i_p002VO_1.setMember_id(member_id);
@@ -75,11 +81,9 @@ public class I_P002ControllerImpl implements I_P002Controller {
 			voArray.add(i, i_p002VO_3);
 		}
 		String contentid = result.get("detail_information");
-		HashMap<String,ArrayList<Integer>> contentArray = mapper.readValue(contentid, HashMap.class);
-		
+		TreeMap<String,ArrayList<Integer>> contentArray = mapper.readValue(contentid, TreeMap.class);
 		List<I_P002VO_2> contentVO = new ArrayList<>();
 		for(Map.Entry<String, ArrayList<Integer>> entry : contentArray.entrySet()) {
-			System.out.println("[key] :" + entry.getKey() + "[value] :" + entry.getValue());
 			for(int j=0; j<entry.getValue().size();j++) {
 				System.out.println(entry.getValue().getClass().getName());
 				I_P002VO_2 i_p002VO_2 = new I_P002VO_2();
@@ -89,20 +93,26 @@ public class I_P002ControllerImpl implements I_P002Controller {
 				contentVO.add(i_p002VO_2);
 			}
 		}
-		
 		i_p002VO_1.setTitle(titleId);
 		i_p002VO_1.setPerson_se(personnel);
 		i_p002VO_1.setRange_date(daterange);
-		
-		
-
-		
 		i_p002Service.insertPlan(i_p002VO_1,contentVO,voArray);
-		
-
-		return mav;
-			
+	
+		response.sendRedirect("/bts/planner/planner");
 	}
-
-
+	@Override
+	@RequestMapping(value="/select_wishList",method= {RequestMethod.POST, RequestMethod.GET})
+	public @ResponseBody String selectWishList(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		HttpSession session = request.getSession();
+		b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
+		String member_id = b_p001VO.getMember_id();
+		g_p001_2VO.setMember_id(member_id);
+		i_p002Service.wishList(member_id);
+		Map<String,List<String>> wishList = i_p002Service.wishList(member_id);
+		JSONObject wishListObj = new JSONObject(wishList);
+		String wish = wishListObj.toJSONString();
+		System.out.println(wish);
+		return wish;
+	}
+	
 }

@@ -90,11 +90,23 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
 		   boolean command = g_p001_2Service.findWishlist(g_p001_2VO);
 		   
 		   if(command == true) {
+			   /*
+			   message = "<script src='/bts/resources/js/alert/sweetalert2.all.min.js'></script>";
+			   message += "<script src='https://cdn.jsdelivr.net/npm/promise-polyfill'></script>";
+			   message += "<script src='/bts/resources/js/alert/sweetalert2.min.js'></script>";
+			   message += "<link rel='stylesheet' href='/bts/resources/js/alert/sweetalert2.min.css'>";	 
+			   message += "<script>";
+			   message += "Swal.fire({";
+			   message += "icon: 'error',";
+			   message += "title: '실패하였습니다!',";
+			   message += "text: '이미 위시리스트에 추가한 명소입니다.'";
+			   message += "})";
+			   message += "</script>";
+			   */
 			   message = "<script>";
-			   message += "alert('이미 존재하는 명소입니다.');";
+			   message += "alert('이미 추가한 명소입니다..');";
 			   message += "history.go(-1)";
 			   message += "</script>";
-			   
 			   return message;
 		   }else {
 			   g_p001_2Service.insertWishlist(g_p001_2VO);

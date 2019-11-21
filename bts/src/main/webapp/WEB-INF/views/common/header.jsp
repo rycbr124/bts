@@ -28,7 +28,7 @@ z-index:2;margin-left:40px;}
 #menu > li > a {position: relative;font-family: 'Binggrae', sans-serif;font-size: 14px;font-weight: 600;color: #222;letter-spacing:0.025em; display:block;overflow: hidden;}
 #menu > li:before {  font-family: 'jt-font'; font-size: 10px; font-weight: normal;text-align: center;color: lightgray; display:block; position:absolute; left:50%; top:5px;  -webkit-transform:scale(0.9) translateX(-50%); 
 -ms-transform:scale(0.9) translateX(-50%);  transform:scale(0.9) translateX(-50%); content: '\e910';  opacity:0;  -webkit-transition: all 0.25s;  transition: all 0.25s;}
-html #menu > li:hover > a,#menu > li.active > a{color:white;}
+html #menu > li:hover > a,#menu > li.active > a{color:#A6A6A6;}
 #menu > li > a {display: inline-block;position:relative;transition: -webkit-transform 500ms;transition: transform 500ms;transition: transform 500ms, -webkit-transform 500ms;-webkit-transition: -webkit-transform 500ms;-moz-transition: transform 500ms;/* overflow: hidden; */}
 #menu > li > a:after {width:100%;content: attr(data-hover);position: absolute;top: -30px;left:0;transform: translate3d(0,0,0);-moz-transform: translate3d(0,0,0);-webkit-transform: translate3d(0,0,0);}
 
@@ -42,7 +42,7 @@ html .member_menu a:last-child{margin-right:0;}
 html .member_menu a:hover{color:rgb(127,127,127);}
 </style>
 <meta charset="UTF-8">
-<title>상단</title>
+
 
 </head>
 <body>
@@ -82,37 +82,6 @@ html .member_menu a:hover{color:rgb(127,127,127);}
 		</c:choose>
    </div><!-- member_menu -->
    </div><!-- header -->
-    <div class="modal fade" id="popUpWindow">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<!-- header -->
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h3 class="modal-title">BTS Login</h3>
-				</div>
-				<!-- body -->
-				<div class="modal-header">
-					<form role="form" method="post" action="${contextPath}/signup/login">
-						<div class="form-group">
-							<label class="member_id"> <span>ID</span> <input type="text" class="form-control" id="member_id" name="member_id" placeholder="ID" /></label> <br> <label class="password"> <span>Password</span> 
-							<input type="password" class="form-control" id="password" name="password" placeholder="Password" /></label> <br> 
-							<br><input type="submit" value="LOGIN" class="submit button" type="button" id="loginbutton">
-						</div>
-					</form>
-				</div>
-				<!-- footer -->
-				<div class="modal-footer">
-
-					<p id="findId_Pw">
-						<a class="forgotpw" href="${contextPath }/find/findPwMain" style="color: white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp; <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>
-					</p>
-				</div>
-
-				<div id="kakao_id_login" style="text-align: center">
-					<a href="https://kauth.kakao.com/oauth/authorize?client_id=6a0602e55acf9e0f00406d7fb1f93b3d&redirect_uri=http://localhost:8088/bts/signup/kakaoLogin&response_type=code"> <img width="223" src="${contextPath}/resources/image/main/kakao_login.png" /></a> <a href="${contextPath}/signup/naverLogin"> <img width="223" src="${contextPath}/resources/image/main/naver_login.PNG" /></a>
-				</div>
-			</div>
-		</div>
-	</div>
+   
 </body>
 </html>

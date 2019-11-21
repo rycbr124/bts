@@ -169,6 +169,20 @@ p {
 			document.frmContents.method="post";
 			document.frmContents.submit();
 		})
+		
+		$('a.page-link').on('click',function(){
+			var nowPage=${paging.curPage}
+			var paging=$(this).text();
+			if(paging==$('a.page-link:first').text()){
+				paging=nowPage-1;
+			}else if(paging==$('a.page-link:last').text()){
+				paging=nowPage+1;				
+			}
+			document.frmContents.curPage.value=paging;
+			document.frmContents.action="${contextPath}/community/review/list";
+			document.frmContents.method="post";
+			document.frmContents.submit();
+		});
 	});
 </script>
 </head>
@@ -223,6 +237,7 @@ p {
 		</ul>
   </div>
 	<form name="frmContents">
+		<input type="hidden" name="curPage">
 		<input type="hidden" name="article">
 	</form>
 </div>

@@ -53,8 +53,8 @@ public class PagingVO {
 	public void calTotalPage(int totalCount,int rangePage) {
 		int totalPage = totalCount/rangePage;
 		
-		if(totalCount%totalPage>0) {
-			totalPage++;
+		if(totalPage%rangePage>0) {
+			totalPage=totalPage+1;
 		}
 		this.totalCount=totalCount;
 		this.rangePage=rangePage;
@@ -63,8 +63,7 @@ public class PagingVO {
 	
 	public void calStartEndPage() {
 		int startPage=(((this.curPage-1)/this.rangePage)*this.rangePage)+1;
-		int endPage=startPage+this.rangePage-1;
-		
+		int endPage=(startPage+this.rangePage)-1;
 		if(endPage>this.totalPage) {
 			endPage=this.totalPage;
 		}
