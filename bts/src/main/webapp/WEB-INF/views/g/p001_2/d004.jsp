@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>코스 상세페이지</title>
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script> <!-- jQuery -->
 <script type="text/javascript" src="${contextPath}/resources/js/recommend/recommend4.js"></script>  <!-- 커스텀 js --> 
 <script>

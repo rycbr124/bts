@@ -6,6 +6,7 @@
 <mapper namespace="d.p001_4">
 	<!-- 리절트 맵 정의 -->
 	<resultMap id="articleResult" type="d_p001_4VO">
+		<result property="rownum" column="rownum" />
 		<result property="member_id" column="member_id" />
 		<result property="title" column="title" />
 		<result property="plan_no" column="plan_no" />
@@ -21,6 +22,8 @@
 		<result property="plan_no" column="plan_no" />
 		<result property="day_no" column="day_no" />
 		<result property="plan_desc" column="plan_desc" />
+		<result property="detail_no" column="detail_no" />
+		<result property="range_date" column="range_date" />
 	</resultMap>
 	
 	<resultMap id="tagResult" type="d_p001_4VO_3">
@@ -31,16 +34,19 @@
 	<!-- 게시글 조회 -->
 	<select id="searchArticle" resultMap="articleResult">
 		<![CDATA[
-			SELECT plan_no, register_date, title, member_id
-			FROM planner
-			WHERE open_val = 'Y'		
+			SELECT ROWNUM, title, register_date, member_id, plan_no
+			FROM (SELECT ROWNUM, title, register_date, member_id, plan_no
+      			  FROM planner
+      			  WHERE open_val = 'Y'
+      			  ORDER BY register_date)
+			ORDER BY ROWNUM desc	
 		]]>	
 	</select>
 	
 	<!-- 게시글 상세 조회 -->
 	<select id="contentsArticle" resultMap="articleResult" parameterType="String">
 		<![CDATA[
-			SELECT title, member_id, register_date
+			SELECT title, member_id, register_date, person_se, range_date
 			FROM planner
 			WHERE plan_no = #{plan_no}
 		]]>	
@@ -49,11 +55,11 @@
 	<!-- 플래너 연동 조회-->
 	<select id="plannerDetail" resultMap="detailResult" parameterType="String">
 		<![CDATA[		
-			SELECT DISTINCT(title), content_id, p.plan_no, plan_desc, day_no
+			SELECT DISTINCT(title), content_id, p.plan_no, plan_desc, day_no, detail_no, range_date
 			FROM planner p, planner_detail pd
 			WHERE p.plan_no = pd.plan_no
 			AND p.plan_no = #{plan_no}
-			ORDER BY day_no
+			ORDER BY detail_no
 		]]>
 	</select>
 	
@@ -78,12 +84,12 @@
 	</update>
 	
 	<!-- 플래너 추가시 open_val 변경 -->
-	<update id="updateOpen" parameterType="d_p001_4VO_2">
-		<![CDATA[
-			UPDATE planner
-			SET open_val = 'Y'
-			WHERE plan_no = #{plan_no}		
-		]]>
+	<update id="updateOpen" parameterType="list">
+		<foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+				UPDATE planner
+				SET open_val = 'Y', title = #{item.title}, register_date = TO_CHAR(sysdate, 'YYYY-MM-DD hh24:mi')
+				WHERE plan_no = #{item.plan_no}		
+		</foreach>
 	</update>
 	
 	<!-- 태그 조회 -->
@@ -95,4 +101,19 @@
 		]]>
 	</select>
 	
+	<!-- 플랜 게시글 삭제 -->
+	<delete id="deletePlan" parameterType="String">
+		<![CDATA[
+			DELETE FROM planner
+			WHERE plan_no = #{plan_no}
+		]]>
+	</delete>
+	
+	<!-- 플랜 디테일 삭제 -->
+	<delete id="deleteDetail" parameterType="String">
+		<![CDATA[
+			DELETE FROM planner_detail
+			WHERE plan_no = #{plan_no}
+		]]>
+	</delete>
 </mapper>

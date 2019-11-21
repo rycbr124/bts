@@ -141,7 +141,7 @@ function enter_check(event){
 function searchContentType(contentTypeId){
 $('.detail_list_container').empty();// 맵을 리셋 시킵니다.
 	$('.select_place').attr('onchange','searchContentType('+ contentTypeId +')');
-	var serviceKey = 'lUN5B8XHOdyoYlgxfJqeeTMdZZWYbuV9qc80jLPpilJ%2BYukKsP1%2FvR6W2AJ9UxbCgbUlkVqiN5O3%2FWiHMOyvcw%3D%3D'
+	var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D'
 	var sigungucode = $('.select_place option:selected').val();
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey='
 	        + serviceKey

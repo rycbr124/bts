@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>커뮤니티 상세 글</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -19,17 +19,38 @@
 		var arr_content = new Array();
 		var arr_day = new Array();
 		var arr_desc = new Array();
+		var arr_no = new Array();
 		<c:forEach var="planner" items="${detailPlanner}" varStatus="status">
 			arr_content[${status.index}] = "${planner.content_id}";
 			arr_day[${status.index}] = "${planner.day_no}";
 			arr_desc[${status.index}] = "${planner.plan_desc}";
+			arr_no[${status.index}] = "${planner.plan_no}"
 		</c:forEach>
 		console.log(arr_content);
 		console.log(arr_day);
+		
+		var titleBox = document.createElement('div');
+		$(titleBox).prop('class', 'titleBox');
+		
+		var titleImage = document.createElement('img');
+		$(titleImage).prop('src', "${contextPath}/resources/image/community/computer.png");
+		$(titleImage).prop('class', 'titleImage');
+		
+		var titleDesc = document.createElement('h2');
+		$(titleDesc).prop('class', 'titleDesc');
+		var descText = document.createTextNode('여행일정');
+		titleDesc.appendChild(descText);
+		
+		$('.planner_detail').append(titleBox);
+		$('.titleBox').append(titleImage);
+		$('.titleBox').append(titleDesc);
+		
+		
+		
 
 		for(var i in arr_content){
 			console.log("1111 : " + arr_content[i]);
-			var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
+			var serviceKey = '8MlvFH5fs4groXQuW9uCj0jvncbl0Pk9sppAzxq0jolCi5lsMOdlpLHgX3wC0rTwyrMHAPkLBm7lmsY44FwxGg%3D%3D'
 			var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + arr_content[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 			
 			$.ajax({
@@ -41,12 +62,21 @@
 			         var div = document.createElement('div');
 			         $(div).prop('class', 'content_div');
 			         $(div).prop('id', 'content_div' + i);
-
+			         
+			         var day_div = document.createElement('div');
+			         $(day_div).prop('class', 'day_div');
+			         var day_text = document.createTextNode(arr_day[i]);
+			         day_div.appendChild(day_text);
+			         
 			         var title = document.createElement('h3');
 			         $(title).prop('class', 'font-weight-light');
 			         var title_text = document.createTextNode(resultArray.title);
 			         title.appendChild(title_text);
 			         
+			         var a = document.createElement('a');
+			         $(a).prop('href', '${contextPath}/recommend/place_detail?contentid=' + arr_content[i]);
+			         a.appendChild(title);
+			         		         
 			         var img= document.createElement('img');
 			         $(img).prop('class', 'content_image');
 			         $(img).prop('src', resultArray.firstimage);
@@ -65,8 +95,9 @@
 			         $(hidden).prop('value', arr_content[i]);
 			         			         
 
+			         $('.planner_detail').append(day_div);
 			         $('.planner_detail').append(div);
-			         $('#content_div' + i).append(title);
+			         $('#content_div' + i).append(a);
 			         $('#content_div' + i).append(img);
 			         $('#content_div' + i).append(text);
 			         $('#content_div' + i).append(hidden);
@@ -77,8 +108,50 @@
 			      }
 			   });
 		}
-				
+		
+		var session_id = "${sessionScope.memberInfo.member_id}";
+		console.log(session_id);
+		<c:forEach var="article" items="${result}">
+			var member_id = "${article.member_id}";
+		</c:forEach>
+		console.log(member_id);
+		console.log("12121 : " + arr_no[0]);
+		if(session_id == member_id){
+			var m_button = document.createElement('input');
+			$(m_button).prop('type', 'button');
+			$(m_button).prop('value', '수정');
+			$(m_button).prop('class', 'btn btn-default btn-sm');
+			$(m_button).attr('onclick', 'location.href="${contextPath}/community/plan_update?plan_no=' + arr_no[0] + '"');
+			
+			var d_button = document.createElement('input');
+			$(d_button).prop('type', 'button');
+			$(d_button).prop('value', '삭제');
+			$(d_button).prop('class', 'btn btn-default btn-sm');
+			$(d_button).attr('onclick', 'location.href="${contextPath}/community/plan_delete?plan_no=' + arr_no[0] + '"');
+			$('.planner_detail').append(m_button);
+			$('.planner_detail').append(d_button);	
+			
+		}
+		
+		
 	});
+	
+	/* 댓글 구현 함수 */
+	
+	function commentList(){
+		$.ajax({
+			type : "post",
+			async : false,
+			url : "${contextPath}/community/comment_list",
+			data : {
+				
+			},
+		})
+	}
+	
+	
+	
+	
 </script>
 
 <style>
@@ -88,18 +161,38 @@
 }
 
 @font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundB.ttf");
+    font-family: "NanumSquareRoundB";
+}
+
+@font-face {
     src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
     font-family: "NanumSquareRoundR";
 }
 
 h1{
-	font-family : "NanumSquareRoundEB";
-	display : inline-block;
+	font-family: "NanumSquareRoundB";
+	
 	margin-left : 30px;	
 }
 
 h2{
 	font-family : "NanumSquareRoundEB";
+}
+
+h3.font-weight-light{
+	color : black;
+}
+.plan_header{
+	max-height:400px;
+}
+strong{
+	display : block;
+	margin-left : 30px;
+}
+
+a:hover{
+	color : black;
 }
 
 *{
@@ -113,43 +206,108 @@ img.thumb_nail{
 }
 
 div.title{
-	width : 1000px;
+	width : 1110px;
 	height : 200px;
-	margin-left : 55px;
-	background-color : white;
-	opacity : 0.5;
 	position : relative;
-	top : -200px;
+	top : -200px;	
+	background-color:rgba(130,130,130,0);
+    background-image: linear-gradient(rgba(100%,100%,100%,0), rgba(100,100,100));
+    color : white;
+    bottom : 0px;s
+	
 }
 
 img.content_image{
-	width : 500px;
-	height : 300px;
+	width : 300px;
+	height : 150px;
 }
 
 div.content_text{
 	display : inline-block;
+	float : right;
+	text-align : center;
 }
 
+div.planner_detail{
+	padding : 80px;	
+	background-color : #F8F8FA;
+}
+
+div.content_div{
+	border : solid 0.8px #D5D5D5;
+	padding : 20px;
+	margin-bottom : 20px;
+	background-color : white;
+}
+
+div.day_div{
+	width : 80px;
+	background-color : #003399;
+	color : white;
+	text-align : center;
+}
+
+div.quoatation{
+	display : inline-block;
+	font-size : 50px;
+}
+
+div.titleBox{
+	margin-bottom : 10px;
+}
+img.titleImage{
+	width : 50px;
+	height : 50px;
+	margin-right : 10px;
+}
+
+h2.titleDesc{
+	display : inline-block;
+}
 </style>
 </head>
 <body>
 	<div class="container">
-	
+		<div class ="plan_header">
 		<c:forEach var="article" items="${result}">
 			<img class="thumb_nail" >
 			<div class="title">
 				<h1>${article.title}</h1>
 				<strong>등록일. ${article.register_date}</strong>
 				<strong>작성자. ${article.member_id}</strong>
+				<strong>여행날짜. ${article.range_date}</strong>
+				<strong>여행타입. ${article.person_se}</strong>
 			</div>
 		</c:forEach>
-		
+		</div>
 		<!-- javascript로 처리할 부분 -->
 		<div class="planner_detail">
+		
+			
 			
 		</div>
-	<input type="button" value="글쓰기" class="btn btn-outline-secondary btn-sm" onClick="location.href='${contextPath}/community/plan_write'">
+		
+		
+        <label for="content">comment</label>
+        <form name="commentInsertForm">
+            <div class="input-group">
+               <input type="hidden" name="bno" value="${detail.bno}"/>
+               <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
+               <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
+               </span>
+              </div>
+        </form>
+    
+    
+    
+        <div class="commentList"></div>
+    
+
+
+
+		
+		
 	</div>
 </body>
 </html>

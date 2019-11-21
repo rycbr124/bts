@@ -102,14 +102,14 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
 			   message += "})";
 			   message += "</script>";
 			   */
-			   message += "<script>";
+			   message = "<script>";
 			   message += "alert('이미 추가한 명소입니다..');";
 			   message += "history.go(-1)";
 			   message += "</script>";
 			   return message;
 		   }else {
 			   g_p001_2Service.insertWishlist(g_p001_2VO);
-			   message += "<script>";
+			   message = "<script>";
 			   message += "alert('위시리스트에 추가하였습니다.');";
 			   message += "history.go(-1)";
 			   message += "</script>";
