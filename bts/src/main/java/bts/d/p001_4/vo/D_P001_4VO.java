@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component("d_p001_4VO")
 public class D_P001_4VO {
+	private String rownum;
 	private String member_id;
 	private String title;
 	private String plan_no;
@@ -11,6 +12,12 @@ public class D_P001_4VO {
 	private String person_se;
 	private String range_date;
 	
+	public String getRownum() {
+		return rownum;
+	}
+	public void setRownum(String rownum) {
+		this.rownum = rownum;
+	}
 	public String getMember_id() {
 		return member_id;
 	}

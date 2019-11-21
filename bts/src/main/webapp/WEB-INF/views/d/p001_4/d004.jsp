@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>커뮤니티 글 저장</title>
 
 <!-- 부트스트랩 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -45,6 +45,10 @@ $(document).ready(function (){
     font-family: "NanumSquareRoundR";
 }
 
+*{
+	font-family: "NanumSquareRoundR";
+}
+
 h2{
 	font-family: "NanumSquareRoundR";
 	margin-bottom : 50px;
@@ -67,8 +71,8 @@ img.check{
 <div class="container">
 	<img class="check" src="${contextPath}/resources/image/community/check.png">
 	<h2>게시글이 성공적으로 등록되었습니다.</h2>
-	<button type="button" class="btn btn-outline-secondary btn-lg" onclick="location.href='${contextPath}/community/plan_list'">목록으로 돌아가기</button>
-<button type="button" class="btn btn-sm btn-primary" id="btnSave">저장</button>
+	<button type="button" class="btn btn-default" onclick="location.href='${contextPath}/community/plan_list'">목록으로 돌아가기</button>
+<!-- <button type="button" class="btn btn-sm btn-primary" id="btnSave">저장</button>  -->
 
 </div>
 </body>

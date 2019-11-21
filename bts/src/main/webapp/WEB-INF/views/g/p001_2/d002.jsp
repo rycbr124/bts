@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>코스 별 추천</title>
+<title>코스별 추천</title>
 
 <link rel="stylesheet" href="${contextPath}/resources/css/custom.css"> <!-- 커스텀 css -->
 <link rel="stylesheet" href="${contextPath}/resources/library/bootstrap/css/bootstrap-grid.min.css">
@@ -63,6 +63,11 @@ h5{
 p{
 	font-family: "NanumSquareRoundR";	
 }
+
+div.box{
+	background-color : #F8F8FA;
+	padding-top : 20px;
+}
 </style>
 
 </head>
@@ -71,19 +76,19 @@ p{
 		<h1 class="title">코스별 추천</h1>
 		<p>서울 내 명소들을 코스별로 추천</p>
 		<hr>
-	
-		<strong>코스타입 : </strong>
-		<select class="form-control" id="cat3" style="display:inline-block;">
-			<option value="" selected>타입선택</option>
-		
-		</select>
-		<button type="button" class="btn btn-outline-secondary btn-sm" id="search">검색</button> 
-		
-		<div class="row" id="image_grid">
+		<div class="box">
+			<strong>코스타입 : </strong>
+			<select class="form-control" id="cat3" style="display:inline-block;">
+				<option value="" selected>타입선택</option>
 			
+			</select>
+			<button type="button" class="btn btn-outline-secondary btn-sm" id="search">검색</button> 
 			
+			<div class="row" id="image_grid">
+				
+				
+			</div>
 		</div>
-		
 		<div id="pagination">
 		<ul class="pagination justify-content-center">
 			<li class="page-item"><span class="page-link">Prev</span></li>

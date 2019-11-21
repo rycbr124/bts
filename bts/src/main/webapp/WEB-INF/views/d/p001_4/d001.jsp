@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>커뮤니티</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -26,6 +26,9 @@
     font-family: "NanumSquareRoundR";
 }
 
+*{
+    font-family: "NanumSquareRoundR";
+}
 table{
 	text-align : center;
 	width:100%;
@@ -54,6 +57,10 @@ img{
 	margin-bottom : 50px;
 }
 
+li.nav-item{
+	width : 250px;
+}
+
 </style>
 
 
@@ -69,7 +76,7 @@ img{
       <a class="nav-link active" href="${contextPath}/community/plan_list">계획</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="${contextPath}/community/review_list">후기</a>
+      <a class="nav-link" href="${contextPath}/community/review/list">후기</a>
     </li>
     
   </ul>
@@ -86,7 +93,7 @@ img{
 		
 		<c:forEach var="article" items="${listArticle}">
 		<tr>
-			<td>${article.plan_no}</td>
+			<td>${article.rownum}</td>
 			<td><a href='${contextPath}/community/plan_contents?plan_no=${article.plan_no}'>${article.title}</a></td>
 			<td>${article.member_id}</td>
 			<td>${article.register_date}</td>
@@ -94,8 +101,21 @@ img{
 		</c:forEach>
 
 	</table>
-	<input type="button" value="글쓰기" class="btn btn-outline-secondary btn-sm" onClick="location.href='${contextPath}/community/plan_write'">
-
+	<div id="pagination">
+		<ul class="pagination justify-content-center">
+			<li class="page-item"><span class="page-link">Prev</span></li>
+			<li class="page-item"><span class="page-link">1</span></li>
+			<li class="page-item"><span class="page-link">2</span></li>
+			<li class="page-item"><span class="page-link">3</span></li>
+			<li class="page-item"><span class="page-link">4</span></li>
+			<li class="page-item"><span class="page-link">5</span></li>
+			<li class="page-item"><span class="page-link">Next</span></li>
+			
+		</ul>
+	</div>
+	<p align="right">
+		<input type="button" value="글쓰기" class="btn btn-default" onClick="location.href='${contextPath}/community/plan_write'">
+	</p>
 
 
 </div>

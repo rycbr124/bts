@@ -48,4 +48,10 @@ public class D_P001_4DAOImpl implements D_P001_4DAO{
 		return sqlSession.selectList("d.p001_4.selectMyplan", member_id);
 	}
 
+	@Override
+	public void deletePlan(String plan_no) throws DataAccessException {
+		sqlSession.delete("d.p001_4.deletePlan", plan_no);
+		sqlSession.delete("d.p001_4.deleteDetail", plan_no);
+	}
+
 }

@@ -39,6 +39,7 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
       Map<String, List<String>> searchResult = g_p001_2Service.searchCategory();
       JSONObject totaObject = new JSONObject(searchResult);
       ModelAndView mav = new ModelAndView("/g/p001_2/d001");
+      System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhh " + totaObject.toJSONString());
       mav.addObject("result", totaObject.toJSONString());
       return mav;
    }
@@ -102,14 +103,14 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
 			   message += "})";
 			   message += "</script>";
 			   */
-			   message += "<script>";
+			   message = "<script>";
 			   message += "alert('이미 추가한 명소입니다..');";
 			   message += "history.go(-1)";
 			   message += "</script>";
 			   return message;
 		   }else {
 			   g_p001_2Service.insertWishlist(g_p001_2VO);
-			   message += "<script>";
+			   message = "<script>";
 			   message += "alert('위시리스트에 추가하였습니다.');";
 			   message += "history.go(-1)";
 			   message += "</script>";

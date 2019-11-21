@@ -15,4 +15,5 @@ public interface D_P001_4DAO {
 	public List<D_P001_4VO_3> searchTag(String plan_no) throws DataAccessException;
 	public void insertContent(List<D_P001_4VO_2> voList) throws DataAccessException;
 	public List<D_P001_4VO> selectMyplan(String member_id) throws DataAccessException;
+	public void deletePlan(String plan_no) throws DataAccessException;
 }

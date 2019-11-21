@@ -23,6 +23,7 @@ import bts.b.p001.VO.B_P001VO;
 import bts.d.p001_4.service.D_P001_4Service;
 import bts.d.p001_4.vo.D_P001_4VO;
 import bts.d.p001_4.vo.D_P001_4VO_2;
+import bts.d.p001_4.vo.D_P001_4VO_4;
 
 @Controller("d_p001_4")
 @RequestMapping(value="/community")
@@ -47,7 +48,6 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 		ModelAndView mav = new ModelAndView("/d/p001_4/d001");
 		mav.addObject("listArticle", listArticle);
 		return mav;
-		
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 	public ModelAndView saveArticle(@RequestParam Map<String, String> result, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String size = request.getParameter("length");
 		int length = Integer.parseInt(size); 
-			
+		
 		List<String> desc = new ArrayList<String>();
 		List<String> id = new ArrayList<String>();
 		List<D_P001_4VO_2> voList = new ArrayList<D_P001_4VO_2>();
@@ -112,6 +112,7 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 			vo.setPlan_no(result.get("p_no"));
 			vo.setContent_id(id.get(i));
 			vo.setPlan_desc(desc.get(i));
+			vo.setTitle(result.get("title"));
 			
 			voList.add(i, vo);
 		}
@@ -121,6 +122,33 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 		
 		return mav;
 	}
+
+	@Override
+	@RequestMapping(value="/plan_update" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView updateArticle(@RequestParam("plan_no") String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("수정");
+		List<D_P001_4VO_2> detailPlanner = d_p001_4Service.detailPlanner(plan_no);
+		ModelAndView mav = new ModelAndView("/d/p001_4/d005");
+		mav.addObject("detailPlanner", detailPlanner);
+		mav.addObject("plan_no", plan_no);
+		return mav;
+	}
+
+	@Override
+	@RequestMapping(value="/plan_delete" ,method={RequestMethod.POST,RequestMethod.GET}, produces = "text/html; charset=utf8")
+	public @ResponseBody String deleteArticle(@RequestParam("plan_no") String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		System.out.println("삭제");
+		String message = null;
+		d_p001_4Service.deletePlan(plan_no);
+		message = "<script>";
+		message += "alert('게시글이 삭제되었습니다.');";
+		message += "location.href='/bts/community/plan_list'";
+		message += "</script>";
+		
+		return message;
+		
+	}
+
 
 
 }
