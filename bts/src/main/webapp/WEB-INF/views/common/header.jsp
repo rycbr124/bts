@@ -59,7 +59,7 @@ html .member_menu a:hover{color:rgb(127,127,127);}
             <a href="#">예약</a>
          </li>
          <li class="menu_accompany">
-            <a href="#">동행</a>
+            <a href="${contextPath}/accompany/accMain">동행</a>
          </li>
          <li class="menu_community">
             <a href="${contextPath}/community/plan_list">커뮤니티</a>
@@ -82,37 +82,5 @@ html .member_menu a:hover{color:rgb(127,127,127);}
 		</c:choose>
    </div><!-- member_menu -->
    </div><!-- header -->
-    <div class="modal fade" id="popUpWindow">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<!-- header -->
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h3 class="modal-title">BTS Login</h3>
-				</div>
-				<!-- body -->
-				<div class="modal-header">
-					<form role="form" method="post" action="${contextPath}/signup/login">
-						<div class="form-group">
-							<label class="member_id"> <span>ID</span> <input type="text" class="form-control" id="member_id" name="member_id" placeholder="ID" /></label> <br> <label class="password"> <span>Password</span> 
-							<input type="password" class="form-control" id="password" name="password" placeholder="Password" /></label> <br> 
-							<br><input type="submit" value="LOGIN" class="submit button" type="button" id="loginbutton">
-						</div>
-					</form>
-				</div>
-				<!-- footer -->
-				<div class="modal-footer">
-
-					<p id="findId_Pw">
-						<a class="forgotpw" href="${contextPath }/find/findPwMain" style="color: white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp; <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>
-					</p>
-				</div>
-
-				<div id="kakao_id_login" style="text-align: center">
-					<a href="https://kauth.kakao.com/oauth/authorize?client_id=6a0602e55acf9e0f00406d7fb1f93b3d&redirect_uri=http://localhost:8088/bts/signup/kakaoLogin&response_type=code"> <img width="223" src="${contextPath}/resources/image/main/kakao_login.png" /></a> <a href="${contextPath}/signup/naverLogin"> <img width="223" src="${contextPath}/resources/image/main/naver_login.PNG" /></a>
-				</div>
-			</div>
-		</div>
-	</div>
 </body>
 </html>

@@ -18,5 +18,5 @@ public interface E_P001Controller {
 	public ModelAndView selectAccompanyList(PagingVO pagingVO, @RequestParam(value="nowPage", required=false)String nowPage
 			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) throws Exception;
 	
-	public ModelAndView accView(@RequestParam int article_no, HttpSession session) throws Exception;
+	public ModelAndView accView(@RequestParam("article_no") int article_no ) throws Exception;
 }

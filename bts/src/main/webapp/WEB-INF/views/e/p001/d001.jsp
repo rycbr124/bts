@@ -68,8 +68,8 @@
 					<c:forEach var="result" items="${accList}" varStatus="status">
 						<tr>
 							<td><c:out value="${result.article_no}" /></td>
-							<td><a href="#" id="acc_title"><c:out value="${result.acc_title}" /></a> 
-							<c:if test="${result.viewcnt >= 100}">
+							<td><a href="${contextPath}/accompany/accView?article_no=${result.article_no}" id="acc_title"><c:out value="${result.acc_title}" /></a> 
+							<c:if test="${result.viewcnt >= 30}">
 									<span class="hit">&nbsp;&nbsp;Hit!</span>
 								</c:if></td>
 							<td><c:out value="${result.member_id }" /></td>
