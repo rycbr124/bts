@@ -4,9 +4,38 @@
 $(document).ready(function (){
 	
 	$('#search').on('click', result_init);
+
+	var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
+	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=' + serviceKey + '&areaCode=1&numOfRows=25&MobileOS=ETC&MobileApp=AppTest'
+		
+		$.ajax({
+			async : false,
+			url : reqUrl,
+			dataType : 'json',
+			success : function(data, textStatus) {
+				var resultArray = data.response.body.items.item;
+				console.log("11111111 : " + resultArray);
+				if (resultArray instanceof Array) {
+					for ( var i in resultArray) {
+						console.log("222 : " + resultArray[i].code + " 333 : " + resultArray[i].name);
+						var option = document.createElement('option');
+						$(option).prop('value', resultArray[i].code);
+						var name = document.createTextNode(resultArray[i].name);
+						option.appendChild(name);
+						
+						$('#sigungucode').append(option);
+	
+					}
+				}
+						
+			},
+			error : function(data, textStatus) {
+				alert("잘못된 접근입니다.")
+			}
+		});
+	
 });
 
-	 
  ////////////////
  function result_init(){
 	 var pageNo = 1;

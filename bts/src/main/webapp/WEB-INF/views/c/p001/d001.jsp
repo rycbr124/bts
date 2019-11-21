@@ -9,9 +9,49 @@
 <title>마이페이지 메인</title>
 <link rel="stylesheet"
 	href="${contextPath}/resources/css/mypage/d001.css">
-<link rel="stylesheet"
-	href="/bts/resources/library/bootstrap/css/bootstrap.min.css" />
-</head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="/bts/resources/library/bootstrap/css/bootstrap.min.css" />
+<script src="${contextPath }/resources/js/c/p001/c_d001.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function() {
+		tagInit();
+		
+		$('#btn-form-submit').click(function() {
+			var profile = $('#frm-profile')[0];
+			profile.action = "${contextPath }/my/update";
+			profile.submit();
+			/*
+			console.log(profile);
+			console.log(profile.profile_image);
+			 */
+		});
+		/*
+		$('.btn-primary').click(function(){
+			$('.btn-primary').removeClass('active');
+			$(this).addClass('active');
+			
+		})
+		*/
+	})
+	
+	function tagInit(){
+		var input = ${selected};
+		var radioList = $('input[type=radio]').toArray();
+		console.log(radioList);
+		for(var i in input){
+			var cd = input[i].incln_cd;
+			for(var j in radioList){
+				var value = $(radioList[j]).prop('value')
+				if(cd==value){
+					$(radioList[j]).prop('checked',true);
+					$(radioList[j]).parent().addClass('active');
+					break;
+				}
+			}
+		}
+	}
+</script>
 <body>
 	<!--<div id = "container">
 <img src ="http://www.artinsight.co.kr/data/tmp/1703/96103d28d38e5fb86a31b713cde7626c_sRZKrRWIDpl7sJnjq5rz2yR.jpg?s=1400x467">
@@ -22,25 +62,36 @@
 			<div class="row">
 				<div class="col-md-9 sub-container">
 					<h3 class="space-5">여행자 정보 등록</h3>
-					<form id="frm-profile" autocomplete="off" method="post"
-						action="${contextPath }/my/update">
-						<input type="hidden" name="email_id" id="email_id"> 
-						<input type="hidden" name="email_host" id="email_host">
-						<div class="mypage-picture row" action="${contextPath}/my/image">
-							
-					<c:choose>
-						<c:when test="${not empty sessionScope.memberInfo.profile_image }">
-						<img src="${sessionScope.memberInfo.profile_image }" id="profImg">
-						
-						</c:when>
-						
-							<c:otherwise>
-								<img src="https://d2mgzmtdeipcjp.cloudfront.net/files/member/profile.png" class="user-picture" id="profImg">
-							</c:otherwise>
-					</c:choose>
-							<input type="file" data-toggle="modal"
+					<hr />
+					<form id="frm-profile" autocomplete="off" method="post">
+						<input type="hidden" name="email_id" id="email_id"> <input
+							type="hidden" name="email_host" id="email_host">
+						<div class="mypage-picture" action="${contextPath}/my/image">
+
+							<c:choose>
+								<c:when
+									test="${not empty sessionScope.memberInfo.profile_image }">
+									<c:if test="${sessionScope.memberInfo.member_type =='kakao' }">
+										<img src="${sessionScope.memberInfo.profile_image }"
+											id="profImg">
+									</c:if>
+									<c:if test="${sessionScope.memberInfo.member_type !='kakao' }">
+										<img
+											src="${contextPath}/${sessionScope.memberInfo.profile_image }"
+											id="profImg">
+									</c:if>
+								</c:when>
+
+								<c:otherwise>
+									<img
+										src="https://d2mgzmtdeipcjp.cloudfront.net/files/member/profile.png"
+										class="user-picture" id="profImg">
+								</c:otherwise>
+							</c:choose>
+
+							<input type="file" data-toggle="modal" name="profile_image"
 								data-target="#modal-set-profile-img"
-								class="btn btn-sm btn-default" value="사진 변경" />
+								class="btn btn-sm btn-default" value="사진 올리기" id="input_img" />
 						</div>
 						<div class="row">
 							<div class="col-md-6">
@@ -69,7 +120,6 @@
 						<div class="row">
 							<div class="col-md-6">
 								<label class="title">성별</label>
-								<!--<input type="text" id="gender" name="gender" value="" class="form-control" engonly="true" required="">-->
 								<select class="form-control" id="gender" name="gender">
 									<c:if test="${sessionScope.memberInfo.gender =='M'}">
 										<option value="M" selected>남</option>
@@ -105,10 +155,29 @@
 									onkeypress="onlyNumOnKeyPress();">
 							</div>
 						</div>
+						<div class="check">
+							<div >
+							<label class="title">여행 성향 체크</label>
+								<br><hr>
+								<c:forEach var="data" items="${incln}">
+									<font size="3.5em" color="green">${data.key}</font><br>
+									<div class="btn-group btn-group-toggle" data-toggle="buttons">
+										<c:forEach var="data2" items="${data.value}">
+											<label class="btn btn-info btn-lg" >
+												<input type="radio" name="${data2.group_name}" value="${data2.incln_cd}">${data2.name}
+											</label>
+										</c:forEach>
+									</div>
+									<hr>
+								</c:forEach>
+
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-md-2">
-								<button type="submit" class="btn btn-form-submit form-control"
-									style="margin-bottom: 40px; background-color: #A5FECB;">저장</button>
+								<button type="button" id="btn-form-submit"
+									class="btn btn-form-submit form-control"
+									style="margin-bottom: 40px; background: #ec008c; /* fallback for old browsers */ background: -webkit-linear-gradient(to right, #fc6767, #ec008c); /* Chrome 10-25, Safari 5.1-6 */ background: linear-gradient(to right, #fc6767, #ec008c);">저장</button>
 							</div>
 						</div>
 					</form>
@@ -117,8 +186,9 @@
 							<div style="margin: auto;">
 								<div data-toggle="modal" data-target="#modal-out-agreement"
 									class="btn-out"
-									style="cursor: pointer; color: lightgrey; text-decoration: underline;">회원
-									탈퇴</div>
+									style="cursor: pointer; color: lightgrey; text-decoration: underline;">
+									<a href="${contextPath }/my/exitMain">회원탈퇴</a>
+								</div>
 							</div>
 						</div>
 					</div>

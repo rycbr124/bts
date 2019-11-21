@@ -17,7 +17,6 @@ public class B_P001VO {
 	private String profile_image;
 	private String member_type;
 	
-	
 	public String getMember_type() {
 		return member_type;
 	}

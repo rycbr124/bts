@@ -229,7 +229,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		if (d001vo != null && d001vo.getMember_id() != null) {
 			HttpSession session = request.getSession();
 			session = request.getSession();
-			session.setMaxInactiveInterval(30*60);
+			session.setMaxInactiveInterval(360*60);
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("memberInfo", d001vo);
 			System.out.println("성공");

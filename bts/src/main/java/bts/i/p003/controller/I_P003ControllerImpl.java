@@ -42,8 +42,14 @@ public class I_P003ControllerImpl implements I_P003Controller{
 		String plan_no = request.getParameter("plan_no");
 		ModelAndView mav = new ModelAndView("/i/p003/d001");
 		Map<String, List<String>> planRoot = i_p002Service.planRoot(plan_no);
+		//VO러 플래너 받기
+		i_p002VO_2.setPlan_no(plan_no);
+		
+		Map<String,List<String>> planner = i_p002Service.planner(plan_no);
 		JSONObject rootObject = new JSONObject(planRoot);
+		JSONObject plannerObj = new JSONObject(planner);
 		mav.addObject("root", rootObject.toJSONString());
+		mav.addObject("planner", plannerObj.toJSONString());
 		return mav;
 		
 	}
