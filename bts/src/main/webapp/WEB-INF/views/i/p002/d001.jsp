@@ -85,7 +85,7 @@
    				<a href="javascript:searchContentType(38)" id="shopping"><img src="${contextPath}/resources/image/icon/shopping-bag.png"/></a>
    				<a href="javascript:searchContentType(32)" id="hotel"><img src="${contextPath}/resources/image/icon/hotel.png"/></a>
    				<a href="javascript:searchContentType(14)" id="museum"><img src="${contextPath}/resources/image/icon/canvas.png"/></a>
-   				<a href="javascript:searchContentType()" id="wishList"><img src="${contextPath}/resources/image/icon/paperclip.png"/></a>
+   				<a href="javascript:selectWishList()" id="wishList"><img src="${contextPath}/resources/image/icon/paperclip.png"/></a>
    			</div>
    			<select class="select_place" id="sigungu">
    				<option value=''>지역선택</option>

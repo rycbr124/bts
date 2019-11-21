@@ -43,7 +43,6 @@ $(document).ready(function (){
 	 //paging 뿌리는 메소드
 	 $('.page-item').on('click',paging_click) //뿌린 버튼에 클릭이벤트 달아주는 메소드
  }
-
  
  function paging_click(){//페이징 버튼 눌렀을 때
 	 var pageNo = $(this).text();//자식노드중에 텍스트노드만 가져온다.

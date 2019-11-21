@@ -80,6 +80,7 @@ function plan_list(planList){
 				alert("잘못된 접근입니다.");
 			}
 		});
+		
 		var plan_size = $('.my_plan').children().size();
 		var del = document.createElement('a');
 		var img = document.createElement('img');

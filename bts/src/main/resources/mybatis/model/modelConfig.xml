@@ -3,7 +3,7 @@
    "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-   <typeAliases>
+	<typeAliases>
       <typeAlias type="bts.b.p001.VO.B_P001VO" alias="d001VO" />
       <typeAlias type="bts.g.p001_2.vo.G_P001_2VO"  alias="g_p001_2VO" />
       <typeAlias type="bts.b.p001.VO.KakaoVO" alias="kakaoVO" />
@@ -13,7 +13,10 @@
 	  <typeAlias type="bts.i.p002.VO.I_P002VO_3" alias="i_p002VO_3" />
 	  <typeAlias type="bts.c.p006.vo.C_P006VO" alias="c_p006VO" /> 
 	  <typeAlias type="bts.d.p001_4.vo.D_P001_4VO" alias="d_p001_4VO" />
-	  <typeAlias type="bts.d.p001_4.vo.D_P001_4VO_2" alias="d_p001_4VO_2" />
-	  <typeAlias type="bts.d.p001_4.vo.D_P001_4VO_3" alias="d_p001_4VO_3" />      
+	  <typeAlias type="bts.d.p001_4.vo.D_P001_4VO_2" alias="d_p001_4VO_2" />      
+	  <typeAlias type="bts.c.p001.vo.C_P001VO" alias="c_p001vo" />
+	  <typeAlias type="bts.d.p001_4.vo.D_P001_4VO_3" alias="d_p001_4VO_3" /> 
+	  <typeAlias type="bts.e.p001.VO.E_P001VO" alias="e_p001VO" />     
    </typeAliases>
+
 </configuration>

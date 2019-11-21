@@ -9,7 +9,8 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/main/main.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/layout/layout.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main/footer.css">
-<link rel="stylesheet" href="${contextPath}/resources/css/main/loginPopup.css">
+<link rel="stylesheet" href="${contextPath}/resources/css/main/login.css">
+<!--  <link rel="stylesheet" href="${contextPath}/resources/css/main/loginPopup.css">-->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="${contextPath}/resources/js/main/logo.js"></script>
 <link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
@@ -18,30 +19,30 @@
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <style>
 @font-face {
-   src: url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
-   font-family: "Binggrae";
+	src: url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
+	font-family: "Binggrae";
 }
 
 div.main_section_accompany {
-   margin-left: 250px;
-   margin-right: 250px;
+	margin-left: 250px;
+	margin-right: 250px;
 }
 
 div.main_section_reservation {
-   margin-left: 250px;
-   margin-right: 250px;
+	margin-left: 250px;
+	margin-right: 250px;
 }
 
 img.detail {
-   display: inline-block;
-   width: 300px;
-   height: 200px;
-   margin: 50px 20px 30px 50px;
+	display: inline-block;
+	width: 300px;
+	height: 200px;
+	margin: 50px 20px 30px 50px;
 }
 
 h3.title {
-   font-family: "Binggrae";
-   margin-bottom: 100px;
+	font-family: "Binggrae";
+	margin-bottom: 100px;
 }
 </style>
 <meta charset="UTF-8">
@@ -67,55 +68,22 @@ h3.title {
 		var text5 = $("#tab5").text();
 		$('#search_text').val(text5);
 	}
+
 	$(document).on('click', 'a[href="#"]', function(e) {
 		e.preventDefault();
 	});
 </script>
 <c:if test='${not empty message }'>
-				<script>
-				window.onload = function(){
-					result();
-				}
-				function result(){
-					alert("아이디나 비밀번호가 틀립니다.");
-				}
-				</script>
-				</c:if>
-<script>
-	$(document).ready(function() {
-		$('a.login').click(function() {
+	<script>
+		window.onload = function() {
+			result();
+		}
+		function result() {
+			alert("아이디나 비밀번호가 틀립니다.");
+		}
+	</script>
+</c:if>
 
-			// Getting the variable's value from a link 
-			var loginBox = $(this).attr('href');
-
-			//Fade in the Popup and add close button
-			$(loginBox).fadeIn(300);
-
-			//Set the center alignment padding + border
-			var popMargTop = ($(loginBox).height() + 24) / 2;
-			var popMargLeft = ($(loginBox).width() + 24) / 2;
-
-			$(loginBox).css({
-				'margin-top' : -popMargTop,
-				'margin-left' : -popMargLeft
-			});
-
-			// Add the mask to body
-			$('body').append('<div id="mask"></div>');
-			$('#mask,.login-popup').fadeIn(300);
-
-			return false;
-		});
-
-		// When clicking on the button close or the mask layer the popup closed
-		$('a.close, #mask').live('click', function() {
-			$('#mask , .login-popup').fadeOut(300, function() {
-				$('#mask').remove();
-			});
-			return false;
-		});
-	});
-</script>
 </head>
 <body>
 	<div id="header">
@@ -125,20 +93,21 @@ h3.title {
 			<ul id="menu" class="menu">
 				<li class="menu_recommend"><a href="${contextPath}/recommend_main">추천</a></li>
 				<li class="menu_reservation"><a href="#">예약</a></li>
-				<li class="menu_accompany"><a href="#">동행</a></li>
+				<li class="menu_accompany"><a href="${contextPath }/accompany/accMain">동행</a></li>
 				<li class="menu_community"><a href="${contextPath}/community/plan_list">커뮤니티</a></li>
 				<li class="menu_planner"><a href="${contextPath}/planner/planner">플래너</a></li>
 				
 			</ul>
 			<div class="member_menu">
 				<c:choose>
-				
+
 					<c:when test="${isLogOn== true and not empty memberInfo }">
 						<a href="${contextPath }/my/profile" class="mypage"><span>마이페이지</span></a>
 						<a href="${contextPath }/signup/logout" class="logout"><span>로그아웃</span></a>
 					</c:when>
 					<c:otherwise>
-						<a href="#popup-layer" class="login"><span>LOGIN</span></a>
+						<!--  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#popUpWindow">Log IN</button>-->
+						<a href="#popUpWindow" class="signup" data-toggle="modal"><span>LOGIN</span></a>
 						<a href="${contextPath }/signup/signup" class="signup"><span>SIGN UP</span></a>
 					</c:otherwise>
 				</c:choose>
@@ -147,30 +116,41 @@ h3.title {
 		</div>
 
 	</div>
-	<!-- header -->
 
-	<!-- login popup -->
-	<div id="login-box" class="login-popup">
-		<a href="#" class="close"><img src="${contextPath}/resources/image/main/close_pop.png" alt="close" /></a>
-		<form method="post" role="form" class="signin" action="${contextPath}/signup/login">
-		
-			<fieldset class="textbox">
-				<p id="h2text" style="color: white;">BTS 로그인</p>
-				<label class="member_id"> <span>ID</span> <input id="member_id" name="member_id" type="text" autocomplete="on" placeholder="ID">
-				</label> <label class="password"> <span>Password</span> <input id="password" name="password" type="password" placeholder="Password">
-				</label> <input type="submit" value="LOGIN" class="submit button" type="button" id="button">
-				<p>
-					<a class="forgotpw" href="${contextPath }/find/findPwMain" style="color:white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp;
-					<a class="forgotid" href="${contextPath }/find/findIdMain" style="color:white">아이디 찾기</a>
-				</p>
-				<div id="kakao_id_login" style="text-align: center">
-					<a href="https://kauth.kakao.com/oauth/authorize?client_id=6a0602e55acf9e0f00406d7fb1f93b3d&redirect_uri=http://localhost:8088/bts/signup/kakaoLogin&response_type=code"> 
-					<img width="223" src="${contextPath}/resources/image/main/kakao_login.png" /></a>
-					<a href="${contextPath}/signup/naverLogin"><img width="223" src="${contextPath}/resources/image/main/naver_login.PNG" /></a>  
+
+	<div class="modal fade" id="popUpWindow">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- header -->
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 class="modal-title">BTS Login</h3>
 				</div>
-			</fieldset>
-		</form>
+				<!-- body -->
+				<div class="modal-header">
+					<form role="form" method="post" action="${contextPath}/signup/login">
+						<div class="form-group">
+							<label class="member_id"> <span>ID</span> <input type="text" class="form-control" id="member_id" name="member_id" placeholder="ID" /></label> <br> <label class="password"> <span>Password</span> 
+							<input type="password" class="form-control" id="password" name="password" placeholder="Password" /></label> <br> 
+							<br><input type="submit" value="LOGIN" class="submit button" type="button" id="loginbutton">
+						</div>
+					</form>
+				</div>
+				<!-- footer -->
+				<div class="modal-footer">
+
+					<p id="findId_Pw">
+						<a class="forgotpw" href="${contextPath }/find/findPwMain" style="color: white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp; <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>
+					</p>
+				</div>
+
+				<div id="kakao_id_login" style="text-align: center">
+					<a href="https://kauth.kakao.com/oauth/authorize?client_id=6a0602e55acf9e0f00406d7fb1f93b3d&redirect_uri=http://localhost:8088/bts/signup/kakaoLogin&response_type=code"> <img width="223" src="${contextPath}/resources/image/main/kakao_login.png" /></a> <a href="${contextPath}/signup/naverLogin"> <img width="223" src="${contextPath}/resources/image/main/naver_login.PNG" /></a>
+				</div>
+			</div>
+		</div>
 	</div>
+
 
 	<main class="main">
 	<div id="carousel-example-generic" class="carousel slide active" data-ride="carousel" data-pause="false">

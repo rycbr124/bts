@@ -38,6 +38,15 @@ public class I_P002ServiceImpl implements I_P002Service{
 		return resultRoot;
 	}
 	@Override
+	public Map<String,List<String>> planner(String plan_no)throws Exception{
+		Map<String,List<String>> resultPlanner = new HashMap<>();
+		List<String> planner = i_p002DAO.planner(plan_no);
+		
+		resultPlanner.put("planner",planner);
+		
+		return resultPlanner;
+	}
+	@Override
 	public void insertPlan(I_P002VO_1 i_p002VO_1,List<I_P002VO_2>contentVO , List<I_P002VO_3> list)throws Exception{
 		String seq = i_p002DAO.selectSeq(i_p002VO_1, contentVO, list);
 		i_p002VO_1.setPlan_no(seq);
@@ -49,6 +58,16 @@ public class I_P002ServiceImpl implements I_P002Service{
 		}
 		i_p002DAO.insertPlan(i_p002VO_1,contentVO,list);
 	}
-
-
+	@Override
+	public void delPlan(String plan_no)throws Exception{
+		i_p002DAO.delPlan(plan_no);
+	}
+	@Override
+	public Map<String,List<String>> wishList(String member_id)throws Exception{
+		Map<String,List<String>> selectWishList = new HashMap<>();
+		List<String> wishList = i_p002DAO.wishList(member_id);
+		selectWishList.put("wishList", wishList);
+		
+		return selectWishList;
+	}
 }

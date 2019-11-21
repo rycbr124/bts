@@ -139,7 +139,7 @@ function enter_check(event){
 // 관광지 리스트 출력 함수
 
 function searchContentType(contentTypeId){
-$('.detail_list_container').empty();// 맵을 리셋 시킵니다.
+$('.detail_list_container').empty();
 	$('.select_place').attr('onchange','searchContentType('+ contentTypeId +')');
 	var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D'
 	var sigungucode = $('.select_place option:selected').val();
@@ -257,10 +257,117 @@ $('.detail_list_container').empty();// 맵을 리셋 시킵니다.
   		});
   	});
 } 
-
-
+function selectWishList(){
+	$('.detail_list_container').empty();
+	$.ajax({
+  		async : false,
+		url : "/bts/plan/select_wishList",
+		dataType : 'json',
+		success : function(data, textStatus){
+			var wish = data.wishList;
+			myWishList(wish);
+		},
+		error : function(data, textStatus) {
+			alert("잘못된 접근입니다.");
+		}
+	});
+}
+function myWishList(wish){
+	var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D';
 	
-
+	var result_arr = new Array();
+	for(var key in wish){
+		var my_wishList = wish[key];
+		var contentid = my_wishList['CONTENT_ID'];
+		var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey='
+			   + serviceKey + '&contentId='+ contentid +'&defaultYN=Y&firstImageYN=Y&overviewYN=Y&mapinfoYN=Y&MobileOS=ETC&MobileApp=AppTest';
+		$.ajax({
+	  		async : false,
+			url : reqUrl,
+			dataType : 'json',
+			success : function(data, textStatus) {
+				var result_obj = new Object();
+				 resultArray = data.response.body.items.item;
+				 var container = document.createElement('div');
+				 var image_container = document.createElement('div');
+				 var information_container = document.createElement('div');
+				 var image = document.createElement('img');
+				 var add_icon = document.createElement('img');
+				 var title = document.createElement('h2');
+				 var add_plan = document.createElement('a');
+				 $('.detail_list_container').append(container);
+				 $(container).append(information_container);
+				 $(container).prop('class','detail_information');
+				 $(information_container).append(image_container);
+				 $(information_container).append(title);
+				 $(image_container).append(image);
+				 $(container).append(add_plan);
+				 $(add_plan).append(add_icon);
+				 $(title).prop('class','title_information');
+				 $(image_container).prop('class','first_image');
+				 $(image).prop('class','image_infoemation');
+				 $(image).attr('src',resultArray.firstimage);
+				 $(add_icon).attr('src','/bts/resources/image/icon/plus.png');
+				 $(add_plan).prop('class','add_button');
+				 $(add_plan).prop('style','cursor:pointer');
+				 $(add_icon).prop('class','button_icon');
+				 
+				 var p_title = document.createTextNode(resultArray.title);
+				 title.appendChild(p_title);
+				 
+				 result_obj['title'] = resultArray.title;
+				 result_obj['first_image'] = resultArray.firstimage;
+				 result_obj['contentid'] = resultArray.contentid;
+				 result_obj['map_x'] = resultArray.mapx;
+				 result_obj['map_y'] = resultArray.mapy;
+				 
+				 
+				 result_arr.push(result_obj);
+				 
+		},
+		error : function(data, textStatus) {
+			alert("잘못된 접근입니다.");
+		}
+		
+	});
+	}
+	map_markers(result_arr);
+	$('.add_button').on('click',function(){
+		var index = $(this).parent().index();
+		var li = document.createElement('li');
+		var image_container = document.createElement('div');
+  		var add_image = document.createElement('img');
+  		var add_title = document.createElement('h3');
+  		var trashcan = document.createElement('a');
+  		var trashcan_img = document.createElement('img');
+  		var text = $('.plan_list_header>h1').text();
+  		var add_list = document.getElementsByClassName(text)[0]
+  		var length =$(add_list).children().length;
+  		add_list.appendChild(li);
+  		$(li).prop('id','add_list');
+  		$(li).append(image_container);
+  		$(li).append(add_title);
+  		$(li).append(trashcan);
+  		$(trashcan).append(trashcan_img);
+  		$(trashcan).prop('class','trashcan');
+  		$(trashcan).prop('href','#');
+  		$(trashcan_img).prop('class','trashcan_img');
+  		$(trashcan_img).attr('src','/bts/resources/image/icon/garbage.png');
+  		$(image_container).append(add_image);
+  		$(image_container).prop('class','image_container');
+  		$(add_image).prop('class','add_image');
+  		$(add_image).attr('src',result_arr[index].first_image);
+  		$(add_title).prop('class','add_title')
+  		$(add_title).text(result_arr[index].title);
+  		var contentid = result_arr[index].contentid;
+  		$(li).attr('data-value',contentid);
+  		
+  		
+  		$('.trashcan').on('click',function(){
+  			$(this).parent().remove();
+  		});
+	});
+}
 function add_marker(mapy,mapx){
 	
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div
@@ -354,7 +461,58 @@ function map_marker(arr_result){
 	};
 	}
 }
+function map_markers(result_arr){
+	$('#map').empty();
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+	mapOption = { 
+	    center: new kakao.maps.LatLng(37.5759947835, 126.9768292386), // 지도의
+																		// 중심좌표
+	    level: 8 // 지도의 확대 레벨
+	};
 
+	var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	
+	var arr_length = result_arr.length;
+	var positions = new Array();
+
+	for(var i = 0; i < arr_length; i++){
+	   positions[i] = { content: '<div>' + result_arr[i].title + '</div>', latlng: new kakao.maps.LatLng(result_arr[i].map_y, result_arr[i].map_x)}
+	   
+    }
+
+	for (var i = 0; i < positions.length; i ++) {
+	// 마커를 생성합니다
+	var marker = new kakao.maps.Marker({
+	    map: map, // 마커를 표시할 지도
+	    position: positions[i].latlng // 마커의 위치
+	});
+
+	 // 마커에 표시할 인포윈도우를 생성합니다
+	var infowindow = new kakao.maps.InfoWindow({
+	    content: positions[i].content // 인포윈도우에 표시할 내용
+	});
+
+	// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+	 // 이벤트 리스너로는 클로저를 만들어 등록합니다
+	 // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+	kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+	kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+	}
+
+	// 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+	function makeOverListener(map, marker, infowindow) {
+	return function() {
+	    infowindow.open(map, marker);
+	};
+	}
+
+	// 인포윈도우를 닫는 클로저를 만드는 함수입니다
+	function makeOutListener(infowindow) {
+	return function() {
+	    infowindow.close();
+	};
+	}
+}
 
 function save_plan(){
 	

@@ -182,6 +182,13 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		ModelAndView mav = new ModelAndView("/b/p001/d001");
 		return mav;
 	}
+	
+	@RequestMapping(value="/loginPopup", method = {RequestMethod.POST, RequestMethod.GET})
+	public ModelAndView loginPopup(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		request.setCharacterEncoding("utf-8");
+		ModelAndView mav = new ModelAndView("/z/p000/logininfo");
+		return mav;
+	}
 
 	@Override
 	@RequestMapping(value = "/signup2", method = RequestMethod.POST)
@@ -222,7 +229,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		if (d001vo != null && d001vo.getMember_id() != null) {
 			HttpSession session = request.getSession();
 			session = request.getSession();
-			session.setMaxInactiveInterval(30*60);
+			session.setMaxInactiveInterval(360*60);
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("memberInfo", d001vo);
 			System.out.println("성공");
