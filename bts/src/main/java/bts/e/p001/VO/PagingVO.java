@@ -2,6 +2,8 @@ package bts.e.p001.VO;
 
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+import org.springframework.stereotype.Component;
+
 
 public class PagingVO {
 	 // 현재페이지, 시작페이지, 끝페이지, 게시글 총 갯수, 페이지당 글 갯수, 마지막페이지, SQL쿼리에 쓸 start, end
@@ -93,6 +95,8 @@ public class PagingVO {
 	   public void getCntPage(int cntPage) {
 	      this.cntPage = cntPage;
 	   }
+	   
+	   @Override
 	   public String toString() {
 	      return "PagingVO [nowPage=" + nowPage + ", startPage=" + startPage + ", endPage=" + endPage + ", total=" + total
 	            + ", cntPerPage=" + cntPerPage + ", lastPage=" + lastPage + ", start=" + start + ", end=" + end

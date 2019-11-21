@@ -96,6 +96,7 @@ h3.title {
 				<li class="menu_accompany"><a href="${contextPath }/accompany/accMain">동행</a></li>
 				<li class="menu_community"><a href="${contextPath}/community/plan_list">커뮤니티</a></li>
 				<li class="menu_planner"><a href="${contextPath}/planner/planner">플래너</a></li>
+				
 			</ul>
 			<div class="member_menu">
 				<c:choose>

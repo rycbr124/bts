@@ -27,29 +27,20 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	Provider<C_P006VO> c_p006Provider;
 	
 	@Autowired
+	Provider<B_P001VO> b_p001Provider;
+	
+	@Autowired
 	Provider<C_P006FormVO> formProvider;
 	
 	@Autowired
 	C_P006Service c_p006Service;
-	
+
 	private static final Map<WebSocketSession,B_P001VO> sessionList = new HashMap<>();
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 		Map<String, Object> map = session.getAttributes();
 		B_P001VO b_p001VO= (B_P001VO) map.get("memberInfo");
-		try {
-			ObjectMapper mapper = new ObjectMapper();
-			C_P006VO c_p006VO = c_p006Provider.get();
-			c_p006VO.setSender(b_p001VO.getMember_id());
-			c_p006VO.setReceiver("test1");
-			List<C_P006VO> msgResult = c_p006Service.selectMessageList(c_p006VO);
-			String result=mapper.writeValueAsString(msgResult);
-			System.out.println(result);
-			session.sendMessage(new TextMessage(result));
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
 		sessionList.put(session, b_p001VO);
 	}
 	
@@ -60,17 +51,22 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception{
-		B_P001VO b_p001VO = sessionList.get(session);
-		sendTo(session,message.getPayload(),b_p001VO);//보내주는 메소드
 		//message.getPayload(); 보낸 메시지
 		//session.sendMessage(message);클라이언트로 메시지 전송
 		//provider.get(); prototype으로 빈 가져오기
-		
-		C_P006VO messageVO = testMakeMessage(3,b_p001VO.getMember_id(),"other",new Date(Calendar.getInstance().getTimeInMillis()),message.getPayload(),"true");		
+		B_P001VO b_p001VO = sessionList.get(session);
 		ObjectMapper mapper = new ObjectMapper();
-		String result=mapper.writeValueAsString(messageVO);
-		System.out.println(result);
-		session.sendMessage(new TextMessage(result));
+		C_P006FormVO c_p006FormVO = mapper.readValue(message.getPayload(), C_P006FormVO.class);
+		String header=c_p006FormVO.getHeader();
+		
+		if(header.equals("chat_list")){
+			showChatList(c_p006FormVO,session,b_p001VO,mapper);
+		}else if(header.equals("send_message")) {
+			sendMessage(c_p006FormVO,session,b_p001VO,mapper);
+		}else if(header.equals("search_member")) {
+			searchMember(c_p006FormVO,session,b_p001VO,mapper);
+		}
+
 	}
 	
 	@Override
@@ -78,34 +74,73 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		exception.printStackTrace();
 	}
 	
-	private void sendTo(WebSocketSession senderSession, String message, B_P001VO senderVO) {
-		try {
-			for(Entry<WebSocketSession, B_P001VO> entry : ChatWebSocketHandler.sessionList.entrySet()) {
-				WebSocketSession recSession = entry.getKey();
-				B_P001VO recVO = entry.getValue();
-				if(!recSession.getId().equals(senderSession.getId())) {
-					C_P006VO messageVO=testMakeMessage(5,senderVO.getMember_id(),recVO.getMember_id(),new Date(Calendar.getInstance().getTimeInMillis()),message,"false");							
-					ObjectMapper mapper = new ObjectMapper();
-					String result=mapper.writeValueAsString(messageVO);
-					System.out.println(result);
-					recSession.sendMessage(new TextMessage(result));
-				}
-			}
+	private void showChatList(C_P006FormVO c_p006FormVO,WebSocketSession session,B_P001VO b_p001VO,ObjectMapper mapper) throws Exception {
+		HashMap<String,Object> body = c_p006FormVO.getBody();
+		String member_id= (String) body.get("member_id");
 
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		C_P006VO c_p006VO = c_p006Provider.get();
+		c_p006VO.setSender(b_p001VO.getMember_id());
+		c_p006VO.setReceiver(member_id);
+		List<C_P006VO> msgResult = c_p006Service.selectMessageList(c_p006VO);
+		body.clear();
+		body.put("result",msgResult);		
+		
+		String result=mapper.writeValueAsString(c_p006FormVO);
+		session.sendMessage(new TextMessage(result));
 	}
 	
-	private C_P006VO testMakeMessage(int item_no,String sender,String receiver,Date writing_date,String contents,String me_at) {
+	private void sendMessage(C_P006FormVO c_p006FormVO,WebSocketSession session,B_P001VO b_p001VO,ObjectMapper mapper) throws Exception {
+		HashMap<String,Object> body = c_p006FormVO.getBody();
+		String receiver=(String) body.get("receiver");
+		String message=(String) body.get("message");
+		
 		C_P006VO c_p006VO = c_p006Provider.get();
-		c_p006VO.setItem_no(item_no);
-		c_p006VO.setSender(sender);
+		c_p006VO.setSender(b_p001VO.getMember_id());
 		c_p006VO.setReceiver(receiver);
-		c_p006VO.setWriting_date(writing_date);
-		c_p006VO.setContents(contents);
-		c_p006VO.setMe_at(me_at);
-		return c_p006VO;
-	}
+		c_p006VO.setContents(message);
+		c_p006VO.setWriting_date(new Date(Calendar.getInstance().getTimeInMillis()));
+		c_p006Service.insertMessage(c_p006VO);
+		
+		for(Entry<WebSocketSession, B_P001VO> entry : ChatWebSocketHandler.sessionList.entrySet()) {
+			WebSocketSession recSession = entry.getKey();
+			B_P001VO recVO = entry.getValue();
 
+			if(recVO.getMember_id().equals(receiver)) {
+				c_p006VO.setMe_at("false");				
+				body.clear();
+				
+				B_P001VO senderVO = b_p001Provider.get();
+				senderVO.setProfile_image(b_p001VO.getProfile_image());
+				senderVO.setMember_type(b_p001VO.getMember_type());
+				senderVO.setNick_name(b_p001VO.getNick_name());
+				
+				body.put("result", c_p006VO);
+				body.put("sender_info", senderVO);
+				String result=mapper.writeValueAsString(c_p006FormVO);
+				recSession.sendMessage(new TextMessage(result));
+			}
+		}
+		
+		c_p006VO.setMe_at("true");
+		body.clear();
+		body.put("result", c_p006VO);
+		String result = mapper.writeValueAsString(c_p006FormVO);
+		session.sendMessage(new TextMessage(result));
+	}
+	
+	private void searchMember(C_P006FormVO c_p006FormVO,WebSocketSession session,B_P001VO b_p001VO,ObjectMapper mapper) throws Exception {
+		HashMap<String,Object> body = c_p006FormVO.getBody();
+		String keyword= (String) body.get("keyword");
+		
+		Map<String,String> searchMap = new HashMap<>();
+		searchMap.put("keyword", keyword);
+		searchMap.put("member_id", b_p001VO.getMember_id());
+		List<B_P001VO> searchResult = c_p006Service.selectSearchList(searchMap);
+		body.clear();
+		body.put("result",searchResult);
+		String result=mapper.writeValueAsString(c_p006FormVO);
+		session.sendMessage(new TextMessage(result));
+	}
+	
+	
 }

@@ -3,27 +3,85 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="i.p001">
+<mapper namespace="i.p002">
 	<resultMap id="planInformation" type="i_p002VO_1">
 		<result property="plan_no" column="plan_no"/>
 		<result property="member_id" column="member_id"/>
 		<result property="title" column="title"/>
 		<result property="register_date" column="register_date"/>
 		<result property="person_se" column="person_se"/>
-		<result property="start_date" column="start_date"/>
-		<result property="end_date" column="end_date"/>	
+		<result property="range_date" column="range_date"/>
+		<result property="open_val" column="open_val"/>
 	</resultMap>
 	<resultMap id="planDetail" type="i_p002VO_2">
 		<result property="plan_no" column="plan_no"/>
-		<result property="item_no" column="item_no"/>
+		<result property="day_no" column="day_no"/>
 		<result property="content_id" column="content_id"/>
+		<result property="detail_no" column="detail_no"/>
+	</resultMap>
+	<resultMap id="addTag" type="i_p002VO_3">
+		<result property="plan_no" column="plan_no"/>
+		<result property="tag_name" column="tag_name"/>
 	</resultMap>
 
 
-<insert id="addPlan" parameterType="i_p002vo_1">
+<insert id="addPlan" parameterType="i_p002VO_1">
 	<![CDATA[
-	 INSERT INTO planner(plan_no, member_id, title, register_date, person_se, start_date, end_date)
-	 VALUSE (#{plan_no}, #{member_id}, #{title}, #{register_date}, #{person_se}, #{start_date}, #{end_date})
+	 INSERT INTO planner(plan_no, member_id, title, register_date, person_se, range_date, open_val)
+	 VALUES (#{plan_no}, #{member_id}, #{title}, TO_CHAR(SYSDATE,'YYYY-MM-DD') , #{person_se}, #{range_date}, 'N')
 	]]>
 </insert> 
+
+<insert id="test" parameterType="i_p002VO_2">
+<foreach item="array" collection="list" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL">
+	<![CDATA[
+	INTO planner_detail(content_id, plan_no, day_no, detail_no)
+	VALUES (#{array.content_id}, #{array.plan_no}, #{array.day_no}, detail_no_seq.nextval)
+	]]>
+	</foreach>
+</insert>
+
+<insert id="detailPlan" parameterType="i_p002VO_2">
+<foreach item="array" collection="list" open="DECLARE BEGIN" separator=";" close="; END;">
+	<![CDATA[
+	INSERT INTO planner_detail(content_id, plan_no, day_no, detail_no) VALUES (#{array.content_id}, #{array.plan_no}, #{array.day_no}, detail_no_seq.nextval)
+	]]>
+	</foreach>
+</insert>
+
+<insert id="planTag" parameterType="list">
+<foreach item="array" collection="list" open="INSERT ALL" separator=" " close="SELECT * FROM DUAL"> 
+	<![CDATA[
+	INTO tag_planner(plan_no, tag_name)
+	VALUES (#{array.plan_no},#{array.tag_name})
+	]]>
+	</foreach>
+</insert>
+<select id="seq" resultType="String">
+	<![CDATA[
+	SELECT plan_list_seq.nextval
+	FROM dual
+	]]>
+</select>
+
+<select id="planList" resultType="Map">
+	SELECT *
+	FROM planner p, planner_detail pd,
+	(
+	SELECT plan_no, MIN(detail_no) dt
+	FROM planner_detail
+	GROUP BY plan_no
+	) t
+	WHERE p.plan_no = pd.plan_no
+	AND t.dt = pd.detail_no
+	ORDER BY p.plan_no desc
+</select>
+
+<select id="planRoot" parameterType="String" resultType="Map">
+	SELECT *
+    FROM planner_detail 
+    WHERE plan_no = #{plan_no,jdbcType=VARCHAR}
+    ORDER BY detail_no asc
+</select>
+
 </mapper>
