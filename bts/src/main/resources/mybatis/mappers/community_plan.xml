@@ -104,16 +104,9 @@
 	<!-- 플랜 게시글 삭제 -->
 	<delete id="deletePlan" parameterType="String">
 		<![CDATA[
-			DELETE FROM planner
-			WHERE plan_no = #{plan_no}
-		]]>
-	</delete>
-	
-	<!-- 플랜 디테일 삭제 -->
-	<delete id="deleteDetail" parameterType="String">
-		<![CDATA[
-			DELETE FROM planner_detail
-			WHERE plan_no = #{plan_no}
+			UPDATE planner
+			SET open_val = 'N'
+			WHERE plan_no = #{plan_no}	
 		]]>
 	</delete>
 </mapper>

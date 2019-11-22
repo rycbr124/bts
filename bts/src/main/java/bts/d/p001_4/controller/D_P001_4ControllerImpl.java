@@ -24,6 +24,7 @@ import bts.d.p001_4.service.D_P001_4Service;
 import bts.d.p001_4.vo.D_P001_4VO;
 import bts.d.p001_4.vo.D_P001_4VO_2;
 import bts.d.p001_4.vo.D_P001_4VO_4;
+import bts.e.p001.VO.PagingVO;
 
 @Controller("d_p001_4")
 @RequestMapping(value="/community")
@@ -43,7 +44,9 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 
 	@Override
 	@RequestMapping(value="/plan_list" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView searchArticle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView searchArticle(PagingVO pagingVO
+			,@RequestParam(value="nowPage", required=false)String nowPage
+			,@RequestParam(value="cntPerPage",required=false) String cntPerPage, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<D_P001_4VO> listArticle = d_p001_4Service.searchArticle();
 		ModelAndView mav = new ModelAndView("/d/p001_4/d001");
 		mav.addObject("listArticle", listArticle);
