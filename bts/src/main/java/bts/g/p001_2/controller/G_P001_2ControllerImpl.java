@@ -77,7 +77,7 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
          throws Exception {
 	   String message = null;
 	   String member_id = null;
-	   
+
 	   try {
 		   HttpSession session = request.getSession();
 		   b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
@@ -89,19 +89,6 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
 		   boolean command = g_p001_2Service.findWishlist(g_p001_2VO);
 		   
 		   if(command == true) {
-			   /*
-			   message = "<script src='/bts/resources/js/alert/sweetalert2.all.min.js'></script>";
-			   message += "<script src='https://cdn.jsdelivr.net/npm/promise-polyfill'></script>";
-			   message += "<script src='/bts/resources/js/alert/sweetalert2.min.js'></script>";
-			   message += "<link rel='stylesheet' href='/bts/resources/js/alert/sweetalert2.min.css'>";	 
-			   message += "<script>";
-			   message += "Swal.fire({";
-			   message += "icon: 'error',";
-			   message += "title: '실패하였습니다!',";
-			   message += "text: '이미 위시리스트에 추가한 명소입니다.'";
-			   message += "})";
-			   message += "</script>";
-			   */
 			   message = "<script>";
 			   message += "alert('이미 추가한 명소입니다..');";
 			   message += "history.go(-1)";
@@ -123,6 +110,7 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
 		   message += "history.go(-1)";
 		   message += "</script>";
 		   
+		    
 		   return message;
 	   }
       
