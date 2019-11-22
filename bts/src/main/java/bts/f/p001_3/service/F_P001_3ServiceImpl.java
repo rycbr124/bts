@@ -35,7 +35,7 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 	
 	@Override
 	public List<F_P001_3VO> selectReviewList(Map<String,Integer> searchMap) throws DataAccessException{
-		List<F_P001_3VO> list = f_p001_3DAO.selectReviewList(searchMap);
+		List<F_P001_3VO> list = f_p001_3DAO.selectReviewList(searchMap);			
 		for(int i=0; i<list.size();i++) {
 			F_P001_3VO vo = list.get(i);
 			List<String> tagList = new ArrayList<>();

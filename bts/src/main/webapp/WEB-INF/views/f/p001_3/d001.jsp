@@ -54,6 +54,7 @@ p {
 
 #review-list img{
 	width:100%;
+	height:100%;
 	object-fit : cover;
 }
 
@@ -222,7 +223,7 @@ p {
 		         				<img src="${contextPath}/resources/image/no_img.jpg">
 		    				</c:when>
 		    				<c:otherwise>
-				        		<img class="img-responsive" src="${contextPath}${article.thumbnail_img}" alt="">		    						    				
+				        		<img src="${contextPath}${article.thumbnail_img}" alt="">		    						    				
 		    				</c:otherwise>
 		    			</c:choose>
 				        <div class="overlay">
