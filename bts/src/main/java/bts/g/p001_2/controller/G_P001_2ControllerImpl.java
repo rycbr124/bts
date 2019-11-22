@@ -39,6 +39,7 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
       Map<String, List<String>> searchResult = g_p001_2Service.searchCategory();
       JSONObject totaObject = new JSONObject(searchResult);
       ModelAndView mav = new ModelAndView("/g/p001_2/d001");
+      System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhh " + totaObject.toJSONString());
       mav.addObject("result", totaObject.toJSONString());
       return mav;
    }

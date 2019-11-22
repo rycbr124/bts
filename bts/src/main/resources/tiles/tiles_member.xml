@@ -6,7 +6,7 @@
 
    <!-- 기본 레이아웃 적용 화면 템플릿 -->
    <definition name="baseLayout"  template="/WEB-INF/views/common/baseLayout.jsp">
-      <put-attribute name="title" value="" />
+
       <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
       <put-attribute name="body" value="" />
       <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
@@ -66,12 +66,12 @@
    
    <!-- 레이아웃 적용-->
    <definition name="/*/*" extends="baseLayout">
-      <put-attribute name="title" value="제목" />
+
       <put-attribute name="body"
          value="/WEB-INF/views/{1}/{2}.jsp" />
    </definition>
    <definition name="/*/*/*" extends="baseLayout">
-      <put-attribute name="title" value="제목" />
+
       <put-attribute name="body"
          value="/WEB-INF/views/{1}/{2}/{3}.jsp" />
    </definition>   

@@ -60,4 +60,11 @@ public class I_P002DAOImpl implements I_P002DAO{
 		
 		return wishList;
 	}
+	@Override
+	public List<String> tagList(String plan_no)throws Exception{
+		 List<String> tagList = new ArrayList<>();
+		 tagList = sqlSession.selectList("i.p002.tagList",plan_no);
+		
+		return tagList;
+	}
 }

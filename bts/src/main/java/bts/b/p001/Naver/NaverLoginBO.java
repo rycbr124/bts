@@ -3,6 +3,7 @@ package bts.b.p001.Naver;
 import java.io.IOException;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.util.StringUtils;
@@ -17,24 +18,27 @@ import com.github.scribejava.core.oauth.OAuth20Service;
 public class NaverLoginBO {
 	private final static String CLIENT_ID = "mASBmnQ_L1VhF2DS1hIs";
 	private final static String CLIENT_SECRET = "q4EftfOBz_";
-	private final static String REDIRECT_URI = "http://localhost:8088/bts/signup/callback";
+	private final static String REDIRECT_URI = "/signup/callback";
 	private final static String SESSION_STATE = "oauth_state";
 	/* 프로필 조회 API URL */
 	private final static String PROFILE_API_URL = "https://openapi.naver.com/v1/nid/me";
 
 	/* 네아로 인증 URL 생성 Method */
-	public String getAuthorizationUrl(HttpSession session) {
+	public String getAuthorizationUrl(HttpSession session,HttpServletRequest request) {
 
 		/* 세션 유효성 검증을 위하여 난수를 생성 */
 		String state = generateRandomString();
 		/* 생성한 난수 값을 session에 저장 */
 		setSession(session,state);
-
+		
+		String url = request.getRequestURL().toString();
+		String reqUrl = url.substring(0,(url.indexOf(request.getContextPath())+request.getContextPath().length()));
+		
 		/* Scribe에서 제공하는 인증 URL 생성 기능을 이용하여 네아로 인증 URL 생성 */
 		OAuth20Service oauthService = new ServiceBuilder()
 				.apiKey(CLIENT_ID)
 				.apiSecret(CLIENT_SECRET)
-				.callback(REDIRECT_URI)
+				.callback(reqUrl+REDIRECT_URI)
 				.state(state)
 				.build(NaverLoginApi.instance());
 
@@ -42,16 +46,19 @@ public class NaverLoginBO {
 	}
 
 	/* 네아로 Callback 처리 및 AccessToken 획득 Method */
-	public OAuth2AccessToken getAccessToken(HttpSession session, String code, String state) throws IOException{
+	public OAuth2AccessToken getAccessToken(HttpSession session, String code, String state,HttpServletRequest request) throws IOException{
 
 		/* Callback으로 전달받은 세선검증용 난수값과 세션에 저장되어있는 값이 일치하는지 확인 */
 		String sessionState = getSession(session);
 		if(StringUtils.pathEquals(sessionState, state)){
 
+			String url = request.getRequestURL().toString();
+			String reqUrl = url.substring(0,(url.indexOf(request.getContextPath())+request.getContextPath().length()));
+			
 			OAuth20Service oauthService = new ServiceBuilder()
 					.apiKey(CLIENT_ID)
 					.apiSecret(CLIENT_SECRET)
-					.callback(REDIRECT_URI)
+					.callback(reqUrl+REDIRECT_URI)
 					.state(state)
 					.build(NaverLoginApi.instance());
 
@@ -78,13 +85,16 @@ public class NaverLoginBO {
 	}
 
 	/* Access Token을 이용하여 네이버 사용자 프로필 API를 호출 */
-	public String getUserProfile(OAuth2AccessToken oauthToken) throws IOException{
+	public String getUserProfile(OAuth2AccessToken oauthToken,HttpServletRequest httpRequest) throws IOException{
 
+		String url = httpRequest.getRequestURL().toString();
+		String reqUrl = url.substring(0,(url.indexOf(httpRequest.getContextPath())+httpRequest.getContextPath().length()));
+		
 		OAuth20Service oauthService =new ServiceBuilder()
     			.apiKey(CLIENT_ID)
     			.apiSecret(CLIENT_SECRET)
-    			.callback(REDIRECT_URI).build(NaverLoginApi.instance());
-
+    			.callback(reqUrl+REDIRECT_URI).build(NaverLoginApi.instance());
+		
     	OAuthRequest request = new OAuthRequest(Verb.GET, PROFILE_API_URL, oauthService);
 		oauthService.signRequest(oauthToken, request);
 		Response response = request.send();

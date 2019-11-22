@@ -10,7 +10,6 @@ function result_init(){
 
 function image_init(idNumber) {
 $("#image_grid").empty();
-	
 	var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + idNumber + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 	var map_array = new Array();
@@ -63,7 +62,7 @@ $("#image_grid").empty();
 function course_detail(idNumber, map_array) {
 	$("#image_grid").empty();
 
-	var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
+	var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailInfo?ServiceKey=' + serviceKey + '&contentTypeId=25&contentId=' + idNumber + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&listYN=Y';
 	
 	$.ajax({

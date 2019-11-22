@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="mapper.f_p001_3">
+	<resultMap id="reviewResult" type="f_p001_3VO">
+		<result property="article_no" column="article_no" />
+		<result property="title" column="title" />
+		<result property="thumbnail_img" column="thumbnail_img" />
+		<result property="contents" column="contents" />
+		<result property="register_date" column="register_date" />
+		<result property="member_id" column="member_id" />		
+	</resultMap>
+	
+	<insert id="insertArticle" parameterType="f_p001_3VO">
+	    <![CDATA[
+		INSERT INTO article (article_no, article_cd, register_date, title, contents, member_id,thumbnail_img) 
+		VALUES (article_review_seq.nextval, #{article_cd}, sysdate, #{title}, #{contents}, #{member_id}, #{thumbnail_img,jdbcType=VARCHAR})
+	    ]]>
+		<selectKey resultType="int" keyProperty="article_no" order="AFTER">
+			<![CDATA[
+			SELECT article_review_seq.currval FROM dual
+		    ]]>
+		</selectKey>
+	</insert>
+
+	<insert id="insertTagList" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			INTO tag_article(tag_name,article_no,article_cd)
+	   		VALUES (#{item.tag_name},#{item.article_no},#{item.article_cd})
+		</foreach>
+	</insert>
+	
+	<select id="selectReviewList" parameterType="map" resultMap="reviewResult">
+	    <![CDATA[
+			SELECT b.* 
+			FROM
+			(
+			    SELECT rownum as rnum, a.*
+			    FROM 
+			    (
+			        SELECT article_no,title,thumbnail_img,article_cd
+			        FROM article
+			        WHERE article_cd=3
+			        ORDER BY article_no DESC
+			    ) a
+			    WHERE rownum<=#{endRow}
+			) b
+			WHERE b.rnum>=#{startRow}
+	    ]]>
+	</select>
+	
+	<select id="selectReviewTotal" resultType="string">
+	    <![CDATA[
+			SELECT COUNT(*) totalCount
+			FROM article
+			WHERE article_cd=3
+	    ]]>
+	</select>
+	
+	<select id="selectTagList" parameterType="f_p001_3VO" resultType="string">
+	    <![CDATA[
+			SELECT tag_name
+			FROM tag_article
+			WHERE article_no=#{article_no}
+			AND article_cd=#{article_cd}
+	    ]]>
+	</select>
+
+	<select id="selectReviewContents" parameterType="map" resultMap="reviewResult">
+	    <![CDATA[
+			SELECT register_date,title,contents,member_id,thumbnail_img,article_no,article_cd
+			FROM article
+			WHERE article_no=#{article_no}
+			AND article_cd=#{article_cd}
+	    ]]>
+	</select>
+
+</mapper>

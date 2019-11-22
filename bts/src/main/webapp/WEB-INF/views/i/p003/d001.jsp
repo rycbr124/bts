@@ -11,7 +11,7 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/js/plan/plan_detail.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6b2f7da39af5c9b3e7839e09fedbc28a"></script>
-<title>Insert title here</title>
+<title>Best Travel Seoul[MY PLAN]</title>
 <script>
 $(document).ready(function(){
 	var plan_root = ${root};

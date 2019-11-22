@@ -43,4 +43,9 @@ public class E_P001ServiceImpl implements E_P001Service {
 	public E_P001VO accView(int article_no) throws Exception {
 		return e_p001DAO.accView(article_no);
 	}
+
+	@Override
+	public void updateViewcnt(int article_no) throws Exception {
+		e_p001DAO.updateViewcnt(article_no);
+	}
 }

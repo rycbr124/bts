@@ -76,7 +76,7 @@ li.nav-item{
       <a class="nav-link active" href="${contextPath}/community/plan_list">계획</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="${contextPath}/community/review_list">후기</a>
+      <a class="nav-link" href="${contextPath}/community/review/list">후기</a>
     </li>
     
   </ul>

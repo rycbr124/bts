@@ -14,4 +14,5 @@ public interface I_P002Service {
 	public void insertPlan(I_P002VO_1 i_p002VO_1,List<I_P002VO_2>contentVO, List<I_P002VO_3> list)throws Exception ;
 	public void delPlan(String plan_no)throws Exception;
 	public Map<String,List<String>> wishList(String member_id)throws Exception;
+	public Map<String,List<String>> tagList(String plan_no)throws Exception;
 }

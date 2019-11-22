@@ -60,14 +60,14 @@ public class E_P001ControllerImpl implements E_P001Controller {
 	}
 
 	@Override
-	public ModelAndView accView(@RequestParam int article_no, HttpSession session) throws Exception {
-		e_p001Service.listCount();
+	@RequestMapping(value="/accView" , method= RequestMethod.GET)
+	public ModelAndView accView(@RequestParam("article_no")int article_no) throws Exception {
+		e_p001Service.updateViewcnt(article_no);
 		ModelAndView mav = new ModelAndView("/e/p001/d002");
-		mav.addObject("article_no", e_p001Service.accView(article_no));
+		mav.addObject("article_no", article_no);
+		mav.addObject("accView", e_p001Service.accView(article_no));
 		return mav;
 	}
-
-
 
 
 }

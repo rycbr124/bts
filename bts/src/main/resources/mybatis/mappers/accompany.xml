@@ -36,7 +36,7 @@
 	</update>
 	
 	<!-- 동행 게시글 상세 조회 -->
-	<select id="accView" resultType="e_p001VO">
+	<select id="accView" resultType="e_p001VO" parameterType="int">
 	<![CDATA[
 	select * from accompany
 	where article_no = #{article_no}

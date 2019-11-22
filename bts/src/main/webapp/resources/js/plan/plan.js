@@ -35,6 +35,7 @@ $(function() {// jquery calendar
            $("#content_container").empty(); // 초기화
            $('#dropContainer').empty();
            var nowDate = picker.startDate._d;// 선택한 출발날자
+           console.log(nowDate.getDay());
            for(var i=0, j=nowDate.getDay(); i<diff; i++,j++){
             var div = document.createElement("div");
             if(j==7){// 토요일 에서 일요일로 배열을 초기화해준다
@@ -79,6 +80,7 @@ $(function() {// jquery calendar
            }
        
            $('div.content_container>div').on('click',function(){
+        	   searchContentType(12);
               $('ul').css('display','none');
               var childP=$(this).children('p')[0];
               var text = $(childP).text();
@@ -89,6 +91,8 @@ $(function() {// jquery calendar
                document.getElementById('map_area').style.width = '1457px';
                document.getElementById('map').style.width = '1117px';
                document.getElementById('map').style.float = 'right';
+              
+               
                var date = $(this).children('p');
                var day = $(this).children('blockquote');
                $('.date_value').text($(date).text());
@@ -107,37 +111,16 @@ var map_produce = $(function(){
 		
 	};
 
-	var map = new kakao.maps.Map(mapContainer, mapOption);
+	var map = new kakao.maps.Map(mapContainer, mapOption);// 지도를 생성합니다	
+});
 
-	});// 지도를 생성합니다	
+
 function enter_check(event){
 	if(window.event.keyCode == 13){
-			var text= $('.tag').val();
-			var p = document.createElement('p');
-			var a = document.createElement('a');
-			var length = $('.tag_value').children().length;
-			if(length >= 5){
-				alert('태그는 5개까지만 추가할수있습니다.')
-				
-			}else{
-				$('.tag_value').append(p);
-				$(p).prop('class','tag_name');
-				$(p).prop('style','display:inline-block;');
-				$(p).text('#'+text);
-				$('.tag_name').append(a);
-				$(a).prop('class','delete_tag');
-				$('.delete_tag').text('x');
-			}
-			$('.tag').val('');
-		}
-	
-	$('.delete_tag').on('click',function(){
-		$(this).parent().remove();
-	});
-	
-	}
+		add_tag();
+	}		
+}
 // 관광지 리스트 출력 함수
-
 function searchContentType(contentTypeId){
 $('.detail_list_container').empty();
 	$('.select_place').attr('onchange','searchContentType('+ contentTypeId +')');
@@ -146,7 +129,6 @@ $('.detail_list_container').empty();
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey='
 	        + serviceKey
 	        + '&contentTypeId='+ contentTypeId +'&areaCode=1&sigunguCode='+sigungucode+'&MobileOS=ETC&MobileApp=AppTest&arrange=P&numOfRows=100&pageNo=1&_type=json';
-	console.log(reqUrl);
 
   var arr_result = new Array();
 
@@ -212,205 +194,8 @@ $('.detail_list_container').empty();
 			}
 			
   	});
-  	map_marker(arr_result);
-  	
-  	$('.add_button').on('click',function(){
-  		var arr_index = $(this).parent().index();
-  		var li = document.createElement('li');
-  		var image_container = document.createElement('div');
-  		var add_image = document.createElement('img');
-  		var add_title = document.createElement('h3');
-  		var add_address = document.createElement('p');
-  		var trashcan = document.createElement('a');
-  		var trashcan_img = document.createElement('img');
-  		var text = $('.plan_list_header>h1').text();
-  		var add_list = document.getElementsByClassName(text)[0]
-  		var length =$(add_list).children().length;
-  		add_list.appendChild(li);
-  		$(li).prop('id','add_list');
-  		$(li).append(image_container);
-  		$(li).append(add_title);
-  		$(li).append(add_address);
-  		$(li).append(trashcan);
-  		$(trashcan).append(trashcan_img);
-  		$(trashcan).prop('class','trashcan');
-  		$(trashcan).prop('href','#');
-  		$(trashcan_img).prop('class','trashcan_img');
-  		$(trashcan_img).attr('src','/bts/resources/image/icon/garbage.png');
-  		$(image_container).append(add_image);
-  		$(image_container).prop('class','image_container');
-  		$(add_image).prop('class','add_image');
-  		$(add_image).attr('src',arr_result[arr_index].first_image);
-  		$(add_title).prop('class','add_title')
-  		$(add_title).text(arr_result[arr_index].title);
-  		$(add_address).prop('class','add_address');
-  		$(add_address).text(arr_result[arr_index].address);
- 
-  	 	var mapx = arr_result[arr_index].map_x;
-  		var mapy = arr_result[arr_index].map_y;
-  		var contentid = arr_result[arr_index].contentid;
-  		$(li).attr('data-value',contentid);
-  		add_marker(mapy,mapx);
-  		
-  		$('.trashcan').on('click',function(){
-  			$(this).parent().remove();
-  		});
-  	});
-} 
-function selectWishList(){
-	$('.detail_list_container').empty();
-	$.ajax({
-  		async : false,
-		url : "/bts/plan/select_wishList",
-		dataType : 'json',
-		success : function(data, textStatus){
-			var wish = data.wishList;
-			myWishList(wish);
-		},
-		error : function(data, textStatus) {
-			alert("잘못된 접근입니다.");
-		}
-	});
-}
-function myWishList(wish){
-	var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D';
-	
-	var result_arr = new Array();
-	for(var key in wish){
-		var my_wishList = wish[key];
-		var contentid = my_wishList['CONTENT_ID'];
-		var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey='
-			   + serviceKey + '&contentId='+ contentid +'&defaultYN=Y&firstImageYN=Y&overviewYN=Y&mapinfoYN=Y&MobileOS=ETC&MobileApp=AppTest';
-		$.ajax({
-	  		async : false,
-			url : reqUrl,
-			dataType : 'json',
-			success : function(data, textStatus) {
-				var result_obj = new Object();
-				 resultArray = data.response.body.items.item;
-				 var container = document.createElement('div');
-				 var image_container = document.createElement('div');
-				 var information_container = document.createElement('div');
-				 var image = document.createElement('img');
-				 var add_icon = document.createElement('img');
-				 var title = document.createElement('h2');
-				 var add_plan = document.createElement('a');
-				 $('.detail_list_container').append(container);
-				 $(container).append(information_container);
-				 $(container).prop('class','detail_information');
-				 $(information_container).append(image_container);
-				 $(information_container).append(title);
-				 $(image_container).append(image);
-				 $(container).append(add_plan);
-				 $(add_plan).append(add_icon);
-				 $(title).prop('class','title_information');
-				 $(image_container).prop('class','first_image');
-				 $(image).prop('class','image_infoemation');
-				 $(image).attr('src',resultArray.firstimage);
-				 $(add_icon).attr('src','/bts/resources/image/icon/plus.png');
-				 $(add_plan).prop('class','add_button');
-				 $(add_plan).prop('style','cursor:pointer');
-				 $(add_icon).prop('class','button_icon');
-				 
-				 var p_title = document.createTextNode(resultArray.title);
-				 title.appendChild(p_title);
-				 
-				 result_obj['title'] = resultArray.title;
-				 result_obj['first_image'] = resultArray.firstimage;
-				 result_obj['contentid'] = resultArray.contentid;
-				 result_obj['map_x'] = resultArray.mapx;
-				 result_obj['map_y'] = resultArray.mapy;
-				 
-				 
-				 result_arr.push(result_obj);
-				 
-		},
-		error : function(data, textStatus) {
-			alert("잘못된 접근입니다.");
-		}
-		
-	});
-	}
-	map_markers(result_arr);
-	$('.add_button').on('click',function(){
-		var index = $(this).parent().index();
-		var li = document.createElement('li');
-		var image_container = document.createElement('div');
-  		var add_image = document.createElement('img');
-  		var add_title = document.createElement('h3');
-  		var trashcan = document.createElement('a');
-  		var trashcan_img = document.createElement('img');
-  		var text = $('.plan_list_header>h1').text();
-  		var add_list = document.getElementsByClassName(text)[0]
-  		var length =$(add_list).children().length;
-  		add_list.appendChild(li);
-  		$(li).prop('id','add_list');
-  		$(li).append(image_container);
-  		$(li).append(add_title);
-  		$(li).append(trashcan);
-  		$(trashcan).append(trashcan_img);
-  		$(trashcan).prop('class','trashcan');
-  		$(trashcan).prop('href','#');
-  		$(trashcan_img).prop('class','trashcan_img');
-  		$(trashcan_img).attr('src','/bts/resources/image/icon/garbage.png');
-  		$(image_container).append(add_image);
-  		$(image_container).prop('class','image_container');
-  		$(add_image).prop('class','add_image');
-  		$(add_image).attr('src',result_arr[index].first_image);
-  		$(add_title).prop('class','add_title')
-  		$(add_title).text(result_arr[index].title);
-  		var contentid = result_arr[index].contentid;
-  		$(li).attr('data-value',contentid);
-  		
-  		
-  		$('.trashcan').on('click',function(){
-  			$(this).parent().remove();
-  		});
-	});
-}
-function add_marker(mapy,mapx){
-	
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-  		mapOption = { 
-  		    center: new kakao.maps.LatLng(mapy,mapx), // 지도의 중심좌표
-  		    level: 8 // 지도의 확대 레벨
-  		};
 
-  		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-  		
-  		// 지도에 표시된 마커 객체를 가지고 있을 배열입니다
-  		var markers = [];
-
-  		// 마커 하나를 지도위에 표시합니다
-  		addMarker(new kakao.maps.LatLng(mapy, mapx));
-
-  		// 마커를 생성하고 지도위에 표시하는 함수입니다
-  		function addMarker(position) {
-  		    
-  		    // 마커를 생성합니다
-  		    var marker = new kakao.maps.Marker({
-  		        position: position
-  		    });
-
-  		    // 마커가 지도 위에 표시되도록 설정합니다
-  		    marker.setMap(map);
-  		    
-  		    // 생성된 마커를 배열에 추가합니다
-  		    markers.push(marker);
-  		}
-
-  		// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
-  		function setMarkers(map) {
-  		    for (var i = 0; i < markers.length; i++) {
-  		        markers[i].setMap(map);
-  		    }            
-  		}
-
-  	
-}
-
-function map_marker(arr_result){
-	$('#map').empty();
+  	$('#map').empty();
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 	mapOption = { 
 	    center: new kakao.maps.LatLng(37.5759947835, 126.9768292386), // 지도의
@@ -460,8 +245,135 @@ function map_marker(arr_result){
 	    infowindow.close();
 	};
 	}
+  
+  	
+  	
+  	$('.add_button').on('click',function(){
+  		var arr_index = $(this).parent().index();
+  		var li = document.createElement('li');
+  		var image_container = document.createElement('div');
+  		var add_image = document.createElement('img');
+  		var add_title = document.createElement('h3');
+  		var add_address = document.createElement('p');
+  		var trashcan = document.createElement('a');
+  		var trashcan_img = document.createElement('img');
+  		var text = $('.plan_list_header>h1').text();
+  		var add_list = document.getElementsByClassName(text)[0]
+  		var length =$(add_list).children().length;
+  		add_list.appendChild(li);
+  		$(li).prop('id','add_list');
+  		$(li).append(image_container);
+  		$(li).append(add_title);
+  		$(li).append(add_address);
+  		$(li).append(trashcan);
+  		$(trashcan).append(trashcan_img);
+  		$(trashcan).prop('class','trashcan');
+  		$(trashcan).prop('href','#');
+  		$(trashcan_img).prop('class','trashcan_img');
+  		$(trashcan_img).attr('src','/bts/resources/image/icon/garbage.png');
+  		$(image_container).append(add_image);
+  		$(image_container).prop('class','image_container');
+  		$(add_image).prop('class','add_image');
+  		$(add_image).attr('src',arr_result[arr_index].first_image);
+  		$(add_title).prop('class','add_title')
+  		$(add_title).text(arr_result[arr_index].title);
+  		$(add_address).prop('class','add_address');
+  		$(add_address).text(arr_result[arr_index].address);
+ 
+  	 	var mapx = arr_result[arr_index].map_x;
+  		var mapy = arr_result[arr_index].map_y;
+  		var contentid = arr_result[arr_index].contentid;
+  		$(li).attr('data-value',contentid);
+  		
+ 		add_marker(mapy,mapx,map);
+  		
+  		$('.trashcan').on('click',function(){
+  			$(this).parent().remove();
+  			
+  		});
+  	});
+} 
+
+function selectWishList(){
+	$('.detail_list_container').empty();
+	$.ajax({
+  		async : false,
+		url : "/bts/plan/select_wishList",
+		dataType : 'json',
+		success : function(data, textStatus){
+			var wish = data.wishList;
+			myWishList(wish);
+		},
+		error : function(data, textStatus) {
+			alert("잘못된 접근입니다.");
+		}
+	});
 }
-function map_markers(result_arr){
+function myWishList(wish){
+	var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D';
+	
+	var result_arr = new Array();
+	for(var key in wish){
+		var my_wishList = wish[key];
+		var contentid = my_wishList['CONTENT_ID'];
+		var reqUrl ='http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' 
+					+ serviceKey + '&contentId=' + contentid + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
+		
+		$.ajax({
+	  		async : false,
+			url : reqUrl,
+			dataType : 'json',
+			success : function(data, textStatus) {
+				var result_obj = new Object();
+				 resultArray = data.response.body.items.item;
+				 var container = document.createElement('div');
+				 var image_container = document.createElement('div');
+				 var information_container = document.createElement('div');
+				 var image = document.createElement('img');
+				 var add_icon = document.createElement('img');
+				 var title = document.createElement('h2');
+				 var address = document.createElement('p');
+				 var add_plan = document.createElement('a');
+				 $('.detail_list_container').append(container);
+				 $(container).append(information_container);
+				 $(container).prop('class','detail_information');
+				 $(information_container).append(image_container);
+				 $(information_container).append(title);
+				 $(image_container).append(image);
+				 $(container).append(add_plan);
+				 $(add_plan).append(add_icon);
+				 $(title).prop('class','title_information');
+				 $(image_container).prop('class','first_image');
+				 $(image).prop('class','image_infoemation');
+				 $(image).attr('src',resultArray.firstimage);
+				 $(information_container).append(address);
+				$(address).prop('class','address_information');
+				 $(add_icon).attr('src','/bts/resources/image/icon/plus.png');
+				 $(add_plan).prop('class','add_button');
+				 $(add_plan).prop('style','cursor:pointer');
+				 $(add_icon).prop('class','button_icon');
+				 
+				 var p_title = document.createTextNode(resultArray.title);
+				 title.appendChild(p_title);
+				 var p_addr = document.createTextNode(resultArray.addr1);
+				 address.appendChild(p_addr);
+				 
+				 result_obj['title'] = resultArray.title;
+				 result_obj['first_image'] = resultArray.firstimage;
+				 result_obj['contentid'] = resultArray.contentid;
+				 result_obj['map_x'] = resultArray.mapx;
+				 result_obj['map_y'] = resultArray.mapy;
+				 result_obj['address'] = resultArray.addr1;
+				 
+				 result_arr.push(result_obj);
+				 
+		},
+		error : function(data, textStatus) {
+			alert("잘못 된 접근입니다.");
+		}
+		
+	});
+	}
 	$('#map').empty();
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 	mapOption = { 
@@ -512,21 +424,98 @@ function map_markers(result_arr){
 	    infowindow.close();
 	};
 	}
+  	
+	
+	$('.add_button').on('click',function(){
+		var index = $(this).parent().index();
+		var li = document.createElement('li');
+		var image_container = document.createElement('div');
+  		var add_image = document.createElement('img');
+  		var add_title = document.createElement('h3');
+  		var add_address = document.createElement('p');
+  		var trashcan = document.createElement('a');
+  		var trashcan_img = document.createElement('img');
+  		var text = $('.plan_list_header>h1').text();
+  		var add_list = document.getElementsByClassName(text)[0]
+  		var length =$(add_list).children().length;
+  		add_list.appendChild(li);
+  		$(li).prop('id','add_list');
+  		$(li).append(image_container);
+  		$(li).append(add_title);
+  		$(li).append(add_address);
+  		$(li).append(trashcan);
+  		$(trashcan).append(trashcan_img);
+  		$(trashcan).prop('class','trashcan');
+  		$(trashcan).prop('href','#');
+  		$(trashcan_img).prop('class','trashcan_img');
+  		$(trashcan_img).attr('src','/bts/resources/image/icon/garbage.png');
+  		$(image_container).append(add_image);
+  		$(image_container).prop('class','image_container');
+  		$(add_image).prop('class','add_image');
+  		$(add_image).attr('src',result_arr[index].first_image);
+  		$(add_title).prop('class','add_title')
+  		$(add_title).text(result_arr[index].title);
+  		$(add_address).prop('class','add_address');
+  		$(add_address).text(result_arr[index].address);
+  		var contentid = result_arr[index].contentid;
+  		$(li).attr('data-value',contentid);
+  		
+  		var mapx = result_arr[index].map_x;
+  		var mapy = result_arr[index].map_y;
+  		
+  		add_marker(mapy,mapx,map);
+  		$('.trashcan').on('click',function(){
+  			$(this).parent().remove();
+  		});
+	});
 }
+function add_marker(mapy,mapx,map){
+  		// 지도에 표시된 마커 객체를 가지고 있을 배열입니다
+  		var markers = [];
+  		
+  		// 마커 하나를 지도위에 표시합니다
+  		addMarker(new kakao.maps.LatLng(mapy, mapx));
 
+  		// 마커를 생성하고 지도위에 표시하는 함수입니다
+  		function addMarker(position) {
+		                
+  		
+  		var imageSrc = "http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+  			imageSize = new kakao.maps.Size(24, 35), // 마커이미지의 크기입니다
+  			imageOption = {offset: new kakao.maps.Point(11, 34)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+  		
+  		var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+  	    	markerPosition = new kakao.maps.LatLng(mapy, mapx); // 마커가 표시될 위치입니다
+  		
+  		    // 마커를 생성합니다
+  		    var marker = new kakao.maps.Marker({
+  		    	map: map,
+  		        position: markerPosition,
+  		        image: markerImage // 마커이미지 설정
+  		    });
+
+  		    // 마커가 지도 위에 표시되도록 설정합니다
+  		    marker.setMap(map);
+  		    
+  		    // 생성된 마커를 배열에 추가합니다
+  		    markers.push(marker);
+  		}
+  		// 배열에 추가된 마커들을 지도에 표시하거나 삭제하는 함수입니다
+  		function setMarkers(map) {
+  		    for (var i = 0; i < markers.length; i++) {
+  		        markers[i].setMap(map);
+  		    }            
+  		}
+}
 function save_plan(){
 	
 	var data_obj = new Object();
 	var result_arr = new Array();
 	var title = $('.title').val();
-	console.log(title);
 	var tag = $('.tag_value').text();
 	var str = tag.substring(0,tag.length-1);
-	console.log(str);
 	var tag_name = str.split('x');
-	console.log(tag_name);
 	var personnel = $('.personnel').val();
-	console.log(personnel);
 	if(confirm("저장하시겠습니까?") === true){
 		var frm_plan = document.plan;
 	
@@ -550,7 +539,7 @@ function save_plan(){
 		frm_plan.personnel.value = personnel;
 		frm_plan.detail_information.value = result;
 		frm_plan.submit();
-}else{
-	
 }
+
 }
+
