@@ -31,6 +31,12 @@ public class F_P001_3DAOImpl implements F_P001_3DAO{
 	public void insertAnswer(F_P001_3VO_3 f_p001_3VO_3) throws DataAccessException{
 		sqlSession.insert("mapper.f_p001_3.insertAnswer",f_p001_3VO_3);
 	}	
+
+	@Override
+	public int deleteAnswer(String answer_no) throws DataAccessException{
+		int result = sqlSession.delete("mapper.f_p001_3.deleteAnswer",answer_no);
+		return result;
+	}		
 	
 	@Override
 	public String selectReviewTotal() throws DataAccessException{

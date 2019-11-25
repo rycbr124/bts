@@ -157,6 +157,18 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		return "redirect:/community/review/contents";
 	}	
 	
+	@ResponseBody
+	@RequestMapping(value="/comment/delete" ,method={RequestMethod.POST})
+	public String commentDelete(RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String answer_no = request.getParameter("answer_no");
+		int result = f_p001_3Service.deleteAnswer(answer_no);
+		if(result==1) {
+			return "true";						
+		}else {
+			return "false";			
+		}
+	}	
+	
 	@RequestMapping(value="/write" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView write(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/f/p001_3/d003");

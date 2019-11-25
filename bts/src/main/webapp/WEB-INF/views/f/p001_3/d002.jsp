@@ -264,23 +264,74 @@ img.comment-image{
 	margin-left:10px;
 }
 
+.comment-delete{
+	border-right:1px dotted #acb4c2;
+}
+
+.comment-delete, .comment-report{
+	padding:0 5px;
+	float:right;
+	color:#555f77;
+}
+
+.comment-delete:hover, .comment-report:hover{
+	text-decoration:underline;
+	cursor: pointer;
+}
+
 </style>
 <script>
 	$(document).ready(function(){
 		init();
-
+		
+		$(document).on('click','span.comment-report',function(){
+		});
+		
+		$(document).on('click','span.comment-delete',function(){
+			var con_test = confirm("삭제하시겠습니까?");
+			if(con_test){
+			   var input = $(this).parent().parent().data('no');
+				$.ajax({
+					type : "post", 
+					async : false,
+					url : "${contextPath}/community/review/comment/delete",
+				    data: {answer_no:input},
+				    dataType:'text',
+					success : function (data,textStatus){
+						if(data=='true'){
+							var paging=$('li.active').text();
+							comPaging(paging);
+						}else{
+							alert("잠시 후 다시 시도해주세요.");							
+						}
+					},//end success
+					error : function (data,textStatus){
+						alert("잠시 후 다시 시도해주세요.");
+					}				
+				}); //end ajax	
+			}
+		});
+		
 		$(document).on('click','a.page-link',function(){
-			var nowPage=${paging.curPage};
-			var startPage=${paging.startPage};
-			var endPage=${paging.endPage};
-			var rangePage=${paging.rangePage};
+			var paging=$(this).text();
+			comPaging(paging);
+		});
+		
+		function init(){
+			var date = '${result.register_date}';
+			date = date.substr(0,date.lastIndexOf('.'));
+			$('#register-date').text(date);
+		}
+		
+		function comPaging(paging){
+			var startPage=$('li.page-item:first').next().text();
+			var endPage=$('li.page-item:last').prev().text();
 			var articleNO=${result.article_no};
 			
-			var paging=$(this).text();
 			if(paging==$('a.page-link:first').text()){
-				paging=startPage-rangePage;
+				paging=startPage-1;
 			}else if(paging==$('a.page-link:last').text()){
-				paging=endPage+1;				
+				paging=endPage+1;
 			}
 			
 			var searchData={
@@ -295,7 +346,6 @@ img.comment-image{
 			    data: searchData,
 			    dataType:'json',
 				success : function (data,textStatus){
-					console.log(data);
 					$('#comments').empty();
 					for(var i in data.comments){
 						var comment = data.comments[i];
@@ -309,7 +359,7 @@ img.comment-image{
 							}							
 						}
 						
-						var comDiv = makeComment(comment.answer_desc,comment.member_id,profile,comment.register_date);
+						var comDiv = makeComment(comment.answer_no,comment.answer_desc,comment.member_id,profile,comment.register_date);
 						$('#comments').append(comDiv);
 					}
 					makePaging(data.paging.startPage,data.paging.endPage,data.paging.curPage);
@@ -318,12 +368,6 @@ img.comment-image{
 					alert("에러가 발생했습니다.");
 				}
 			}); //end ajax	
-		});
-		
-		function init(){
-			var date = '${result.register_date}';
-			date = date.substr(0,date.lastIndexOf('.'));
-			$('#register-date').text(date);
 		}
 		
 		function makePaging(startPage,endPage,curPage){
@@ -351,7 +395,7 @@ img.comment-image{
 			
 		}
 		
-		function makeComment(answer_desc,member_id,profile_image,register_date){
+		function makeComment(answer_no,answer_desc,member_id,profile_image,register_date){
 			var container = document.createElement('div');
 			var imgDiv=document.createElement('img');
 			var boxDiv=document.createElement('div');
@@ -359,6 +403,8 @@ img.comment-image{
 			var footerDiv=document.createElement('div');
 			var authorSpan=document.createElement('span');
 			var dateSpan=document.createElement('span');
+			var delSpan=document.createElement('span');
+			var repSpan=document.createElement('span');
 			
 			$(container).addClass('comment');
 			$(imgDiv).addClass('comment-image');
@@ -367,6 +413,8 @@ img.comment-image{
 			$(footerDiv).addClass('comment-footer');
 			$(authorSpan).addClass('comment-author');
 			$(dateSpan).addClass('comment-date');
+			$(repSpan).addClass('comment-report');
+			$(delSpan).addClass('comment-delete');
 			
 			container.append(imgDiv);
 			container.append(boxDiv);
@@ -374,11 +422,19 @@ img.comment-image{
 			boxDiv.append(footerDiv);
 			footerDiv.append(authorSpan);
 			footerDiv.append(dateSpan);
+			footerDiv.append(repSpan);
+			if('${sessionScope.memberInfo.member_id}'==member_id){
+				footerDiv.append(delSpan);				
+			}
 			$(imgDiv).prop('src',profile_image);
+			$(boxDiv).data('no',answer_no);
 			$(textDiv).text(answer_desc);
 			$(authorSpan).text(member_id);
 			var	regDate = new Date(register_date)
 			$(dateSpan).text(regDate.toLocaleString('ko-KR', { dateStyle:'medium', timeStyle:'medium', hour12:false }));			
+			$(repSpan).text('신고');
+			$(delSpan).text('삭제');
+			
 			return container;
 		}
 	})
@@ -388,17 +444,6 @@ img.comment-image{
 <title>Insert title here</title>
 </head>
 <body>
-<!-- 
-${result.article_no}
-<br>
-${result.title}
-<br>
-${result.contents}
-<br>
-${result.register_date}
-<br>
-${result.member_id}
- -->
 	<div class="container">
 		<div id="review-header">
 			<c:choose>
@@ -417,8 +462,7 @@ ${result.member_id}
 				<input type="button" id="review-modify" class="btn btn-outline-light" value="수정">
 			</div>
 		</div>
-		<!-- 
-		 -->
+
 		<div id="review-detail">
 			<div id="contents">${result.contents}</div>
 			<div id="tags">
@@ -427,7 +471,7 @@ ${result.member_id}
 				</c:forEach>
 			</div>
 			<div id='contents-info'>
-				<span id="comment-count"><i class="far fa-comment-dots fa-2x"></i>3</span><span id="view-count"></span>
+				<span id="comment-count"><i class="far fa-comment-dots fa-2x"></i>${paging.totalCount}</span><span id="view-count"></span>
 			</div>
 			
 			<div id="comment-form" class="mx-auto">
@@ -453,11 +497,15 @@ ${result.member_id}
 								</c:if>
 							</c:otherwise>
 						</c:choose>					
-						<div class="comment-box">
+						<div class="comment-box" data-no="${com.answer_no}">
 							<div class="comment-text">${com.answer_desc}</div>
 							<div class="comment-footer">
 								<span class="comment-author">${com.member_id}</span>
 								<span class="comment-date"><fmt:formatDate value="${com.register_date}" pattern="yyyy. MM. dd. HH:mm:ss"/></span>
+								<span class="comment-report">신고</span>
+								<c:if test="${sessionScope.memberInfo.member_id==com.member_id}">
+									<span class="comment-delete">삭제</span>
+								</c:if>
 							</div>						
 						</div>		
 					</div>

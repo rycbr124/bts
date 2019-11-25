@@ -48,7 +48,14 @@
 		VALUES (#{article_no}, #{article_cd}, article_comment_seq.nextval, #{answer_desc}, #{member_id}, sysdate)
 	    ]]>
 	</insert>
-
+	
+	<delete id="deleteAnswer" parameterType="string">
+	    <![CDATA[
+			DELETE FROM answer_article
+			WHERE answer_no=#{answer_no}
+	    ]]>
+	</delete>
+	
 	<select id="selectReviewList" parameterType="map" resultMap="reviewResult">
 	    <![CDATA[
 			SELECT b.* 

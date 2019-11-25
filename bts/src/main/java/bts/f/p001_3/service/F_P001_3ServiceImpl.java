@@ -32,6 +32,12 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 	public void insertAnswer(F_P001_3VO_3 f_p001_3VO_3) throws DataAccessException{
 		f_p001_3DAO.insertAnswer(f_p001_3VO_3);
 	}		
+
+	@Override
+	public int deleteAnswer(String answer_no) throws DataAccessException{
+		int result = f_p001_3DAO.deleteAnswer(answer_no);
+		return result;
+	}	
 	
 	@Override
 	public String selectReviewTotal() throws DataAccessException{
