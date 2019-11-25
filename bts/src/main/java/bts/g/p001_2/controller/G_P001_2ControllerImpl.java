@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import bts.b.p001.VO.B_P001VO;
+import bts.e.p001.VO.PagingVO;
 import bts.g.p001_2.service.G_P001_2Service;
 import bts.g.p001_2.vo.G_P001_2VO;
 
@@ -36,13 +37,12 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
    @Override
    @RequestMapping(value="/recommend_place" ,method={RequestMethod.POST,RequestMethod.GET})
    public ModelAndView P001_D001(HttpServletRequest request, HttpServletResponse response) throws Exception {      
-      Map<String, List<String>> searchResult = g_p001_2Service.searchCategory();
-      JSONObject totaObject = new JSONObject(searchResult);
-      ModelAndView mav = new ModelAndView("/g/p001_2/d001");
-      System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhh " + totaObject.toJSONString());
-      mav.addObject("result", totaObject.toJSONString());
-      return mav;
-   }
+	      Map<String, List<String>> searchResult = g_p001_2Service.searchCategory();
+	      JSONObject totaObject = new JSONObject(searchResult);
+	      ModelAndView mav = new ModelAndView("/g/p001_2/d001");
+	      mav.addObject("result", totaObject.toJSONString());
+	      return mav;
+	   }
 
    @Override
    @RequestMapping(value="/recommend_course" ,method={RequestMethod.POST,RequestMethod.GET})

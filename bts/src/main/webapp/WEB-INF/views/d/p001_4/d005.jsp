@@ -98,7 +98,7 @@ $(document).on('click', '#btnSave', function(){
 	var length = $('.content_div').length;
 	console.log(length);
 	var frmSave = document.form;
-	frmSave.action="${contextPath}/community/plan_save";
+	frmSave.action="${contextPath}/community/plan_modify";
 	frmSave.length.value=length;		
 	frmSave.submit();
 });

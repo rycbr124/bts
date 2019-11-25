@@ -17,7 +17,6 @@ $(document).ready(function (){
 				console.log("11111111 : " + resultArray);
 				if (resultArray instanceof Array) {
 					for ( var i in resultArray) {
-						console.log("222 : " + resultArray[i].code + " 333 : " + resultArray[i].name);
 						var option = document.createElement('option');
 						$(option).prop('value', resultArray[i].code);
 						var name = document.createTextNode(resultArray[i].name);
@@ -36,15 +35,15 @@ $(document).ready(function (){
 	
 });
 
- ////////////////
- function result_init(){
+////////////////
+function result_init(){
 	 var pageNo = 1;
 	 image_init(pageNo);//이미지 삽입
 	 //paging 뿌리는 메소드
 	 $('.page-item').on('click',paging_click) //뿌린 버튼에 클릭이벤트 달아주는 메소드
- }
- 
- function paging_click(){//페이징 버튼 눌렀을 때
+}
+
+function paging_click(){//페이징 버튼 눌렀을 때
 	 var pageNo = $(this).text();//자식노드중에 텍스트노드만 가져온다.
 	 if(pageNo == 'Next'){
 		pageNo = 6;
@@ -52,9 +51,8 @@ $(document).ready(function (){
 	 console.log(pageNo);
 	 image_init(pageNo);
 	 
- }
- /////////////
-
+}
+/////////////
  
 function image_init(pageNo) {
 	$("#image_grid").empty();
@@ -81,6 +79,16 @@ function image_init(pageNo) {
 			var resultArray = data.response.body.items.item;
 			console.log(resultArray);
 			console.log("total 값 : " + data.response.body.totalCount);
+			$('.totalCount').remove();
+			var total = document.createElement('input');
+			$(total).prop('type', 'hidden');
+			$(total).prop('name', 'totalCount');
+			$(total).prop('class', 'totalCount');
+			$(total).prop('value', data.response.body.totalCount);
+			
+			$('.box').append(total);
+			
+			
 			if (resultArray instanceof Array) {
 				for ( var i in resultArray) {
 					var col = document.createElement('div');
