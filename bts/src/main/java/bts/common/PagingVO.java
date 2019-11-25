@@ -13,7 +13,21 @@ public class PagingVO {
 	private int curPage;//현재 페이지
 	private int startPage;//현재 시작 페이지
 	private int endPage;//현재 끝 페이지
+	private int startRow;//현재 시작 열
+	private int endRow;//현재 끝 열
 	
+	public int getStartRow() {
+		return startRow;
+	}
+	public void setStartRow(int startRow) {
+		this.startRow = startRow;
+	}
+	public int getEndRow() {
+		return endRow;
+	}
+	public void setEndRow(int endRow) {
+		this.endRow = endRow;
+	}
 	public int getRangeRow() {
 		return rangeRow;
 	}
@@ -58,7 +72,14 @@ public class PagingVO {
 		this.totalPage = totalPage;
 	}
 	
-	public void calTotalPage(int totalCount,int rangeRow) {
+	public void setPaging(int curPage,int totalCount,int rPage,int rRow) {
+		calTotalPage(totalCount, rRow);
+		calCurPage(curPage);
+		calStartEndPage(rPage);
+		calStartEndRow();
+	}
+	
+	private void calTotalPage(int totalCount,int rangeRow) {
 		int totalPage = totalCount/rangeRow;
 		if(totalCount%rangeRow>0) {
 			totalPage=totalPage+1;
@@ -68,16 +89,33 @@ public class PagingVO {
 		this.totalPage=totalPage;
 	}
 	
-	public void calStartEndPage() {
-		int startPage=(((this.curPage-1)/this.rangePage)*this.rangePage)+1;
-		int endPage=(startPage+this.rangePage)-1;
+	private void calStartEndPage(int rangePage) {
+		int startPage=(((this.curPage-1)/rangePage)*rangePage)+1;
+		int endPage=(startPage+rangePage)-1;
 		if(endPage>this.totalPage) {
 			endPage=this.totalPage;
 		}
 		
 		this.startPage=startPage;
 		this.endPage = endPage;
+		this.rangePage=rangePage;
 	}
 	
+	private void calStartEndRow() {
+		int endRow = this.curPage*this.rangeRow;
+		int startRow = (endRow-this.rangeRow)+1;
+		this.startRow=startRow;
+		this.endRow=endRow;
+	}
+	
+	private void calCurPage(int curPage){
+		if(curPage<=0) {
+			this.curPage=1;
+		}else if(curPage>this.totalPage) {
+			this.curPage=this.totalPage;			
+		}else {
+			this.curPage=curPage;
+		}
+	}
 	
 }

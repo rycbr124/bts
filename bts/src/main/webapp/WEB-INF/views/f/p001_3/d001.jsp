@@ -240,7 +240,14 @@ p {
 		<ul class="pagination justify-content-center">
 		    <li class="page-item"><a class="page-link">Previous</a></li>
 		    <c:forEach begin="${paging.startPage}" end="${paging.endPage}" varStatus="status">
-			    <li class="page-item"><a class="page-link">${paging.startPage+status.count-1}</a></li>		    
+				<c:choose>
+					<c:when test="${(paging.startPage+status.count-1)==paging.curPage}">
+					    <li class="page-item active"><a class="page-link">${paging.startPage+status.count-1}</a></li>		    
+					</c:when>
+					<c:otherwise>
+					    <li class="page-item"><a class="page-link">${paging.startPage+status.count-1}</a></li>		    
+					</c:otherwise>
+				</c:choose>			    
 		    </c:forEach>
 		    <li class="page-item"><a class="page-link">Next</a></li>
 		</ul>

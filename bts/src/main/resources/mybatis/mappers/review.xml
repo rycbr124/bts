@@ -12,6 +12,16 @@
 		<result property="register_date" column="register_date" />
 		<result property="member_id" column="member_id" />		
 	</resultMap>
+
+	<resultMap id="ansResult" type="f_p001_3VO_3">
+		<result property="answer_no" column="answer_no" />
+		<result property="article_no" column="article_no" />
+		<result property="article_cd" column="article_cd" />
+		<result property="answer_desc" column="answer_desc" />
+		<result property="member_id" column="member_id" />		
+		<result property="register_date" column="register_date" />	
+		<result property="profile_image" column="profile_image" />
+	</resultMap>
 	
 	<insert id="insertArticle" parameterType="f_p001_3VO">
 	    <![CDATA[
@@ -31,7 +41,14 @@
 	   		VALUES (#{item.tag_name},#{item.article_no},#{item.article_cd})
 		</foreach>
 	</insert>
-	
+
+	<insert id="insertAnswer" parameterType="f_p001_3VO_3">
+	    <![CDATA[
+		INSERT INTO answer_article (article_no, article_cd, answer_no, answer_desc, member_id, register_date) 
+		VALUES (#{article_no}, #{article_cd}, article_comment_seq.nextval, #{answer_desc}, #{member_id}, sysdate)
+	    ]]>
+	</insert>
+
 	<select id="selectReviewList" parameterType="map" resultMap="reviewResult">
 	    <![CDATA[
 			SELECT b.* 
@@ -58,6 +75,15 @@
 			WHERE article_cd=3
 	    ]]>
 	</select>
+
+	<select id="selectCommentTotal" parameterType="string" resultType="string">
+	    <![CDATA[
+			SELECT COUNT(*) totalCount
+			FROM answer_article
+			WHERE article_cd=3
+			AND article_no=#{article_no}
+	    ]]>
+	</select>
 	
 	<select id="selectTagList" parameterType="f_p001_3VO" resultType="string">
 	    <![CDATA[
@@ -74,6 +100,27 @@
 			FROM article
 			WHERE article_no=#{article_no}
 			AND article_cd=#{article_cd}
+	    ]]>
+	</select>
+
+	<select id="selectAnswerList" parameterType="map" resultMap="ansResult">
+	    <![CDATA[
+			SELECT b.* 
+			FROM
+			(
+			    SELECT rownum as rnum, a.*
+			    FROM 
+			    (
+			        SELECT answer_no,article_no,answer_desc,register_date,ar.member_id,profile_image,member_type
+			        FROM answer_article ar,b_member mem
+			        WHERE ar.member_id=mem.member_id
+                    AND article_cd=3
+                    AND article_no=#{article_no}
+			        ORDER BY answer_no
+			    ) a
+			    WHERE rownum<=#{endRow}
+			) b
+			WHERE b.rnum>=#{startRow}
 	    ]]>
 	</select>
 

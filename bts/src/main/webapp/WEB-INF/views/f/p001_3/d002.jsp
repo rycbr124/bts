@@ -3,6 +3,7 @@
     isELIgnored="false"
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}" />	
 <!DOCTYPE html>
 <html>
@@ -204,23 +205,184 @@
     margin-bottom:10px;
 }
 
+.comment{
+	margin-bottom: 20px;
+	position: relative;
+	z-index: 0;
+}
+
 img.comment-image{
-	border: 2px solid #fff;
+	border: 3px solid #fff;
     border-radius: 50%;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .2);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
     height: 80px;
     left: 0;
     overflow: hidden;
-    width: 80px;
+	position: absolute;
+	top: 0;
+	width: 80px;
+	background-color:grey;
+}
+
+.comment-box{
+	background-color: #fcfcfc;
+	border-radius: 4px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+    margin-left: 100px;
+    min-height: 60px;
+    position: relative;
+    padding: 15px;
+}
+
+.comment .comment-box::before{
+	border-color: transparent rgba(0, 0, 0, .1);
+	top: 22px;
+}
+
+.comment-box::before,.comment-box::after{
+    border-width: 10px 10px 10px 0;
+    border-style: solid;
+    border-color: transparent #FCFCFC;
+    content: "";
+    left: -10px;
+    position: absolute;
+    top: 20px;
+}
+
+.comment-text{
+	color:#555f77;
+	font-size: 15px;
+	margin-bottom: 25px;
+}
+
+.comment-footer{
+	color:#acb4c2;
+	font-size: 13px;
+}
+
+.comment-date{
+	margin-left:10px;
 }
 
 </style>
 <script>
 	$(document).ready(function(){
-		var date = '${result.register_date}';
-		date = date.substr(0,date.lastIndexOf('.'));
-		$('#register-date').text(date);
+		init();
+
+		$(document).on('click','a.page-link',function(){
+			var nowPage=${paging.curPage};
+			var startPage=${paging.startPage};
+			var endPage=${paging.endPage};
+			var rangePage=${paging.rangePage};
+			var articleNO=${result.article_no};
+			
+			var paging=$(this).text();
+			if(paging==$('a.page-link:first').text()){
+				paging=startPage-rangePage;
+			}else if(paging==$('a.page-link:last').text()){
+				paging=endPage+1;				
+			}
+			
+			var searchData={
+				curPage : paging,
+				article_no : articleNO	
+			}
+			
+			$.ajax({
+				type : "post", 
+				async : false,
+				url : "${contextPath}/community/review/comment",
+			    data: searchData,
+			    dataType:'json',
+				success : function (data,textStatus){
+					console.log(data);
+					$('#comments').empty();
+					for(var i in data.comments){
+						var comment = data.comments[i];
+						var profile = comment.profile_image;
+						
+						if(profile==null){
+							profile='${contextPath}/resources/image/no_img.jpg';
+						}else{
+							if(comment.member_type!='kakao' && comment.member_type!='naver'){
+								imgSrc='${contextPath}/'+imgSrc;
+							}							
+						}
+						
+						var comDiv = makeComment(comment.answer_desc,comment.member_id,profile,comment.register_date);
+						$('#comments').append(comDiv);
+					}
+					makePaging(data.paging.startPage,data.paging.endPage,data.paging.curPage);
+				},//end success
+				error : function (data,textStatus){
+					alert("에러가 발생했습니다.");
+				}
+			}); //end ajax	
+		});
+		
+		function init(){
+			var date = '${result.register_date}';
+			date = date.substr(0,date.lastIndexOf('.'));
+			$('#register-date').text(date);
+		}
+		
+		function makePaging(startPage,endPage,curPage){
+			$('#paging-list').empty();
+			
+			for(var j=startPage-1;j<=endPage+1;j++){
+				var li=document.createElement('li');
+				var a=document.createElement('a');
+				$(li).addClass('page-item');
+				if(j==curPage){
+					$(li).addClass('active');
+				}
+				$(a).addClass('page-link');
+				if(j==startPage-1){
+					$(a).text('Previous');					
+				}else if(j==endPage+1){
+					$(a).text('Next');										
+				}else{
+					$(a).text(j);					
+				}
+				li.append(a);
+				
+				$('#paging-list').append(li);
+			}
+			
+		}
+		
+		function makeComment(answer_desc,member_id,profile_image,register_date){
+			var container = document.createElement('div');
+			var imgDiv=document.createElement('img');
+			var boxDiv=document.createElement('div');
+			var textDiv=document.createElement('div');
+			var footerDiv=document.createElement('div');
+			var authorSpan=document.createElement('span');
+			var dateSpan=document.createElement('span');
+			
+			$(container).addClass('comment');
+			$(imgDiv).addClass('comment-image');
+			$(boxDiv).addClass('comment-box');
+			$(textDiv).addClass('comment-text');
+			$(footerDiv).addClass('comment-footer');
+			$(authorSpan).addClass('comment-author');
+			$(dateSpan).addClass('comment-date');
+			
+			container.append(imgDiv);
+			container.append(boxDiv);
+			boxDiv.append(textDiv);
+			boxDiv.append(footerDiv);
+			footerDiv.append(authorSpan);
+			footerDiv.append(dateSpan);
+			$(imgDiv).prop('src',profile_image);
+			$(textDiv).text(answer_desc);
+			$(authorSpan).text(member_id);
+			var	regDate = new Date(register_date)
+			$(dateSpan).text(regDate.toLocaleString('ko-KR', { dateStyle:'medium', timeStyle:'medium', hour12:false }));			
+			return container;
+		}
 	})
+	
 </script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -269,15 +431,53 @@ ${result.member_id}
 			</div>
 			
 			<div id="comment-form" class="mx-auto">
-				<form name="frmCom" class="row justify-content-md-end">
+				<form name="frmCom" class="row justify-content-md-end"  action="${contextPath}/community/review/comment/write" method="post">
 					<textarea name="input-comment"></textarea>
 					<input type="submit" class="btn btn-outline-secondary btn-sm" value="작성하기">
-					<input type="hidden" value="${result.article_no}">
+					<input type="hidden" name="article_no" value="${result.article_no}">
 				</form>
 			</div>
 			<div id="comments">
-				<img class="comment-image" src="${contextPath}${result.thumbnail_img}">
-				<div></div>			
+				<c:forEach var="com" items="${comments}" varStatus="status">
+					<div class="comment">
+						<c:choose>
+							<c:when test="${com.profile_image==null}">
+								<img class="comment-image" src="${contextPath}/resources/image/no_img.jpg">
+							</c:when>
+							<c:otherwise>
+								<c:if test="${com.member_type=='naver' || com.member_type=='kakao'}">
+									<img class="comment-image" src="${com.profile_image}">
+								</c:if>
+								<c:if test="${com.member_type!='naver' && com.member_type!='kakao'}">
+									<img class="comment-image" src="${contextPath}${com.profile_image}">
+								</c:if>
+							</c:otherwise>
+						</c:choose>					
+						<div class="comment-box">
+							<div class="comment-text">${com.answer_desc}</div>
+							<div class="comment-footer">
+								<span class="comment-author">${com.member_id}</span>
+								<span class="comment-date"><fmt:formatDate value="${com.register_date}" pattern="yyyy. MM. dd. HH:mm:ss"/></span>
+							</div>						
+						</div>		
+					</div>
+				</c:forEach>
+			</div>
+			<div id="comment-paging">
+				<ul id="paging-list" class="pagination justify-content-center pagination-sm">
+					<li class="page-item"><a class="page-link">Previous</a></li>
+				    <c:forEach begin="${paging.startPage}" end="${paging.endPage}" varStatus="status">
+						<c:choose>
+							<c:when test="${(paging.startPage+status.count-1)==paging.curPage}">
+							    <li class="page-item active"><a class="page-link">${paging.startPage+status.count-1}</a></li>		    
+							</c:when>
+							<c:otherwise>
+							    <li class="page-item"><a class="page-link">${paging.startPage+status.count-1}</a></li>		    
+							</c:otherwise>
+						</c:choose>						    
+				    </c:forEach>
+					<li class="page-item"><a class="page-link">Next</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>

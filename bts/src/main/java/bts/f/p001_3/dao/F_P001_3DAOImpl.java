@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import bts.f.p001_3.vo.F_P001_3VO;
 import bts.f.p001_3.vo.F_P001_3VO_2;
+import bts.f.p001_3.vo.F_P001_3VO_3;
 
 @Repository("f_p001_3DAO")
 public class F_P001_3DAOImpl implements F_P001_3DAO{
@@ -25,12 +26,23 @@ public class F_P001_3DAOImpl implements F_P001_3DAO{
 	public void insertTagList(List<F_P001_3VO_2> list) throws DataAccessException{
 		sqlSession.insert("mapper.f_p001_3.insertTagList",list);
 	}
+
+	@Override
+	public void insertAnswer(F_P001_3VO_3 f_p001_3VO_3) throws DataAccessException{
+		sqlSession.insert("mapper.f_p001_3.insertAnswer",f_p001_3VO_3);
+	}	
 	
 	@Override
 	public String selectReviewTotal() throws DataAccessException{
 		String totalCount = sqlSession.selectOne("mapper.f_p001_3.selectReviewTotal");
 		return totalCount;
 	}
+
+	@Override
+	public String selectCommentTotal(String article_no) throws DataAccessException{
+		String totalCount = sqlSession.selectOne("mapper.f_p001_3.selectCommentTotal",article_no);
+		return totalCount;
+	}	
 	
 	@Override
 	public List<F_P001_3VO> selectReviewList(Map<String,Integer> searchMap) throws DataAccessException{
@@ -49,4 +61,10 @@ public class F_P001_3DAOImpl implements F_P001_3DAO{
 		F_P001_3VO f_p001_3VO = sqlSession.selectOne("mapper.f_p001_3.selectReviewContents",searchMap);
 		return f_p001_3VO;
 	}
+	
+	@Override
+	public List<F_P001_3VO_3> selectAnswerList(Map<String,String> searchMap) throws DataAccessException{
+		List<F_P001_3VO_3> list = sqlSession.selectList("mapper.f_p001_3.selectAnswerList",searchMap);
+		return list;
+	}	
 }
