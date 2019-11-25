@@ -11,6 +11,8 @@
 		<result property="contents" column="contents" />
 		<result property="register_date" column="register_date" />
 		<result property="member_id" column="member_id" />		
+		<result property="member_type" column="member_type" />	
+		<result property="profile_image" column="profile_image" />
 	</resultMap>
 
 	<resultMap id="ansResult" type="f_p001_3VO_3">
@@ -18,8 +20,9 @@
 		<result property="article_no" column="article_no" />
 		<result property="article_cd" column="article_cd" />
 		<result property="answer_desc" column="answer_desc" />
-		<result property="member_id" column="member_id" />		
 		<result property="register_date" column="register_date" />	
+		<result property="member_id" column="member_id" />		
+		<result property="member_type" column="member_type" />	
 		<result property="profile_image" column="profile_image" />
 	</resultMap>
 	
@@ -103,10 +106,11 @@
 
 	<select id="selectReviewContents" parameterType="map" resultMap="reviewResult">
 	    <![CDATA[
-			SELECT register_date,title,contents,member_id,thumbnail_img,article_no,article_cd
-			FROM article
-			WHERE article_no=#{article_no}
+			SELECT register_date,title,contents,ar.member_id,thumbnail_img,article_no,article_cd,profile_image,member_type
+			FROM article ar,b_member mem
+			WHERE ar.member_id=mem.member_id 
 			AND article_cd=#{article_cd}
+			AND article_no=#{article_no}
 	    ]]>
 	</select>
 
