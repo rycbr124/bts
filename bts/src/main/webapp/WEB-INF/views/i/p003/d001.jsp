@@ -22,13 +22,16 @@ $(document).ready(function(){
 </script>
 </head>
 <body>
+	<form  name="desc">
+	<input type="hidden" name="plan_no"/>
+	<input type="hidden" name="detail_no"/>
+	<input type="hidden" name="plan_desc"/>
 	<div class="body">
 		<div class="plan_detail_header">
 			<img class="thumbnail_image" style="position:relative; display:inline-block;">
 		</div>
+	<div class="plan_detail_info"></div>
 	</div>
-	<div class="plan_detail_info">
-	<div id="map" style="width:346px; height:303px;"></div>
-	</div>
+	</form>
 </body>
 </html>
