@@ -284,7 +284,23 @@ img.comment-image{
 	$(document).ready(function(){
 		init();
 		
+		$('#review-modify').on('click',function(){
+			//window.location.href="${contextPath}/community/review/write/mod";
+			var form = document.createElement('form');
+			var hidden = document.createElement('input');
+			$(hidden).attr('type','hidden');
+			$(hidden).attr('name','article_no');			
+			form.append(hidden);
+			
+			form.article_no.value=${result.article_no}
+			form.action="${contextPath}/community/review/write/mod";
+			form.method="post";
+			$('#hid').append(form);
+			form.submit();
+		});
+		
 		$(document).on('click','span.comment-report',function(){
+		
 		});
 		
 		$(document).on('click','span.comment-delete',function(){
@@ -471,7 +487,9 @@ img.comment-image{
 				</c:choose>						
 				<h3 id="member-id">${result.member_id}</h3>
 				<p id="register-date"></p>
-				<input type="button" id="review-modify" class="btn btn-outline-light" value="수정">
+				<c:if test="${sessionScope.memberInfo.member_id==result.member_id}">
+					<input type="button" id="review-modify" class="btn btn-outline-light" value="수정">
+				</c:if>
 			</div>
 		</div>
 
@@ -540,6 +558,8 @@ img.comment-image{
 				</ul>
 			</div>
 		</div>
+	</div>
+	<div id="hid">
 	</div>
 </body>
 </html>

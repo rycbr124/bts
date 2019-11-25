@@ -51,6 +51,14 @@
 		VALUES (#{article_no}, #{article_cd}, article_comment_seq.nextval, #{answer_desc}, #{member_id}, sysdate)
 	    ]]>
 	</insert>
+
+	<delete id="deleteTag" parameterType="string">
+	    <![CDATA[
+			DELETE FROM tag_article
+			WHERE article_cd=3
+			AND article_no=#{article_no}
+	    ]]>
+	</delete>
 	
 	<delete id="deleteAnswer" parameterType="string">
 	    <![CDATA[

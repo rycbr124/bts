@@ -172,8 +172,22 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 	@RequestMapping(value="/write" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView write(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/f/p001_3/d003");
+		mav.addObject("uri",request.getRequestURI());
 		return mav;
 	}
+
+	@RequestMapping(value="/write/mod" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView mod(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/f/p001_3/d003");
+		Map<String,String> searchMap = new HashMap<>();
+		searchMap.put("article_no", request.getParameter("article_no"));
+		searchMap.put("article_cd", article_cd);
+		
+		F_P001_3VO resultVO = f_p001_3Service.selectReviewContents(searchMap);
+		mav.addObject("contentsMod", resultVO);
+		mav.addObject("uri",request.getRequestURI());
+		return mav;
+	}	
 	
 	@ResponseBody
 	@RequestMapping(value="/image" ,method={RequestMethod.POST,RequestMethod.GET}, produces="application/json;charset=UTF-8")
@@ -215,6 +229,80 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
             }
 		}
 	}
+
+//	@RequestMapping(value="/upload/mod" ,method={RequestMethod.POST,RequestMethod.GET})
+//	public void modUpload(HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		ObjectMapper mapper = new ObjectMapper();
+//		ArrayList imageList = mapper.readValue(request.getParameter("imageList"), ArrayList.class);
+//		String thumb = null;
+//		
+//		if(!imageList.isEmpty()) {
+//			thumb = (String) imageList.get(0);
+//			thumb = thumb.substring(request.getContextPath().length());
+//		}
+//		
+//		OutputStream out = null;
+////		InputStream in = null;
+//		try {
+//			for(int i=0; i<imageList.size(); i++) {
+//				String srcUrl = (String) imageList.get(i);
+//				srcUrl = srcUrl.substring(srcUrl.indexOf(mappingUrl)+mappingUrl.length());
+//				srcUrl = srcUrl.replace("/", "\\");
+//				
+//				File downloadFile = new File(metaUrl+"\\"+srcUrl);
+//				File uploadFile = new File(imageUrl+"\\"+srcUrl);
+//				
+//				if(!uploadFile.getParentFile().exists()) {
+//					uploadFile.getParentFile().mkdirs();
+//				}
+//				downloadFile.renameTo(uploadFile);
+//				
+//				/*
+//				in = new FileInputStream(downloadFile);
+//				out = new FileOutputStream(uploadFile);
+//				int data =0;
+//				
+//				while((data=in.read())!=-1) {
+//					out.write(data);
+//				}				
+//				 * */
+//			}			
+//		}catch(Exception e) {
+//			e.printStackTrace();
+//		}finally {
+//            try {
+//                if (out != null) {
+//                    out.close();
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//		}
+//		
+//		F_P001_3VO vo = f_p001_3Provider.get();
+//		B_P001VO b_p001VO= (B_P001VO) request.getSession().getAttribute("memberInfo");
+//		vo.setMember_id(b_p001VO.getMember_id());
+//		vo.setArticle_cd(article_cd);
+//		vo.setTitle(request.getParameter("title"));
+//		vo.setContents(request.getParameter("editor"));
+//		vo.setThumbnail_img(thumb);
+//		vo.setArticle_no(Integer.parseInt(request.getParameter("article_no")));
+//		
+//		ArrayList tagList = mapper.readValue(request.getParameter("tagList"), ArrayList.class);
+//		f_p001_3Service.insertArticle(vo);
+//		List<F_P001_3VO_2> insertTagList = new ArrayList<>();
+//		for(int i=0; i<tagList.size();i++) {
+//			F_P001_3VO_2 tagVO = tagProvider.get();
+//			tagVO.setArticle_no(vo.getArticle_no());
+//			tagVO.setArticle_cd(article_cd);
+//			tagVO.setTag_name((String) tagList.get(i));
+//			insertTagList.add(tagVO);
+//		}
+//		if(!insertTagList.isEmpty()) {
+//			f_p001_3Service.insertTagList(insertTagList);			
+//		}
+//		response.sendRedirect("/bts/community/review/list");
+//	}	
 	
 	@RequestMapping(value="/upload" ,method={RequestMethod.POST,RequestMethod.GET})
 	public void endWrite(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -241,7 +329,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 				if(!uploadFile.getParentFile().exists()) {
 					uploadFile.getParentFile().mkdirs();
 				}
-				System.out.println(downloadFile.renameTo(uploadFile));
+				downloadFile.renameTo(uploadFile);
 				
 				/*
 				in = new FileInputStream(downloadFile);
