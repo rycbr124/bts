@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -32,6 +33,7 @@ import bts.common.PagingVO;
 import bts.f.p001_3.service.F_P001_3Service;
 import bts.f.p001_3.vo.F_P001_3VO;
 import bts.f.p001_3.vo.F_P001_3VO_2;
+import bts.f.p001_3.vo.F_P001_3VO_3;
 
 @Controller("f_p001_3")
 @RequestMapping(value="/community/review")
@@ -42,6 +44,9 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 	@Autowired
 	Provider<F_P001_3VO_2> tagProvider;	
 
+	@Autowired
+	Provider<F_P001_3VO_3> ansProvider;		
+	
 	@Autowired
 	Provider<PagingVO> pagingProvider;		
 	
@@ -54,6 +59,8 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 	private static final String article_cd="3";
 	private static final int rangeRow = 6;
 	private static final int rangePage = 5;
+	private static final int comRangeRow=10;
+	private static final int comRangePage=5;
 	
 	@Override
 	@RequestMapping(value="/list" ,method={RequestMethod.POST,RequestMethod.GET})
@@ -70,26 +77,13 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 			e.printStackTrace();
 			curPage=1;
 		}
-		
 		int totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal());
 		PagingVO pvo = pagingProvider.get();
-		pvo.setRangePage(rangePage);
-		pvo.calTotalPage(totalCount, rangeRow);
-		
-		if(curPage<=0) {
-			curPage=1;
-		}else if(curPage>pvo.getTotalPage()) {
-			curPage=pvo.getTotalPage();			
-		}
-		
-		pvo.setCurPage(curPage);
-		pvo.calStartEndPage();
-		
-		int endRow = curPage*rangeRow;
-		int startRow = (endRow-rangeRow)+1;		
+		pvo.setPaging(curPage, totalCount, rangePage, rangeRow);
+
 		Map<String,Integer> searchMap = new HashMap<>();
-		searchMap.put("startRow", startRow);
-		searchMap.put("endRow", endRow);
+		searchMap.put("startRow", pvo.getStartRow());
+		searchMap.put("endRow", pvo.getEndRow());
 		
 		List<F_P001_3VO> reviewList = new ArrayList<>();
 		reviewList = f_p001_3Service.selectReviewList(searchMap);
@@ -99,18 +93,81 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		return mav;
 	}
 	
-	@Override
 	@RequestMapping(value="/contents" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView searchArticle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView searchArticle(@RequestParam(value="article", required=false) String articleNo,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/f/p001_3/d002");
 		Map<String,String> searchMap = new HashMap<>();
-		String articleNo = request.getParameter("article");
 		searchMap.put("article_no", articleNo);
 		searchMap.put("article_cd", article_cd);
 		F_P001_3VO resultVO = f_p001_3Service.selectReviewContents(searchMap);
+
+		int totalCount = Integer.parseInt(f_p001_3Service.selectCommentTotal(articleNo));
+		PagingVO pvo = pagingProvider.get();
+		pvo.setPaging(totalCount, totalCount, comRangePage, comRangeRow);
+		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
+		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
+		
+		List<F_P001_3VO_3> comments = f_p001_3Service.selectAnswerList(searchMap);
 		mav.addObject("result", resultVO);
+		mav.addObject("comments", comments);
+		mav.addObject("paging", pvo);
 		return mav;
 	}
+
+	@ResponseBody
+	@RequestMapping(value="/comment" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String commentPaging(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String selectPage = request.getParameter("curPage");
+		String article_no = request.getParameter("article_no");
+		
+		Map<String,String> searchMap = new HashMap<>();
+		searchMap.put("article_no", article_no);
+		searchMap.put("article_cd", article_cd);
+		
+		int totalCount = Integer.parseInt(f_p001_3Service.selectCommentTotal(article_no));
+		PagingVO pvo = pagingProvider.get();
+		pvo.setPaging(Integer.parseInt(selectPage), totalCount, comRangePage, comRangeRow);
+		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
+		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
+		
+		List<F_P001_3VO_3> comments = f_p001_3Service.selectAnswerList(searchMap);
+		Map<String,Object> resultMap = new HashMap<>();
+		resultMap.put("comments", comments);
+		resultMap.put("paging", pvo);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String result = mapper.writeValueAsString(resultMap);
+		return result;
+	}
+	
+	@RequestMapping(value="/comment/write" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String commentWrite(RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String comment = request.getParameter("input-comment");
+		int nowpage = Integer.parseInt(request.getParameter("article_no"));
+		B_P001VO b_p001VO= (B_P001VO) request.getSession().getAttribute("memberInfo");
+
+		F_P001_3VO_3 f_p001_3VO_3 = ansProvider.get();
+		f_p001_3VO_3.setAnswer_desc(comment);
+		f_p001_3VO_3.setArticle_cd(article_cd);
+		f_p001_3VO_3.setArticle_no(nowpage);
+		f_p001_3VO_3.setMember_id(b_p001VO.getMember_id());
+		f_p001_3Service.insertAnswer(f_p001_3VO_3);
+		
+		redirect.addAttribute("article",nowpage);
+		return "redirect:/community/review/contents";
+	}	
+	
+	@ResponseBody
+	@RequestMapping(value="/comment/delete" ,method={RequestMethod.POST})
+	public String commentDelete(RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String answer_no = request.getParameter("answer_no");
+		int result = f_p001_3Service.deleteAnswer(answer_no);
+		if(result==1) {
+			return "true";						
+		}else {
+			return "false";			
+		}
+	}	
 	
 	@RequestMapping(value="/write" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView write(HttpServletRequest request, HttpServletResponse response) throws Exception {
