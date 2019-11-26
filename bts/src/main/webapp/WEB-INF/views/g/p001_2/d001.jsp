@@ -90,6 +90,15 @@ $(document).ready(function (){
 		}
 	};
 	
+	function paging_click(){//페이징 버튼 눌렀을 때
+		var pageNo = $(this).text();//자식노드중에 텍스트노드만 가져온다.
+		if(pageNo == 'Next'){
+			pageNo = 6;
+		}
+		console.log(pageNo);
+		image_init(pageNo);
+		 
+	}
 	
 });
 
@@ -122,17 +131,18 @@ $(document).ready(function (){
 			</div>
 		</div>
 		<div id="pagination">
-		<ul class="pagination justify-content-center">
-			<li class="page-item"><span class="page-link">Prev</span></li>
-			<li class="page-item"><span class="page-link">1</span></li>
-			<li class="page-item"><span class="page-link">2</span></li>
-			<li class="page-item"><span class="page-link">3</span></li>
-			<li class="page-item"><span class="page-link">4</span></li>
-			<li class="page-item"><span class="page-link">5</span></li>
-			<li class="page-item"><span class="page-link">Next</span></li>
-			
-		</ul>
-	</div>
+			<ul class="pagination justify-content-center">
+				<li class="page-item"><span class="page-link">Prev</span></li>
+				<li class="page-item"><span class="page-link">1</span></li>
+				<li class="page-item"><span class="page-link">2</span></li>
+				<li class="page-item"><span class="page-link">3</span></li>
+				<li class="page-item"><span class="page-link">4</span></li>
+				<li class="page-item"><span class="page-link">5</span></li>
+				<li class="page-item"><span class="page-link">Next</span></li>
+				
+			</ul>
+		</div>
+
 	</div>
 	
 	

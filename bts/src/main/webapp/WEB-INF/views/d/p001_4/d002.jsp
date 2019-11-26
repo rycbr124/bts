@@ -132,7 +132,12 @@
 			$('.planner_detail').append(d_button);	
 			
 		}
-		
+		var list_button = document.createElement('input');
+		$(list_button).prop('type', 'button');
+		$(list_button).prop('value', '목록');
+		$(list_button).prop('class', 'btn btn-default btn-sm');
+		$(list_button).attr('onclick', 'location.href="${contextPath}/community/plan_list"');
+		$('.planner_detail').append(list_button);	
 		
 	});
 	

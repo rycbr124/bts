@@ -20,6 +20,6 @@ public interface D_P001_4Controller {
 	 public ModelAndView saveArticle(@RequestParam Map<String, String> result, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	 public ModelAndView updateArticle(@RequestParam("plan_no") String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	 public @ResponseBody String deleteArticle(@RequestParam("plan_no") String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception;
-	 //public @ResponseBody List<D_P001_4VO_4> commentList(@RequestParam("article_no") String article_no, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	 public ModelAndView modifyArticle(@RequestParam Map<String, String> result, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }
 

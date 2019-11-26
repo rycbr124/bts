@@ -11,6 +11,8 @@ public class D_P001_4VO {
 	private String register_date;
 	private String person_se;
 	private String range_date;
+	private String view_cnt;
+	private String open_val;
 	
 	public String getRownum() {
 		return rownum;
@@ -54,4 +56,17 @@ public class D_P001_4VO {
 	public void setRange_date(String range_date) {
 		this.range_date = range_date;
 	}
+	public String getView_cnt() {
+		return view_cnt;
+	}
+	public void setView_cnt(String view_cnt) {
+		this.view_cnt = view_cnt;
+	}
+	public String getOpen_val() {
+		return open_val;
+	}
+	public void setOpen_val(String open_val) {
+		this.open_val = open_val;
+	}
+	
 }

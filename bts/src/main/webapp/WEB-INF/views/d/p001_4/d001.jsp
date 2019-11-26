@@ -61,6 +61,11 @@ li.nav-item{
 	width : 250px;
 }
 
+div#paging{
+	display: block; 
+	text-align: center;
+}
+
 </style>
 
 
@@ -89,6 +94,7 @@ li.nav-item{
 			<th>제목</th>
 			<th>작성자</th>
 			<th>작성일</th>
+			<th>조회수</th>
 		</tr>
 		
 		<c:forEach var="article" items="${listArticle}">
@@ -97,22 +103,34 @@ li.nav-item{
 			<td><a href='${contextPath}/community/plan_contents?plan_no=${article.plan_no}'>${article.title}</a></td>
 			<td>${article.member_id}</td>
 			<td>${article.register_date}</td>
+			<td>${article.view_cnt}</td>
 		</tr>
 		</c:forEach>
 
 	</table>
-	<div id="pagination">
-		<ul class="pagination justify-content-center">
-			<li class="page-item"><span class="page-link">Prev</span></li>
-			<li class="page-item"><span class="page-link">1</span></li>
-			<li class="page-item"><span class="page-link">2</span></li>
-			<li class="page-item"><span class="page-link">3</span></li>
-			<li class="page-item"><span class="page-link">4</span></li>
-			<li class="page-item"><span class="page-link">5</span></li>
-			<li class="page-item"><span class="page-link">Next</span></li>
-			
-		</ul>
-	</div>
+		<div id="paging">
+			<ul class="pagination justify-content-center" id="pagination">
+				<!-- 이전버튼 -->
+				<c:if test="${paging.startPage != 1}">
+					<li class="page-item"><a href="${contextPath}/community/plan_list?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous" id="prev">이전</a></li>
+				</c:if>
+				<!-- 페이지 번호 -->
+				<c:forEach var="idx" begin="${paging.startPage}" end="${paging.endPage}">
+					<c:choose>
+						<c:when test="${idx == paging.nowPage }">
+							<li class="page-item"><a class="page-link" href="#" id="pageNo">${idx}</a></li>
+						</c:when>
+						<c:when test="${idx != paging.nowPage }">
+							<li class="page-item"><a class="page-link" href="${contextPath}/community/plan_list?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" id="pageNo">${idx}</a></li>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+				<!-- 이후 -->
+				<c:if test="${paging.endPage != paging.lastPage}">
+					<li class="page-item"><a href="${contextPath}/community/plan_list?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
+				</c:if>
+			</ul>
+		</div>
 	<p align="right">
 		<input type="button" value="글쓰기" class="btn btn-default" onClick="location.href='${contextPath}/community/plan_write'">
 	</p>

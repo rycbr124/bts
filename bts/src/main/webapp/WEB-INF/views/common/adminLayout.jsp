@@ -38,6 +38,11 @@
 	margin-right : 0;
 }
 
+
+#body{
+	display : inline-block; 
+}
+
 </style>
 </head>
 <body>

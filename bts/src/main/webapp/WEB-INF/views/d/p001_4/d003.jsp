@@ -262,8 +262,8 @@ table.table_content{
 }
 
 img.file{
-	width : 350px;
-	height : 350px;
+	width : 150px;
+	height : 150px;
 	display: block; 
 	margin: 0px auto;
 	
