@@ -23,7 +23,12 @@
 		src:url("/bts/resources/fonts/Binggrae-Bold.ttf");
 		font-family:"nanum";	
 	}
-
+	
+	@font-face{
+		src:url("/bts/resources/fonts/BMJUA_ttf.ttf");
+		font-family:"bmjua";	
+	}
+	
 #title *{
 	text-align:center;
 }
@@ -171,14 +176,20 @@
 }
 
 #contents-info{
-	display:flex;
-	justify-content : space-between;
 	margin-bottom : 10px;
 }
 
 .fa-comment-dots{
 	color:rgba(170,170,170);
-	margin-right:5px;
+	margin-right:2px;
+}
+
+#comment-count>span{
+	position:relative;
+	bottom:5px;
+	font-family:bmjua;
+	font-size:18px;
+    color: #555f77;
 }
 
 #comments{
@@ -268,13 +279,13 @@ img.comment-image{
 	border-right:1px dotted #acb4c2;
 }
 
-.comment-delete, .comment-report{
+.comment-delete, .comment-report,#contents-report{
 	padding:0 5px;
 	float:right;
 	color:#555f77;
 }
 
-.comment-delete:hover, .comment-report:hover{
+.comment-delete:hover, .comment-report:hover,#contents-report:hover{
 	text-decoration:underline;
 	cursor: pointer;
 }
@@ -301,6 +312,10 @@ img.comment-image{
 		
 		$(document).on('click','span.comment-report',function(){
 		
+		});
+		
+		$('#contents-report').on('click',function(){
+			
 		});
 		
 		$(document).on('click','span.comment-delete',function(){
@@ -362,6 +377,7 @@ img.comment-image{
 			    data: searchData,
 			    dataType:'json',
 				success : function (data,textStatus){
+					$('#comment-count>span').text(data.paging.totalCount);
 					$('#comments').empty();
 					for(var i in data.comments){
 						var comment = data.comments[i];
@@ -501,7 +517,12 @@ img.comment-image{
 				</c:forEach>
 			</div>
 			<div id='contents-info'>
-				<span id="comment-count"><i class="far fa-comment-dots fa-2x"></i>${paging.totalCount}</span><span id="view-count"></span>
+				<span id="comment-count">
+					<i class="far fa-comment-dots fa-2x"></i>
+					<span>${paging.totalCount}</span>
+				</span>
+				<span id="view-count"></span>
+				<span id="contents-report">게시글 신고</span>
 			</div>
 			
 			<div id="comment-form" class="mx-auto">
