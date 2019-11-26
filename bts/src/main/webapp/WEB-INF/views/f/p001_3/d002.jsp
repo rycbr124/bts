@@ -296,7 +296,6 @@ img.comment-image{
 		init();
 		
 		$('#review-modify').on('click',function(){
-			//window.location.href="${contextPath}/community/review/write/mod";
 			var form = document.createElement('form');
 			var hidden = document.createElement('input');
 			$(hidden).attr('type','hidden');
@@ -306,16 +305,20 @@ img.comment-image{
 			form.article_no.value=${result.article_no}
 			form.action="${contextPath}/community/review/write/mod";
 			form.method="post";
-			$('#hid').append(form);
+			$('body').append(form);
 			form.submit();
 		});
 		
 		$(document).on('click','span.comment-report',function(){
-		
+			var reqUrl="${contextPath}/report/comment"
+			var contents_cd=$(this).parent().parent().data('no');
+			var popup = openReport(reqUrl,contents_cd);			
 		});
 		
 		$('#contents-report').on('click',function(){
-			
+			var reqUrl="${contextPath}/report/article/review"
+			var contents_cd=${result.article_no};
+			var popup = openReport(reqUrl,contents_cd);
 		});
 		
 		$(document).on('click','span.comment-delete',function(){
@@ -347,6 +350,30 @@ img.comment-image{
 			var paging=$(this).text();
 			comPaging(paging);
 		});
+
+		function openReport(url,contents_cd){
+			var title="reportForm"
+			var wid=800;
+			var hei=500;
+			var top = (window.screen.height/2)-(hei/2);
+			var left = (window.screen.width/2)-(wid/2);
+			
+			var pop=window.open("",title,'width='+wid+',height='+hei+',top='+top+',left='+left);
+			
+			var form = document.createElement('form');
+			var cdInput = document.createElement('input');		
+			$(cdInput).attr('type','hidden');
+			$(cdInput).attr('name','contents_cd');
+			form.append(cdInput);
+
+			form.contents_cd.value=contents_cd;			
+			form.target=title;
+			form.action=url;
+			form.method="post";
+			$('body').append(form);
+			form.submit();
+			return pop;
+		}		
 		
 		function init(){
 			var date = '${result.register_date}';
@@ -579,8 +606,6 @@ img.comment-image{
 				</ul>
 			</div>
 		</div>
-	</div>
-	<div id="hid">
 	</div>
 </body>
 </html>

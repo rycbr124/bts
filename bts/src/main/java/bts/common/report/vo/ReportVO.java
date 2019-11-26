@@ -1,4 +1,4 @@
-package bts.common;
+package bts.common.report.vo;
 
 import java.util.Date;
 
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component("reportVO")
 public class ReportVO {
-	private String report_no;
+	private int report_no;
 	private Date report_date;
 	private String title;
 	private String report_se;
@@ -14,10 +14,10 @@ public class ReportVO {
 	private String pnish_cd;
 	private String member_id;
 	private String report_at;
-	public String getReport_no() {
+	public int getReport_no() {
 		return report_no;
 	}
-	public void setReport_no(String report_no) {
+	public void setReport_no(int report_no) {
 		this.report_no = report_no;
 	}
 	public Date getReport_date() {
