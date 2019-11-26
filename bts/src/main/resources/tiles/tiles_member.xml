@@ -62,6 +62,10 @@
 			value="/WEB-INF/views/i/p002/d001.jsp" />
 	</definition>
 	
+	<definition name="/common/report" extends="emptyLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/views/common/report.jsp" />
+	</definition>
 	
    
    <!-- 레이아웃 적용-->

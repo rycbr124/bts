@@ -21,7 +21,7 @@ body{
 	background-color:rgba(130,130,130,0);
 	background-image: linear-gradient(rgba(100%,100%,100%,0), rgba(100,100,100));
 	color:#fff;
-	top:-245px;
+	top:-244px;
 	padding:20px;
 }
 .plan_information .title{
@@ -59,14 +59,107 @@ body{
 	border: none;
 	cursor:pointer;
 	color:#fff;
+	text-align:center;
+	line-height:40px;
 }
 .plan_information .person_type{
 	position:relative;
 	top:100px;
 	left:195px;
 }
-#map{
-	position:relative;
+.plan_detail_info{
+	width:1110px;
+	heigth:auto;
 	margin:0 auto;
-	left:0;
+	margin-top:100px;
+	border:1px solid lightgray;
+}
+.plan_detail_info #compare_day{
+	position:relative;
+	height:auto;
+	width:100%;
+	left:50%;
+	transform:translate(-50%,0);
+	
+}
+.day_info_box{
+	border-bottom:1px solid lightgray;
+}
+.plan_detail_info #compare_day .day_text{
+	position:relative;
+	width:110px;
+	height:60px;
+	background: #203341;
+	text-align:center;
+	font-size:22px;
+	line-height:60px;
+	color:white;
+	font-weight: bold;
+	margin:0;
+	
+}
+.plan_detail_info #compare_day .date_info{
+	position:absolute;
+	width:auto;
+	top:0;
+	left:130px;
+	line-height:60px;
+}
+.plan_detail_info #compare_day .sch_content{
+	border-bottom:1px solid lightgray;
+	width:100%;
+}
+.spot_img{
+	margin-left:50px;
+	width:100px;
+	height:100px;
+}
+.sch_content .spot_content_box{
+	position:absolute;
+	display:inline-block;
+	float:left;
+	width:80%;
+	padding-left:20px;
+	
+}
+.spot_content_box .spot_name{
+	font-weight: bold;
+}
+.spot_content_box .btn_memo{
+	font-size:13px;
+	cursor:pointer;
+	width:60px;
+}
+.spot_content_box .place_desc{
+	width:100%;
+	border:0;
+	background-color:#fff;
+}
+.sch_content .sch_add_memo{
+	display:none;
+	width: 380px;
+    padding-left: 190px;
+    padding-right: 15px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.sch_content .sch_add_memo .sch_memo{
+	
+	width:300px;
+	height:100px;
+	resize: none;
+}
+.save_memo{
+	position:absolute;
+	display:inline-block;
+    text-align: center;
+    background: #ff9320;
+    border: 1px solid #f7870f;
+    color: #fff;
+    font-size: 13px;
+    line-height: 31px;
+    width:60px;
+    cursor: pointer;
+    margin-left: 5px;
+    text-decoration:none;
 }

@@ -1,7 +1,9 @@
 package bts.i.p003.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -13,9 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.google.gson.JsonObject;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bts.b.p001.VO.B_P001VO;
 import bts.i.p002.VO.I_P002VO_1;
@@ -87,7 +90,67 @@ public class I_P003ControllerImpl implements I_P003Controller{
 		request.setAttribute("plannerInfo", planner);
 		request.setAttribute("tag_list", tag);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/plan/plan");
-		dispatcher.forward(request, response);
+		dispatcher.forward(request, response);	
+	}
+	@Override
+	@RequestMapping(value="/modify", method= {RequestMethod.POST,RequestMethod.GET})
+	public void planModify(@RequestParam Map<String, String> result,HttpServletRequest request, HttpServletResponse response)throws Exception{
+
+		HttpSession session = request.getSession();
+		b_p001VO = (B_P001VO) session.getAttribute("memberInfo");
+		String member_id = b_p001VO.getMember_id();
+		i_p002VO_1.setMember_id(member_id);
+		request.setCharacterEncoding("utf-8");
+		String plan_no = request.getParameter("plan_no");
+		ObjectMapper mapper = new ObjectMapper();
+		String titleId = (String) result.get("title");
+		String daterange =(String) result.get("daterange"); 
+		String personnel = (String) result.get("personnel");
+		System.out.println("CONTROLLER : "+ plan_no);
+		String tag = (String) result.get("tag_value");
+		String[] tagArray = tag.split(",");
+		List<I_P002VO_3> voArray = new ArrayList<>();
 		
+		for(int i=0;i<tagArray.length;i++ ) {
+			I_P002VO_3 i_p002VO_3 = new I_P002VO_3();
+			i_p002VO_3.setTag_name(tagArray[i]);
+			voArray.add(i, i_p002VO_3);
+		}
+		String contentid = result.get("detail_information");
+		TreeMap<String,ArrayList<Integer>> contentArray = mapper.readValue(contentid, TreeMap.class);
+		List<I_P002VO_2> contentVO = new ArrayList<>();
+		for(Map.Entry<String, ArrayList<Integer>> entry : contentArray.entrySet()) {
+			for(int j=0; j<entry.getValue().size();j++) {
+				System.out.println(entry.getValue().getClass().getName());
+				I_P002VO_2 i_p002VO_2 = new I_P002VO_2();
+				i_p002VO_2.setDay_no(entry.getKey());
+				String id = Integer.toString(entry.getValue().get(j));
+				i_p002VO_2.setContent_id(id);
+				contentVO.add(i_p002VO_2);
+			}
+		}
+		i_p002VO_1.setTitle(titleId);
+		i_p002VO_1.setPerson_se(personnel);
+		i_p002VO_1.setRange_date(daterange);
+		i_p002Service.delPlan(plan_no);
+		i_p002Service.insertPlan(i_p002VO_1,contentVO,voArray);
+		response.sendRedirect("/bts/planner/planner");
+	}
+	@Override
+	@RequestMapping(value="/update_desc", method= {RequestMethod.POST, RequestMethod.GET})
+	public void updateDesc(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		HttpSession session = request.getSession();
+		b_p001VO = (B_P001VO) session.getAttribute("memberInfo");
+		String member_id = b_p001VO.getMember_id();
+		String plan_no = request.getParameter("plan_no");
+		String detail_no = request.getParameter("detail_no");
+		String desc = request.getParameter("plan_desc");
+	
+		i_p002VO_1.setMember_id(member_id);
+		i_p002VO_2.setDetail_no(detail_no);
+		i_p002VO_2.setPlan_desc(desc);
+		
+		i_p002Service.updateDesc(i_p002VO_2);
+		response.sendRedirect("/bts/plan_detail/plan_detail?plan_no="+plan_no);
 	}
 }
