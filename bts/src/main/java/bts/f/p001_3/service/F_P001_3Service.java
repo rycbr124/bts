@@ -14,6 +14,8 @@ public interface F_P001_3Service {
 	public void insertTagList(List<F_P001_3VO_2> list) throws DataAccessException;
 	public void insertAnswer(F_P001_3VO_3 f_p001_3VO_3) throws DataAccessException;
 	public int deleteAnswer(String answer_no) throws DataAccessException;
+	public void updateArticle(F_P001_3VO vo) throws DataAccessException;
+	public void updateTagList(List<F_P001_3VO_2> updateTagList,int article_no) throws DataAccessException;
 	public String selectReviewTotal() throws DataAccessException;
 	public String selectCommentTotal(String article_no) throws DataAccessException;
 	public List<F_P001_3VO> selectReviewList(Map<String,Integer> searchMap) throws DataAccessException;

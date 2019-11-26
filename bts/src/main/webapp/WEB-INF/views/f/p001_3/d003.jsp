@@ -118,53 +118,15 @@
 		});
 		
 		$('#end').on('click',function(){
-			var test = document.createElement('div');
-			var contents = CKEDITOR.instances.editor.getData();
-			test.innerHTML = contents;
-			var img = $(test).find('img').toArray();
-			var result = new Array();
-			
-			for(var i in img){
-				result.push($(img[i]).attr('src'));
-			}
-			
-			//tag
-			var inputTag = $('.tag-input').toArray();
-			var tagResult = new Array();
-			for(var j in inputTag){
-				tagResult.push($(inputTag[j]).text());
-			}
-			
-			var frm = document.frmWrite;
-			frm.imageList.value=JSON.stringify(result);
-			frm.tagList.value=JSON.stringify(tagResult);
-			console.log(frm);
+			var frm = submitAction();
+			frm.action="${contextPath}/community/review/upload";
 			frm.submit();
 		})
 		
 		$('#endMod').on('click',function(){
-			var test = document.createElement('div');
-			var contents = CKEDITOR.instances.editor.getData();
-			test.innerHTML = contents;
-			var img = $(test).find('img').toArray();
-			var result = new Array();
-			
-			for(var i in img){
-				result.push($(img[i]).attr('src'));
-			}
-			
-			//tag
-			var inputTag = $('.tag-input').toArray();
-			var tagResult = new Array();
-			for(var j in inputTag){
-				tagResult.push($(inputTag[j]).text());
-			}
-			
-			var frm = document.frmWrite;
-			frm.imageList.value=JSON.stringify(result);
-			frm.tagList.value=JSON.stringify(tagResult);
-			console.log(frm);
-			//frm.submit();
+			var frm = submitAction();
+			frm.action="${contextPath}/community/review/upload/mod";
+			frm.submit();
 		})
 		
 		$('#tag-list>input[type=text]').on("keydown",function(event){
@@ -184,6 +146,30 @@
 			$(this).parent().remove();
 		});
 
+		function submitAction(){
+			var test = document.createElement('div');
+			var contents = CKEDITOR.instances.editor.getData();
+			test.innerHTML = contents;
+			var img = $(test).find('img').toArray();
+			var result = new Array();
+			
+			for(var i in img){
+				result.push($(img[i]).attr('src'));
+			}
+			
+			//tag
+			var inputTag = $('.tag-input').toArray();
+			var tagResult = new Array();
+			for(var j in inputTag){
+				tagResult.push($(inputTag[j]).text());
+			}
+			
+			var frm = document.frmWrite;
+			frm.imageList.value=JSON.stringify(result);
+			frm.tagList.value=JSON.stringify(tagResult);
+			return frm;
+		}
+		
 		function isTagExist(inputText){
 			var inputTag = $('.tag-input').toArray();
 			for(var j in inputTag){
@@ -222,7 +208,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form name="frmWrite" action="${contextPath}/community/review/upload" method="post">
+	<form name="frmWrite" method="post">
 		<div id="title">
 			<input type="text" name="title" placeholder="제목" value="${contentsMod.title}">
 		</div>

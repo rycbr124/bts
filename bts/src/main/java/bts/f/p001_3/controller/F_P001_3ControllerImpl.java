@@ -159,7 +159,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 	
 	@ResponseBody
 	@RequestMapping(value="/comment/delete" ,method={RequestMethod.POST})
-	public String commentDelete(RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String commentDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String answer_no = request.getParameter("answer_no");
 		int result = f_p001_3Service.deleteAnswer(answer_no);
 		if(result==1) {
@@ -230,79 +230,70 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		}
 	}
 
-//	@RequestMapping(value="/upload/mod" ,method={RequestMethod.POST,RequestMethod.GET})
-//	public void modUpload(HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		ObjectMapper mapper = new ObjectMapper();
-//		ArrayList imageList = mapper.readValue(request.getParameter("imageList"), ArrayList.class);
-//		String thumb = null;
-//		
-//		if(!imageList.isEmpty()) {
-//			thumb = (String) imageList.get(0);
-//			thumb = thumb.substring(request.getContextPath().length());
-//		}
-//		
-//		OutputStream out = null;
-////		InputStream in = null;
-//		try {
-//			for(int i=0; i<imageList.size(); i++) {
-//				String srcUrl = (String) imageList.get(i);
-//				srcUrl = srcUrl.substring(srcUrl.indexOf(mappingUrl)+mappingUrl.length());
-//				srcUrl = srcUrl.replace("/", "\\");
-//				
-//				File downloadFile = new File(metaUrl+"\\"+srcUrl);
-//				File uploadFile = new File(imageUrl+"\\"+srcUrl);
-//				
-//				if(!uploadFile.getParentFile().exists()) {
-//					uploadFile.getParentFile().mkdirs();
-//				}
-//				downloadFile.renameTo(uploadFile);
-//				
-//				/*
-//				in = new FileInputStream(downloadFile);
-//				out = new FileOutputStream(uploadFile);
-//				int data =0;
-//				
-//				while((data=in.read())!=-1) {
-//					out.write(data);
-//				}				
-//				 * */
-//			}			
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//		}finally {
-//            try {
-//                if (out != null) {
-//                    out.close();
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//		}
-//		
-//		F_P001_3VO vo = f_p001_3Provider.get();
-//		B_P001VO b_p001VO= (B_P001VO) request.getSession().getAttribute("memberInfo");
-//		vo.setMember_id(b_p001VO.getMember_id());
-//		vo.setArticle_cd(article_cd);
-//		vo.setTitle(request.getParameter("title"));
-//		vo.setContents(request.getParameter("editor"));
-//		vo.setThumbnail_img(thumb);
-//		vo.setArticle_no(Integer.parseInt(request.getParameter("article_no")));
-//		
-//		ArrayList tagList = mapper.readValue(request.getParameter("tagList"), ArrayList.class);
-//		f_p001_3Service.insertArticle(vo);
-//		List<F_P001_3VO_2> insertTagList = new ArrayList<>();
-//		for(int i=0; i<tagList.size();i++) {
-//			F_P001_3VO_2 tagVO = tagProvider.get();
-//			tagVO.setArticle_no(vo.getArticle_no());
-//			tagVO.setArticle_cd(article_cd);
-//			tagVO.setTag_name((String) tagList.get(i));
-//			insertTagList.add(tagVO);
-//		}
-//		if(!insertTagList.isEmpty()) {
-//			f_p001_3Service.insertTagList(insertTagList);			
-//		}
-//		response.sendRedirect("/bts/community/review/list");
-//	}	
+	@RequestMapping(value="/upload/mod" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String modUpload(RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		ArrayList imageList = mapper.readValue(request.getParameter("imageList"), ArrayList.class);
+		String thumb = null;
+		
+		if(!imageList.isEmpty()) {
+			thumb = (String) imageList.get(0);
+			thumb = thumb.substring(request.getContextPath().length());
+		}
+		
+		OutputStream out = null;
+		try {
+			for(int i=0; i<imageList.size(); i++) {
+				String srcUrl = (String) imageList.get(i);
+				srcUrl = srcUrl.substring(srcUrl.indexOf(mappingUrl)+mappingUrl.length());
+				srcUrl = srcUrl.replace("/", "\\");
+				
+				File downloadFile = new File(metaUrl+"\\"+srcUrl);
+				File uploadFile = new File(imageUrl+"\\"+srcUrl);
+				
+				if(!uploadFile.getParentFile().exists()) {
+					uploadFile.getParentFile().mkdirs();
+				}
+				
+				if(downloadFile.exists()) {
+					downloadFile.renameTo(uploadFile);
+				}
+			}			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+		}
+		
+		F_P001_3VO vo = f_p001_3Provider.get();
+		vo.setArticle_cd(article_cd);
+		vo.setTitle(request.getParameter("title"));
+		vo.setContents(request.getParameter("editor"));
+		vo.setThumbnail_img(thumb);
+		vo.setArticle_no(Integer.parseInt(request.getParameter("article_no")));
+		
+		ArrayList tagList = mapper.readValue(request.getParameter("tagList"), ArrayList.class);
+		f_p001_3Service.updateArticle(vo);
+		List<F_P001_3VO_2> updateTagList = new ArrayList<>();
+		for(int i=0; i<tagList.size();i++) {
+			F_P001_3VO_2 tagVO = tagProvider.get();
+			tagVO.setArticle_no(vo.getArticle_no());
+			tagVO.setArticle_cd(article_cd);
+			tagVO.setTag_name((String) tagList.get(i));
+			updateTagList.add(tagVO);
+		}
+		if(!updateTagList.isEmpty()) {
+			f_p001_3Service.updateTagList(updateTagList,vo.getArticle_no());			
+		}
+		redirect.addAttribute("article",vo.getArticle_no());
+		return "redirect:/community/review/contents";
+	}	
 	
 	@RequestMapping(value="/upload" ,method={RequestMethod.POST,RequestMethod.GET})
 	public void endWrite(HttpServletRequest request, HttpServletResponse response) throws Exception {

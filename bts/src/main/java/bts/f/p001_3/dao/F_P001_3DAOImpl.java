@@ -33,9 +33,19 @@ public class F_P001_3DAOImpl implements F_P001_3DAO{
 	}	
 
 	@Override
+	public void deleteTagList(int article_no) {
+		sqlSession.delete("mapper.f_p001_3.deleteTagList",article_no);
+	}
+	
+	@Override
 	public int deleteAnswer(String answer_no) throws DataAccessException{
 		int result = sqlSession.delete("mapper.f_p001_3.deleteAnswer",answer_no);
 		return result;
+	}		
+
+	@Override
+	public void updateArticle(F_P001_3VO f_p001_3VO) {
+		sqlSession.update("mapper.f_p001_3.updateArticle",f_p001_3VO);
 	}		
 	
 	@Override
@@ -72,5 +82,6 @@ public class F_P001_3DAOImpl implements F_P001_3DAO{
 	public List<F_P001_3VO_3> selectAnswerList(Map<String,String> searchMap) throws DataAccessException{
 		List<F_P001_3VO_3> list = sqlSession.selectList("mapper.f_p001_3.selectAnswerList",searchMap);
 		return list;
-	}	
+	}
+
 }

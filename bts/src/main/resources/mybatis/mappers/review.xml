@@ -52,7 +52,7 @@
 	    ]]>
 	</insert>
 
-	<delete id="deleteTag" parameterType="string">
+	<delete id="deleteTagList" parameterType="int">
 	    <![CDATA[
 			DELETE FROM tag_article
 			WHERE article_cd=3
@@ -66,6 +66,25 @@
 			WHERE answer_no=#{answer_no}
 	    ]]>
 	</delete>
+	
+	<update id="updateArticle" parameterType="f_p001_3VO">
+	    <![CDATA[  
+	    	UPDATE article
+	    ]]>		
+		<set>
+			<![CDATA[
+				title=#{title},
+				contents=#{contents},
+				thumbnail_img=#{thumbnail_img},
+		    ]]>	
+		</set>
+		<where>
+			<![CDATA[
+				 article_cd=#{article_cd}
+				 AND article_no=#{article_no}
+		    ]]>	
+		</where>
+	</update>
 	
 	<select id="selectReviewList" parameterType="map" resultMap="reviewResult">
 	    <![CDATA[

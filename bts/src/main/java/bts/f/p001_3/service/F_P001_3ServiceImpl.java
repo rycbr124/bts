@@ -40,6 +40,17 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 	}	
 	
 	@Override
+	public void updateArticle(F_P001_3VO f_p001_3VO) throws DataAccessException {
+		f_p001_3DAO.updateArticle(f_p001_3VO);
+	}
+	
+	@Override
+	public void updateTagList(List<F_P001_3VO_2> updateTagList,int article_no) throws DataAccessException{
+		f_p001_3DAO.deleteTagList(article_no);
+		f_p001_3DAO.insertTagList(updateTagList);
+	}	
+	
+	@Override
 	public String selectReviewTotal() throws DataAccessException{
 		String totalCount = f_p001_3DAO.selectReviewTotal();
 		return totalCount;
@@ -76,5 +87,6 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 	public List<F_P001_3VO_3> selectAnswerList(Map<String,String> searchMap) throws DataAccessException{
 		List<F_P001_3VO_3> list = f_p001_3DAO.selectAnswerList(searchMap);
 		return list;
-	}	
+	}
+
 }
