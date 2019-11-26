@@ -1,4 +1,4 @@
-package bts.c.p001.DAO;
+package bts.c.p001.dao;
 
 import java.util.List;
 import java.util.Map;

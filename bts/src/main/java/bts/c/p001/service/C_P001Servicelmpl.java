@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import bts.b.p001.VO.B_P001VO;
-import bts.c.p001.DAO.C_P001DAO;
+import bts.c.p001.dao.C_P001DAO;
 import bts.c.p001.vo.C_P001VO;
 
 @Service("c_p001Service")
