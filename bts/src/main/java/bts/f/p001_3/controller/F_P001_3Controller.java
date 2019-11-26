@@ -9,14 +9,14 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 public interface F_P001_3Controller {
-	public ModelAndView searchReview(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView searchArticle(@RequestParam(value="article", required=false) String articleNo,HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public String commentPaging(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public String commentWrite(RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView searchReview(String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView searchArticle(String article_cd,@RequestParam(value="article", required=false) String articleNo,HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public String commentPaging(String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public String commentWrite(String article_cd,RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public String commentDelete(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView write(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView mod(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView mod(String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public String upload(HttpServletRequest request, HttpServletResponse response,@RequestParam MultipartFile upload) throws Exception;
-	public String modUpload(RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public void endWrite(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public String modUpload(String article_cd,RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public void endWrite(String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception;
 }
