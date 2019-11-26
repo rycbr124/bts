@@ -28,6 +28,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <style type="text/css">/* Chart.js */
+body{
+overflow-y:hidden;
+}
 @
 keyframes chartjs-render-animation {
 	from {opacity: .99
@@ -37,6 +40,9 @@ to {
 	opacity: 1
 }
 
+}
+#side{
+float:left;
 }
 #accordinonSidebar{
 	margin-right : 0px;
@@ -81,7 +87,7 @@ to {
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Member:</h6>
-            <a class="collapse-item" href="#">회원 목록 조회</a>
+            <a class="collapse-item" href="${contextPath}/admin/mainMember">회원 목록 조회</a>
             <a class="collapse-item" href="#">회원 목록 상세/수정</a>
           </div>
         </div>
@@ -120,7 +126,7 @@ to {
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Contact:</h6>
-            <a class="collapse-item" href="#">문의 목록 조회</a>
+            <a class="collapse-item" href="${contextPath}/admin/question">문의 목록 조회</a>
             <a class="collapse-item" href="#">문의 내역 답변 작성</a>
           </div>
         </div>

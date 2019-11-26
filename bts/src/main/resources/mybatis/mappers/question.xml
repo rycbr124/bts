@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="c.p004">
+	<resultMap id="questionInfo" type="c_p004VO">
+		<result property="contact_no" column="contact_no"/>
+		<result property="title" column="title"/>
+		<result property="contents" column="contents"/>
+		<result property="answer_at" column="answer_at"/>
+		<result property="member_id" column="member_id"/>
+		<result property="contact_date" column="contact_date"/>
+		<result property="contact_type" column="contact_type"/>
+	</resultMap>
+	
+	
+	
+<insert id="addQuestion" parameterType="c_p004VO">
+	<![CDATA[
+	INSERT INTO contact(contact_no, title, contents, answer_at, member_id, contact_date, contact_type)
+	VALUES (#{contact_no}, #{title}, #{contents}, 'N', #{member_id}, TO_CHAR(SYSDATE,'YYYY-MM-DD'), #{contact_type})
+	]]>
+</insert>
+<select id="questionSeq" resultType="String">
+	<![CDATA[
+	SELECT question_seq.nextval
+	FROM dual
+	]]>
+</select>
+</mapper>

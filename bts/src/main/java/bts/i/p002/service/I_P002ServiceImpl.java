@@ -60,7 +60,6 @@ public class I_P002ServiceImpl implements I_P002Service{
 	@Override
 	public void delPlan(String plan_no)throws Exception{
 		i_p002DAO.delPlan(plan_no);
-		System.out.println("수정 눌렀드아아아"+plan_no);
 	}
 	@Override
 	public Map<String,List<String>> wishList(String member_id)throws Exception{
