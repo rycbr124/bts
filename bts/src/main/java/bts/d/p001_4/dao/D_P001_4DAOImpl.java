@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import bts.d.p001_4.vo.D_P001_4VO;
 import bts.d.p001_4.vo.D_P001_4VO_2;
 import bts.d.p001_4.vo.D_P001_4VO_3;
+import bts.e.p001.VO.PagingVO;
 
 @Repository("d_p001_4DAO")
 public class D_P001_4DAOImpl implements D_P001_4DAO{
@@ -17,8 +18,8 @@ public class D_P001_4DAOImpl implements D_P001_4DAO{
 	private SqlSession sqlSession;
 
 	@Override
-	public List<D_P001_4VO> searchArticle() throws DataAccessException {
-		return sqlSession.selectList("d.p001_4.searchArticle");
+	public List<D_P001_4VO> searchArticle(PagingVO pagingVO) throws DataAccessException {
+		return sqlSession.selectList("d.p001_4.searchArticle", pagingVO);
 	}
 	
 	@Override
@@ -39,7 +40,7 @@ public class D_P001_4DAOImpl implements D_P001_4DAO{
 	@Override
 	public void insertContent(List<D_P001_4VO_2> voList) throws DataAccessException {
 		sqlSession.insert("d.p001_4.insertDesc", voList);
-		sqlSession.insert("d.p001_4.updateOpen", voList);
+		sqlSession.update("d.p001_4.updateOpen", voList);
 		
 	}
 
@@ -47,5 +48,30 @@ public class D_P001_4DAOImpl implements D_P001_4DAO{
 	public List<D_P001_4VO> selectMyplan(String member_id) throws DataAccessException {
 		return sqlSession.selectList("d.p001_4.selectMyplan", member_id);
 	}
+
+	@Override
+	public void deletePlan(String plan_no) throws DataAccessException {
+		sqlSession.delete("d.p001_4.deletePlan", plan_no);
+	}
+
+	@Override
+	public void increaseCnt(String plan_no) throws DataAccessException {
+		sqlSession.update("d.p001_4.viewCnt", plan_no);
+		
+	}
+
+	@Override
+	public void updateContent(List<D_P001_4VO_2> voList) throws DataAccessException {
+		sqlSession.insert("d.p001_4.insertDesc", voList);
+		sqlSession.update("d.p001_4.updateTitle", voList);
+		
+	}
+
+	@Override
+	public Integer pageCount() {
+		return sqlSession.selectOne("d.p001_4.pageCount");
+	}
+
+
 
 }

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.accompany">
+
+	<!-- ACCOMPANY_LIST -->
+	<resultMap id="accompanyResult" type="e_p001VO">
+		<result property="gender" column="gender" />
+		<result property="age" column="age" />
+		<result property="traffic" column="traffic" />
+		<result property="whlrs_no" column="whlrs_no" />
+		<result property="article_no" column="article_no" />
+		<result property="article_cd" column="article_cd" />
+		<result property="acc_title" column="acc_title" />
+		<result property="tag" column="tag" />
+		<result property="member_id" column="member_id" />
+		<result property="content" column="content" />
+		<result property="incln_cd" column="incln_cd" />
+		<result property="viewcnt" column="viewcnt" />
+	</resultMap>
+
+
+	<!-- 페이징 처리 쿼리 -->
+	<select id="selectAccompany" resultMap="accompanyResult">
+	<![CDATA[
+	select * from(select ROWNUM RN, A.*FROM(select * from accompany_list
+	order by article_no desc)A) where RN between #{start} and #{end}
+	]]>
+	</select>
+	
+	<!-- 조회수 증가  -->
+	<update id="updateViewcnt">
+	update accompany set viewcnt = viewcnt+1 where article_no = #{article_no}
+	</update>
+	
+	<!-- 동행 게시글 상세 조회 -->
+	<select id="accView" resultType="e_p001VO" parameterType="int">
+	<![CDATA[
+	select * from accompany
+	where article_no = #{article_no}
+	]]>
+	</select>
+	
+	<!-- 동행 리스트 -->
+	<select id="accList" resultMap="accompanyResult" resultType="e_p001VO" >
+	<![CDATA[
+	select * 
+	from (select rownum rn, a.* from (select * from accompany order by article_no desc) a)
+	 where rn between #{start} and #{end}
+	]]>
+	</select>
+	
+	<!-- 동행 리스트 카운트 -->
+	<select id="listCount" resultType="java.lang.Integer" >
+	<![CDATA[
+	select count(*) from accompany
+	]]>
+	</select>
+	
+	<!-- 동행 게시글 목록 조회 -->
+	<select id="accompanyList" resultMap="accompanyResult"
+		parameterType="e_p001VO">
+	<![CDATA[
+	select a.acc_title, a.article_no, p.range_date
+	(select t.tag_name from tag_planner t, planner p, accompany_list al where t.plan_no = p.plan_no
+	and al.member_id = p.member_id)as tag,
+	 a.age, al.register_date from accompany a, accompany_list al
+	where a.article_no = al.article_no
+	]]>
+	</select>
+</mapper>	

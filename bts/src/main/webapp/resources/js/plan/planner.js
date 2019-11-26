@@ -43,10 +43,13 @@ function plan_list(planList){
 		var person_se = plan['PERSON_SE'];
 		plan_arr.push(plan_no);
 		
-		var serviceKey = '8MlvFH5fs4groXQuW9uCj0jvncbl0Pk9sppAzxq0jolCi5lsMOdlpLHgX3wC0rTwyrMHAPkLBm7lmsY44FwxGg%3D%3D';
+
+		var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D';
+
 		var contentid = plan['CONTENT_ID'];
 		var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey='
 					+ serviceKey + '&contentId='+ contentid +'&defaultYN=Y&firstImageYN=Y&overviewYN=Y&mapinfoYN=Y&MobileOS=ETC&MobileApp=AppTest';
+		console.log(reqUrl);
 		$.ajax({
 			async:false,
 			url: reqUrl,
@@ -83,6 +86,5 @@ function plan_list(planList){
 			$(del).remove();
 		});
 	}
-	}
-	
+}	
 }

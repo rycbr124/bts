@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import bts.b.p001.VO.B_P001VO;
+import bts.e.p001.VO.PagingVO;
 import bts.g.p001_2.service.G_P001_2Service;
 import bts.g.p001_2.vo.G_P001_2VO;
 
@@ -36,12 +37,12 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
    @Override
    @RequestMapping(value="/recommend_place" ,method={RequestMethod.POST,RequestMethod.GET})
    public ModelAndView P001_D001(HttpServletRequest request, HttpServletResponse response) throws Exception {      
-      Map<String, List<String>> searchResult = g_p001_2Service.searchCategory();
-      JSONObject totaObject = new JSONObject(searchResult);
-      ModelAndView mav = new ModelAndView("/g/p001_2/d001");
-      mav.addObject("result", totaObject.toJSONString());
-      return mav;
-   }
+	      Map<String, List<String>> searchResult = g_p001_2Service.searchCategory();
+	      JSONObject totaObject = new JSONObject(searchResult);
+	      ModelAndView mav = new ModelAndView("/g/p001_2/d001");
+	      mav.addObject("result", totaObject.toJSONString());
+	      return mav;
+	   }
 
    @Override
    @RequestMapping(value="/recommend_course" ,method={RequestMethod.POST,RequestMethod.GET})
@@ -77,7 +78,7 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
          throws Exception {
 	   String message = null;
 	   String member_id = null;
-	   
+
 	   try {
 		   HttpSession session = request.getSession();
 		   b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
@@ -89,27 +90,14 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
 		   boolean command = g_p001_2Service.findWishlist(g_p001_2VO);
 		   
 		   if(command == true) {
-			   /*
-			   message = "<script src='/bts/resources/js/alert/sweetalert2.all.min.js'></script>";
-			   message += "<script src='https://cdn.jsdelivr.net/npm/promise-polyfill'></script>";
-			   message += "<script src='/bts/resources/js/alert/sweetalert2.min.js'></script>";
-			   message += "<link rel='stylesheet' href='/bts/resources/js/alert/sweetalert2.min.css'>";	 
-			   message += "<script>";
-			   message += "Swal.fire({";
-			   message += "icon: 'error',";
-			   message += "title: '실패하였습니다!',";
-			   message += "text: '이미 위시리스트에 추가한 명소입니다.'";
-			   message += "})";
-			   message += "</script>";
-			   */
-			   message += "<script>";
+			   message = "<script>";
 			   message += "alert('이미 추가한 명소입니다..');";
 			   message += "history.go(-1)";
 			   message += "</script>";
 			   return message;
 		   }else {
 			   g_p001_2Service.insertWishlist(g_p001_2VO);
-			   message += "<script>";
+			   message = "<script>";
 			   message += "alert('위시리스트에 추가하였습니다.');";
 			   message += "history.go(-1)";
 			   message += "</script>";
@@ -123,6 +111,7 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
 		   message += "history.go(-1)";
 		   message += "</script>";
 		   
+		    
 		   return message;
 	   }
       

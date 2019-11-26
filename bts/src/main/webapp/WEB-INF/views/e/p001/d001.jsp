@@ -1,179 +1,112 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
+<c:set var="result" value="${param.result }" />
+<%
+	request.setCharacterEncoding("UTF-8");
+%>
 <!DOCTYPE html>
 <html>
 <head>
+<script>
+	function selChange() {
+		var sel = document.getElementById('cntPerPage').value;
+		location.href = "${contextPath}/accompany/accMain?nowPage=${paging.nowPage}&cntPerPage="
+				+ sel;
+	}
+</script>
+<style>
+   .hit {
+      animation-name: blink;
+      animation-duration: 1.5s;
+      animation-timing-function: ease;
+      animation-iteration-count: infinite;
+      /* 위 속성들을 한 줄로 표기하기 */
+      /* -webkit-animation: blink 1.5s ease infinite; */
+    }
+     
+    /* 애니메이션 지점 설정하기 */
+    /* 익스플로러 10 이상, 최신 모던 브라우저에서 지원 */
+    @keyframes blink {
+      from {color: white;}
+      30% {color: yellow;}
+      to {color: red; font-weight: bold;}
+      /* 0% {color:white;}
+      30% {color: yellow;}
+      100% {color:red; font-weight: bold;} */
+    }
+</style>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap/bootstrap.css" />
+<link rel="stylesheet" href="${contextPath}/resources/css/e/p001/accompanyMain.css" />
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 <title>동행 찾기</title>
 <!-- Bootstrap core CSS -->
-<link href="${contextPath }/resources/css/bootstrap/bootstrap.min.css" rel="stylesheet">
-<!-- Custom styles for this template -->
-<link href="${contextPath }/resources/css/accompany.css" rel="stylesheet">
 </head>
 <body>
-<div class="container">
-
-		<div class="row">
-
-			<!-- /.col-lg-3 -->
-
-			<div class="col-lg-9">
-				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" style="width:800px; height:400px">
-					<!-- Indicators -->
-					<ol class="carousel-indicators">
-						<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-						<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-						<li data-target="#carousel-example-generic" data-slide-to="2"></li>
-					</ol>
-
-					<!-- Wrapper for slides -->
-					<div class="carousel-inner" role="listbox">
-						<div class="item active">
-							<img class="slide" src="../resources/image/gyungbok.jpg" alt="..." id="crsImg1">
-							<div class="carousel-caption" >경복궁 야간개장!!</div>
-						</div>
-						<div class="item">
-							<img class="slide" src="../resources/image/hanRiver.jpg" alt="..." id="crsImg2">
-							<div class="carousel-caption" >한강 투어!!</div>
-						</div>
-						<div class="item">
-							<img class="slide" src="../resources/image/duksu.jpg" alt="..." id="crsImg3">
-							<div class="carousel-caption" >덕수궁 둘러보기</div>
-						</div>
-					</div>
-
-
-					<!-- Controls -->
-					<a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev"> <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> <span class="sr-only">Previous</span>
-					</a> <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next"> <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <span class="sr-only">Next</span>
-					</a>
-				</div>
-				<br> <br> <br> <br>
-				<div class="row" align="center">
-
-					<div class="col-lg-4 col-md-6 mb-4" id="content1">
-						<div class="card h-100">
-							<a href="${contextPath }/member/accompany2.do"><img class="card-img-top" src="../resources/image/gyungbok.jpg" alt="" id="content-img1"></a>
-							<div class="card-body">
-								<h4 class="card-title">
-									<a href="${contextPath }/member/accompany2.do" id="accTitle">경복궁 야간개장!!</a>
-								</h4>
-								<h5>#고궁투어 #경복궁 #야경</h5>
-								<p class="card-text">야간 경복궁 같이 보고 저녁 먹으실분 찾아요~!</p>
-							</div>
-							<div class="card-footer">
-								<input id="toggle-heart" type="checkbox" /> <label for="toggle-heart">❤</label>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-4 col-md-6 mb-4" id="content2">
-						<div class="card h-100">
-							<a href="#"><img class="card-img-top" src="../resources/image/samchung.jpg" alt="" id="content-img2"></a>
-							<div class="card-body">
-								<h4 class="card-title">
-									<a href="#" id="accTitle">서울 맛집 투어</a>
-								</h4>
-								<h5>#맛집 #사진 #인스타그램</h5>
-								<p class="card-text">서울 여기저기 같이 맛집 투어하고 사진 찍으실분 찾아요!</p>
-							</div>
-							<div class="card-footer">
-								<input id="toggle-heart2" type="checkbox" /> <label for="toggle-heart2">❤</label>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-4 col-md-6 mb-4" id="content3">
-						<div class="card h-100">
-							<a href="#"><img class="card-img-top" src="../resources/image/coex.jpg" alt="" id="content-img3"></a>
-							<div class="card-body">
-								<h4 class="card-title">
-									<a href="#" id="accTitle">코엑스에서 하루 보내기</a>
-								</h4>
-								<h5>#쇼핑 #코엑스 #아쿠아리움</h5>
-								<p class="card-text">코엑스에서 같이 쇼핑하고 아쿠아리움구경해요!</p>
-							</div>
-							<div class="card-footer">
-								<input id="toggle-heart3" type="checkbox" /> <label for="toggle-heart3">❤</label>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-4 col-md-6 mb-4" id="content4">
-						<div class="card h-100">
-							<a href="#"><img class="card-img-top" src="../resources/image/olympic.jpg" alt="" id="content-img4"></a>
-							<div class="card-body">
-								<h4 class="card-title">
-									<a href="#" id="accTitle">올림픽 공원 가기!</a>
-								</h4>
-								<h5>#나홀로나무 #경치 #힐링</h5>
-								<p class="card-text">올림픽공원 나홀로나무 보러 같이가요!</p>
-							</div>
-							<div class="card-footer">
-								<input id="toggle-heart4" type="checkbox" /> <label for="toggle-heart4">❤</label>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-4 col-md-6 mb-4" id="content5">
-						<div class="card h-100">
-							<a href="#"><img class="card-img-top" src="../resources/image/hanRiver.jpg" alt="" id="content-img5"></a>
-							<div class="card-body">
-								<h4 class="card-title">
-									<a href="#" id="accTitle">한강 투어!!</a>
-								</h4>
-								<h5>#여의도 #한강공원 #분위기</h5>
-								<p class="card-text">여의도 공원에서 같이 밤도깨비 야시장 갈사람 찾아요!!</p>
-							</div>
-							<div class="card-footer">
-								<input id="toggle-heart5" type="checkbox" /> <label for="toggle-heart5">❤</label>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-4 col-md-6 mb-4" id="content6">
-						<div class="card h-100">
-							<a href="#"><img class="card-img-top" src="../resources/image/duksu.jpg" alt="" id="content-img6"></a>
-							<div class="card-body">
-								<h4 class="card-title">
-									<a href="#" id="accTitle">덕수궁 둘러보기</a>
-								</h4>
-								<h5>#고궁투어 #덕수궁 #한복</h5>
-								<p class="card-text">덕수궁 같이보고 근처 맛집도 같이 가요!</p>
-							</div>
-							<div class="card-footer">
-								<input id="toggle-heart6" type="checkbox" /> <label for="toggle-heart6">❤</label>
-							</div>
-						</div>
-					</div>
-
-				</div>
-				<!-- /.row -->
-
-			</div>
-			<!-- /.col-lg-9 -->
-
+	<div class="container" id="container">
+		<img src="${contextPath }/resources/image/accompanyMain.jpg" id="accMainImage"> <br> <br>
+		<div id="headsubject">
+			<h1 id="subjectText">동행 찾기</h1>
 		</div>
-		<!-- /.row -->
-		<div id="pagination">
-			<ul class="pagination">
-				<li class="page-item"><a class="page-link" href="#">Prev</a></li>
-				<li class="page-item"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item"><a class="page-link" href="#">4</a></li>
-				<li class="page-item"><a class="page-link" href="#">5</a></li>
-				<li class="page-item"><a class="page-link" href="#">Next</a></li>
-				<a href="${contextPath }/member/accWrite.do">
-				<button type="submit" class="btn btn-default">동행 글 작성</button></a>
+		<form id="boardForm" name="boardForm" method="post">
+			<table class="table table-striped table-hover">
+				<thead>
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>아이디</th>
+						<th>날짜</th>
+						<th>조회수</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="result" items="${accList}" varStatus="status">
+						<tr>
+							<td><c:out value="${result.article_no}" /></td>
+							<td><a href="${contextPath}/accompany/accView?article_no=${result.article_no}" id="acc_title"><c:out value="${result.acc_title}" /></a> 
+							<c:if test="${result.viewcnt >= 30}">
+									<span class="hit">&nbsp;&nbsp;Hit!</span>
+								</c:if></td>
+							<td><c:out value="${result.member_id }" /></td>
+							<td><c:out value="${result.register_date }" /></td>
+							<td><c:out value="${result.viewcnt }" /></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+			<div>
+				<a href="${contextPath}/accompany/accWrite" class="btn btn-success" id="writeBtn">글작성</a>
+			</div>
+		</form>
+		<br> <br>
+		<div id="paging" style="display: block; text-align: center;">
+			<ul class="pagination" id="pagination">
+				<!-- 이전버튼 -->
+				<c:if test="${paging.startPage != 1}">
+					<li class="page-item"><a href="${contextPath}/accompany/accMain?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous" id="prev">이전</a></li>
+				</c:if>
+				<!-- 페이지 번호 -->
+				<c:forEach var="idx" begin="${paging.startPage}" end="${paging.endPage}">
+					<c:choose>
+						<c:when test="${idx == paging.nowPage }">
+							<li class="page-item"><a class="page-link" href="#" id="pageNo">${idx}</a></li>
+						</c:when>
+						<c:when test="${idx != paging.nowPage }">
+							<li class="page-item"><a class="page-link" href="${contextPath}/accompany/accMain?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" id="pageNo">${idx}</a></li>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+				<!-- 이후 -->
+				<c:if test="${paging.endPage != paging.lastPage}">
+					<li class="page-item"><a href="${contextPath}/accompany/accMain?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
+				</c:if>
 			</ul>
 		</div>
 	</div>
-	<!-- /.container -->
-	<script src="${contextPath }/resources/library/jquery/jquery.min.js"></script>
-	<script src="${contextPath }/resources/js/bootstrap.js"></script>
-	<script src="${contextPath }/resources/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

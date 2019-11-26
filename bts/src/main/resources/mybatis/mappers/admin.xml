@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="a.p005">	
+	<!-- 리절트 맵 정의 -->
+	<resultMap id="memberResult" type="a_p005VO">
+		<result property="member_id" column="member_id" />
+		<result property="name" column="name" />
+		<result property="password" column="password" />
+		<result property="email" column="email" />
+		<result property="nick_name" column="nick_name" />		
+	</resultMap>
+	
+	<!-- 회원조회 -->
+	<select id="searchMember" resultMap="memberResult" parameterType="java.util.Map">
+		<![CDATA[
+			SELECT member_id, name, password, email, nick_name
+			FROM b_member
+		]]>	
+		<where>
+			<if test=" member_id != ''  and  member_id != null">
+				member_id = #{member_id}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 회원추가 -->
+	<insert id="insertMember" parameterType="java.util.Map">
+		<![CDATA[
+			INSERT INTO b_member(member_id, name, password, email, nick_name)
+			VALUES (#{member_id}, #{name}, #{password}, #{email}, #{nick_name})
+		]]>
+	</insert>
+	
+	<!-- 회원 업데이트 -->
+	<update id="updateMember" parameterType="java.util.Map">
+		<![CDATA[
+			UPDATE b_member
+			SET password = #{password}
+			  , name = #{name}
+			WHERE member_id = #{member_id}   
+		]]>
+	</update>
+	
+	<!-- 회원 삭제 -->
+	<delete id="deleteMember" parameterType="java.util.Map">
+		<![CDATA[
+			DELETE b_member
+			WHERE member_id = #{member_id}
+		]]>
+	</delete>
+</mapper>

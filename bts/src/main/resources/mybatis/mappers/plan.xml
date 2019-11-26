@@ -18,6 +18,7 @@
 		<result property="day_no" column="day_no"/>
 		<result property="content_id" column="content_id"/>
 		<result property="detail_no" column="detail_no"/>
+		<result property="plan_desc" column="plan_desc"/>
 	</resultMap>
 	<resultMap id="addTag" type="i_p002VO_3">
 		<result property="plan_no" column="plan_no"/>
@@ -27,7 +28,7 @@
 		<result property="member_id" column="member_id"/>
 		<result property="content_id" column="content_id"/>
 	</resultMap>
-
+<!-- DB plan insert start -->
 <insert id="addPlan" parameterType="i_p002VO_1">
 	<![CDATA[
 	 INSERT INTO planner(plan_no, member_id, title, register_date, person_se, range_date, open_val)
@@ -60,13 +61,16 @@
 	]]>
 	</foreach>
 </insert>
+<!-- DB insert end -->
+
+<!-- sequens select(plan_no 설정) -->
 <select id="seq" resultType="String">
 	<![CDATA[
 	SELECT plan_list_seq.nextval
 	FROM dual
 	]]>
 </select>
-
+<!-- plan_no별로 가장 상위 컬럼 select-->
 <select id="planList" resultType="Map">
 	SELECT *
 	FROM planner p, planner_detail pd,
@@ -77,9 +81,11 @@
 	) t
 	WHERE p.plan_no = pd.plan_no
 	AND t.dt = pd.detail_no
+	AND member_id = #{member_id,jdbcType=VARCHAR}
 	ORDER BY TO_NUMBER(p.plan_no) desc
 </select>
 
+<!-- plan_no 별로 planner_detail컬럼 select -->
 <select id="planRoot" parameterType="String" resultType="Map">
 	SELECT *
     FROM planner_detail 
@@ -87,17 +93,25 @@
     ORDER BY detail_no asc
 </select>
 
+<!-- plan_no 별로 planner 컬럼 select -->
 <select id="planNo" parameterType="i_p002VO_2" resultType="Map">
 	SELECT *
 	FROM planner
 	WHERE plan_no = #{plan_no,jdbcType=VARCHAR}
 </select>
+
+<!-- whishList 컬럼 값 select -->
 <select id="wishList" parameterType="g_p001_2VO" resultType="Map">
 	SELECT content_id
 	FROM recommend_wish_list
 	WHERE member_id = #{member_id}  
 </select>
 
+<select id="tagList" parameterType="i_p002VO_3" resultType="Map">
+	SELECT *
+	FROM tag_planner
+	WHERE plan_no = #{plan_no,jdbcType=VARCHAR}
+</select>
 
 <delete id="deletePlanner" parameterType="String">
 	DELETE FROM planner
@@ -111,4 +125,9 @@
 	DELETE FROM tag_planner
 	WHERE plan_no = #{plan_no,jdbcType=VARCHAR}
 </delete>
+<update id="updateDesc" parameterType="i_p002VO_2">
+	UPDATE planner_detail
+	SET plan_desc = #{plan_desc,jdbcType=VARCHAR}
+	WHERE detail_no = #{detail_no,jdbcType=VARCHAR}
+</update>
 </mapper>

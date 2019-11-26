@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="mapper.f_p001_3">
+	<resultMap id="reviewResult" type="f_p001_3VO">
+		<result property="article_no" column="article_no" />
+		<result property="title" column="title" />
+		<result property="thumbnail_img" column="thumbnail_img" />
+		<result property="contents" column="contents" />
+		<result property="register_date" column="register_date" />
+		<result property="member_id" column="member_id" />		
+		<result property="member_type" column="member_type" />	
+		<result property="profile_image" column="profile_image" />
+	</resultMap>
+
+	<resultMap id="ansResult" type="f_p001_3VO_3">
+		<result property="answer_no" column="answer_no" />
+		<result property="article_no" column="article_no" />
+		<result property="article_cd" column="article_cd" />
+		<result property="answer_desc" column="answer_desc" />
+		<result property="register_date" column="register_date" />	
+		<result property="member_id" column="member_id" />		
+		<result property="member_type" column="member_type" />	
+		<result property="profile_image" column="profile_image" />
+	</resultMap>
+	
+	<insert id="insertArticle" parameterType="f_p001_3VO">
+	    <![CDATA[
+		INSERT INTO article (article_no, article_cd, register_date, title, contents, member_id,thumbnail_img) 
+		VALUES (article_review_seq.nextval, #{article_cd}, sysdate, #{title}, #{contents}, #{member_id}, #{thumbnail_img,jdbcType=VARCHAR})
+	    ]]>
+		<selectKey resultType="int" keyProperty="article_no" order="AFTER">
+			<![CDATA[
+			SELECT article_review_seq.currval FROM dual
+		    ]]>
+		</selectKey>
+	</insert>
+
+	<insert id="insertTagList" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
+			INTO tag_article(tag_name,article_no,article_cd)
+	   		VALUES (#{item.tag_name},#{item.article_no},#{item.article_cd})
+		</foreach>
+	</insert>
+
+	<insert id="insertAnswer" parameterType="f_p001_3VO_3">
+	    <![CDATA[
+		INSERT INTO answer_article (article_no, article_cd, answer_no, answer_desc, member_id, register_date) 
+		VALUES (#{article_no}, #{article_cd}, article_comment_seq.nextval, #{answer_desc}, #{member_id}, sysdate)
+	    ]]>
+	</insert>
+
+	<delete id="deleteTagList" parameterType="f_p001_3VO">
+	    <![CDATA[
+			DELETE FROM tag_article
+			WHERE article_cd=#{article_cd}
+			AND article_no=#{article_no}
+	    ]]>
+	</delete>
+	
+	<delete id="deleteAnswer" parameterType="string">
+	    <![CDATA[
+			DELETE FROM answer_article
+			WHERE answer_no=#{answer_no}
+	    ]]>
+	</delete>
+	
+	<update id="updateArticle" parameterType="f_p001_3VO">
+	    <![CDATA[  
+	    	UPDATE article
+	    ]]>		
+		<set>
+			<![CDATA[
+				title=#{title},
+				contents=#{contents},
+				thumbnail_img=#{thumbnail_img},
+		    ]]>	
+		</set>
+		<where>
+			<![CDATA[
+				 article_cd=#{article_cd}
+				 AND article_no=#{article_no}
+		    ]]>	
+		</where>
+	</update>
+	
+	<select id="selectReviewList" parameterType="map" resultMap="reviewResult">
+	    <![CDATA[
+			SELECT b.* 
+			FROM
+			(
+			    SELECT rownum as rnum, a.*
+			    FROM 
+			    (
+			        SELECT article_no,title,thumbnail_img,article_cd
+			        FROM article
+			        WHERE article_cd=#{article_cd}
+			        ORDER BY article_no DESC
+			    ) a
+			    WHERE rownum<=#{endRow}
+			) b
+			WHERE b.rnum>=#{startRow}
+	    ]]>
+	</select>
+	
+	<select id="selectReviewTotal" parameterType="string" resultType="string">
+	    <![CDATA[
+			SELECT COUNT(*) totalCount
+			FROM article
+			WHERE article_cd=#{article_cd}
+	    ]]>
+	</select>
+
+	<select id="selectCommentTotal" parameterType="map" resultType="string">
+	    <![CDATA[
+			SELECT COUNT(*) totalCount
+			FROM answer_article
+			WHERE article_cd=#{article_cd}
+			AND article_no=#{article_no}
+	    ]]>
+	</select>
+	
+	<select id="selectTagList" parameterType="f_p001_3VO" resultType="string">
+	    <![CDATA[
+			SELECT tag_name
+			FROM tag_article
+			WHERE article_no=#{article_no}
+			AND article_cd=#{article_cd}
+	    ]]>
+	</select>
+
+	<select id="selectReviewContents" parameterType="map" resultMap="reviewResult">
+	    <![CDATA[
+			SELECT register_date,title,contents,ar.member_id,thumbnail_img,article_no,article_cd,profile_image,member_type
+			FROM article ar,b_member mem
+			WHERE ar.member_id=mem.member_id 
+			AND article_cd=#{article_cd}
+			AND article_no=#{article_no}
+	    ]]>
+	</select>
+
+	<select id="selectAnswerList" parameterType="map" resultMap="ansResult">
+	    <![CDATA[
+			SELECT b.* 
+			FROM
+			(
+			    SELECT rownum as rnum, a.*
+			    FROM 
+			    (
+			        SELECT answer_no,article_no,answer_desc,register_date,ar.member_id,profile_image,member_type
+			        FROM answer_article ar,b_member mem
+			        WHERE ar.member_id=mem.member_id
+                    AND article_cd=#{article_cd}
+                    AND article_no=#{article_no}
+			        ORDER BY answer_no
+			    ) a
+			    WHERE rownum<=#{endRow}
+			) b
+			WHERE b.rnum>=#{startRow}
+	    ]]>
+	</select>
+
+	<select id="selectArticleCd" parameterType="string" resultType="string">
+	    <![CDATA[
+			SELECT menu_cd
+			FROM menu
+			WHERE name=#{name}
+	    ]]>
+	</select>
+
+</mapper>

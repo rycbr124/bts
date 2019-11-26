@@ -11,26 +11,33 @@
 <link rel="stylesheet"  href="${contextPath}/resources/css/plan/plan.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-<script type="text/javascript" src="${contextPath}/resources/js/recommend.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <script type="text/javascript" src="${contextPath}/resources/js/plan/plan.js"></script>
+<script type="text/javascript" src="${contextPath}/resources/js/plan/plan_modify.js"></script>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6b2f7da39af5c9b3e7839e09fedbc28a"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <title>Best Travel Seoul[플랜 작성]</title>
-
+<script>
+$(document).ready(function(){
+ var planner_info = ${plannerInfo};
+ var detail_info = ${detailInfo};
+ var tagList = ${tag_list};
+ plan_modify(planner_info,detail_info, tagList);
+});
+</script>
 
 </head>
 <body>
- <form action="/bts/plan/insert_plan" name="plan" onsubmit="return false">
+ <form  name="plan" onsubmit="return false">
 <div class="map_controller" id="map_controller">
  <div class="select_date" id="select_date">
    <div class="plan_tab" id="plan_tab">
       <a href="${contextPath}/main/main"><img src="${contextPath}/resources/image/logo/흰색/logo_white_all.png" class="logo" alt="홈화면이동"></a>
       <div class="select_date" id="select_date">
           <div class="title_write">
-         	<input type="text" class="title" name="title" placeholder="제목을 입력해주세요"/>
+         	<input type="text" class="title" id="title_val" name="title"  placeholder="제목을 입력해주세요"/>
          	<div class="tag_write">
          	<input type="text" name="tag" class="tag" placeholder="태그를 입력해주세요." onkeydown="enter_check();"/>
          	<div class="tag_value" ></div>
@@ -38,10 +45,10 @@
          	</div>
          	<select class="personnel" style="height:30px; margin-top:10px; margin-bottom:10px;">
          		<option value=''>타입선택</option>
-         		<option value='혼자'>나홀로 여행</option>
-         		<option value='친구'>친구와 함께</option>
+         		<option value='나홀로 여행'>나홀로 여행</option>
+         		<option value='친구와 함께'>친구와 함께</option>
          		<option value='커플/신혼'>커플/신혼 여행</option>
-         		<option value='가족'>가족 여행</option>
+         		<option value='가족 여행'>가족 여행</option>
          	</select>
          	<input type="hidden" name="personnel" value=""/>
          </div>
@@ -77,6 +84,7 @@
  <div class="tourist" id="tourist">
    		<div class="tourist_header">서울
    		<button onclick="save_plan()" class="save_plan" style="position:absolute;right:0;width:60px;height:45px;">저장</button> 
+   		<input type="hidden" name="plan_no" value=""/>
    		</div>
    		<div class="tourist_tab" style="border:1px solid #fff; width:100%; height:150px;">
    			<div class="select_icon">
@@ -121,7 +129,6 @@
    		
    </div>
 <div id="map" style="width:100%;height:100vh;">
-<button onclick="save_plan()" class="save_plan" value="" style="position:absolute;">저장</button> 
 </div>
 </div>
 </form>

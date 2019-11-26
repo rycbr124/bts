@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>커뮤니티</title>
 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -26,6 +26,9 @@
     font-family: "NanumSquareRoundR";
 }
 
+*{
+    font-family: "NanumSquareRoundR";
+}
 table{
 	text-align : center;
 	width:100%;
@@ -54,6 +57,15 @@ img{
 	margin-bottom : 50px;
 }
 
+li.nav-item{
+	width : 250px;
+}
+
+div#paging{
+	display: block; 
+	text-align: center;
+}
+
 </style>
 
 
@@ -69,7 +81,7 @@ img{
       <a class="nav-link active" href="${contextPath}/community/plan_list">계획</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="${contextPath}/community/review_list">후기</a>
+      <a class="nav-link" href="${contextPath}/community/review/list">후기</a>
     </li>
     
   </ul>
@@ -82,20 +94,46 @@ img{
 			<th>제목</th>
 			<th>작성자</th>
 			<th>작성일</th>
+			<th>조회수</th>
 		</tr>
 		
 		<c:forEach var="article" items="${listArticle}">
 		<tr>
-			<td>${article.plan_no}</td>
+			<td>${article.rownum}</td>
 			<td><a href='${contextPath}/community/plan_contents?plan_no=${article.plan_no}'>${article.title}</a></td>
 			<td>${article.member_id}</td>
 			<td>${article.register_date}</td>
+			<td>${article.view_cnt}</td>
 		</tr>
 		</c:forEach>
 
 	</table>
-	<input type="button" value="글쓰기" class="btn btn-outline-secondary btn-sm" onClick="location.href='${contextPath}/community/plan_write'">
-
+		<div id="paging">
+			<ul class="pagination justify-content-center" id="pagination">
+				<!-- 이전버튼 -->
+				<c:if test="${paging.startPage != 1}">
+					<li class="page-item"><a href="${contextPath}/community/plan_list?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous" id="prev">이전</a></li>
+				</c:if>
+				<!-- 페이지 번호 -->
+				<c:forEach var="idx" begin="${paging.startPage}" end="${paging.endPage}">
+					<c:choose>
+						<c:when test="${idx == paging.nowPage }">
+							<li class="page-item"><a class="page-link" href="#" id="pageNo">${idx}</a></li>
+						</c:when>
+						<c:when test="${idx != paging.nowPage }">
+							<li class="page-item"><a class="page-link" href="${contextPath}/community/plan_list?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" id="pageNo">${idx}</a></li>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+				<!-- 이후 -->
+				<c:if test="${paging.endPage != paging.lastPage}">
+					<li class="page-item"><a href="${contextPath}/community/plan_list?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
+				</c:if>
+			</ul>
+		</div>
+	<p align="right">
+		<input type="button" value="글쓰기" class="btn btn-default" onClick="location.href='${contextPath}/community/plan_write'">
+	</p>
 
 
 </div>

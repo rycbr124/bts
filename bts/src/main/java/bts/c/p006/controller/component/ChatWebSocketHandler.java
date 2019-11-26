@@ -1,7 +1,5 @@
 package bts.c.p006.controller.component;
 
-import java.sql.Date;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -98,7 +96,6 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		c_p006VO.setSender(b_p001VO.getMember_id());
 		c_p006VO.setReceiver(receiver);
 		c_p006VO.setContents(message);
-		c_p006VO.setWriting_date(new Date(Calendar.getInstance().getTimeInMillis()));
 		c_p006Service.insertMessage(c_p006VO);
 		
 		for(Entry<WebSocketSession, B_P001VO> entry : ChatWebSocketHandler.sessionList.entrySet()) {

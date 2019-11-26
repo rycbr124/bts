@@ -41,6 +41,11 @@ h5{
 p{
 	font-family: "NanumSquareRoundR";	
 }
+
+div.box{
+	background-color : #F8F8FA;
+	padding-top : 20px;
+}
 </style>
 
 
@@ -85,6 +90,15 @@ $(document).ready(function (){
 		}
 	};
 	
+	function paging_click(){//페이징 버튼 눌렀을 때
+		var pageNo = $(this).text();//자식노드중에 텍스트노드만 가져온다.
+		if(pageNo == 'Next'){
+			pageNo = 6;
+		}
+		console.log(pageNo);
+		image_init(pageNo);
+		 
+	}
 	
 });
 
@@ -96,37 +110,39 @@ $(document).ready(function (){
 		<h1 class="title">지역별 추천</h1>
 		<p>서울 내 명소들을 지역별로 추천</p>
 		<hr>
-		<strong>지역선택 : </strong>
-		<select class="form-control" id="sigungucode" style="display:inline-block;">
-			<option value="" selected>지역선택</option>
-		</select>
-	
-		<strong>관광타입 : </strong>
-		<select class="form-control" id="contenttypeid" style="display:inline-block;">
-			<option value="" selected>타입선택</option>
-		</select>
+		<div class="box">
+			<strong>지역선택 : </strong>
+			<select class="form-control" id="sigungucode" style="display:inline-block;">
+				<option value="" selected>지역선택</option>
+			</select>
 		
-		<select class="form-control" id="cat3" style="display:inline-block;">
-			<option value="">분류</option>
-		</select>
-		<button type="button" class="btn btn-outline-secondary btn-sm" id="search">검색</button> 
-		 
-		<div class="row" id="image_grid">
+			<strong>관광타입 : </strong>
+			<select class="form-control" id="contenttypeid" style="display:inline-block;">
+				<option value="" selected>타입선택</option>
+			</select>
 			
+			<select class="form-control" id="cat3" style="display:inline-block;">
+				<option value="">분류</option>
+			</select>
+			<button type="button" class="btn btn-outline-secondary btn-sm" id="search">검색</button> 
+			 
+			<div class="row" id="image_grid">
+				
+			</div>
 		</div>
-		
 		<div id="pagination">
-		<ul class="pagination justify-content-center">
-			<li class="page-item"><span class="page-link">Prev</span></li>
-			<li class="page-item"><span class="page-link">1</span></li>
-			<li class="page-item"><span class="page-link">2</span></li>
-			<li class="page-item"><span class="page-link">3</span></li>
-			<li class="page-item"><span class="page-link">4</span></li>
-			<li class="page-item"><span class="page-link">5</span></li>
-			<li class="page-item"><span class="page-link">Next</span></li>
-			
-		</ul>
-	</div>
+			<ul class="pagination justify-content-center">
+				<li class="page-item"><span class="page-link">Prev</span></li>
+				<li class="page-item"><span class="page-link">1</span></li>
+				<li class="page-item"><span class="page-link">2</span></li>
+				<li class="page-item"><span class="page-link">3</span></li>
+				<li class="page-item"><span class="page-link">4</span></li>
+				<li class="page-item"><span class="page-link">5</span></li>
+				<li class="page-item"><span class="page-link">Next</span></li>
+				
+			</ul>
+		</div>
+
 	</div>
 	
 	

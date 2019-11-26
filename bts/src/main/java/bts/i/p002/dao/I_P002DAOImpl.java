@@ -16,9 +16,9 @@ public class I_P002DAOImpl implements I_P002DAO{
 	@Autowired
 	private SqlSession sqlSession;
 	@Override
-	public List<String> planList()throws Exception{
+	public List<String> planList(String member_id)throws Exception{
 		List<String> planList = new ArrayList<>();
-		planList = sqlSession.selectList("i.p002.planList");
+		planList = sqlSession.selectList("i.p002.planList", member_id);
 		return planList;
 	}
 	@Override
@@ -52,6 +52,7 @@ public class I_P002DAOImpl implements I_P002DAO{
 		sqlSession.delete("i.p002.deletePlanner",plan_no);
 		sqlSession.delete("i.p002.deletePlanner_detail",plan_no);
 		sqlSession.delete("i.p002.deleteTag_planner",plan_no);
+		System.out.println("dao확인 : " + plan_no);
 	}
 	@Override
 	public List<String> wishList(String member_id)throws Exception{
@@ -59,5 +60,16 @@ public class I_P002DAOImpl implements I_P002DAO{
 		wishList = sqlSession.selectList("i.p002.wishList",member_id);
 		
 		return wishList;
+	}
+	@Override
+	public List<String> tagList(String plan_no)throws Exception{
+		 List<String> tagList = new ArrayList<>();
+		 tagList = sqlSession.selectList("i.p002.tagList",plan_no);
+		
+		return tagList;
+	}
+	@Override
+	public void updateDesc(I_P002VO_2 i_p002VO_2)throws Exception{
+		sqlSession.update("i.p002.updateDesc", i_p002VO_2);
 	}
 }

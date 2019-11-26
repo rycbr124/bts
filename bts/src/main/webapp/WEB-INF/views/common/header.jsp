@@ -9,7 +9,7 @@
 <head>
 <style>
 body{margin:0;}
-#header{width:100%; height:100px; position:relative; z-index:200;top:0;
+#header{width:100%; height:100px; position:relative;top:0;
 -webkit-transition:background 300ms, height 200ms; 
 transition: background 300ms, height 200ms; }
 /*LOGO*/
@@ -28,7 +28,8 @@ z-index:2;margin-left:40px;}
 #menu > li > a {position: relative;font-family: 'Binggrae', sans-serif;font-size: 14px;font-weight: 600;color: #222;letter-spacing:0.025em; display:block;overflow: hidden;}
 #menu > li:before {  font-family: 'jt-font'; font-size: 10px; font-weight: normal;text-align: center;color: lightgray; display:block; position:absolute; left:50%; top:5px;  -webkit-transform:scale(0.9) translateX(-50%); 
 -ms-transform:scale(0.9) translateX(-50%);  transform:scale(0.9) translateX(-50%); content: '\e910';  opacity:0;  -webkit-transition: all 0.25s;  transition: all 0.25s;}
-html #menu > li:hover > a,#menu > li.active > a{color:white;}
+html #menu > li:hover > a,#menu > li.active > a{color:lightgray;}
+html #menu > li:hover > a,#menu > li.active > a{color:#A6A6A6;}
 #menu > li > a {display: inline-block;position:relative;transition: -webkit-transform 500ms;transition: transform 500ms;transition: transform 500ms, -webkit-transform 500ms;-webkit-transition: -webkit-transform 500ms;-moz-transition: transform 500ms;/* overflow: hidden; */}
 #menu > li > a:after {width:100%;content: attr(data-hover);position: absolute;top: -30px;left:0;transform: translate3d(0,0,0);-moz-transform: translate3d(0,0,0);-webkit-transform: translate3d(0,0,0);}
 
@@ -43,7 +44,7 @@ html .member_menu a:hover{color:rgb(127,127,127);}
 </style>
 <meta charset="UTF-8">
 <title>상단</title>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
 </head>
 <body>
 <div id="header">
@@ -59,7 +60,7 @@ html .member_menu a:hover{color:rgb(127,127,127);}
             <a href="#">예약</a>
          </li>
          <li class="menu_accompany">
-            <a href="#">동행</a>
+            <a href="${contextPath}/accompany/accMain">동행</a>
          </li>
          <li class="menu_community">
             <a href="${contextPath}/community/plan_list">커뮤니티</a>
@@ -76,12 +77,13 @@ html .member_menu a:hover{color:rgb(127,127,127);}
 				<a href="${contextPath }/signup/logout" class="logout"><span>로그아웃</span></a>			 		
 			</c:when>
 			<c:otherwise>
-				<a href="#popup-layer" class="login"><span>LOGIN</span></a>
+				<a href="#popUpWindow" class="signup" data-toggle="modal"><span>LOGIN</span></a>
 				<a href="${contextPath }/signup/signup" class="signup"><span>SIGN UP</span></a>
 			</c:otherwise>
 		</c:choose>
    </div><!-- member_menu -->
    </div><!-- header -->
+
    
 </body>
 </html>

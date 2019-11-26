@@ -9,6 +9,7 @@ import bts.d.p001_4.dao.D_P001_4DAO;
 import bts.d.p001_4.vo.D_P001_4VO;
 import bts.d.p001_4.vo.D_P001_4VO_2;
 import bts.d.p001_4.vo.D_P001_4VO_3;
+import bts.e.p001.VO.PagingVO;
 
 @Service("d_p001_4Service")
 public class D_P001_4ServiceImpl implements D_P001_4Service{
@@ -16,8 +17,8 @@ public class D_P001_4ServiceImpl implements D_P001_4Service{
 	D_P001_4DAO d_p001_4DAO;
 
 	@Override
-	public List<D_P001_4VO> searchArticle() throws Exception {	
-		return d_p001_4DAO.searchArticle();
+	public List<D_P001_4VO> searchArticle(PagingVO pagingVO) throws Exception {	
+		return d_p001_4DAO.searchArticle(pagingVO);
 	}
 	
 	@Override
@@ -42,6 +43,28 @@ public class D_P001_4ServiceImpl implements D_P001_4Service{
 	@Override
 	public List<D_P001_4VO> selectMyplan(String member_id) throws Exception {
 		return d_p001_4DAO.selectMyplan(member_id);
+	}
+
+	@Override
+	public void deletePlan(String plan_no) throws Exception {
+		d_p001_4DAO.deletePlan(plan_no);		
+	}
+
+	@Override
+	public void increaseCnt(String plan_no) throws Exception {
+		d_p001_4DAO.increaseCnt(plan_no);
+		
+	}
+
+	@Override
+	public void updateContent(List<D_P001_4VO_2> voList) throws Exception {
+		d_p001_4DAO.updateContent(voList);
+		
+	}
+
+	@Override
+	public Integer listCount() {
+		return d_p001_4DAO.pageCount();
 	}
 
 
