@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="mapper.report">
+	<resultMap id="reportResult" type="reportVO">
+		<result property="report_no" column="report_no" />
+		<result property="report_date" column="report_date" />
+		<result property="title" column="title" />
+		<result property="report_se" column="report_se" />
+		<result property="contents" column="contents" />
+		<result property="pnish_cd" column="pnish_cd" />		
+		<result property="member_id" column="member_id" />	
+		<result property="report_at" column="report_at" />
+	</resultMap>
+	
+	<select id="selectMenuCd" parameterType="string" resultType="string">
+	    <![CDATA[
+			SELECT menu_cd
+			FROM menu
+			WHERE name=#{name}
+	    ]]>
+	</select>
+</mapper>
