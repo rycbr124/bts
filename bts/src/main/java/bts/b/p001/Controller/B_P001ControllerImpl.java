@@ -234,6 +234,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 			session = request.getSession();
 			session.setMaxInactiveInterval(360*60);
 			session.setAttribute("isLogOn", true);
+			session.setAttribute("member_id",d001vo.getMember_id());
 			session.setAttribute("memberInfo", d001vo);
 			System.out.println("성공");
 			mav.setViewName("/z/p000/d001");

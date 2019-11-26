@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
-
+import bts.c.p001.vo.C_P001VO;
 import bts.e.p001.VO.E_P001VO;
 import bts.e.p001.VO.PagingVO;
 
@@ -36,6 +36,11 @@ public class E_P001DAOImpl implements E_P001DAO{
 	@Override
 	public E_P001VO accView(int article_no) throws Exception {
 		return sqlSession.selectOne("mapper.accompany.accView",article_no);
+	}
+
+	@Override
+	public List<C_P001VO> inclnView(String member_id) throws Exception {
+		return sqlSession.selectList("mapper.accompany.accIncln",member_id);
 	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.annotation.Propagation;
 
+import bts.c.p001.vo.C_P001VO;
 import bts.e.p001.DAO.E_P001DAO;
 import bts.e.p001.VO.E_P001VO;
 import bts.e.p001.VO.PagingVO;
@@ -47,5 +48,10 @@ public class E_P001ServiceImpl implements E_P001Service {
 	@Override
 	public void updateViewcnt(int article_no) throws Exception {
 		e_p001DAO.updateViewcnt(article_no);
+	}
+
+	@Override
+	public List<C_P001VO> inclnView(String member_id) throws Exception {
+		return e_p001DAO.inclnView(member_id);
 	}
 }

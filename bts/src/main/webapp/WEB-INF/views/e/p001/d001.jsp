@@ -59,7 +59,7 @@
 					<tr>
 						<th>번호</th>
 						<th>제목</th>
-						<th>아이디</th>
+						<th>작성자</th>
 						<th>날짜</th>
 						<th>조회수</th>
 					</tr>
@@ -68,11 +68,11 @@
 					<c:forEach var="result" items="${accList}" varStatus="status">
 						<tr>
 							<td><c:out value="${result.article_no}" /></td>
-							<td><a href="${contextPath}/accompany/accView?article_no=${result.article_no}" id="acc_title"><c:out value="${result.acc_title}" /></a> 
+							<td><a href="${contextPath}/accompany/accView?article_no=${result.article_no}&member_id=${result.member_id}" id="acc_title"><c:out value="${result.acc_title}" /></a> 
 							<c:if test="${result.viewcnt >= 30}">
 									<span class="hit">&nbsp;&nbsp;Hit!</span>
 								</c:if></td>
-							<td><c:out value="${result.member_id }" /></td>
+							<td><c:out value="${result.nick_name }" /></td>
 							<td><c:out value="${result.register_date }" /></td>
 							<td><c:out value="${result.viewcnt }" /></td>
 						</tr>
