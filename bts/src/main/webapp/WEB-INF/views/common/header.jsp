@@ -43,7 +43,7 @@ html .member_menu a:last-child{margin-right:0;}
 html .member_menu a:hover{color:rgb(127,127,127);}
 </style>
 <meta charset="UTF-8">
-
+<title>상단</title>
 
 </head>
 <body>
@@ -60,7 +60,7 @@ html .member_menu a:hover{color:rgb(127,127,127);}
             <a href="#">예약</a>
          </li>
          <li class="menu_accompany">
-            <a href="#">동행</a>
+            <a href="${contextPath}/accompany/accMain">동행</a>
          </li>
          <li class="menu_community">
             <a href="${contextPath}/community/plan_list">커뮤니티</a>
@@ -83,6 +83,7 @@ html .member_menu a:hover{color:rgb(127,127,127);}
 		</c:choose>
    </div><!-- member_menu -->
    </div><!-- header -->
+
    
 </body>
 </html>

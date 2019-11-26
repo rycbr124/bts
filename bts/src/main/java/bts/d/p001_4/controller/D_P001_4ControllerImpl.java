@@ -24,6 +24,7 @@ import bts.d.p001_4.service.D_P001_4Service;
 import bts.d.p001_4.vo.D_P001_4VO;
 import bts.d.p001_4.vo.D_P001_4VO_2;
 import bts.d.p001_4.vo.D_P001_4VO_4;
+import bts.e.p001.VO.PagingVO;
 
 @Controller("d_p001_4")
 @RequestMapping(value="/community")
@@ -43,9 +44,24 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 
 	@Override
 	@RequestMapping(value="/plan_list" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView searchArticle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		List<D_P001_4VO> listArticle = d_p001_4Service.searchArticle();
+	public ModelAndView searchArticle(PagingVO pagingVO
+			,@RequestParam(value="nowPage", required=false)String nowPage
+			,@RequestParam(value="cntPerPage",required=false) String cntPerPage, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		int total = d_p001_4Service.listCount();
+		if(nowPage == null && cntPerPage == null) {
+			nowPage = "1";
+			cntPerPage = "5";
+		}else if(nowPage == null) {
+			nowPage = "1";
+		}else if(cntPerPage == null) {
+			cntPerPage = "5";			
+		}
+		
 		ModelAndView mav = new ModelAndView("/d/p001_4/d001");
+		pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		mav.addObject("paging", pagingVO);
+		
+		List<D_P001_4VO> listArticle = d_p001_4Service.searchArticle(pagingVO);
 		mav.addObject("listArticle", listArticle);
 		return mav;
 	}
@@ -55,6 +71,7 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 	public ModelAndView contentsArticle(@RequestParam String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<D_P001_4VO> result = d_p001_4Service.contentsArticle(plan_no);
 		List<D_P001_4VO_2> detailPlanner = d_p001_4Service.detailPlanner(plan_no);
+		d_p001_4Service.increaseCnt(plan_no);
 		ModelAndView mav = new ModelAndView("/d/p001_4/d002");
 		mav.addObject("result", result);
 		mav.addObject("detailPlanner", detailPlanner);
@@ -69,9 +86,7 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 		String member_id = b_p001VO.getMember_id();
 		List<D_P001_4VO> myPlan = d_p001_4Service.selectMyplan(member_id);
 		
-		List<D_P001_4VO_2> detailPlanner = d_p001_4Service.detailPlanner("109");
 		ModelAndView mav = new ModelAndView("/d/p001_4/d003");
-		mav.addObject("detailPlanner", detailPlanner);
 		mav.addObject("myPlan", myPlan);
 		return mav;
 	}
@@ -147,6 +162,38 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 		
 		return message;
 		
+	}
+
+	@Override
+	@RequestMapping(value="/plan_modify" ,method={RequestMethod.POST,RequestMethod.GET}, produces = "text/html; charset=utf8")
+	public ModelAndView modifyArticle(@RequestParam Map<String, String> result, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String size = request.getParameter("length");
+		int length = Integer.parseInt(size); 
+		System.out.println("22222 : " + length);
+		
+		List<String> desc = new ArrayList<String>();
+		List<String> id = new ArrayList<String>();
+		List<D_P001_4VO_2> voList = new ArrayList<D_P001_4VO_2>();
+		
+		for(int i = 0; i < length; i++) {
+			desc.add(i, result.get("content" + i));
+			id.add(i, result.get("content_id" + i));
+		};
+		System.out.println("p_no : " + result.get("p_no"));
+		for(int i = 0; i < desc.size(); i++) {
+			D_P001_4VO_2 vo = d_p001_4VO_2.get(); 
+			vo.setPlan_no(result.get("p_no"));
+			vo.setContent_id(id.get(i));
+			vo.setPlan_desc(desc.get(i));
+			vo.setTitle(result.get("title"));
+			
+			voList.add(i, vo);
+		}
+		d_p001_4Service.updateContent(voList);
+		
+		ModelAndView mav = new ModelAndView("/d/p001_4/d004");
+		
+		return mav;
 	}
 
 

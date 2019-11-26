@@ -68,8 +68,8 @@
 					<c:forEach var="result" items="${accList}" varStatus="status">
 						<tr>
 							<td><c:out value="${result.article_no}" /></td>
-							<td><a href="#" id="acc_title"><c:out value="${result.acc_title}" /></a> 
-							<c:if test="${result.viewcnt >= 100}">
+							<td><a href="${contextPath}/accompany/accView?article_no=${result.article_no}" id="acc_title"><c:out value="${result.acc_title}" /></a> 
+							<c:if test="${result.viewcnt >= 30}">
 									<span class="hit">&nbsp;&nbsp;Hit!</span>
 								</c:if></td>
 							<td><c:out value="${result.member_id }" /></td>
@@ -88,22 +88,22 @@
 			<ul class="pagination" id="pagination">
 				<!-- 이전버튼 -->
 				<c:if test="${paging.startPage != 1}">
-					<li class="page-item"><a href="${contextPath}/accompany/accMain?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous">이전</a></li>
+					<li class="page-item"><a href="${contextPath}/accompany/accMain?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous" id="prev">이전</a></li>
 				</c:if>
 				<!-- 페이지 번호 -->
 				<c:forEach var="idx" begin="${paging.startPage}" end="${paging.endPage}">
 					<c:choose>
 						<c:when test="${idx == paging.nowPage }">
-							<li class="page-item"><a class="page-link" href="#">${idx}</a></li>
+							<li class="page-item"><a class="page-link" href="#" id="pageNo">${idx}</a></li>
 						</c:when>
 						<c:when test="${idx != paging.nowPage }">
-							<li class="page-item"><a class="page-link" href="${contextPath}/accompany/accMain?nowPage=${idx}&cntPerPage=${paging.cntPerPage}">${idx}</a></li>
+							<li class="page-item"><a class="page-link" href="${contextPath}/accompany/accMain?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" id="pageNo">${idx}</a></li>
 						</c:when>
 					</c:choose>
 				</c:forEach>
 				<!-- 이후 -->
 				<c:if test="${paging.endPage != paging.lastPage}">
-					<li class="page-item"><a href="${contextPath}/accompany/accMain?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next">다음 </a></li>
+					<li class="page-item"><a href="${contextPath}/accompany/accMain?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
 				</c:if>
 			</ul>
 		</div>

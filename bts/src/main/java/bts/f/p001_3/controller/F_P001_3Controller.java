@@ -7,5 +7,5 @@ import org.springframework.web.servlet.ModelAndView;
 
 public interface F_P001_3Controller {
 	public ModelAndView searchReview(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	public ModelAndView searchArticle(HttpServletRequest request, HttpServletResponse response) throws Exception;
+
 }

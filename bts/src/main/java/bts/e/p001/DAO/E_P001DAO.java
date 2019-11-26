@@ -10,6 +10,6 @@ import bts.e.p001.VO.PagingVO;
 public interface E_P001DAO {
 	public List<E_P001VO> selectAccompanyList(PagingVO pagingVO) throws DataAccessException;
 	public Integer pageCount();
-	public void updateViewcnt(Integer article_no) throws Exception;
+	public void updateViewcnt(int article_no) throws Exception;
 	public E_P001VO accView(int article_no) throws Exception;
 }

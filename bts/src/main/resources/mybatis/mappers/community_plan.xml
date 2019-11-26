@@ -13,7 +13,8 @@
 		<result property="register_date" column="register_date" />
 		<result property="person_se" column="person_se" />
 		<result property="range_date" column="range_date" />
-		<result property="open_val" column="open_val" />		
+		<result property="open_val" column="open_val" />
+		<result property="view_cnt" column="view_cnt" />		
 	</resultMap>
 	
 	<resultMap id="detailResult" type="d_p001_4VO_2">
@@ -34,11 +35,13 @@
 	<!-- 게시글 조회 -->
 	<select id="searchArticle" resultMap="articleResult">
 		<![CDATA[
-			SELECT ROWNUM, title, register_date, member_id, plan_no
-			FROM (SELECT ROWNUM, title, register_date, member_id, plan_no
-      			  FROM planner
-      			  WHERE open_val = 'Y'
-      			  ORDER BY register_date)
+			SELECT rownum, member_id, title, plan_no, register_date, range_date, open_val, view_cnt
+			FROM (SELECT ROWNUM RN, A.*
+      			  FROM (SELECT * 
+            			FROM planner
+            			WHERE open_val = 'Y'
+            			ORDER BY register_date) A)
+			WHERE RN between #{start} and #{end}
 			ORDER BY ROWNUM desc	
 		]]>	
 	</select>
@@ -86,11 +89,21 @@
 	<!-- 플래너 추가시 open_val 변경 -->
 	<update id="updateOpen" parameterType="list">
 		<foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
-				UPDATE planner
-				SET open_val = 'Y', title = #{item.title}, register_date = TO_CHAR(sysdate, 'YYYY-MM-DD hh24:mi')
-				WHERE plan_no = #{item.plan_no}		
+			UPDATE planner
+			SET open_val = 'Y', title = #{item.title}, register_date = TO_CHAR(sysdate, 'YYYY-MM-DD hh24:mi'), view_cnt = 0
+			WHERE plan_no = #{item.plan_no}		
 		</foreach>
 	</update>
+	
+	<!-- 플래너 수정시 제목 변경 -->
+	<update id="updateTitle" parameterType="list">
+		<foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
+			UPDATE planner
+			SET title = #{item.title}
+			WHERE plan_no = #{item.plan_no}
+		</foreach>
+	</update>
+	
 	
 	<!-- 태그 조회 -->
 	<select id="searchTag" resultMap="tagResult" parameterType="String">
@@ -102,18 +115,30 @@
 	</select>
 	
 	<!-- 플랜 게시글 삭제 -->
-	<delete id="deletePlan" parameterType="String">
+	<update id="deletePlan" parameterType="String">
 		<![CDATA[
-			DELETE FROM planner
-			WHERE plan_no = #{plan_no}
+			UPDATE planner
+			SET open_val = 'N'
+			WHERE plan_no = #{plan_no}	
 		]]>
-	</delete>
+	</update>
 	
-	<!-- 플랜 디테일 삭제 -->
-	<delete id="deleteDetail" parameterType="String">
+	<!-- 조회수 증가 -->
+	<update id="viewCnt" parameterType="String">
 		<![CDATA[
-			DELETE FROM planner_detail
+			UPDATE planner
+			SET view_cnt = view_cnt+1
 			WHERE plan_no = #{plan_no}
 		]]>
-	</delete>
+	</update>
+	
+	<!-- 리스트 카운트 -->
+	<select id="pageCount" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM planner
+			WHERE open_val = 'Y'
+		]]>
+	</select>
+	
 </mapper>
