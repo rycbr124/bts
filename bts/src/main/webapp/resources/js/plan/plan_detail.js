@@ -79,7 +79,7 @@ function planRoot(plan_root,planner,e){
 	var array = new Array();
 	var arr_location = new Array();
 	var info = document.createElement('div');
-	var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+	var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D'
 	var day_arr = new Array();
 	var day;
 	var desc;
@@ -175,7 +175,7 @@ function planRoot(plan_root,planner,e){
 	var header_rangeDt = document.createElement('p');
 	var header_member = document.createElement('h3');
 	var profile = document.createElement('img');
-	var modified = document.createElement('button');
+	var modified = document.createElement('a');
 	var personType = document.createElement('p');
 	$('.plan_information').append(header_title);
 	$(header_title).prop('class', 'title');
@@ -194,10 +194,10 @@ function planRoot(plan_root,planner,e){
 	$(personType).text('('+person_se+')');
 	$('.plan_information').append(modified);
 	$(modified).prop('class','modify');
-	$(modified).attr('onclick','location.href="/bts/plan_detail/plan_modify?plan_no=' + plan_no + '"');
+	$(modified).attr('href','/bts/plan_detail/plan_modify?plan_no=' + plan_no );
 	$(modified).text('수정하기');
 	
-	
+
 	$('.btn_memo').on('click',function(){
 		var toggleArea = $(this).parent();
 		var dropdown = toggleArea.next();

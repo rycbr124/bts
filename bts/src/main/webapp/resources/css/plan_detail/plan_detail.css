@@ -59,6 +59,8 @@ body{
 	border: none;
 	cursor:pointer;
 	color:#fff;
+	text-align:center;
+	line-height:40px;
 }
 .plan_information .person_type{
 	position:relative;
