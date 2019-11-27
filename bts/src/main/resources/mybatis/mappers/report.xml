@@ -4,15 +4,10 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="mapper.report">
-	<resultMap id="reportResult" type="reportVO">
-		<result property="report_no" column="report_no" />
-		<result property="report_date" column="report_date" />
-		<result property="title" column="title" />
-		<result property="report_se" column="report_se" />
-		<result property="contents" column="contents" />
-		<result property="pnish_cd" column="pnish_cd" />		
-		<result property="member_id" column="member_id" />	
-		<result property="report_at" column="report_at" />
+	<resultMap id="pnishResult" type="pnishVO">
+		<result property="pnish_cd" column="pnish_cd" />
+		<result property="name" column="name" />
+		<result property="day_cnt" column="day_cnt" />
 	</resultMap>
 	
 	<select id="selectMenuCd" parameterType="string" resultType="string">
@@ -22,4 +17,17 @@
 			WHERE name=#{name}
 	    ]]>
 	</select>
+	
+	<select id="selectPnishList" resultMap="pnishResult">
+	    <![CDATA[
+			SELECT pnish_cd,name,day_cnt
+			FROM punishment
+			ORDER BY name
+	    ]]>
+	</select>	
+	
+	<insert id="insertReport" parameterType="reportVO">
+		INSERT INTO report_list (report_no, report_date, title, report_se, contents_cd, contents, pnish_cd, reporter_id, target_id, report_at)
+		VALUES (report_list_seq.nextval, sysdate, #{title}, #{report_se}, #{contents_cd}, #{contents}, #{pnish_cd}, #{reporter_id}, #{target_id}, 'N' )
+	</insert>
 </mapper>

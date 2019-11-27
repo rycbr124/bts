@@ -14,16 +14,11 @@ public class ReportVO {
 	private String report_se;
 	private String contents;
 	private String pnish_cd;
-	private String member_id;
+	private String reporter_id;
+	private String target_id;
 	private String report_at;
 	private String contents_cd;
 	
-	public String getContents_cd() {
-		return contents_cd;
-	}
-	public void setContents_cd(String contents_cd) {
-		this.contents_cd = contents_cd;
-	}
 	public int getReport_no() {
 		return report_no;
 	}
@@ -60,11 +55,17 @@ public class ReportVO {
 	public void setPnish_cd(String pnish_cd) {
 		this.pnish_cd = pnish_cd;
 	}
-	public String getMember_id() {
-		return member_id;
+	public String getReporter_id() {
+		return reporter_id;
 	}
-	public void setMember_id(String member_id) {
-		this.member_id = member_id;
+	public void setReporter_id(String reporter_id) {
+		this.reporter_id = reporter_id;
+	}
+	public String getTarget_id() {
+		return target_id;
+	}
+	public void setTarget_id(String target_id) {
+		this.target_id = target_id;
 	}
 	public String getReport_at() {
 		return report_at;
@@ -72,6 +73,12 @@ public class ReportVO {
 	public void setReport_at(String report_at) {
 		this.report_at = report_at;
 	}
-	
+	public String getContents_cd() {
+		return contents_cd;
+	}
+	public void setContents_cd(String contents_cd) {
+		this.contents_cd = contents_cd;
+	}
+
 	
 }
