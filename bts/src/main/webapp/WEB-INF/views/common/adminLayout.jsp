@@ -33,6 +33,9 @@
 	<script src="${contextPath}/resources/js/admin/chart-pie-demo.js"></script>
 
 <style>
+body{
+	overflow-y : hidden;
+}
 #side{
 	width: 224px;
 	margin-right : 0;
@@ -40,7 +43,7 @@
 
 
 #body{
-	display : inline-block; 
+	display : inline-block;
 }
 
 </style>

@@ -76,12 +76,12 @@ to {
 	top: 0
 }
 
-#page-top{
+#page{
 	display : inline-block;
 }
 </style>
 </head>
-<body id="page-top">
+<body id="page">
 
   <!-- Page Wrapper -->
   <div id="wrapper">

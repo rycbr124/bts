@@ -29,7 +29,7 @@ public class A_P005ControllerImpl implements A_P005Controller{
 	A_P005VO a_p005VO;
 
 	@Override
-	@RequestMapping(value="/main" ,method={RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value="/mainMember" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView memberAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p005/d001");
 		return mav;
@@ -78,6 +78,13 @@ public class A_P005ControllerImpl implements A_P005Controller{
 		
 		resultMap.put("Result", result);         
         return resultMap;
+	}
+
+	@Override
+	@RequestMapping(value="/updateMember" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView memberUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/a/p005/d002");
+		return mav;
 	}
 
 }

@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import bts.e.p001.VO.PagingVO;
 
+
 public interface D_P001_4Controller {
 	 public ModelAndView searchArticle(PagingVO pagingVO, @RequestParam(value="nowPage", required=false)String nowPage
 				, @RequestParam(value="cntPerPage", required=false)String cntPerPage, HttpServletRequest request, HttpServletResponse response) throws Exception;
@@ -21,5 +22,6 @@ public interface D_P001_4Controller {
 	 public ModelAndView updateArticle(@RequestParam("plan_no") String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	 public @ResponseBody String deleteArticle(@RequestParam("plan_no") String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	 public ModelAndView modifyArticle(@RequestParam Map<String, String> result, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	
 }
 

@@ -1,13 +1,17 @@
 package bts.d.p001_4.service;
 
 import java.util.List;
+import java.util.Map;
+
 
 import org.springframework.stereotype.Service;
 
 import bts.d.p001_4.vo.D_P001_4VO;
 import bts.d.p001_4.vo.D_P001_4VO_2;
 import bts.d.p001_4.vo.D_P001_4VO_3;
+import bts.d.p001_4.vo.D_P001_4VO_5;
 import bts.e.p001.VO.PagingVO;
+import bts.f.p001_3.vo.F_P001_3VO_3;
 
 @Service("d_p001_4Service")
 public interface D_P001_4Service {
@@ -20,5 +24,7 @@ public interface D_P001_4Service {
 	public void deletePlan(String plan_no) throws Exception;
 	public void increaseCnt(String plan_no) throws Exception;
 	public void updateContent(List<D_P001_4VO_2> voList) throws Exception;
-	public Integer listCount();
+	public Integer listCount() throws Exception;
+	public Integer commentCount(String plan_no) throws Exception;
+	public List<D_P001_4VO_5> selectAnswerList(Map<String,String> searchMap) throws Exception;
 }
