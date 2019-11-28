@@ -29,3 +29,16 @@
 	color:white;
 	text-align:left;
 }
+#popUpdel{
+	font-family:"binggrae";
+	padding-top:200px;
+}
+#delInput{
+	padding-left:20px;
+}
+#delbutton,#modbutton{
+	background:#666666;
+	border-radius:1em;
+	border:1px solid #666666;
+	color:white;
+}

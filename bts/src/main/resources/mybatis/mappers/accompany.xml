@@ -29,6 +29,11 @@
 		<result property="group_desc" column="group_desc" />
 		<result property="member_id" column="member_id" />
 	</resultMap>
+	
+	<resultMap id="accTagResult" type="e_p003VO_2">
+	<result property="article_no" column="article_no" />
+	<result property="tag_name" column="tag_name" />
+	</resultMap>
 
 	<resultMap id="insertAccResult" type="e_p003VO">
 		<result property="article_no" column="article_no" />
@@ -104,7 +109,7 @@
 	</select>
 	
 	<!-- 태그 가져오기 -->
-	<select id="tagView" resultType="string" parameterType="e_p003VO">
+	<select id="tagView" resultMap="accTagResult" parameterType="e_p003VO_2">
 	<![CDATA[
 	select tag_name from tag_accompany where article_no = #{article_no}
 	]]>
@@ -138,4 +143,10 @@
 	where a.article_no = al.article_no
 	]]>
 	</select>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="accompanyDel" parameterType="String">
+
+	</delete>
+	
 </mapper>	

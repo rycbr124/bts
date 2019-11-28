@@ -11,6 +11,19 @@
 		<result property="contents" column="contents" />
 		<result property="register_date" column="register_date" />
 		<result property="member_id" column="member_id" />		
+		<result property="member_type" column="member_type" />	
+		<result property="profile_image" column="profile_image" />
+	</resultMap>
+
+	<resultMap id="ansResult" type="f_p001_3VO_3">
+		<result property="answer_no" column="answer_no" />
+		<result property="article_no" column="article_no" />
+		<result property="article_cd" column="article_cd" />
+		<result property="answer_desc" column="answer_desc" />
+		<result property="register_date" column="register_date" />	
+		<result property="member_id" column="member_id" />		
+		<result property="member_type" column="member_type" />	
+		<result property="profile_image" column="profile_image" />
 	</resultMap>
 	
 	<insert id="insertArticle" parameterType="f_p001_3VO">
@@ -31,6 +44,47 @@
 	   		VALUES (#{item.tag_name},#{item.article_no},#{item.article_cd})
 		</foreach>
 	</insert>
+
+	<insert id="insertAnswer" parameterType="f_p001_3VO_3">
+	    <![CDATA[
+		INSERT INTO answer_article (article_no, article_cd, answer_no, answer_desc, member_id, register_date) 
+		VALUES (#{article_no}, #{article_cd}, article_comment_seq.nextval, #{answer_desc}, #{member_id}, sysdate)
+	    ]]>
+	</insert>
+
+	<delete id="deleteTagList" parameterType="f_p001_3VO">
+	    <![CDATA[
+			DELETE FROM tag_article
+			WHERE article_cd=#{article_cd}
+			AND article_no=#{article_no}
+	    ]]>
+	</delete>
+	
+	<delete id="deleteAnswer" parameterType="string">
+	    <![CDATA[
+			DELETE FROM answer_article
+			WHERE answer_no=#{answer_no}
+	    ]]>
+	</delete>
+	
+	<update id="updateArticle" parameterType="f_p001_3VO">
+	    <![CDATA[  
+	    	UPDATE article
+	    ]]>		
+		<set>
+			<![CDATA[
+				title=#{title},
+				contents=#{contents},
+				thumbnail_img=#{thumbnail_img},
+		    ]]>	
+		</set>
+		<where>
+			<![CDATA[
+				 article_cd=#{article_cd}
+				 AND article_no=#{article_no}
+		    ]]>	
+		</where>
+	</update>
 	
 	<select id="selectReviewList" parameterType="map" resultMap="reviewResult">
 	    <![CDATA[
@@ -42,7 +96,7 @@
 			    (
 			        SELECT article_no,title,thumbnail_img,article_cd
 			        FROM article
-			        WHERE article_cd=3
+			        WHERE article_cd=#{article_cd}
 			        ORDER BY article_no DESC
 			    ) a
 			    WHERE rownum<=#{endRow}
@@ -51,11 +105,20 @@
 	    ]]>
 	</select>
 	
-	<select id="selectReviewTotal" resultType="string">
+	<select id="selectReviewTotal" parameterType="string" resultType="string">
 	    <![CDATA[
 			SELECT COUNT(*) totalCount
 			FROM article
-			WHERE article_cd=3
+			WHERE article_cd=#{article_cd}
+	    ]]>
+	</select>
+
+	<select id="selectCommentTotal" parameterType="map" resultType="string">
+	    <![CDATA[
+			SELECT COUNT(*) totalCount
+			FROM answer_article
+			WHERE article_cd=#{article_cd}
+			AND article_no=#{article_no}
 	    ]]>
 	</select>
 	
@@ -70,10 +133,40 @@
 
 	<select id="selectReviewContents" parameterType="map" resultMap="reviewResult">
 	    <![CDATA[
-			SELECT register_date,title,contents,member_id,thumbnail_img,article_no,article_cd
-			FROM article
-			WHERE article_no=#{article_no}
+			SELECT register_date,title,contents,ar.member_id,thumbnail_img,article_no,article_cd,profile_image,member_type
+			FROM article ar,b_member mem
+			WHERE ar.member_id=mem.member_id 
 			AND article_cd=#{article_cd}
+			AND article_no=#{article_no}
+	    ]]>
+	</select>
+
+	<select id="selectAnswerList" parameterType="map" resultMap="ansResult">
+	    <![CDATA[
+			SELECT b.* 
+			FROM
+			(
+			    SELECT rownum as rnum, a.*
+			    FROM 
+			    (
+			        SELECT answer_no,article_no,answer_desc,register_date,ar.member_id,profile_image,member_type
+			        FROM answer_article ar,b_member mem
+			        WHERE ar.member_id=mem.member_id
+                    AND article_cd=#{article_cd}
+                    AND article_no=#{article_no}
+			        ORDER BY answer_no
+			    ) a
+			    WHERE rownum<=#{endRow}
+			) b
+			WHERE b.rnum>=#{startRow}
+	    ]]>
+	</select>
+
+	<select id="selectArticleCd" parameterType="string" resultType="string">
+	    <![CDATA[
+			SELECT menu_cd
+			FROM menu
+			WHERE name=#{name}
 	    ]]>
 	</select>
 

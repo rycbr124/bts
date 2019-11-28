@@ -1,8 +1,10 @@
 package bts.e.p003.VO;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component("e_p003VO_2")
+@Scope("prototype")
 public class E_P003VO_2 {
 	private int article_no;
 	private String tag_name;

@@ -352,9 +352,18 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		}
 		mav.addObject("isLogOn", true);
 		mav.addObject("memberInfo");
+		B_P001VO userInfo = new B_P001VO();
+		userInfo.setMember_id(id);
+		userInfo.setNick_name(nickname);
+		userInfo.setGender(gender);
+		userInfo.setEmail(email);
+		userInfo.setName(name);
+		userInfo.setBirth(birthday);
+		userInfo.setMember_type(member_type);
+		
 		session.setMaxInactiveInterval(30*60);
 		session.setAttribute("isLogON", true);
-		session.setAttribute("memberInfo", naverInfo);
+		session.setAttribute("memberInfo", userInfo);
 		System.out.println("naverInfo : " + naverInfo);
 		System.out.println("naverInfo id:" + naverInfo.getMember_id());
 		return mav;

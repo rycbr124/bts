@@ -3,9 +3,11 @@ package bts.e.p003.VO;
 import java.sql.Date;
 import java.util.List;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component("e_p003VO")
+@Scope("prototype")
 public class E_P003VO {
 	private int article_no;
 	private int article_cd;

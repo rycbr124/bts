@@ -7,6 +7,7 @@ public class I_P002VO_2 {
 	private String plan_no;
 	private String day_no;
 	private String content_id;
+	private String plan_desc;
 	private String detail_no;
 	
 	public String getDetail_no() {
@@ -32,6 +33,12 @@ public class I_P002VO_2 {
 	}
 	public void setContent_id(String content_id) {
 		this.content_id = content_id;
+	}
+	public String getPlan_desc() {
+		return plan_desc;
+	}
+	public void setPlan_desc(String plan_desc) {
+		this.plan_desc = plan_desc;
 	}
 	
 	

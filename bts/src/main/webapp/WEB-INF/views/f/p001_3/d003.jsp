@@ -4,6 +4,8 @@
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}" />	
+<c:set var="insertUrl"  value="${pageContext.request.contextPath}/community/review/write" />	
+<c:set var="uploadUrl"  value="${pageContext.request.contextPath}/community/review/write/mod" />	
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,7 +75,7 @@
 		cursor: pointer;
 	}
 	
-	#end{
+	#end,#emdMod{
 		margin-top:30px;
 		margin-right:11%;
 		width:150px;
@@ -114,8 +116,37 @@
 
 			}
 		});
-
+		
 		$('#end').on('click',function(){
+			var frm = submitAction();
+			frm.action="${contextPath}/community/review/upload";
+			frm.submit();
+		})
+		
+		$('#endMod').on('click',function(){
+			var frm = submitAction();
+			frm.action="${contextPath}/community/review/upload/mod";
+			frm.submit();
+		})
+		
+		$('#tag-list>input[type=text]').on("keydown",function(event){
+			if(event.keyCode==13){
+				var inputText = $(this).val();
+				if(inputText.trim()==''){
+					alert('태그를 입력해주세요');
+					return;
+				};
+				addTag(inputText);
+				$(this).val('');
+			}
+		});
+
+		//팝업 검색결과 클릭
+		$(document).on("click",".tag-result>a",function(){
+			$(this).parent().remove();
+		});
+
+		function submitAction(){
 			var test = document.createElement('div');
 			var contents = CKEDITOR.instances.editor.getData();
 			test.innerHTML = contents;
@@ -136,27 +167,8 @@
 			var frm = document.frmWrite;
 			frm.imageList.value=JSON.stringify(result);
 			frm.tagList.value=JSON.stringify(tagResult);
-			console.log(frm);
-			frm.submit();
-		})
-		
-		$('#tag-list>input[type=text]').on("keydown",function(event){
-			if(event.keyCode==13){
-				var inputText = $(this).val();
-				if(inputText.trim()==''){
-					alert('태그를 입력해주세요');
-					return;
-				};
-				addTag(inputText);
-				$(this).val('');
-			}
-		});
-
-		//팝업 검색결과 클릭
-		$(document).on("click",".tag-result>a",function(){
-			console.log("?");
-			$(this).parent().remove();
-		});
+			return frm;
+		}
 		
 		function isTagExist(inputText){
 			var inputTag = $('.tag-input').toArray();
@@ -196,32 +208,34 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<form name="frmWrite" action="${contextPath}/community/review/upload" method="post">
+	<form name="frmWrite" method="post">
 		<div id="title">
-			<input type="text" name="title" placeholder="제목" >
+			<input type="text" name="title" placeholder="제목" value="${contentsMod.title}">
 		</div>
 		<div id="tag-list">
 			<input type="text" placeholder="태그">
 			<span>
-			<!-- 
-				<span class="tag-result">
-					<span>#</span><span>일번</span><a>&times;</a>
-				</span>
-				<span class="tag-result">
-					<span>#</span>이번<a>&times;</a>
-				</span>
-				<span class="tag-result">
-					<span>#</span>삼번<a>&times;</a>
-				</span>
-			 -->
+				<c:forEach var="tags" items="${contentsMod.tag_list}">
+					<span class="tag-result">
+						<span>#</span>
+						<span class="tag-input">${tags}</span>
+						<a>x</a>
+					</span>
+				</c:forEach>
 			</span>
 		</div>
-		<textarea id="editor" name="editor"></textarea>
+		<textarea id="editor" name="editor">${contentsMod.contents}</textarea>
 		<input type="hidden" name="imageList">
 		<input type="hidden" name="tagList">
+		<input type="hidden" name="article_no" value="${contentsMod.article_no}">
 	</form>
 	<div class="row justify-content-md-end">
-		<input type="button" id="end" class="btn btn-outline-secondary" value="작성하기">
+		<c:if test="${uri==insertUrl}">
+			<input type="button" id="end" class="btn btn-outline-secondary" value="작성하기">
+		</c:if>
+		<c:if test="${uri==uploadUrl}">
+			<input type="button" id="endMod" class="btn btn-outline-secondary" value="수정하기">
+		</c:if>
 	</div>
 </body>
 </html>

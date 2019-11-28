@@ -58,19 +58,19 @@ public class I_P002ControllerImpl implements I_P002Controller {
 	}
 
 	
-	
+	@Override
 	@RequestMapping(value = "/insert_plan", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody void planInsert(@RequestParam Map<String, String> result , HttpServletRequest request,HttpServletResponse response) throws Exception {
+	public @ResponseBody void planInsert(@RequestParam Map<String, String> result, HttpServletRequest request,HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		b_p001VO = (B_P001VO) session.getAttribute("memberInfo");
 		String member_id = b_p001VO.getMember_id();
 		i_p002VO_1.setMember_id(member_id);
 		request.setCharacterEncoding("utf-8");
+		
 		ObjectMapper mapper = new ObjectMapper();
 		String titleId = (String) result.get("title");
 		String daterange =(String) result.get("daterange"); 
 		String personnel = (String) result.get("personnel");
-		
 		String tag = (String) result.get("tag_value");
 		String[] tagArray = tag.split(",");
 		List<I_P002VO_3> voArray = new ArrayList<>();
@@ -97,7 +97,6 @@ public class I_P002ControllerImpl implements I_P002Controller {
 		i_p002VO_1.setPerson_se(personnel);
 		i_p002VO_1.setRange_date(daterange);
 		i_p002Service.insertPlan(i_p002VO_1,contentVO,voArray);
-	
 		response.sendRedirect("/bts/planner/planner");
 	}
 	@Override
@@ -115,3 +114,4 @@ public class I_P002ControllerImpl implements I_P002Controller {
 		return wish;
 	}
 }
+			

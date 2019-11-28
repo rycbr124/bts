@@ -508,7 +508,6 @@ function add_marker(mapy,mapx,map){
   		}
 }
 function save_plan(){
-	
 	var data_obj = new Object();
 	var result_arr = new Array();
 	var title = $('.title').val();
@@ -532,6 +531,7 @@ function save_plan(){
 			}
 			resultData["DAY"+(i+1)] = arr_test;
 			var result = JSON.stringify(resultData);
+			console.log(result);
 		}
 		frm_plan.action = "/bts/plan/insert_plan";
 		frm_plan.method = "get";

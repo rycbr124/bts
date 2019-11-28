@@ -18,9 +18,7 @@
 <!-- Custom fonts for this template-->
 <link href="${contextPath}/resources/css/admin/all.min.css" rel="stylesheet"
 	type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-	rel="stylesheet">
+
 
 <!-- Custom styles for this template-->
 <link href="${contextPath}/resources/css/admin/sb-admin-2.min.css" rel="stylesheet">
@@ -40,40 +38,6 @@ to {
 }
 
 }
-.chartjs-render-monitor {
-	animation: chartjs-render-animation 1ms
-}
-
-.chartjs-size-monitor, .chartjs-size-monitor-expand,
-	.chartjs-size-monitor-shrink {
-	position: absolute;
-	direction: ltr;
-	left: 0;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	overflow: hidden;
-	pointer-events: none;
-	visibility: hidden;
-	z-index: -1
-}
-
-.chartjs-size-monitor-expand>div {
-	position: absolute;
-	width: 1000000px;
-	height: 1000000px;
-	left: 0;
-	top: 0
-}
-
-.chartjs-size-monitor-shrink>div {
-	position: absolute;
-	width: 200%;
-	height: 200%;
-	left: 0;
-	top: 0
-}
-
 #accordinonSidebar{
 	margin-right : 0px;
 }

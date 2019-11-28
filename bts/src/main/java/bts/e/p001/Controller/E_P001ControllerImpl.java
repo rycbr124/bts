@@ -28,6 +28,7 @@ import bts.c.p001.vo.C_P001VO;
 import bts.e.p001.Service.E_P001Service;
 import bts.e.p001.VO.E_P001VO;
 import bts.e.p001.VO.PagingVO;
+import bts.e.p003.VO.E_P003VO_2;
 
 @Controller("e_p001")
 @RequestMapping(value = "/accompany")
@@ -81,7 +82,10 @@ public class E_P001ControllerImpl implements E_P001Controller {
 	public ModelAndView accView(@RequestParam("article_no")int article_no,@RequestParam("member_id")String member_id) throws Exception {
 		e_p001Service.updateViewcnt(article_no);
 		List<C_P001VO> aclnList = e_p001Service.inclnView(member_id);
+		List<E_P003VO_2> tagList = e_p001Service.selectTag(article_no);
 		ModelAndView mav = new ModelAndView("/e/p001/d002");
+		mav.addObject("tagList",tagList);
+		System.out.println("taglist:" +tagList);
 		mav.addObject("article_no", article_no);
 		mav.addObject("member_id",member_id);
 		mav.addObject("inclnView",aclnList);

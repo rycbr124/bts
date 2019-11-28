@@ -20,7 +20,14 @@
   	  <typeAlias type="bts.f.p001_3.vo.F_P001_3VO" alias="f_p001_3VO" /> 
 	  <typeAlias type="bts.f.p001_3.vo.F_P001_3VO_2" alias="f_p001_3VO_2" />	  
 	  <typeAlias type="bts.common.PagingVO" alias="pagingVO" />
-	  <typeAlias type="bts.e.p003.VO.E_P003VO" alias="e_p003VO" />	    
+	  <typeAlias type="bts.e.p003.VO.E_P003VO" alias="e_p003VO" />
+	  <typeAlias type="bts.e.p003.VO.E_P003VO_2" alias="e_p003VO_2" />	    
+  	  <typeAlias type="bts.f.p001_3.vo.F_P001_3VO" alias="f_p001_3VO" /> 
+	  <typeAlias type="bts.f.p001_3.vo.F_P001_3VO_2" alias="f_p001_3VO_2" />
+	  <typeAlias type="bts.f.p001_3.vo.F_P001_3VO_3" alias="f_p001_3VO_3" />
+	  <typeAlias type="bts.a.p005.vo.A_P005VO" alias="a_p005VO" />
+	  <typeAlias type="bts.common.PagingVO" alias="pagingVO" />	 
+	  <typeAlias type="bts.common.report.vo.ReportVO" alias="reportVO"/>   
    </typeAliases>
 
 </configuration>

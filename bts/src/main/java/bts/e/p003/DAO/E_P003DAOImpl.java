@@ -22,8 +22,8 @@ public class E_P003DAOImpl implements E_P003DAO{
 	}
 
 	@Override
-	public void insertTag(List<E_P003VO_2> e_p003VO_2) throws DataAccessException {
-		sqlSession.insert("mapper.accompany.tagInsert",e_p003VO_2);
+	public void insertTag(List<E_P003VO_2> list) throws DataAccessException {
+		sqlSession.insert("mapper.accompany.tagInsert",list);
 	}
 
 }

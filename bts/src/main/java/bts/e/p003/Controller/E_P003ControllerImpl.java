@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import javax.inject.Provider;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -38,13 +39,13 @@ public class E_P003ControllerImpl implements E_P003Controller{
 	@Autowired
 	E_P003Service e_p003Service;
 	@Autowired
-	E_P003VO e_p003VO;
+	Provider<E_P003VO> e_p003VO;
 	@Autowired
-	E_P003VO_2 e_p003VO_2;
+	Provider<E_P003VO_2> e_p003VO_2;
 	
-	private static final String imageUrl = "C:\\Users\\bit\\git\\bts\\bts\\src\\main\\webapp\\resources\\image\\accompany";
-	private static final String metaUrl = "D:\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\bts\\resources\\image\\board";
-	private static final String mappingUrl = "/resources/image/accompany";
+	private static final String imageUrl = "C:\\Users\\bit\\git\\bts\\bts\\src\\main\\webapp\\resources\\image\\board";
+	private static final String metaUrl = "C:\\MyProject\\WorkSpace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\bts\\resources\\image\\board";
+	private static final String mappingUrl = "/resources/image/board";
 	
 	@Override
 	@RequestMapping(value="/accInsert", method= {RequestMethod.POST, RequestMethod.GET})
@@ -55,13 +56,19 @@ public class E_P003ControllerImpl implements E_P003Controller{
 		HttpSession session = request.getSession();
 		ObjectMapper mapper = new ObjectMapper();
 		ArrayList imageList = mapper.readValue(request.getParameter("imageList"), ArrayList.class);
+		String thumb = null;
 		String member_id = (String) session.getAttribute("member_id");
 		e_p003VO.setMember_id(member_id);
-		System.out.println("accInsert:" + member_id);
+		System.out .println("accInsert:" + member_id);
 		String message = null;
 		ResponseEntity resEntity = null;
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		if(!imageList.isEmpty()) {
+			thumb = (String) imageList.get(0);
+			thumb = thumb.substring(request.getContextPath().length());
+		}
+		OutputStream out = null;
 		try {
 			for(int i=0; i<imageList.size(); i++) {
 				String srcUrl = (String) imageList.get(i);
@@ -74,18 +81,27 @@ public class E_P003ControllerImpl implements E_P003Controller{
 				if(!uploadFile.getParentFile().exists()) {
 					uploadFile.getParentFile().mkdirs();
 				}
-				System.out.println(downloadFile.renameTo(uploadFile));
+				downloadFile.renameTo(uploadFile);
 			}
+			
+			
 			ArrayList tagList = mapper.readValue(request.getParameter("tagList"),ArrayList.class);
 			e_p003VO.setContent(request.getParameter("editor"));
-			e_p003Service.insertAcc(e_p003VO);		
+			e_p003Service.insertAcc(e_p003VO);
 			List<E_P003VO_2> tagInsert = new ArrayList<>();
 			for(int i=0; i<tagList.size(); i++) {
-				e_p003VO_2.setArticle_no(e_p003VO.getArticle_no());
-				e_p003VO_2.setTag_name((String) tagList.get(i));
-				tagInsert.add(e_p003VO_2);
+				E_P003VO_2 tagVO = e_p003VO_2.get();
+				System.out.println("123taglist: "+ tagList);							
+				tagVO.setArticle_no(e_p003VO.getArticle_no());
+				tagVO.setTag_name((String) tagList.get(i));
+				tagInsert.add(tagVO);
+				System.out.println("tagInsertzzzzz:"+tagInsert);
 			}
-			e_p003Service.insertTag(tagInsert);
+			if(!tagList.isEmpty()) {
+				System.out.println("tagInsertzzzzz:"+tagInsert);
+				e_p003Service.insertTag(tagInsert);
+			}
+			System.out.println("tagInserttttt:" + tagInsert);
 			message = "<script>";
 			message += "alert('글작성을 마쳤습니다. 목록으로 이동합니다.');";
 			message += "location.href='"+request.getContextPath() +"/accompany/accMain';";
@@ -96,6 +112,14 @@ public class E_P003ControllerImpl implements E_P003Controller{
 			message += "history.go(-1);";
 			message += "</script>";
 			e.printStackTrace();
+		}finally {
+			try {
+				if(out != null) {
+					out.close();
+				}
+			}catch(IOException e) {
+				e.printStackTrace();
+			}
 		}
 		resEntity = new ResponseEntity(message, responseHeaders, HttpStatus.OK);
 		return resEntity;

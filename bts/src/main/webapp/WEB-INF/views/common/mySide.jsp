@@ -14,7 +14,7 @@
 <body>
 	<div id="sidebar">
 		<ul class="submenu">
-			<li class="active"><a href="profile.html"> <i
+			<li class="active"><a href="${contextPath}/my/profile"> <i
 					class="icon icon-update-profile"></i> <span>여행자 정보 조회/수정</span>
 			</a></li>
 			<li><a href="order.html"> <i class="icon icon-post-list"></i>
@@ -23,7 +23,7 @@
 			<li><a href="wishlist.html"> <i
 					class="icon icon-reservation"></i> <span>예약 내역 관리</span>
 			</a></li>
-			<li><a href="cart.html"> <i class="icon icon-question"></i>
+			<li><a href="${contextPath}/my/contact/list"> <i class="icon icon-question"></i>
 					<span>문의 내역 관리</span>
 			</a></li>
 			<li><a href="coupon.html"> <i class="icon icon-wishlist"></i>

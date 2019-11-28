@@ -18,12 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -32,6 +34,7 @@ import bts.common.PagingVO;
 import bts.f.p001_3.service.F_P001_3Service;
 import bts.f.p001_3.vo.F_P001_3VO;
 import bts.f.p001_3.vo.F_P001_3VO_2;
+import bts.f.p001_3.vo.F_P001_3VO_3;
 
 @Controller("f_p001_3")
 @RequestMapping(value="/community/review")
@@ -43,6 +46,9 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 	Provider<F_P001_3VO_2> tagProvider;	
 
 	@Autowired
+	Provider<F_P001_3VO_3> ansProvider;		
+	
+	@Autowired
 	Provider<PagingVO> pagingProvider;		
 	
 	@Autowired
@@ -51,12 +57,21 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 	private static final String imageUrl = "D:\\git\\bts\\bts\\src\\main\\webapp\\resources\\image\\board";
 	private static final String metaUrl = "D:\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\bts\\resources\\image\\board";
 	private static final String mappingUrl = "/resources/image/board";
-	private static final String article_cd="3";
-	private static final int rangePage = 6;
+	private static final String menuName="review";
+	private static final int rangeRow = 6;
+	private static final int rangePage = 5;
+	private static final int comRangeRow=10;
+	private static final int comRangePage=5;
+	
+	@ModelAttribute("article_cd")
+	public String getArticle_cd() {
+		String article_cd = f_p001_3Service.selectArticleCd(menuName);
+		return article_cd;
+	}
 	
 	@Override
 	@RequestMapping(value="/list" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView searchReview(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView searchReview(@ModelAttribute("article_cd") String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/f/p001_3/d001");
 		String inputPage = request.getParameter("curPage");
 		
@@ -69,25 +84,14 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 			e.printStackTrace();
 			curPage=1;
 		}
-		
-		int totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal());
+		int totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal(article_cd));
 		PagingVO pvo = pagingProvider.get();
-		pvo.calTotalPage(totalCount, rangePage);
-		
-		if(curPage<=0) {
-			curPage=1;
-		}else if(curPage>pvo.getTotalPage()) {
-			curPage=pvo.getTotalPage();			
-		}
-		
-		pvo.setCurPage(curPage);
-		pvo.calStartEndPage();
-		
-		int endRow = curPage*rangePage;
-		int startRow = (endRow-rangePage)+1;		
-		Map<String,Integer> searchMap = new HashMap<>();
-		searchMap.put("startRow", startRow);
-		searchMap.put("endRow", endRow);
+		pvo.setPaging(curPage, totalCount, rangePage, rangeRow);
+
+		Map<String,String> searchMap = new HashMap<>();
+		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
+		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
+		searchMap.put("article_cd", article_cd);
 		
 		List<F_P001_3VO> reviewList = new ArrayList<>();
 		reviewList = f_p001_3Service.selectReviewList(searchMap);
@@ -97,24 +101,101 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		return mav;
 	}
 	
-	@Override
 	@RequestMapping(value="/contents" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView searchArticle(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView searchArticle(@ModelAttribute("article_cd") String article_cd,@RequestParam(value="article", required=false) String articleNo,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/f/p001_3/d002");
 		Map<String,String> searchMap = new HashMap<>();
-		String articleNo = request.getParameter("article");
 		searchMap.put("article_no", articleNo);
 		searchMap.put("article_cd", article_cd);
 		F_P001_3VO resultVO = f_p001_3Service.selectReviewContents(searchMap);
+
+		int totalCount = Integer.parseInt(f_p001_3Service.selectCommentTotal(searchMap));
+		PagingVO pvo = pagingProvider.get();
+		pvo.setPaging(totalCount, totalCount, comRangePage, comRangeRow);
+		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
+		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
+		
+		List<F_P001_3VO_3> comments = f_p001_3Service.selectAnswerList(searchMap);
 		mav.addObject("result", resultVO);
+		mav.addObject("comments", comments);
+		mav.addObject("paging", pvo);
 		return mav;
 	}
+
+	@ResponseBody
+	@RequestMapping(value="/comment" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String commentPaging(@ModelAttribute("article_cd") String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String selectPage = request.getParameter("curPage");
+		String article_no = request.getParameter("article_no");
+		
+		Map<String,String> searchMap = new HashMap<>();
+		searchMap.put("article_no", article_no);
+		searchMap.put("article_cd", article_cd);
+		
+		int totalCount = Integer.parseInt(f_p001_3Service.selectCommentTotal(searchMap));
+		PagingVO pvo = pagingProvider.get();
+		pvo.setPaging(Integer.parseInt(selectPage), totalCount, comRangePage, comRangeRow);
+		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
+		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
+		
+		List<F_P001_3VO_3> comments = f_p001_3Service.selectAnswerList(searchMap);
+		Map<String,Object> resultMap = new HashMap<>();
+		resultMap.put("comments", comments);
+		resultMap.put("paging", pvo);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String result = mapper.writeValueAsString(resultMap);
+		return result;
+	}
+	
+	@RequestMapping(value="/comment/write" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String commentWrite(@ModelAttribute("article_cd") String article_cd,RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String comment = request.getParameter("input-comment");
+		int nowpage = Integer.parseInt(request.getParameter("article_no"));
+		B_P001VO b_p001VO= (B_P001VO) request.getSession().getAttribute("memberInfo");
+
+		F_P001_3VO_3 f_p001_3VO_3 = ansProvider.get();
+		f_p001_3VO_3.setAnswer_desc(comment);
+		f_p001_3VO_3.setArticle_cd(article_cd);
+		f_p001_3VO_3.setArticle_no(nowpage);
+		f_p001_3VO_3.setMember_id(b_p001VO.getMember_id());
+		f_p001_3Service.insertAnswer(f_p001_3VO_3);
+		
+		redirect.addAttribute("article",nowpage);
+		return "redirect:/community/review/contents";
+	}	
+	
+	@ResponseBody
+	@RequestMapping(value="/comment/delete" ,method={RequestMethod.POST})
+	public String commentDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String answer_no = request.getParameter("answer_no");
+		int result = f_p001_3Service.deleteAnswer(answer_no);
+		if(result==1) {
+			return "true";						
+		}else {
+			return "false";			
+		}
+	}	
 	
 	@RequestMapping(value="/write" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView write(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/f/p001_3/d003");
+		mav.addObject("uri",request.getRequestURI());
 		return mav;
 	}
+
+	@RequestMapping(value="/write/mod" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView mod(@ModelAttribute("article_cd") String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/f/p001_3/d003");
+		Map<String,String> searchMap = new HashMap<>();
+		searchMap.put("article_no", request.getParameter("article_no"));
+		searchMap.put("article_cd", article_cd);
+		
+		F_P001_3VO resultVO = f_p001_3Service.selectReviewContents(searchMap);
+		mav.addObject("contentsMod", resultVO);
+		mav.addObject("uri",request.getRequestURI());
+		return mav;
+	}	
 	
 	@ResponseBody
 	@RequestMapping(value="/image" ,method={RequestMethod.POST,RequestMethod.GET}, produces="application/json;charset=UTF-8")
@@ -156,9 +237,74 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
             }
 		}
 	}
+
+	@RequestMapping(value="/upload/mod" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String modUpload(@ModelAttribute("article_cd") String article_cd,RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		ArrayList imageList = mapper.readValue(request.getParameter("imageList"), ArrayList.class);
+		String thumb = null;
+		
+		if(!imageList.isEmpty()) {
+			thumb = (String) imageList.get(0);
+			thumb = thumb.substring(request.getContextPath().length());
+		}
+		
+		OutputStream out = null;
+		try {
+			for(int i=0; i<imageList.size(); i++) {
+				String srcUrl = (String) imageList.get(i);
+				srcUrl = srcUrl.substring(srcUrl.indexOf(mappingUrl)+mappingUrl.length());
+				srcUrl = srcUrl.replace("/", "\\");
+				
+				File downloadFile = new File(metaUrl+"\\"+srcUrl);
+				File uploadFile = new File(imageUrl+"\\"+srcUrl);
+				
+				if(!uploadFile.getParentFile().exists()) {
+					uploadFile.getParentFile().mkdirs();
+				}
+				
+				if(downloadFile.exists()) {
+					downloadFile.renameTo(uploadFile);
+				}
+			}			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+		}
+		
+		F_P001_3VO vo = f_p001_3Provider.get();
+		vo.setArticle_cd(article_cd);
+		vo.setTitle(request.getParameter("title"));
+		vo.setContents(request.getParameter("editor"));
+		vo.setThumbnail_img(thumb);
+		vo.setArticle_no(Integer.parseInt(request.getParameter("article_no")));
+		
+		ArrayList tagList = mapper.readValue(request.getParameter("tagList"), ArrayList.class);
+		f_p001_3Service.updateArticle(vo);
+		List<F_P001_3VO_2> updateTagList = new ArrayList<>();
+		for(int i=0; i<tagList.size();i++) {
+			F_P001_3VO_2 tagVO = tagProvider.get();
+			tagVO.setArticle_no(vo.getArticle_no());
+			tagVO.setArticle_cd(article_cd);
+			tagVO.setTag_name((String) tagList.get(i));
+			updateTagList.add(tagVO);
+		}
+		if(!updateTagList.isEmpty()) {
+			f_p001_3Service.updateTagList(updateTagList,vo);			
+		}
+		redirect.addAttribute("article",vo.getArticle_no());
+		return "redirect:/community/review/contents";
+	}	
 	
 	@RequestMapping(value="/upload" ,method={RequestMethod.POST,RequestMethod.GET})
-	public void endWrite(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public void endWrite(@ModelAttribute("article_cd") String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ObjectMapper mapper = new ObjectMapper();
 		ArrayList imageList = mapper.readValue(request.getParameter("imageList"), ArrayList.class);
 		String thumb = null;
@@ -182,7 +328,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 				if(!uploadFile.getParentFile().exists()) {
 					uploadFile.getParentFile().mkdirs();
 				}
-				System.out.println(downloadFile.renameTo(uploadFile));
+				downloadFile.renameTo(uploadFile);
 				
 				/*
 				in = new FileInputStream(downloadFile);
@@ -214,8 +360,8 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		vo.setContents(request.getParameter("editor"));
 		vo.setThumbnail_img(thumb);
 		
-		f_p001_3Service.insertArticle(vo);
 		ArrayList tagList = mapper.readValue(request.getParameter("tagList"), ArrayList.class);
+		f_p001_3Service.insertArticle(vo);
 		List<F_P001_3VO_2> insertTagList = new ArrayList<>();
 		for(int i=0; i<tagList.size();i++) {
 			F_P001_3VO_2 tagVO = tagProvider.get();
@@ -224,7 +370,9 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 			tagVO.setTag_name((String) tagList.get(i));
 			insertTagList.add(tagVO);
 		}
-		f_p001_3Service.insertTagList(insertTagList);
+		if(!insertTagList.isEmpty()) {
+			f_p001_3Service.insertTagList(insertTagList);			
+		}
 		response.sendRedirect("/bts/community/review/list");
 	}
 	

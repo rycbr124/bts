@@ -25,8 +25,8 @@ public class E_P003ServiceImpl implements E_P003Service{
 	}
 
 	@Override
-	public void insertTag(List<E_P003VO_2> tagList) throws DataAccessException {
-		e_p003DAO.insertTag(tagList);
+	public void insertTag(List<E_P003VO_2> list) throws DataAccessException {
+		e_p003DAO.insertTag(list);
 		
 	}
 
