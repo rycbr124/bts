@@ -58,4 +58,14 @@
 			value="resources\image\mypage\profileImage">
 		</beans:constructor-arg>
 	</beans:bean>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/my/**" />
+			<mapping path="/community/**" />
+			<exclude-mapping path="/community/review/list"/>
+			<exclude-mapping path="/community/plan_list"/>			
+			<beans:bean class="bts.common.interceptor.CheckLoginInterceptor"/>
+		</interceptor>
+	</interceptors>
 </beans:beans>

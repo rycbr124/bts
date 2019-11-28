@@ -13,5 +13,5 @@ public interface A_P005Controller {
 	public ModelAndView memberAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map<String, Object> searchMember(@RequestParam("p_id") String p_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public Map saveMember(HttpServletRequest request, HttpServletResponse response) throws Exception;
-
+	public ModelAndView memberUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

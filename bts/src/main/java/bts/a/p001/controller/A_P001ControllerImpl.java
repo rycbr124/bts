@@ -1,4 +1,4 @@
-package bts.a.p005.controller;
+package bts.a.p001.controller;
 
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -12,48 +12,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import bts.a.p005.service.A_P005Service;
-import bts.a.p005.vo.A_P005VO;
+import bts.a.p001.service.A_P001Service;
+import bts.a.p001.vo.A_P001VO;
 
-@Controller("a_p005")
+@Controller("a_p001")
 @RequestMapping(value="/admin")
-public class A_P005ControllerImpl implements A_P005Controller{
+public class A_P001ControllerImpl implements A_P001Controller{
 	@Autowired
-	A_P005Service a_p005Service;
+	A_P001Service a_p001Service;
 	
-	@Autowired
-	A_P005VO a_p005VO;
-
+	
 	@Override
-	@RequestMapping(value="/mainMember" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView memberAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView("/a/p005/d001");
+	@RequestMapping(value="/inclnMain" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView inclnAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/a/p001/d001");
 		return mav;
 	}
 
 	@Override
-	@RequestMapping(value="/searchMember" ,method={RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value="/searchIncln" ,method={RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
-	public Map<String, Object> searchMember(@RequestParam("p_id") String p_id, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		Map<String, String> searchMap = new HashMap<String, String>(); // 검색결과
-		Map<String, Object> resultMap = new HashMap<String, Object>(); // 조회결과
-		searchMap.put("member_id", p_id);
-		
-		List<A_P005VO> result = a_p005Service.searchMember(searchMap);
-		
+	public Map<String, Object> searchIncln(String group_desc, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, String> searchMap = new HashMap<>();
+		searchMap.put("group_desc", group_desc);
+		List<A_P001VO> result = a_p001Service.searchIncln(searchMap);
+		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("Data", result);
 		
 		return resultMap;
 	}
 
 	@Override
-	@RequestMapping(value="/saveMember" ,method={RequestMethod.POST,RequestMethod.GET})
-	public Map saveMember(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value="/saveIncln" ,method={RequestMethod.POST,RequestMethod.GET})
+	public Map saveIncln(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map<String, String[]> dataMap = new HashMap<String, String[]>(); // 저장 할 Data
 		Map<String, Object> resultMap = new HashMap<String, Object>(); // 처리결과
 		
@@ -67,7 +61,7 @@ public class A_P005ControllerImpl implements A_P005Controller{
 		
 		Map<String, String> result = new HashMap<String, String>();
 		try {
-			a_p005Service.saveData(dataMap);	
+			a_p001Service.saveData(dataMap);	
 			result.put("Code","0");
 			result.put("Message","저장되었습니다.");
 		}catch(Exception e) {
@@ -81,9 +75,9 @@ public class A_P005ControllerImpl implements A_P005Controller{
 	}
 
 	@Override
-	@RequestMapping(value="/updateMember" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView memberUpdate(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView("/a/p005/d002");
+	@RequestMapping(value="/updateIncln" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView updateIncln(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/a/p001/d002");
 		return mav;
 	}
 

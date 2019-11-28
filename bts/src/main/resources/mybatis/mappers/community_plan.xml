@@ -31,6 +31,17 @@
 		<result property="tag_name" column="tag_name" />
 		<result property="plan_no" column="plan_no" />
 	</resultMap>
+	
+	<resultMap id="ansResult" type="d_P001_4VO_5">
+		<result property="answer_no" column="answer_no" />
+		<result property="article_no" column="article_no" />
+		<result property="article_cd" column="article_cd" />
+		<result property="answer_desc" column="answer_desc" />
+		<result property="register_date" column="register_date" />	
+		<result property="member_id" column="member_id" />		
+		<result property="member_type" column="member_type" />	
+		<result property="profile_image" column="profile_image" />
+	</resultMap>
 
 	<!-- 게시글 조회 -->
 	<select id="searchArticle" resultMap="articleResult">
@@ -132,12 +143,44 @@
 		]]>
 	</update>
 	
-	<!-- 리스트 카운트 -->
+	<!-- 게시글 리스트 카운트 -->
 	<select id="pageCount" resultType="java.lang.Integer">
 		<![CDATA[
 			SELECT COUNT(*)
 			FROM planner
 			WHERE open_val = 'Y'
+		]]>
+	</select>
+	
+	<!-- 댓글 리스트 카운트 -->
+	<select id="commentCount" parameterType="String" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM answer_article
+			WHERE article_cd = '2'
+			AND article_no = #{plan_no}
+		]]>
+	</select>
+	
+	<!-- 댓글 리스트 검색 -->
+	<select id="selectAnswerList" parameterType="Map" resultMap="ansResult">
+		<![CDATA[
+			SELECT b.* 
+			FROM
+			(
+			    SELECT rownum as rnum, a.*
+			    FROM 
+			    (
+			        SELECT answer_no,article_no,answer_desc,register_date,ar.member_id,profile_image,member_type
+			        FROM answer_article ar,b_member mem
+			        WHERE ar.member_id=mem.member_id
+                    AND article_cd=3
+                    AND article_no=#{article_no}
+			        ORDER BY answer_no
+			    ) a
+			    WHERE rownum<=#{end}
+			) b
+			WHERE b.rnum>=#{start}
 		]]>
 	</select>
 	

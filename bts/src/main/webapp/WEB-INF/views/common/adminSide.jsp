@@ -36,7 +36,9 @@ keyframes chartjs-render-animation {
 to {
 	opacity: 1
 }
-
+}
+#side{
+	float:left;
 }
 #accordinonSidebar{
 	margin-right : 0px;
@@ -47,7 +49,7 @@ to {
 	<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${contextPath}/main/main">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -81,8 +83,8 @@ to {
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Member:</h6>
-            <a class="collapse-item" href="#">회원 목록 조회</a>
-            <a class="collapse-item" href="#">회원 목록 상세/수정</a>
+            <a class="collapse-item" href="${contextPath}/admin/mainMember">회원 목록 조회</a>
+            <a class="collapse-item" href="${contextPath}/admin/updateMember">회원 목록 상세/수정</a>
           </div>
         </div>
       </li>
@@ -134,8 +136,8 @@ to {
           <div id="collapseMember" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Inclination:</h6>
-            <a class="collapse-item" href="#">성향 목록 조회</a>
-            <a class="collapse-item" href="#">성향 추가</a>
+            <a class="collapse-item" href="${contextPath}/admin/inclnMain">성향 목록 조회</a>
+            <a class="collapse-item" href="${contextPath}/admin/updateIncln">성향 추가</a>
           </div>
         </div>
       </li>

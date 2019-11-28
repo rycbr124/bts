@@ -47,7 +47,6 @@
 		
 		
 		
-
 		for(var i in arr_content){
 			console.log("1111 : " + arr_content[i]);
 			var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
@@ -94,7 +93,6 @@
 			         $(hidden).prop('name', 'content_id' + i);
 			         $(hidden).prop('value', arr_content[i]);
 			         			         
-
 			         $('.planner_detail').append(day_div);
 			         $('.planner_detail').append(div);
 			         $('#content_div' + i).append(a);
@@ -164,27 +162,22 @@
 	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
     font-family: "NanumSquareRoundEB";
 }
-
 @font-face {
 	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundB.ttf");
     font-family: "NanumSquareRoundB";
 }
-
 @font-face {
     src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
     font-family: "NanumSquareRoundR";
 }
-
 h1{
 	font-family: "NanumSquareRoundB";
 	
 	margin-left : 30px;	
 }
-
 h2{
 	font-family : "NanumSquareRoundEB";
 }
-
 h3.font-weight-light{
 	color : black;
 }
@@ -195,21 +188,16 @@ strong{
 	display : block;
 	margin-left : 30px;
 }
-
 a:hover{
 	color : black;
 }
-
 *{
 	font-family: "NanumSquareRoundR";
 }
-
-
 img.thumb_nail{
 	width : 1110px;
 	height : 400px;
 }
-
 div.title{
 	width : 1110px;
 	height : 200px;
@@ -221,42 +209,35 @@ div.title{
     bottom : 0px;s
 	
 }
-
 img.content_image{
 	width : 300px;
 	height : 150px;
 }
-
 div.content_text{
 	display : inline-block;
 	float : right;
 	text-align : center;
 }
-
 div.planner_detail{
 	padding : 80px;	
 	background-color : #F8F8FA;
 }
-
 div.content_div{
 	border : solid 0.8px #D5D5D5;
 	padding : 20px;
 	margin-bottom : 20px;
 	background-color : white;
 }
-
 div.day_div{
 	width : 80px;
 	background-color : #003399;
 	color : white;
 	text-align : center;
 }
-
 div.quoatation{
 	display : inline-block;
 	font-size : 50px;
 }
-
 div.titleBox{
 	margin-bottom : 10px;
 }
@@ -265,7 +246,6 @@ img.titleImage{
 	height : 50px;
 	margin-right : 10px;
 }
-
 h2.titleDesc{
 	display : inline-block;
 }

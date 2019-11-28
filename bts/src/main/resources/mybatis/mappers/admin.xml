@@ -3,7 +3,7 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace="a.p005">	
+<mapper namespace="a.p000">	
 	<!-- 리절트 맵 정의 -->
 	<resultMap id="memberResult" type="a_p005VO">
 		<result property="member_id" column="member_id" />
@@ -12,6 +12,14 @@
 		<result property="email" column="email" />
 		<result property="nick_name" column="nick_name" />		
 	</resultMap>
+	
+	<resultMap id="inclnResult" type="a_p001VO">
+		<result property="incln_cd" column="incln_cd" />
+		<result property="name" column="name" />
+		<result property="group_name" column="group_name" />
+		<result property="group_desc" column="group_desc" />		
+	</resultMap>
+	
 	
 	<!-- 회원조회 -->
 	<select id="searchMember" resultMap="memberResult" parameterType="java.util.Map">
@@ -51,4 +59,46 @@
 			WHERE member_id = #{member_id}
 		]]>
 	</delete>
+	
+	<!-- 성향 조회 -->
+	<select id="searchIncln" resultMap="inclnResult" parameterType="java.util.Map">
+		<![CDATA[
+			SELECT incln_cd, name, group_name, group_desc
+			FROM incln_list
+		]]>	
+		<where>
+			<if test=" group_desc != ''  and  group_desc != null">
+				group_desc = #{group_desc}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 성향추가 -->
+	<insert id="insertIncln" parameterType="java.util.Map">
+		<![CDATA[
+			INSERT INTO incln_list(incln_cd, name, group_name, group_desc)
+			VALUES (#{incln_cd}, #{name}, #{group_name}, #{group_desc})
+		]]>
+	</insert>
+	
+	<!-- 성향 업데이트 -->
+	<update id="updateIncln" parameterType="java.util.Map">
+		<![CDATA[
+			UPDATE incln_list
+			SET name = #{name}
+			WHERE incln_cd = #{incln_cd}   
+		]]>
+	</update>
+	
+	<!-- 성향 삭제 -->
+	<delete id="deleteIncln" parameterType="java.util.Map">
+		<![CDATA[
+			DELETE incln_list
+			WHERE incln_cd = #{incln_cd}
+		]]>
+	</delete>
+	
+	
+	
+	
 </mapper>
