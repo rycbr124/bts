@@ -51,6 +51,14 @@
 		VALUES (#{article_no}, #{article_cd}, article_comment_seq.nextval, #{answer_desc}, #{member_id}, sysdate)
 	    ]]>
 	</insert>
+
+	<delete id="deleteTagList" parameterType="f_p001_3VO">
+	    <![CDATA[
+			DELETE FROM tag_article
+			WHERE article_cd=#{article_cd}
+			AND article_no=#{article_no}
+	    ]]>
+	</delete>
 	
 	<delete id="deleteAnswer" parameterType="string">
 	    <![CDATA[
@@ -58,6 +66,25 @@
 			WHERE answer_no=#{answer_no}
 	    ]]>
 	</delete>
+	
+	<update id="updateArticle" parameterType="f_p001_3VO">
+	    <![CDATA[  
+	    	UPDATE article
+	    ]]>		
+		<set>
+			<![CDATA[
+				title=#{title},
+				contents=#{contents},
+				thumbnail_img=#{thumbnail_img},
+		    ]]>	
+		</set>
+		<where>
+			<![CDATA[
+				 article_cd=#{article_cd}
+				 AND article_no=#{article_no}
+		    ]]>	
+		</where>
+	</update>
 	
 	<select id="selectReviewList" parameterType="map" resultMap="reviewResult">
 	    <![CDATA[
@@ -69,7 +96,7 @@
 			    (
 			        SELECT article_no,title,thumbnail_img,article_cd
 			        FROM article
-			        WHERE article_cd=3
+			        WHERE article_cd=#{article_cd}
 			        ORDER BY article_no DESC
 			    ) a
 			    WHERE rownum<=#{endRow}
@@ -78,19 +105,19 @@
 	    ]]>
 	</select>
 	
-	<select id="selectReviewTotal" resultType="string">
+	<select id="selectReviewTotal" parameterType="string" resultType="string">
 	    <![CDATA[
 			SELECT COUNT(*) totalCount
 			FROM article
-			WHERE article_cd=3
+			WHERE article_cd=#{article_cd}
 	    ]]>
 	</select>
 
-	<select id="selectCommentTotal" parameterType="string" resultType="string">
+	<select id="selectCommentTotal" parameterType="map" resultType="string">
 	    <![CDATA[
 			SELECT COUNT(*) totalCount
 			FROM answer_article
-			WHERE article_cd=3
+			WHERE article_cd=#{article_cd}
 			AND article_no=#{article_no}
 	    ]]>
 	</select>
@@ -125,13 +152,21 @@
 			        SELECT answer_no,article_no,answer_desc,register_date,ar.member_id,profile_image,member_type
 			        FROM answer_article ar,b_member mem
 			        WHERE ar.member_id=mem.member_id
-                    AND article_cd=3
+                    AND article_cd=#{article_cd}
                     AND article_no=#{article_no}
 			        ORDER BY answer_no
 			    ) a
 			    WHERE rownum<=#{endRow}
 			) b
 			WHERE b.rnum>=#{startRow}
+	    ]]>
+	</select>
+
+	<select id="selectArticleCd" parameterType="string" resultType="string">
+	    <![CDATA[
+			SELECT menu_cd
+			FROM menu
+			WHERE name=#{name}
 	    ]]>
 	</select>
 

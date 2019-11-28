@@ -33,25 +33,35 @@ public class F_P001_3DAOImpl implements F_P001_3DAO{
 	}	
 
 	@Override
+	public void deleteTagList(F_P001_3VO f_p001_3VO) {
+		sqlSession.delete("mapper.f_p001_3.deleteTagList",f_p001_3VO);
+	}
+	
+	@Override
 	public int deleteAnswer(String answer_no) throws DataAccessException{
 		int result = sqlSession.delete("mapper.f_p001_3.deleteAnswer",answer_no);
 		return result;
 	}		
+
+	@Override
+	public void updateArticle(F_P001_3VO f_p001_3VO) {
+		sqlSession.update("mapper.f_p001_3.updateArticle",f_p001_3VO);
+	}		
 	
 	@Override
-	public String selectReviewTotal() throws DataAccessException{
-		String totalCount = sqlSession.selectOne("mapper.f_p001_3.selectReviewTotal");
+	public String selectReviewTotal(String article_cd) throws DataAccessException{
+		String totalCount = sqlSession.selectOne("mapper.f_p001_3.selectReviewTotal",article_cd);
 		return totalCount;
 	}
 
 	@Override
-	public String selectCommentTotal(String article_no) throws DataAccessException{
-		String totalCount = sqlSession.selectOne("mapper.f_p001_3.selectCommentTotal",article_no);
+	public String selectCommentTotal(Map<String,String> searchMap) throws DataAccessException{
+		String totalCount = sqlSession.selectOne("mapper.f_p001_3.selectCommentTotal",searchMap);
 		return totalCount;
 	}	
 	
 	@Override
-	public List<F_P001_3VO> selectReviewList(Map<String,Integer> searchMap) throws DataAccessException{
+	public List<F_P001_3VO> selectReviewList(Map<String,String> searchMap) throws DataAccessException{
 		List<F_P001_3VO> list = sqlSession.selectList("mapper.f_p001_3.selectReviewList",searchMap);
 		return list;
 	}
@@ -72,5 +82,12 @@ public class F_P001_3DAOImpl implements F_P001_3DAO{
 	public List<F_P001_3VO_3> selectAnswerList(Map<String,String> searchMap) throws DataAccessException{
 		List<F_P001_3VO_3> list = sqlSession.selectList("mapper.f_p001_3.selectAnswerList",searchMap);
 		return list;
-	}	
+	}
+
+	@Override
+	public String selectArticleCd(String menu) {
+		String article_cd = sqlSession.selectOne("mapper.f_p001_3.selectArticleCd",menu);
+		return article_cd;
+	}
+
 }

@@ -252,9 +252,11 @@ p {
 		    <li class="page-item"><a class="page-link">Next</a></li>
 		</ul>
 		
-		<div class="row justify-content-md-end">
-			<input type="button" id="write_review" class="btn btn-outline-secondary" value="글쓰기">
-		</div>
+		<c:if test="${sessionScope.isLogOn==true}">
+			<div class="row justify-content-md-end">
+				<input type="button" id="write_review" class="btn btn-outline-secondary" value="글쓰기">
+			</div>
+		</c:if>
   </div>
 	<form name="frmContents">
 		<input type="hidden" name="curPage">

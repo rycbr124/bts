@@ -8,11 +8,14 @@ function plan_modify(planner_info,detail_info, tagList){
 	var title = planner['TITLE'];
 	var rangeDate = planner['RANGE_DATE'];
 	var person_type = planner['PERSON_SE'];
+	var plan_no = planner['PLAN_NO'];
 	$('.title').attr('value',title);
 	$('.daterange').attr('value',rangeDate);
 	$('.personnel').val(person_type).attr('selected','selected');
-
 	var contentid_arr = new Array();
+
+	
+	
 	for(var key in detail){
 		var detail_arr = detail[key];
 		var contentid = detail_arr['CONTENT_ID'];
@@ -34,7 +37,7 @@ function plan_modify(planner_info,detail_info, tagList){
 	$('.delete_tag').on('click',function(){
 		$(this).parent().remove();
 	});
-	//시작일과 도착일을 계산하여 준다
+	// 시작일과 도착일을 계산하여 준다
 	var start = rangeDate.substring(0,10);
 	var startDt_arr = start.split('-');
 	var end = rangeDate.substring(12,23);
@@ -50,7 +53,7 @@ function plan_modify(planner_info,detail_info, tagList){
 	var nowDate = startDate
 	for(var i=0, j=nowDate.getDay(); i<diff; i++,j++){
 		var travel_day = document.createElement('div');
-		if(j == 7){//토요일에서 일요일로 배열을 초기화
+		if(j == 7){// 토요일에서 일요일로 배열을 초기화
 			j =0;
 		}
 		var dayOfWeek = week[j];
@@ -86,41 +89,41 @@ function plan_modify(planner_info,detail_info, tagList){
         
         $('.plan_list_container').append(ul);
 	}
-	   $('div.content_container>div').on('click',function(){
-		   searchContentType(12);
-		   
-		   document.getElementById('map_controller').style.width = "460px";
-		   document.getElementById('plan_list_container').style.display="inline-block";
-		   document.getElementById('tourist').style.display = "inline-block";
-		   document.getElementById('map_area').style.width = '1457px';
-		   document.getElementById('map').style.width = '1117px';
-		   document.getElementById('map').style.float = 'right';
-		   $('.save_plan').text('수정');
-		   $('.save_plan').attr('onclick','modify_plan()');
-		   $('.plan_list_container > ul').empty();
+	searchContentType(12);
+	document.getElementById('map_controller').style.width = "460px";
+	document.getElementById('plan_list_container').style.display="inline-block";
+	document.getElementById('tourist').style.display = "inline-block";
+	document.getElementById('map_area').style.width = '1457px';
+	document.getElementById('map').style.width = '1117px';
+	document.getElementById('map').style.float = 'right';
+	$('.save_plan').text('수정');
+	$('.save_plan').attr('onclick','modify_plan('+plan_no+')');
+	var date = document.getElementById('date');
+	var day = document.getElementById('day');
+	var date_text = $(date).text();
+	var day_val = $(day).text();
+		$('.date_value').text(date_text);
+		$('.day_value').text(day_val);
+		$('.'+date_text).css('display','block');
+	 $('div.content_container>div').on('click',function(){
 		   var day_text = $(this).text();
-		   var compare_day = day_text.substring(0,4);
-    	  
     	   $('ul').css('display','none');
     	   var childP=$(this).children('p')[0];
            var text = $(childP).text();
-    	   
-    	   
-    	   
-           
            var date = $(this).children('p');
            var day = $(this).children('blockquote');
            $('.date_value').text($(date).text());
            $('.day_value').text($(day).text());
            $('.'+text).css('display','block');
-           
-           content_value(detail,compare_day);
 	   });
+	 
+	   content_value(detail);
 }
-function content_value(detail,compare_day){
-	
+function content_value(detail){
 	var result_arr = new Array();
-	var serviceKey = 'cYcvlZ9yaPE20UToWcxr8bpZJbItY6rEa3kIxGzSd3N4e3R1kmaERDblD3vpL6zg3bM76YmVcfip6YU83Nc4CA%3D%3D'
+	var day_obj = new Object();
+	var day_arr = new Array();
+	var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D'
 	for(var key in detail){
 		var detail_arr = detail[key];
 		var contentid = detail_arr['CONTENT_ID'];
@@ -129,7 +132,6 @@ function content_value(detail,compare_day){
 	var reqUrl ='http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' 
 	+ serviceKey + '&contentId=' 
 	+ contentid + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
-	console.log(reqUrl);
 	$.ajax({
 		async : false,
 		url : reqUrl,
@@ -144,40 +146,41 @@ function content_value(detail,compare_day){
 	  		var add_address = document.createElement('p');
 	  		var trashcan = document.createElement('a');
 	  		var trashcan_img = document.createElement('img');
-	  		var text = $('.plan_list_header>h1').text();
-	  		var add_list = document.getElementsByClassName(text)[0]
-	  		add_list.appendChild(li);
+	  		
+	  		var add_list = document.getElementsByClassName(DAY)[0];
+	  		$(add_list).append(li);
 	  		$(li).prop('class',DAY);
-	  		var className2 = $(li).attr('class');
-	  		if(compare_day === className2){
-	  			$(li).prop('id','add_list');
-	  			$(li).attr('data-value',contentid);
-	  			$(li).append(image_container);
-		  		$(li).append(add_title);
-		  		$(li).append(add_address);
-		  		$(li).append(trashcan);
-		  		$(trashcan).append(trashcan_img);
-		  		$(trashcan).prop('class','trashcan');
-		  		$(trashcan).prop('href','#');
-		  		$(trashcan_img).prop('class','trashcan_img');
-		  		$(trashcan_img).attr('src','/bts/resources/image/icon/garbage.png');
-		  		$(image_container).append(add_image);
-		  		$(image_container).prop('class','image_container');
-		  		$(add_image).prop('class','add_image');
-		  		$(add_image).attr('src',resultArray.firstimage);
-		  		$(add_title).prop('class','add_title')
-		  		$(add_title).text(resultArray.title);
-		  		$(add_address).prop('class','add_address');
-		  		$(add_address).text(resultArray.addr1);
+	  		
+	  				$(li).prop('id','add_list');
+		  			$(li).attr('data-value',contentid);
+		  			$(li).append(image_container);
+			  		$(li).append(add_title);
+			  		$(li).append(add_address);
+			  		$(li).append(trashcan);
+			  		$(trashcan).append(trashcan_img);
+			  		$(trashcan).prop('class','trashcan');
+			  		$(trashcan).prop('href','#');
+			  		$(trashcan_img).prop('class','trashcan_img');
+			  		$(trashcan_img).attr('src','/bts/resources/image/icon/garbage.png');
+			  		$(image_container).append(add_image);
+			  		$(image_container).prop('class','image_container');
+			  		$(add_image).prop('class','add_image');
+			  		$(add_image).attr('src',resultArray.firstimage);
+			  		$(add_title).prop('class','add_title')
+			  		$(add_title).text(resultArray.title);
+			  		$(add_address).prop('class','add_address');
+			  		$(add_address).text(resultArray.addr1);
+	  	
+	  			
 		  		result_obj['map_x'] = resultArray.mapx;
 		  		result_obj['map_y'] = resultArray.mapy;
 		  		result_obj['title'] = resultArray.title;
 		  		
 		  		result_arr.push(result_obj);
 		  	 	
-	  		}else{
-	  			$(li).remove();
-	  		}
+	  	
+	  			
+	  		
 	  		
 		},
 		error : function(data, textStatus){
@@ -185,7 +188,7 @@ function content_value(detail,compare_day){
 		}
 	});
 	}
-	//장소 삭제시 실행
+	// 장소 삭제시 실행
 	$('.trashcan').on('click',function(){
 			$(this).parent().remove();
 			
@@ -243,7 +246,7 @@ function content_value(detail,compare_day){
 	
 }
 
-//키보드 이벤트가 엔터일시 실행돼는 함수
+// 키보드 이벤트가 엔터일시 실행돼는 함수
 function add_tag(){
 	var text= $('.tag').val();
 	var p = document.createElement('p');
@@ -267,24 +270,24 @@ function add_tag(){
 	});
 	}
 
-function modify_plan(){
+function modify_plan(plan_no){
 	var data_obj = new Object();
 	var result_arr = new Array();
 	var title = document.getElementById("title_val").value;
-
+	console.log(title);
 	var tag = $('.tag_value').text();
 	var str = tag.substring(0,tag.length-1);
 	var tag_name = str.split('x');
 	
 	var personnel = $('.personnel').val();
 	
-			if(confirm("저장하시겠습니까?") === true){
+	if(confirm("저장하시겠습니까?") === true){
+		console.log(plan_no);
 		var frm_plan = document.plan;
 			var resultData = {};
 		var ulLength = $('.plan_list_container>ul').length;
 			for(var i=0; i<ulLength; i++){
 				var liLength = $(".DAY"+(i+1)+'>li').length;	
-				console.log(liLength);		
 				 var arr_test = new Array();
 				for(var j=0; j<liLength; j++){
 					 var $data =$('.DAY'+(i+1)+'>li');
@@ -295,13 +298,13 @@ function modify_plan(){
 				}
 				resultData["DAY"+(i+1)] = arr_test;
 				var result = JSON.stringify(resultData);
-				
 			}
-// 			frm_plan.action = "/bts/plan/update_plan";
-// 			frm_plan.method = "get";
-// 			frm_plan.tag_value.value = tag_name;
-// 			frm_plan.personnel.value = personnel;
-// 			frm_plan.detail_information.value = result;
-// 			frm_plan.submit();
+			frm_plan.action = "/bts/plan_detail/modify";
+			frm_plan.method = "get";
+			frm_plan.plan_no.value = plan_no;
+			frm_plan.tag_value.value = tag_name;
+			frm_plan.personnel.value = personnel;
+			frm_plan.detail_information.value = result;
+			frm_plan.submit();
 			}
 }

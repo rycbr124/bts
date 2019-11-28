@@ -23,7 +23,12 @@
 		src:url("/bts/resources/fonts/Binggrae-Bold.ttf");
 		font-family:"nanum";	
 	}
-
+	
+	@font-face{
+		src:url("/bts/resources/fonts/BMJUA_ttf.ttf");
+		font-family:"bmjua";	
+	}
+	
 #title *{
 	text-align:center;
 }
@@ -171,14 +176,20 @@
 }
 
 #contents-info{
-	display:flex;
-	justify-content : space-between;
 	margin-bottom : 10px;
 }
 
 .fa-comment-dots{
 	color:rgba(170,170,170);
-	margin-right:5px;
+	margin-right:2px;
+}
+
+#comment-count>span{
+	position:relative;
+	bottom:5px;
+	font-family:bmjua;
+	font-size:18px;
+    color: #555f77;
 }
 
 #comments{
@@ -268,13 +279,13 @@ img.comment-image{
 	border-right:1px dotted #acb4c2;
 }
 
-.comment-delete, .comment-report{
+.comment-delete, .comment-report,#contents-report{
 	padding:0 5px;
 	float:right;
 	color:#555f77;
 }
 
-.comment-delete:hover, .comment-report:hover{
+.comment-delete:hover, .comment-report:hover,#contents-report:hover{
 	text-decoration:underline;
 	cursor: pointer;
 }
@@ -284,7 +295,32 @@ img.comment-image{
 	$(document).ready(function(){
 		init();
 		
+		$('#review-modify').on('click',function(){
+			var form = document.createElement('form');
+			var hidden = document.createElement('input');
+			$(hidden).attr('type','hidden');
+			$(hidden).attr('name','article_no');			
+			form.append(hidden);
+			
+			form.article_no.value=${result.article_no}
+			form.action="${contextPath}/community/review/write/mod";
+			form.method="post";
+			$('body').append(form);
+			form.submit();
+		});
+		
 		$(document).on('click','span.comment-report',function(){
+			var reqUrl="${contextPath}/report/comment"
+			var contents_cd=$(this).parent().parent().data('no');
+			var target_id=$(this).parent().find('.comment-author').text();
+			var popup = openReport(reqUrl,contents_cd,target_id);			
+		});
+		
+		$('#contents-report').on('click',function(){
+			var reqUrl="${contextPath}/report/article/review"
+			var contents_cd=${result.article_no};
+			var target_id="${result.member_id}";
+			var popup = openReport(reqUrl,contents_cd,target_id);
 		});
 		
 		$(document).on('click','span.comment-delete',function(){
@@ -316,6 +352,35 @@ img.comment-image{
 			var paging=$(this).text();
 			comPaging(paging);
 		});
+
+		function openReport(url,contents_cd,target_id){
+			var title="reportForm"
+			var wid=800;
+			var hei=550;
+			var top = (window.screen.height/2)-(hei/2);
+			var left = (window.screen.width/2)-(wid/2);
+			
+			var pop=window.open("",title,'width='+wid+',height='+hei+',top='+top+',left='+left);
+			
+			var form = document.createElement('form');
+			var cdInput = document.createElement('input');
+			var idInput = document.createElement('input');
+			$(cdInput).attr('type','hidden');
+			$(cdInput).attr('name','contents_cd');
+			$(idInput).attr('type','hidden');
+			$(idInput).attr('name','target_id');
+			form.append(cdInput);
+			form.append(idInput);
+			
+			form.contents_cd.value=contents_cd;			
+			form.target_id.value=target_id;
+			form.target=title;
+			form.action=url;
+			form.method="post";
+			$('body').append(form);
+			form.submit();
+			return pop;
+		}		
 		
 		function init(){
 			var date = '${result.register_date}';
@@ -346,6 +411,7 @@ img.comment-image{
 			    data: searchData,
 			    dataType:'json',
 				success : function (data,textStatus){
+					$('#comment-count>span').text(data.paging.totalCount);
 					$('#comments').empty();
 					for(var i in data.comments){
 						var comment = data.comments[i];
@@ -471,7 +537,9 @@ img.comment-image{
 				</c:choose>						
 				<h3 id="member-id">${result.member_id}</h3>
 				<p id="register-date"></p>
-				<input type="button" id="review-modify" class="btn btn-outline-light" value="수정">
+				<c:if test="${sessionScope.memberInfo.member_id==result.member_id}">
+					<input type="button" id="review-modify" class="btn btn-outline-light" value="수정">
+				</c:if>
 			</div>
 		</div>
 
@@ -483,7 +551,12 @@ img.comment-image{
 				</c:forEach>
 			</div>
 			<div id='contents-info'>
-				<span id="comment-count"><i class="far fa-comment-dots fa-2x"></i>${paging.totalCount}</span><span id="view-count"></span>
+				<span id="comment-count">
+					<i class="far fa-comment-dots fa-2x"></i>
+					<span>${paging.totalCount}</span>
+				</span>
+				<span id="view-count"></span>
+				<span id="contents-report">게시글 신고</span>
 			</div>
 			
 			<div id="comment-form" class="mx-auto">
