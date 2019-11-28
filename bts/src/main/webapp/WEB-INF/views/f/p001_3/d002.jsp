@@ -207,10 +207,13 @@
 		});
 		
 		function init(){
+			var date = '${result.register_date}';
+			date = date.substr(0,date.lastIndexOf('.'));
+			$('#register-date').text(date);
+			
 			var context="${contextPath}";
 			var no=${result.article_no};
 			var id="${sessionScope.memberInfo.member_id}";
-			
 			setInit(context,no,id);
 			var paging = ${initTotal};
 			comPaging(paging);
