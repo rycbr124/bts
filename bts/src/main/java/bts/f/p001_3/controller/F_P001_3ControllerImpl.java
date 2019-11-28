@@ -108,17 +108,10 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		searchMap.put("article_no", articleNo);
 		searchMap.put("article_cd", article_cd);
 		F_P001_3VO resultVO = f_p001_3Service.selectReviewContents(searchMap);
-
-		int totalCount = Integer.parseInt(f_p001_3Service.selectCommentTotal(searchMap));
-		PagingVO pvo = pagingProvider.get();
-		pvo.setPaging(totalCount, totalCount, comRangePage, comRangeRow);
-		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
-		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
-		
-		List<F_P001_3VO_3> comments = f_p001_3Service.selectAnswerList(searchMap);
 		mav.addObject("result", resultVO);
-		mav.addObject("comments", comments);
-		mav.addObject("paging", pvo);
+		
+		int totalCount = Integer.parseInt(f_p001_3Service.selectCommentTotal(searchMap));
+		mav.addObject("initTotal",totalCount);
 		return mav;
 	}
 
