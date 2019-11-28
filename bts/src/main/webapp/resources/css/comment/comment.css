@@ -1,0 +1,131 @@
+@charset "UTF-8";
+
+@font-face{
+	src:url("/bts/resources/fonts/Nanum/NANUMBARUNGOTHICBOLD.TTF");
+	font-family:"nanumB";	
+}
+
+@font-face{
+	src:url("/bts/resources/fonts/Binggrae-Bold.ttf");
+	font-family:"nanum";	
+}
+
+@font-face{
+	src:url("/bts/resources/fonts/BMJUA_ttf.ttf");
+	font-family:"bmjua";	
+}
+
+#contents-info{
+	margin-bottom : 10px;
+}
+
+.fa-comment-dots{
+	color:rgba(170,170,170);
+	margin-right:2px;
+}
+
+#comment-count>span{
+	position:relative;
+	bottom:5px;
+	font-family:bmjua;
+	font-size:18px;
+    color: #555f77;
+}
+
+#comments{
+	margin-top:10px;
+	background-color:#f7f7f7;	
+}
+
+#comment-form{
+	width:50%;
+	margin: auto 0;
+}
+
+#comment-form textarea{
+ 	background-color: #fcfcfc;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .30);
+    color: #555f77;
+    font-size: 14px;
+    padding: 5px 10px;
+    outline: none;
+    width: 100%;
+    resize:none;
+    margin-bottom:10px;
+}
+
+.comment{
+	margin-bottom: 20px;
+	position: relative;
+	z-index: 0;
+}
+
+img.comment-image{
+	border: 3px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .5);
+    height: 80px;
+    left: 0;
+    overflow: hidden;
+	position: absolute;
+	top: 0;
+	width: 80px;
+	background-color:grey;
+}
+
+.comment-box{
+	background-color: #fcfcfc;
+	border-radius: 4px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .15);
+    margin-left: 100px;
+    min-height: 60px;
+    position: relative;
+    padding: 15px;
+}
+
+.comment .comment-box::before{
+	border-color: transparent rgba(0, 0, 0, .1);
+	top: 22px;
+}
+
+.comment-box::before,.comment-box::after{
+    border-width: 10px 10px 10px 0;
+    border-style: solid;
+    border-color: transparent #FCFCFC;
+    content: "";
+    left: -10px;
+    position: absolute;
+    top: 20px;
+}
+
+.comment-text{
+	color:#555f77;
+	font-size: 15px;
+	margin-bottom: 25px;
+}
+
+.comment-footer{
+	color:#acb4c2;
+	font-size: 13px;
+}
+
+.comment-date{
+	margin-left:10px;
+}
+
+.comment-delete{
+	border-right:1px dotted #acb4c2;
+}
+
+.comment-delete, .comment-report,#contents-report{
+	padding:0 5px;
+	float:right;
+	color:#555f77;
+}
+
+.comment-delete:hover, .comment-report:hover,#contents-report:hover{
+	text-decoration:underline;
+	cursor: pointer;
+}
