@@ -137,7 +137,7 @@ to {
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Inclination:</h6>
             <a class="collapse-item" href="${contextPath}/admin/inclnMain">성향 목록 조회</a>
-            <a class="collapse-item" href="#">성향 추가</a>
+            <a class="collapse-item" href="${contextPath}/admin/updateIncln">성향 추가</a>
           </div>
         </div>
       </li>

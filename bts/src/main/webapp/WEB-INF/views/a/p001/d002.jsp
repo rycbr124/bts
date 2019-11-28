@@ -60,7 +60,7 @@
 			case "save": // 저장
 				//var tempStr = mySheet.GetSaveString();
 				//alert("서버로 전달되는 문자열 확인 :"+tempStr);
-				mySheet.DoSave("${contextPath}/admin/saveMember");
+				mySheet.DoSave("${contextPath}/admin/saveIncln");
 				break;			
 			case "insert": //신규행 추가
 				var row = mySheet.DataInsert();
@@ -89,7 +89,7 @@
 <body onload="LoadPage()">
   <div class="page_title">
     <span><a class="closeDepth" href="#">closeDepth</a></span> 
-    <span class="title">성향관리 > <b>성향 목록 조회</b></span>
+    <span class="title">성향관리 > <b>성향 추가</b></span>
   </div>
   <div class="main_content">
     <div class="exp_product">각 행의 데이터를 수정하거나 입력,삭제시 상태컬럼의 변화를
@@ -101,9 +101,9 @@
     </div>
     <div class="ib_function float_right">
 	  <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-	  <!-- <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a> -->
+	  <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
 	  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-	  <!-- <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a> -->
+	  <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
 	</div>
 
 	<div class="clear hidden"></div>
