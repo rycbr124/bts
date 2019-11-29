@@ -22,6 +22,20 @@
 		objImg.src = imgArray[imgNum];
 
 	}
+	function accDel(){
+		alert('정말 삭제하시겠습니까?');
+		location.href = "${contextPath}/accompany3/accDel?article_no=${accView.article_no}";
+	}
+	
+	$(document).ready(function(){
+		init();
+		$('#contents-report').on('click',function(){
+			var reqUrl="${contextPath}/report/article/review"
+			var contents_cd=${result.article_no};
+			var target_id="${result.member_id}";
+			var popup = openReport(reqUrl,contents_cd,target_id);
+		});
+	})
 </script>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/e/p001/d002.css" />
@@ -38,6 +52,7 @@
 			<img id="accImage">
 			<div id="imgText">
 				<h1 id="h4text">&nbsp;&nbsp;${accView.acc_title }</h1>
+				<span id="h4text">글번호 : ${accView.article_no }</span>
 				<br>
 				<h4 id="h4text">작성자 : ${accView.nick_name}</h4>
 				<h4 id="h4text">나이 : ${accView.age }</h4>
@@ -53,6 +68,7 @@
 		</div>
 		<div id="headsubject">
 			<h1 id="subjectText">동행 게시글</h1>
+			<input type="hidden" value="${accView.article_no}" name="article_no">			
 		</div>
 		<div id="contents">
 			<br>
@@ -76,12 +92,18 @@
 			${accView.content} <br> <br> 
 			<a class="btn btn-success" href="#" style="background-color: #666666; border-color: #666666">매칭신청하기</a> &nbsp;&nbsp;&nbsp; 
 			<a class="btn btn-success" href="${contextPath}/accompany/accMain" style="background-color: #666666; border-color: #666666">목록으로 돌아가기</a>&nbsp;&nbsp;&nbsp; 
-			<a class="btn btn-success" href="#" style="background-color: #666666; border-color: #666666">게시글 신고하기</a>&nbsp;&nbsp;&nbsp; 		
-			<a class="btn btn-success" href="#popUpdel" style="background-color: #666666; border-color: #666666" data-toggle="modal">게시글 수정/삭제하기</a>
+			<a class="btn btn-success" href="#popUpReport" style="background-color: #666666; border-color: #666666" data-toggle="modal">게시글 신고하기</a>&nbsp;&nbsp;&nbsp;
+			<c:choose>
+			<c:when test="${sessionScope.memberInfo.member_id eq member_id}">
+			 		
+			<a class="btn btn-success" href="${contextPath }/accompany3/accUpdateForm?article_no=${accView.article_no}" style="background-color: #666666; border-color: #666666" >게시글 수정하기</a>&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-success" onclick="accDel();" id="accDelBtn" href="#" style="background-color: #666666; border-color: #666666" >게시글 삭제하기</a>
+			</c:when>
+			</c:choose>
 		</div>
 	</div>
 	
-	<div class="modal fade" id="popUpdel">
+	<div class="modal fade" id="popUpReport">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<!-- header -->
