@@ -1,0 +1,13 @@
+package bts.a.p004.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import bts.a.p004.vo.A_P004VO;
+import bts.c.p004.vo.C_P004VO;
+
+public interface A_P004DAO {
+	public List<C_P004VO> searchContact(Map<String,String> searchMap)throws Exception;
+	public List<C_P004VO> questionAnswer(String contact_no)throws Exception;
+	public void addAnswer(A_P004VO a_p004VO)throws Exception;
+}
