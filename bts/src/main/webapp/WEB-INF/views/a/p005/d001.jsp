@@ -31,7 +31,6 @@
 			//MultiLineText설정하면 shift+enter 누를 때 하나의 셀 안에 여러 값을 넣을 수 있음.
 			//Wrap은 컬럼 사이즈가 정해져 있지만 데이터 길이가 더 길 때, 뒷 부분은 알아서 줄 바꿈 해줌.
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"}, //모든 그리드에 들어감
-			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50}, //모든 그리드에 들어감
 			{Header:"ID",Type:"Text",SaveName:"member_id",MinWidth:80,Align:"Center"},
 			{Header:"비밀번호",Type:"Text",SaveName:"password",MinWidth:80,KeyField:1 ,MultiLineText:1}, //필수값을 체크하고자 할 때 keyField사용			
 			{Header:"이름",Type:"Text",SaveName:"name",MinWidth:150,KeyField:1 ,MultiLineText:1, Wrap:1}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
@@ -41,6 +40,7 @@
 		IBS_InitSheet( mySheet , initSheet);
 
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
+		mySheet.SetEditable(false);
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 		//doAction('search');
 	}
@@ -57,17 +57,6 @@
 			case "reload": //초기화
 				mySheet.RemoveAll();
 				break;
-			
-			/*	
-			case "save": // 저장
-				//var tempStr = mySheet.GetSaveString();
-				//alert("서버로 전달되는 문자열 확인 :"+tempStr);
-				mySheet.DoSave("${contextPath}/admin/saveMember");
-				break;			
-			case "insert": //신규행 추가
-				var row = mySheet.DataInsert();
-				break;
-			*/
 		}
 	}
 	

@@ -34,8 +34,8 @@
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50}, //모든 그리드에 들어감
 			{Header:"성향코드",Type:"Text",SaveName:"incln_cd",MinWidth:50,KeyField:1, Align:"Center"},
 			{Header:"성향이름",Type:"Text",SaveName:"name",MinWidth:300,KeyField:1 ,MultiLineText:1}, //필수값을 체크하고자 할 때 keyField사용			
-			{Header:"성향그룹",Type:"Text",SaveName:"group_name",MinWidth:50,KeyField:1 ,MultiLineText:1, Align:"Center"}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
-			{Header:"성향내용",Type:"Text",SaveName:"group_desc",MinWidth:50, Align:"Center"},
+			{Header:"성향그룹",Type:"Combo",SaveName:"group_name",MinWidth:50,KeyField:1 ,MultiLineText:1, Align:"Center", ComboCode:"security|plan|food|friend|safety|scenery|time|theme"}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
+			{Header:"성향내용",Type:"Combo",SaveName:"group_desc",MinWidth:50, Align:"Center", ComboCode:"경비|계획|음식|사람|안전|풍경|시간|스타일"},
 		];   
 		IBS_InitSheet( mySheet , initSheet);
 
@@ -96,7 +96,18 @@
 			확인하고,저장 버튼 클릭시 서버로 전송되는 데이터를 확인한다.</div>
     <div class="exp_product">
       <form name='frm'>
-        성향내용: <input type='text' id="group_desc" name="group_desc" /> 
+        성향내용:
+        <select id="group_desc" name="group_desc">
+        	<option value="">선택없음</option>
+        	<option value="경비">경비</option>
+        	<option value="계획">계획</option>
+        	<option value="음식">음식</option>
+        	<option value="사람">사람</option>
+        	<option value="안전">안전</option>
+        	<option value="풍경">풍경</option>
+        	<option value="시간">시간</option>
+        	<option value="스타일">스타일</option>        	
+        </select>
       </form>
     </div>
     <div class="ib_function float_right">

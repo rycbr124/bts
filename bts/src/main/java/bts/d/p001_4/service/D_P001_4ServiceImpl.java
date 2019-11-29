@@ -70,14 +70,28 @@ public class D_P001_4ServiceImpl implements D_P001_4Service{
 	}
 
 	@Override
-	public Integer commentCount(String plan_no) throws Exception {
-		return d_p001_4DAO.commentCount(plan_no);
-	}
-
-	@Override
 	public List<D_P001_4VO_5> selectAnswerList(Map<String, String> searchMap) throws Exception {
 		return d_p001_4DAO.selectAnswerList(searchMap);
 	}
 
+	@Override
+	public String selectArticleCd(String menuname) throws Exception {
+		return d_p001_4DAO.selectArticleCd(menuname);
+	}
+
+	@Override
+	public String selectCommentTotal(Map<String, String> searchMap) throws Exception {
+		return d_p001_4DAO.selectCommentTotal(searchMap);
+	}
+
+	@Override
+	public void insertAnswer(D_P001_4VO_5 d_p001_4VO_5) throws Exception {
+		d_p001_4DAO.insertAnswer(d_p001_4VO_5);
+	}
+
+	@Override
+	public int deleteAnswer(String answer_no) throws Exception {
+		return d_p001_4DAO.deleteAnswer(answer_no);
+	}
 
 }

@@ -112,6 +112,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		
 		int totalCount = Integer.parseInt(f_p001_3Service.selectCommentTotal(searchMap));
 		mav.addObject("initTotal",totalCount);
+	    mav.addObject("reqUrl","/community/review");
 		return mav;
 	}
 
