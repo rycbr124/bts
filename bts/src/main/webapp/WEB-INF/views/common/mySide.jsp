@@ -35,7 +35,7 @@ $(function(){
 <body>
 		<span class="title">마이페이지</span>
 		<ul class="submenu">
-			<li class="active"><a href="profile.html"> <i
+			<li class="active"><a href="${contextPath}/my/profile"> <i
 					class="icon icon-update-profile"></i> <span>여행자 정보 조회/수정</span>
 			</a></li>
 			<li><a href="order.html"> <i class="icon icon-post-list"></i>

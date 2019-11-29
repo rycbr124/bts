@@ -24,6 +24,7 @@
    
    <!-- 관리자페이지 기본 레이아웃 적용 화면 템플릿 -->
    <definition name="adminLayout"  template="/WEB-INF/views/common/adminLayout.jsp">
+   	  <put-attribute name="header" value="/WEB-INF/views/common/adminHeader.jsp" />	
       <put-attribute name="side" value="/WEB-INF/views/common/adminSide.jsp" />
       <put-attribute name="body" value="" />
    </definition>   

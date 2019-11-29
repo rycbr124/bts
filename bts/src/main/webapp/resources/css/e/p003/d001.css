@@ -1,0 +1,13 @@
+@charset "UTF-8";
+@font-face{
+	src:url("/resources/fonts/Binggrae/Binggrae-Bold.ttf");
+	font-family:"binggrae";	
+}
+
+#container{
+	font-family:"binggrae";
+	padding:auto;
+}
+#subject{
+	font-family:"binggrae";
+}

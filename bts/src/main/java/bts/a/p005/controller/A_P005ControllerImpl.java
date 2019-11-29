@@ -35,6 +35,7 @@ public class A_P005ControllerImpl implements A_P005Controller{
       return mav;
    }
 
+
    @Override
    @RequestMapping(value="/searchMember" ,method={RequestMethod.POST,RequestMethod.GET})
    @ResponseBody
@@ -88,3 +89,5 @@ public class A_P005ControllerImpl implements A_P005Controller{
    }
 
 }
+
+

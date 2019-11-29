@@ -75,7 +75,7 @@
 		cursor: pointer;
 	}
 	
-	#end,#emdMod{
+	#end,#endMod{
 		margin-top:30px;
 		margin-right:11%;
 		width:150px;

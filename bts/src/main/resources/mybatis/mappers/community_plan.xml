@@ -31,6 +31,17 @@
 		<result property="tag_name" column="tag_name" />
 		<result property="plan_no" column="plan_no" />
 	</resultMap>
+	
+	<resultMap id="ansResult" type="d_P001_4VO_5">
+		<result property="answer_no" column="answer_no" />
+		<result property="article_no" column="article_no" />
+		<result property="article_cd" column="article_cd" />
+		<result property="answer_desc" column="answer_desc" />
+		<result property="register_date" column="register_date" />	
+		<result property="member_id" column="member_id" />		
+		<result property="member_type" column="member_type" />	
+		<result property="profile_image" column="profile_image" />
+	</resultMap>
 
 	<!-- 게시글 조회 -->
 	<select id="searchArticle" resultMap="articleResult">
@@ -132,7 +143,7 @@
 		]]>
 	</update>
 	
-	<!-- 리스트 카운트 -->
+	<!-- 게시글 리스트 카운트 -->
 	<select id="pageCount" resultType="java.lang.Integer">
 		<![CDATA[
 			SELECT COUNT(*)
@@ -140,5 +151,64 @@
 			WHERE open_val = 'Y'
 		]]>
 	</select>
+	
+	<!-- 댓글 리스트 검색 -->
+	<select id="selectAnswerList" parameterType="Map" resultMap="ansResult">
+		<![CDATA[
+			SELECT b.* 
+			FROM
+			(
+			    SELECT rownum as rnum, a.*
+			    FROM 
+			    (
+			        SELECT answer_no,article_no,answer_desc,register_date,ar.member_id,profile_image,member_type
+			        FROM answer_article ar,b_member mem
+			        WHERE ar.member_id=mem.member_id
+                    AND article_cd=#{article_cd}
+                    AND article_no=#{article_no}
+			        ORDER BY answer_no
+			    ) a
+			    WHERE rownum<=#{endRow}
+			) b
+			WHERE b.rnum>=#{startRow}
+		]]>
+	</select>
+	
+	<!-- 메뉴 코드 검색 -->
+	<select id="selectArticleCd" parameterType="String" resultType="String">
+		<![CDATA[
+			SELECT menu_cd
+			FROM menu
+			WHERE name = #{name}
+		]]>
+	</select>
+	
+	<!-- 댓글 리스트 카운트 -->
+	<select id="selectCommentTotal" parameterType="map" resultType="String">
+		<![CDATA[
+			SELECT COUNT(*) totalCount
+			FROM answer_article 
+			WHERE article_cd = #{article_cd}
+			AND article_no = #{article_no}
+		]]>
+	</select>
+	
+	<!-- 댓글 추가 -->
+	<insert id="insertAnswer" parameterType="d_p001_4VO_5">
+		<![CDATA[
+			INSERT INTO answer_article(article_no, article_cd, answer_no, answer_desc, member_id, register_date)
+			VALUES (#{article_no}, #{article_cd}, article_comment_seq.nextval, #{answer_desc}, #{member_id}, sysdate)
+		]]>
+	</insert>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteAnswer" parameterType="String">
+		<![CDATA[
+			DELETE FROM answer_article
+			WHERE answer_no = #{answer_no}
+		]]>
+	</delete>
+	
+	
 	
 </mapper>

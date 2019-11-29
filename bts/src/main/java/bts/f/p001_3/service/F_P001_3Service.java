@@ -15,10 +15,11 @@ public interface F_P001_3Service {
 	public void insertAnswer(F_P001_3VO_3 f_p001_3VO_3) throws DataAccessException;
 	public int deleteAnswer(String answer_no) throws DataAccessException;
 	public void updateArticle(F_P001_3VO vo) throws DataAccessException;
-	public void updateTagList(List<F_P001_3VO_2> updateTagList,int article_no) throws DataAccessException;
-	public String selectReviewTotal() throws DataAccessException;
-	public String selectCommentTotal(String article_no) throws DataAccessException;
-	public List<F_P001_3VO> selectReviewList(Map<String,Integer> searchMap) throws DataAccessException;
+	public void updateTagList(List<F_P001_3VO_2> updateTagList,F_P001_3VO f_p001_3VO) throws DataAccessException;
+	public String selectReviewTotal(String article_cd) throws DataAccessException;
+	public String selectCommentTotal(Map<String,String> searchMap) throws DataAccessException;
+	public List<F_P001_3VO> selectReviewList(Map<String,String> searchMap) throws DataAccessException;
 	public F_P001_3VO selectReviewContents(Map<String,String> searchMap) throws DataAccessException;
 	public List<F_P001_3VO_3> selectAnswerList(Map<String,String> searchMap) throws DataAccessException;
+	public String selectArticleCd(String menu);
 }
