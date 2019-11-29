@@ -13,7 +13,12 @@
 		<result property="contact_date" column="contact_date"/>
 		<result property="contact_type" column="contact_type"/>
 	</resultMap>
-	
+	<resultMap id="answerInfo" type ="a_p004VO">
+		<result property="contents" column="contents"/>
+		<result property="contact_no" column="contact_no"/>
+		<result property="member_id" column="member_id"/>
+		<result property="register_date" column="register_date"/>
+	</resultMap>
 	
 	
 <insert id="addQuestion" parameterType="c_p004VO">
@@ -22,10 +27,32 @@
 	VALUES (#{contact_no}, #{title}, #{contents}, 'N', #{member_id}, TO_CHAR(SYSDATE,'YYYY-MM-DD'), #{contact_type})
 	]]>
 </insert>
+<select id="selectQuestion" resultMap="questionInfo">
+	<![CDATA[
+	SELECT *
+	FROM CONTACT
+	WHERE member_id = #{member_id,jdbcType=VARCHAR}
+	ORDER BY TO_NUMBER(contact_no) desc
+	]]>
+</select>
+<select id="questionDetail" resultMap="questionInfo">
+	<![CDATA[
+	SELECT contact_no,contact_date,contact_type,contents,member_id,title,DECODE(answer_at,'N','처리중','Y','처리완료')AS answer_at
+	FROM CONTACT
+	WHERE contact_no = #{contact_no, jdbcType=VARCHAR}
+	]]>
+</select>
 <select id="questionSeq" resultType="String">
 	<![CDATA[
 	SELECT question_seq.nextval
 	FROM dual
+	]]>
+</select>
+<select id="select_answer" resultType="String" parameterType="c_p004VO">
+	<![CDATA[
+		SELECT contents
+		FROM answer_contact
+		WHERE contact_no = #{contact_no,jdbcType=VARCHAR}
 	]]>
 </select>
 </mapper>

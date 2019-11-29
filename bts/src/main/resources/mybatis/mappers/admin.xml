@@ -3,7 +3,7 @@
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
-<mapper namespace="a.p005">	
+<mapper namespace="a.p000">	
 	<!-- 리절트 맵 정의 -->
 	<resultMap id="memberResult" type="a_p005VO">
 		<result property="member_id" column="member_id" />
@@ -11,6 +11,23 @@
 		<result property="password" column="password" />
 		<result property="email" column="email" />
 		<result property="nick_name" column="nick_name" />		
+	</resultMap>
+	
+	<resultMap id="questionResult" type="c_p004VO">
+		<result property="contact_no" column="contact_no"/>
+		<result property="title" column="title"/>
+		<result property="contents" column="contents"/>
+		<result property="answer_at" column="answer_at"/>
+		<result property="member_id" column="member_id"/>
+		<result property="contact_date" column="contact_date"/>
+		<result property="contact_type" column="contact_type"/>
+	</resultMap>
+	
+	<resultMap id="answerResult" type="a_p004VO">
+		<result property="contents" column="contents"/>
+		<result property="contact_no" column="contact_no"/>
+		<result property="member_id" column="member_id"/>
+		<result property="register_date" column="register_date"/>
 	</resultMap>
 	
 	<!-- 회원조회 -->
@@ -51,4 +68,36 @@
 			WHERE member_id = #{member_id}
 		]]>
 	</delete>
+	
+	<select id="searchContact" resultMap="questionResult" parameterType="java.util.Map">
+		<![CDATA[
+			SELECT title,contact_no, DECODE(contact_type,'1','계정/탈퇴','2','서비스 문의','3','광고밒 제휴 문의','4','기타')AS contact_type , member_id,contact_date,DECODE(answer_at,'N','처리중','Y','처리완료')AS answer_at
+			FROM contact
+		]]>
+		<where>
+			<if test=" member_id != ''  and  member_id != null">
+				member_id = $(member_id)
+			</if>
+		</where>
+	</select>
+	<select id="questionAnswer" resultMap="questionResult" parameterType="c_p004VO">
+		<![CDATA[
+			SELECT *
+			FROM contact
+			WHERE contact_no = #{contact_no,jdbcType=VARCHAR}
+		]]>
+	</select>
+	<insert id="addAnswer" parameterType="a_p004VO">
+		<![CDATA[
+		INSERT INTO answer_contact(member_id, contact_no, contents, register_date)
+		VALUES (#{member_id,jdbcType=VARCHAR}, #{contact_no,jdbcType=VARCHAR}, #{contents,jdbcType=VARCHAR}, TO_CHAR(sysdate,'YYYY-MM-DD'))
+		]]>
+	</insert>
+	<update id="update_answer_at" parameterType="a_p004VO">
+		<![CDATA[
+		UPDATE contact
+		SET	answer_at = 'Y'
+		WHERE contact_no = #{contact_no,jdbcType=VARCHAR}
+		]]>
+	</update>
 </mapper>

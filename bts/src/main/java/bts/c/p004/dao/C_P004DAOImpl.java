@@ -1,7 +1,13 @@
 package bts.c.p004.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
 import bts.c.p004.vo.C_P004VO;
@@ -9,16 +15,30 @@ import bts.c.p004.vo.C_P004VO;
 @Repository("c_p004DAO")
 public class C_P004DAOImpl implements C_P004DAO{
 	@Autowired
-	private SqlSession QuestionSession;
+	private SqlSession sqlSession;
 	
 	@Override
-	public void addQuestion(C_P004VO c_p004VO)throws Exception{
-		QuestionSession.insert("c.p004.addQuestion",c_p004VO);
+	public List<C_P004VO> selectQuestion(String member_id)throws DataAccessException{
+		  return sqlSession.selectList("c.p004.selectQuestion",member_id);
 	}
 	@Override
-	public String questionSeq(C_P004VO c_p004VO)throws Exception{
-		String seq = QuestionSession.selectOne("c.p004.questionSeq");
+	public List<C_P004VO> questionDetail(String contact_no)throws DataAccessException{
+		return sqlSession.selectList("c.p004.questionDetail", contact_no);
+		
+	}
+	@Override
+	public void addQuestion(C_P004VO c_p004VO)throws DataAccessException{
+		sqlSession.insert("c.p004.addQuestion",c_p004VO);
+	}
+	@Override
+	public String questionSeq(C_P004VO c_p004VO)throws DataAccessException{
+		String seq = sqlSession.selectOne("c.p004.questionSeq");
 		
 		return seq;
+	}
+	@Override
+	public String answerDetail(String contact_no)throws DataAccessException{
+		String detail = sqlSession.selectOne("c.p004.select_answer",contact_no);
+		return detail;
 	}
 }

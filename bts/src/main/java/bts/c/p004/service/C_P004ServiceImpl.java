@@ -1,7 +1,8 @@
 package bts.c.p004.service;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +18,21 @@ public class C_P004ServiceImpl implements C_P004Service{
 	C_P004DAO c_p004DAO;
 	
 	@Override
+	public List<C_P004VO> selectQuestion(String member_id)throws Exception{
+		return c_p004DAO.selectQuestion(member_id);
+	}
+	@Override
 	public void addQuestion(C_P004VO c_p004VO)throws Exception{
 		String seq = c_p004DAO.questionSeq(c_p004VO);
 		c_p004VO.setContact_no(seq);
 		c_p004DAO.addQuestion(c_p004VO);
 	}
-
+	@Override
+	public List<C_P004VO> questionDetail(String contact_no)throws Exception{
+		return c_p004DAO.questionDetail(contact_no);
+	}
+	@Override
+	public String answerDetail(String contact_no)throws Exception{
+		return c_p004DAO.answerDetail(contact_no);
+	}
 }

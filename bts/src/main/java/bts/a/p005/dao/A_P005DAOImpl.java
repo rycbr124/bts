@@ -17,24 +17,24 @@ public class A_P005DAOImpl implements A_P005DAO{
 
 	@Override
 	public List<A_P005VO> searchMember(Map<String, String> searchMap) throws DataAccessException {
-		return sqlSession.selectList("a.p005.searchMember", searchMap);
+		return sqlSession.selectList("a.p000.searchMember", searchMap);
 	}
 
 	@Override
 	public void insertData(Map<String, String> row) {
-		sqlSession.update("a.p005.insertMember", row);
+		sqlSession.update("a.p000.insertMember", row);
 		
 	}
 
 	@Override
 	public void updateData(Map<String, String> row) {
-		sqlSession.update("a.p005.updateMember", row);
+		sqlSession.update("a.p000.updateMember", row);
 		
 	}
 
 	@Override
 	public void deleteData(Map<String, String> row) {
-		sqlSession.update("a.p005.deleteMember", row);
+		sqlSession.update("a.p000.deleteMember", row);
 		
 	}
 

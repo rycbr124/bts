@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"
+	isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath"  value="${pageContext.request.contextPath}" />	
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,35 +70,51 @@ background-color: lightgray;
 height:40px;
 border-top:2px solid gray;
 }
+#question_body td{
+font-size:13px;
+border-right:1px solid lightgray;
+border-bottom:1px solid lightgray;
+padding:10px;
+}
 </style>
+<script>
+$(function(){
+	$('#title a').on('click', function(){
+		var contact_tag = $(this).parent().prev();
+		var contact_no = $(contact_tag).text();
+		$('#title a').attr('href','/bts/question/question_detail?contact_no='+contact_no);
+	});
+});
+</script>
 </head>
 <body>
 	<div class="question">
 		<ul class="nav nav-tabs">
 			<li class="nav-item"><a class="nav-link" href="/bts/question/questionMain">문의 내역</a></li>
 			<li class="nav-item"><a class="nav-link active" href="/bts/question/question_write">문의하기</a></li>
-			<li class="nav-item"><a class="nav-link active" href="#">문의완료내역</a></li>
 		</ul>
 		
 	<table class="question_table">
-		<thread>
+		<thead>
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
 				<th>작성자</th>
 				<th>날짜</th>
-				<th>답변 완료</th>
+				<th style="font-size:10px;">답변 여부</th>
 			</tr>
-		</thread>
-		<tbody>
-			<tr>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+		</thead>
+		<c:forEach var="question" items="${questionList}">
+			<tbody>
+			<tr id="question_body">
+				<td style="width:50px;">${question.contact_no}</td>
+				<td id="title"><a href="#">${question.title}</a></td>
+				<td style="width:100px;">${question.member_id}</td>
+				<td style="width:100px;">${question.contact_date}</td>
+				<td style="width:50px;">${question.answer_at}</td>
 			</tr>
-		</tbody>
+			</tbody>
+		</c:forEach>
 	</table>	
 	
 		

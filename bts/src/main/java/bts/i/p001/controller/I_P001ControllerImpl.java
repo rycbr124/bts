@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.SystemPropertyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,7 +41,6 @@ public class I_P001ControllerImpl implements I_P001Controller {
 		b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
 		String member_id = b_p001VO.getMember_id();
 		Map<String,List<String>> searchPlan = i_p002Service.planList(member_id);
-		System.out.println(searchPlan);
 		JSONObject totalObject = new JSONObject(searchPlan);
 		ModelAndView mav = new ModelAndView("/i/p001/d001");
 		mav.addObject("list", totalObject.toJSONString());

@@ -1,5 +1,6 @@
 package bts.c.p004.vo;
 
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.stereotype.Component;
 
 @Component("i_p004VO")
@@ -54,5 +55,10 @@ public class C_P004VO {
 		this.contact_type = contact_type;
 	}
 	
+	
+	public String toString() {
+        return String.format(contents);
+    }
+
 	
 }
