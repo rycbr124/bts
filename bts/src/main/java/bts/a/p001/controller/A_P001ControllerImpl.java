@@ -80,5 +80,11 @@ public class A_P001ControllerImpl implements A_P001Controller{
 		ModelAndView mav = new ModelAndView("/a/p001/d002");
 		return mav;
 	}
+	
+	@RequestMapping(value="/test" ,method={RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView test(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/a/p001/d003");
+		return mav;
+	}
 
 }
