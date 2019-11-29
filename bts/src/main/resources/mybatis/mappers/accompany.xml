@@ -145,8 +145,35 @@
 	</select>
 	
 	<!-- 게시글 삭제 -->
-	<delete id="accompanyDel" parameterType="String">
-
+	<delete id="accompanyDel" parameterType="int">
+	<![CDATA[
+	delete from accompany where article_no = #{article_no}
+	]]>
 	</delete>
 	
+	<!-- 태그 삭제 -->
+	<delete id="accTagDel" parameterType="int">
+	<![CDATA[
+	delete from tag_accompany where article_no = #{article_no}
+	]]>
+	</delete>
+	
+	<!-- 게시글 수정 -->
+	<update id="accUpdate" parameterType="e_p003VO">
+	<![CDATA[
+	update accompany 
+	]]>
+	<set> 
+	 <![CDATA[acc_title = #{acc_title, jdbcType=VARCHAR},
+	 gender = #{gender, jdbcType=VARCHAR}, age= #{age, jdbcType=VARCHAR},
+	 traffic = #{traffic, jdbcType=VARCHAR}, whlrs_no = #{whlrs_no, jdbcType=VARCHAR},
+	 register_date = sysdate, content = #{content, jdbcType=VARCHAR}
+	 ]]>
+	</set>
+	<where>
+	<![CDATA[
+	article_no = #{article_no}
+	]]>
+	</where>
+	</update>
 </mapper>	
