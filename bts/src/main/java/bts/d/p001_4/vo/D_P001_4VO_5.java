@@ -1,7 +1,11 @@
 package bts.d.p001_4.vo;
 
+import java.sql.Timestamp;
+
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+@Scope("prototype")
 @Component("d_p001_4VO_5")
 public class D_P001_4VO_5 {
 	private int answer_no;
@@ -11,7 +15,7 @@ public class D_P001_4VO_5 {
 	private String member_id;
 	private String profile_image;
 	private String member_type;
-	private String register_date;
+	private Timestamp register_date;
 	public int getAnswer_no() {
 		return answer_no;
 	}
@@ -54,12 +58,12 @@ public class D_P001_4VO_5 {
 	public void setMember_type(String member_type) {
 		this.member_type = member_type;
 	}
-	public String getRegister_date() {
+	public Timestamp getRegister_date() {
 		return register_date;
 	}
-	public void setRegister_date(String register_date) {
+	public void setRegister_date(Timestamp register_date) {
 		this.register_date = register_date;
 	}
-	
+
 	
 }

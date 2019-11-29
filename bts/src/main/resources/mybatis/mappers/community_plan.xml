@@ -152,16 +152,6 @@
 		]]>
 	</select>
 	
-	<!-- 댓글 리스트 카운트 -->
-	<select id="commentCount" parameterType="String" resultType="java.lang.Integer">
-		<![CDATA[
-			SELECT COUNT(*)
-			FROM answer_article
-			WHERE article_cd = '2'
-			AND article_no = #{plan_no}
-		]]>
-	</select>
-	
 	<!-- 댓글 리스트 검색 -->
 	<select id="selectAnswerList" parameterType="Map" resultMap="ansResult">
 		<![CDATA[
@@ -174,14 +164,51 @@
 			        SELECT answer_no,article_no,answer_desc,register_date,ar.member_id,profile_image,member_type
 			        FROM answer_article ar,b_member mem
 			        WHERE ar.member_id=mem.member_id
-                    AND article_cd=3
+                    AND article_cd=#{article_cd}
                     AND article_no=#{article_no}
 			        ORDER BY answer_no
 			    ) a
-			    WHERE rownum<=#{end}
+			    WHERE rownum<=#{endRow}
 			) b
-			WHERE b.rnum>=#{start}
+			WHERE b.rnum>=#{startRow}
 		]]>
 	</select>
+	
+	<!-- 메뉴 코드 검색 -->
+	<select id="selectArticleCd" parameterType="String" resultType="String">
+		<![CDATA[
+			SELECT menu_cd
+			FROM menu
+			WHERE name = #{name}
+		]]>
+	</select>
+	
+	<!-- 댓글 리스트 카운트 -->
+	<select id="selectCommentTotal" parameterType="map" resultType="String">
+		<![CDATA[
+			SELECT COUNT(*) totalCount
+			FROM answer_article 
+			WHERE article_cd = #{article_cd}
+			AND article_no = #{article_no}
+		]]>
+	</select>
+	
+	<!-- 댓글 추가 -->
+	<insert id="insertAnswer" parameterType="d_p001_4VO_5">
+		<![CDATA[
+			INSERT INTO answer_article(article_no, article_cd, answer_no, answer_desc, member_id, register_date)
+			VALUES (#{article_no}, #{article_cd}, article_comment_seq.nextval, #{answer_desc}, #{member_id}, sysdate)
+		]]>
+	</insert>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="deleteAnswer" parameterType="String">
+		<![CDATA[
+			DELETE FROM answer_article
+			WHERE answer_no = #{answer_no}
+		]]>
+	</delete>
+	
+	
 	
 </mapper>

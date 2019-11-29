@@ -33,23 +33,41 @@
 	<script src="${contextPath}/resources/js/admin/chart-pie-demo.js"></script>
 
 <style>
+
 body{
 	overflow-y : hidden;
 }
+
+#header{
+	width : 88%;
+	float : right;
+	display : block;
+	position : relative;
+
+}
+
 #side{
 	width: 224px;
 	margin-right : 0;
+	position : relative;
 }
 
 
 #body{
 	display : inline-block;
+	width : 88%;
+	float : right;
+	position : relative;
 }
 
 </style>
 </head>
 <body>
 <div id = "container">
+	<div id="header">
+			<tiles:insertAttribute name="header" />
+	</div>
+	
 	<div id="side">
 			<tiles:insertAttribute name="side" />
 	</div>

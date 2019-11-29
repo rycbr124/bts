@@ -33,7 +33,9 @@ public class ReportControllerImpl implements ReportController {
 	ReportService repService;
 	
 	private static final String reviewName="review";
+	private static final String planName="plan";
 	private static final String commentName="comment";
+	
 	
 	@ModelAttribute("member_id")
 	public String getMember_id(HttpServletRequest request) {
@@ -47,6 +49,13 @@ public class ReportControllerImpl implements ReportController {
 	public ModelAndView reportArticle(@ModelAttribute ReportVO vo,HttpServletRequest request, HttpServletResponse response)throws Exception{
 		ModelAndView mav = new ModelAndView("/common/report");
 		makeReportForm(reviewName,vo,mav);
+		return mav;
+	}
+	
+	@RequestMapping(value="/article/plan", method= {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView reportPlan(@ModelAttribute ReportVO vo,HttpServletRequest request, HttpServletResponse response)throws Exception{
+		ModelAndView mav = new ModelAndView("/common/report");
+		makeReportForm(planName,vo,mav);
 		return mav;
 	}
 	

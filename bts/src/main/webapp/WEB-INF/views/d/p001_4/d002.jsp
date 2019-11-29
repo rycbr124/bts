@@ -14,8 +14,44 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<link rel="stylesheet" href="${contextPath}/resources/css/comment/comment.css"> <!-- 커스텀 css -->
+<script src="${contextPath}/resources/js/comment/comment.js"></script> <!-- 커스텀 js -->
+<script src="${contextPath}/resources/js/report/report.js"></script> <!-- 커스텀 js -->
+
+
 <script>
 	$(document).ready(function (){
+		init();
+		
+		function init(){
+          var context="${contextPath}";
+          var no="${plan_no}";
+          var id="${sessionScope.memberInfo.member_id}";
+          var url="${reqUrl}";
+          setInit(context,no,id,url);
+          var paging = ${initTotal};
+          comPaging(paging);
+	    }
+		
+		$(document).on('click','span.comment-report',function(){
+			var reqUrl="${contextPath}/report/comment"
+			var contents_cd=$(this).parent().parent().data('no');
+			var target_id=$(this).parent().find('.comment-author').text();
+			var popup = openReport(reqUrl,contents_cd,target_id);			
+		});
+		
+		$('#contents-report').on('click',function(){
+			var reqUrl="${contextPath}/report/article/plan"
+			var contents_cd="${plan_no}";
+			var target_id="${result[0].member_id}";
+			var popup = openReport(reqUrl,contents_cd,target_id);
+		});
+		
+		
+		
+		
+		
 		var arr_content = new Array();
 		var arr_day = new Array();
 		var arr_desc = new Array();
@@ -138,19 +174,7 @@
 		$('.planner_detail').append(list_button);	
 		
 	});
-	
-	/* 댓글 구현 함수 */
-	
-	function commentList(){
-		$.ajax({
-			type : "post",
-			async : false,
-			url : "${contextPath}/community/comment_list",
-			data : {
-				
-			},
-		})
-	}
+
 	
 	
 	
@@ -268,31 +292,30 @@ h2.titleDesc{
 		<!-- javascript로 처리할 부분 -->
 		<div class="planner_detail">
 		
-			
-			
 		</div>
 		
-		
-        <label for="content">comment</label>
-        <form name="commentInsertForm">
-            <div class="input-group">
-               <input type="hidden" name="bno" value="${detail.bno}"/>
-               <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
-               <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
-               </span>
-              </div>
-        </form>
-    
-    
-    
-        <div class="commentList"></div>
-    
+		<div id='contents-info'>
+			<span id="comment-count">
+				<i class="far fa-comment-dots fa-2x"></i>
+				<span>${paging.totalCount}</span>
+			</span>
+			<span id="view-count"></span>
+			<span id="contents-report">게시글 신고</span>
+		</div>
+		<div id="comment-form" class="mx-auto">
+			<form name="frmCom" class="row justify-content-md-end"  action="${contextPath}/community/comment/write" method="post">
+				<textarea name="input-comment"></textarea>
+				<input type="submit" class="btn btn-outline-secondary btn-sm" value="작성하기">
+				<input type="hidden" name="article_no" value="${plan_no}">
+			</form>
+		</div>
+		<div id="comments">
+		</div>
+		<div id="comment-paging">
+			<ul id="paging-list" class="pagination justify-content-center pagination-sm">
+			</ul>
+		</div>
 
-
-
-		
-		
 	</div>
 </body>
 </html>
