@@ -27,15 +27,7 @@
 		location.href = "${contextPath}/accompany3/accDel?article_no=${accView.article_no}";
 	}
 	
-	$(document).ready(function(){
-		init();
-		$('#contents-report').on('click',function(){
-			var reqUrl="${contextPath}/report/article/review"
-			var contents_cd=${result.article_no};
-			var target_id="${result.member_id}";
-			var popup = openReport(reqUrl,contents_cd,target_id);
-		});
-	})
+	
 </script>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/e/p001/d002.css" />
