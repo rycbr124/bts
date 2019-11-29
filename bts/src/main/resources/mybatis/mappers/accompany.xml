@@ -19,8 +19,34 @@
 		<result property="content" column="content" />
 		<result property="incln_cd" column="incln_cd" />
 		<result property="viewcnt" column="viewcnt" />
+		<result property="nick_name" column="nick_name" />
 	</resultMap>
 
+	<resultMap id="accInclnResult" type="c_p001vo">
+		<result property="incln_cd" column="incln_cd" />
+		<result property="name" column="name" />
+		<result property="group_name" column="group_name" />
+		<result property="group_desc" column="group_desc" />
+		<result property="member_id" column="member_id" />
+	</resultMap>
+	
+	<resultMap id="accTagResult" type="e_p003VO_2">
+	<result property="article_no" column="article_no" />
+	<result property="tag_name" column="tag_name" />
+	</resultMap>
+
+	<resultMap id="insertAccResult" type="e_p003VO">
+		<result property="article_no" column="article_no" />
+		<result property="article_cd" column="article_cd" />
+		<result property="gender" column="gender" />
+		<result property="age" column="age" />
+		<result property="traffic" column="traffic" />
+		<result property="whlrs_no" column="whlrs_no" />
+		<result property="tag" column="tag" />
+		<result property="member_id" column="member_id" />
+		<result property="content" column="content" />
+		<result property="register_date" column="register" />
+	</resultMap>
 
 	<!-- 페이징 처리 쿼리 -->
 	<select id="selectAccompany" resultMap="accompanyResult">
@@ -29,12 +55,51 @@
 	order by article_no desc)A) where RN between #{start} and #{end}
 	]]>
 	</select>
-	
-	<!-- 조회수 증가  -->
+
+	<!-- 글작성 쿼리 -->
+	<insert id="accInsert" parameterType="e_p003VO">
+	<![CDATA[
+	insert into accompany(article_no, acc_title, article_cd, gender, age, traffic, whlrs_no, member_id, register_date, content, nick_name, viewcnt)
+	values(article_no.nextval, #{acc_title, jdbcType=VARCHAR}, 'E_00', 
+	#{gender, jdbcType=VARCHAR}, #{age , jdbcType=VARCHAR}, #{traffic, jdbcType=VARCHAR}
+	, #{whlrs_no, jdbcType=VARCHAR}, 
+	#{member_id, jdbcType=VARCHAR}, sysdate, #{content, jdbcType=VARCHAR}
+	,(select nick_name from b_member where member_id = #{member_id, jdbcType=VARCHAR}),0)
+	]]>
+		<selectKey resultType="int" keyProperty="article_no"
+			order="AFTER">
+	<![CDATA[
+	select article_no.currval from dual
+	]]>
+		</selectKey>
+	</insert>
+
+	<!-- 태그 등록 -->
+	<insert id="tagInsert" parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=" "
+			open="INSERT ALL" close="SELECT * FROM DUAL">
+			INTO tag_accompany(tag_name, article_no)
+			values(#{item.tag_name},#{item.article_no})
+		</foreach>
+	</insert>
+
+	<!-- 조회수 증가 -->
 	<update id="updateViewcnt">
-	update accompany set viewcnt = viewcnt+1 where article_no = #{article_no}
+		update accompany set viewcnt = viewcnt+1 where
+		article_no = #{article_no}
 	</update>
-	
+
+	<!-- 회원 성향 가져오기 -->
+	<select id="accIncln" resultMap="accInclnResult"
+		parameterType="c_p001vo">
+	<![CDATA[
+	select il.name from incln_list il , incln_member im 
+	where il.incln_cd = im.incln_cd
+	and member_id = #{member_id}
+	]]>
+	</select>
+
+
 	<!-- 동행 게시글 상세 조회 -->
 	<select id="accView" resultType="e_p001VO" parameterType="int">
 	<![CDATA[
@@ -43,22 +108,30 @@
 	]]>
 	</select>
 	
+	<!-- 태그 가져오기 -->
+	<select id="tagView" resultMap="accTagResult" parameterType="e_p003VO_2">
+	<![CDATA[
+	select tag_name from tag_accompany where article_no = #{article_no}
+	]]>
+	</select> 
+
 	<!-- 동행 리스트 -->
-	<select id="accList" resultMap="accompanyResult" resultType="e_p001VO" >
+	<select id="accList" resultMap="accompanyResult"
+		resultType="e_p001VO">
 	<![CDATA[
 	select * 
 	from (select rownum rn, a.* from (select * from accompany order by article_no desc) a)
 	 where rn between #{start} and #{end}
 	]]>
 	</select>
-	
+
 	<!-- 동행 리스트 카운트 -->
-	<select id="listCount" resultType="java.lang.Integer" >
+	<select id="listCount" resultType="java.lang.Integer">
 	<![CDATA[
 	select count(*) from accompany
 	]]>
 	</select>
-	
+
 	<!-- 동행 게시글 목록 조회 -->
 	<select id="accompanyList" resultMap="accompanyResult"
 		parameterType="e_p001VO">
@@ -70,4 +143,10 @@
 	where a.article_no = al.article_no
 	]]>
 	</select>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="accompanyDel" parameterType="String">
+
+	</delete>
+	
 </mapper>	

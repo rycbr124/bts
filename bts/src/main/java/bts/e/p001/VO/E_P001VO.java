@@ -20,6 +20,14 @@ public class E_P001VO {
 	private String incln_cd;
 	private Date register_date;
 	private int viewcnt;
+	private String nick_name;
+	
+	public String getNick_name() {
+		return nick_name;
+	}
+	public void setNick_name(String nick_name) {
+		this.nick_name = nick_name;
+	}
 	public String getGender() {
 		return gender;
 	}
