@@ -30,7 +30,8 @@
 	  <typeAlias type="bts.a.p005.vo.A_P005VO" alias="a_p005VO" />
 	  <typeAlias type="bts.common.PagingVO" alias="pagingVO" />	 
 	  <typeAlias type="bts.common.report.vo.ReportVO" alias="reportVO"/>   
-	  <typeAlias type="bts.common.report.vo.PnishVO" alias="pnishVO"/>   
+	  <typeAlias type="bts.common.report.vo.PnishVO" alias="pnishVO"/>
+	  <typeAlias type="bts.e.p002.VO.E_P002VO" alias="e_p002VO"/>      
    </typeAliases>
-
+   
 </configuration>

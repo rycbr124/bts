@@ -34,6 +34,7 @@ public class ReportControllerImpl implements ReportController {
 	
 	private static final String reviewName="review";
 	private static final String commentName="comment";
+	private static final String planName="plan";
 	private static final String accompanyName="accompany";
 	
 	
@@ -52,10 +53,19 @@ public class ReportControllerImpl implements ReportController {
 		return mav;
 	}
 	
-	@RequestMapping(value="/accompany/report")
-	public ModelAndView reportAccompany(@ModelAttribute ReportVO vo,HttpServletRequest request, HttpServletResponse response )throws Exception{
+	@RequestMapping(value="/article/accompany", method= {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView reportAccompany(@ModelAttribute ReportVO vo,HttpServletRequest request, HttpServletResponse response)throws Exception{
 		ModelAndView mav = new ModelAndView("/common/report");
 		makeReportForm(accompanyName,vo,mav);
+		return mav;
+	}
+
+
+	
+	@RequestMapping(value="/article/plan", method= {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView reportPlan(@ModelAttribute ReportVO vo,HttpServletRequest request, HttpServletResponse response)throws Exception{
+		ModelAndView mav = new ModelAndView("/common/report");
+		makeReportForm(planName,vo,mav);
 		return mav;
 	}
 	
@@ -84,5 +94,9 @@ public class ReportControllerImpl implements ReportController {
 		List<PnishVO> pnish = repService.selectPnishList();
 		mav.addObject("initValue",vo);
 		mav.addObject("pnish",pnish);
+	}
+	
+	private void accReportForm(String se_name, ReportVO vo, ModelAndView mav) {
+		String report_se=repService.selectMenuCd(se_name);
 	}
 }
