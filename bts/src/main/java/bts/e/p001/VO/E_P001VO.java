@@ -20,8 +20,15 @@ public class E_P001VO {
 	private String incln_cd;
 	private Date register_date;
 	private int viewcnt;
+	private String thumb;
 	private String nick_name;
 	
+	public String getThumb() {
+		return thumb;
+	}
+	public void setThumb(String thumb) {
+		this.thumb = thumb;
+	}
 	public String getNick_name() {
 		return nick_name;
 	}
