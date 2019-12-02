@@ -32,34 +32,20 @@ table {
 	width: 100%;
 }
 
-th {
+th,td,h2,p {
 	font-family: "NanumSquareRoundEB";
-}
-
-td {
-	font-family: "NanumSquareRoundR";
-}
-
-h2 {
-	font-family: "NanumSquareRoundEB";
-}
-
-p {
-	font-family: "NanumSquareRoundR";
 }
 #body{
 	width:85%;
 }
 .question {
 	position: relative;
-	height: 500px;
+	height: auto;
 	width: 1000px;
+	min-height:500px;
 	margin: 0 auto;
 }
 
-#side li {
-	font-size: 13px;
-}
 .nav-link{
 	font-size:13px;
 	font-weight:bold;
@@ -75,6 +61,9 @@ font-size:13px;
 border-right:1px solid lightgray;
 border-bottom:1px solid lightgray;
 padding:10px;
+}
+#footer{
+	margin-top:50px;
 }
 </style>
 <script>
@@ -116,10 +105,30 @@ $(function(){
 			</tbody>
 		</c:forEach>
 	</table>	
-	
-		
 	</div>
-
+		<div id="paging">
+			<ul class="pagination justify-content-center" id="pagination">
+				<!-- 이전버튼 -->
+				<c:if test="${paging.startPage != 1}">
+					<li class="page-item"><a href="${contextPath}/community/plan_list?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous" id="prev">이전</a></li>
+				</c:if>
+				<!-- 페이지 번호 -->
+				<c:forEach var="idx" begin="${paging.startPage}" end="${paging.endPage}">
+					<c:choose>
+						<c:when test="${idx == paging.nowPage }">
+							<li class="page-item"><a class="page-link" href="#" id="pageNo">${idx}</a></li>
+						</c:when>
+						<c:when test="${idx != paging.nowPage }">
+							<li class="page-item"><a class="page-link" href="${contextPath}/community/plan_list?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" id="pageNo">${idx}</a></li>
+						</c:when>
+					</c:choose>
+				</c:forEach>
+				<!-- 이후 -->
+				<c:if test="${paging.endPage != paging.lastPage}">
+					<li class="page-item"><a href="${contextPath}/community/plan_list?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
+				</c:if>
+			</ul>
+		</div>
 
 
 </body>

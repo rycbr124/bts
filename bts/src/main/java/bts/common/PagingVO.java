@@ -79,6 +79,7 @@ public class PagingVO {
 		calStartEndRow();
 	}
 	
+	
 	private void calTotalPage(int totalCount,int rangeRow) {
 		int totalPage = totalCount/rangeRow;
 		if(totalCount%rangeRow>0) {

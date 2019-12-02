@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.http.protocol.HTTP;
 import org.springframework.web.servlet.ModelAndView;
 
+import bts.e.p001.VO.PagingVO;
+
 public interface C_P004Controller {
 	public ModelAndView questionMain(HttpServletRequest request, HttpServletResponse response)throws Exception;
 	public ModelAndView questionWrite(HttpServletRequest request, HttpServletResponse response)throws Exception;

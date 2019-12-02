@@ -14,11 +14,13 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import bts.b.p001.VO.B_P001VO;
 import bts.c.p004.service.C_P004Service;
 import bts.c.p004.vo.C_P004VO;
+import bts.e.p001.VO.PagingVO;
 
 @Controller("c_p004")
 @RequestMapping(value="/question")

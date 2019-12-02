@@ -29,8 +29,20 @@ $(function(){
 		}
 		$('#side').animate({'top':position},{duration:speed, easing, queue:false});
 	});
+	$('.submenu li a').on('mouseover',function(){
+		$(this).parent().prop('style','background-color:lightgray');
+	}),
 });
 </script>
+<style>
+.submenu li{
+	font-size:14px;
+}
+.title{
+	color:#fff;
+	letter-spacing:2px;
+}
+</style>
 </head>
 <body>
 		<span class="title">마이페이지</span>

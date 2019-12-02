@@ -12,6 +12,15 @@ public class C_P004VO {
 	private String member_id;
 	private String contact_date;
 	private String contact_type;
+	private String rownum;
+	
+	
+	public String getRownum() {
+		return rownum;
+	}
+	public void setRownum(String rownum) {
+		this.rownum = rownum;
+	}
 	public String getContact_date() {
 		return contact_date;
 	}
@@ -59,6 +68,4 @@ public class C_P004VO {
 	public String toString() {
         return String.format(contents);
     }
-
-	
 }

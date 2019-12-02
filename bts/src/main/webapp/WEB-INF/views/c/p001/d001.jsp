@@ -19,7 +19,7 @@
 		
 		$('#btn-form-submit').click(function() {
 			var profile = $('#frm-profile')[0];
-			profile.action = "${contextPath }/my/update";
+			profile.action = "/bts/my/update";
 			profile.submit();
 			/*
 			console.log(profile);
@@ -38,7 +38,6 @@
 	function tagInit(){
 		var input = ${selected};
 		var radioList = $('input[type=radio]').toArray();
-		console.log(radioList);
 		for(var i in input){
 			var cd = input[i].incln_cd;
 			for(var j in radioList){
@@ -66,7 +65,7 @@
 					<form id="frm-profile" autocomplete="off" method="post">
 						<input type="hidden" name="email_id" id="email_id"> <input
 							type="hidden" name="email_host" id="email_host">
-						<div class="mypage-picture" action="${contextPath}/my/image">
+						<div class="mypage-picture">
 
 							<c:choose>
 								<c:when
@@ -79,6 +78,7 @@
 										<img
 											src="${contextPath}/${sessionScope.memberInfo.profile_image }"
 											id="profImg">
+s										<input type="hidden" name="profileImage" value=""/>
 									</c:if>
 								</c:when>
 
