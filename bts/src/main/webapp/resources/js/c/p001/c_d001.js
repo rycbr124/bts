@@ -42,7 +42,6 @@ function fileChange(e) {
     var formData = new FormData();
 
     formData.append("file", file);
-
 		$.ajax({
     	url: '/bts/my/uploadAjax',
 		  data: formData,
@@ -58,6 +57,7 @@ function fileChange(e) {
 		})
 
 
+		/*
  		function checkImageType(fileName){
  			var pattern = /jpg$|gif$|png$|jpeg$/i;
  			return fileName.match(pattern);
@@ -86,5 +86,6 @@ function fileChange(e) {
  			return front + end;
 
  		}
+ * */
 
 }

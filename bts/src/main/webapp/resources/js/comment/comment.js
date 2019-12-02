@@ -1,13 +1,14 @@
 
 var globalValue;
 
-function setInit(path,article,member){
+function setInit(path,article,member,reqUrl){
 	globalValue=new valueForm();
 	
 	function valueForm(){
 		var contextPath=path;
 		var articleNo=article;
 		var id=member;
+		var url=reqUrl;
 		
 		this.getContextPath=function(){
 			return contextPath;
@@ -33,6 +34,14 @@ function setInit(path,article,member){
 			id=input;
 		}
 		
+		this.getUrl=function(){
+			return url;
+		};
+		
+		this.setUrl=function(input){
+			url=input;
+		}
+		
 	}
 }
 
@@ -46,7 +55,7 @@ $(document).ready(function(){
 			$.ajax({
 				type : "post", 
 				async : false,
-				url : globalValue.getContextPath()+"/community/review/comment/delete",
+				url : globalValue.getContextPath()+globalValue.getUrl()+"/comment/delete",
 			    data: {answer_no:input},
 			    dataType:'text',
 				success : function (data,textStatus){
@@ -90,7 +99,7 @@ function comPaging(paging){
 	$.ajax({
 		type : "post", 
 		async : false,
-		url : globalValue.getContextPath()+"/community/review/comment",
+		url : globalValue.getContextPath()+globalValue.getUrl()+"/comment",
 		data: searchData,
 		dataType:'json',
 		success : function (data,textStatus){

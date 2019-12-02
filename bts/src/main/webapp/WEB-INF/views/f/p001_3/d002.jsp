@@ -214,7 +214,8 @@
 			var context="${contextPath}";
 			var no=${result.article_no};
 			var id="${sessionScope.memberInfo.member_id}";
-			setInit(context,no,id);
+			var url="${reqUrl}";
+			setInit(context,no,id,url);
 			var paging = ${initTotal};
 			comPaging(paging);
 		}	
@@ -268,7 +269,7 @@
 			<div id='contents-info'>
 				<span id="comment-count">
 					<i class="far fa-comment-dots fa-2x"></i>
-					<span>${paging.totalCount}</span>
+					<span></span>
 				</span>
 				<span id="view-count"></span>
 				<span id="contents-report">게시글 신고</span>
