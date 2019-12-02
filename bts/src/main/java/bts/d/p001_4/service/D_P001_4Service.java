@@ -25,6 +25,9 @@ public interface D_P001_4Service {
 	public void increaseCnt(String plan_no) throws Exception;
 	public void updateContent(List<D_P001_4VO_2> voList) throws Exception;
 	public Integer listCount() throws Exception;
-	public Integer commentCount(String plan_no) throws Exception;
 	public List<D_P001_4VO_5> selectAnswerList(Map<String,String> searchMap) throws Exception;
+	public String selectArticleCd(String menuname) throws Exception;
+	public String selectCommentTotal(Map<String, String> searchMap) throws Exception;
+	public void insertAnswer(D_P001_4VO_5 d_p001_4VO_5) throws Exception;
+	public int deleteAnswer(String answer_no) throws Exception;
 }

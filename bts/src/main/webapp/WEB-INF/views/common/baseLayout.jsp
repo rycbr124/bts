@@ -16,7 +16,6 @@
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 </head>
 <body>
-
 	<div id="container">
 		<div id="header">
 			<tiles:insertAttribute name="header" />

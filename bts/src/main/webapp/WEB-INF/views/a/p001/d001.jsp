@@ -31,16 +31,15 @@
 			//MultiLineText설정하면 shift+enter 누를 때 하나의 셀 안에 여러 값을 넣을 수 있음.
 			//Wrap은 컬럼 사이즈가 정해져 있지만 데이터 길이가 더 길 때, 뒷 부분은 알아서 줄 바꿈 해줌.
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"}, //모든 그리드에 들어감
-			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50}, //모든 그리드에 들어감
-			{Header:"ID",Type:"Text",SaveName:"member_id",MinWidth:80,Align:"Center"},
-			{Header:"비밀번호",Type:"Text",SaveName:"password",MinWidth:80,KeyField:1 ,MultiLineText:1}, //필수값을 체크하고자 할 때 keyField사용			
-			{Header:"이름",Type:"Text",SaveName:"name",MinWidth:150,KeyField:1 ,MultiLineText:1, Wrap:1}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
-			{Header:"이메일",Type:"Text",SaveName:"email",MinWidth:150},
-			{Header:"닉네임",Type:"Text",SaveName:"nick_name",MinWidth:100},
+			{Header:"성향코드",Type:"Text",SaveName:"incln_cd",MinWidth:50,KeyField:1, Align:"Center"},
+			{Header:"성향이름",Type:"Text",SaveName:"name",MinWidth:300,KeyField:1 ,MultiLineText:1}, //필수값을 체크하고자 할 때 keyField사용			
+			{Header:"성향그룹",Type:"Text",SaveName:"group_name",MinWidth:50,KeyField:1 ,MultiLineText:1, Align:"Center"}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
+			{Header:"성향내용",Type:"Text",SaveName:"group_desc",MinWidth:50, Align:"Center"},
 		];   
 		IBS_InitSheet( mySheet , initSheet);
 
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
+		mySheet.SetEditable(false);
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
 		//doAction('search');
 	}
@@ -50,24 +49,13 @@
 		switch(sAction) {
 			case "search": //조회
 			    var param = FormQueryStringEnc(document.frm);
-				mySheet.DoSearch("${contextPath}/admin/searchMember", param);
+				mySheet.DoSearch("${contextPath}/admin/searchIncln", param);
 				//mySheet.DoSearch("transaction_data2.json");
 				console.log(param);
 				break;
 			case "reload": //초기화
 				mySheet.RemoveAll();
 				break;
-			
-			/*	
-			case "save": // 저장
-				//var tempStr = mySheet.GetSaveString();
-				//alert("서버로 전달되는 문자열 확인 :"+tempStr);
-				mySheet.DoSave("${contextPath}/admin/saveMember");
-				break;			
-			case "insert": //신규행 추가
-				var row = mySheet.DataInsert();
-				break;
-			*/
 		}
 	}
 	
@@ -98,15 +86,25 @@
 			확인하고,저장 버튼 클릭시 서버로 전송되는 데이터를 확인한다.</div>
     <div class="exp_product">
       <form name='frm'>
-        ID: <input type='text' id="p_id" name="p_id" /> 
+        성향내용:
+        <select id="group_desc" name="group_desc">
+        	<option value="">선택없음</option>
+        	<option value="경비">경비</option>
+        	<option value="계획">계획</option>
+        	<option value="음식">음식</option>
+        	<option value="사람">사람</option>
+        	<option value="안전">안전</option>
+        	<option value="풍경">풍경</option>
+        	<option value="시간">시간</option>
+        	<option value="스타일">스타일</option>        	
+        </select>
       </form>
     </div>
     <div class="ib_function float_right">
 	  <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-	  <!-- <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>  -->
 	  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-	  <!-- <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>  -->
 	</div>
+
 
 	<div class="clear hidden"></div>
 	<div class="ib_product"><script>createIBSheet("mySheet", "100%", "100%");</script></div>

@@ -22,6 +22,9 @@ public interface D_P001_4DAO {
 	public void increaseCnt(String plan_no) throws DataAccessException;
 	public void updateContent(List<D_P001_4VO_2> voList) throws DataAccessException;
 	public Integer pageCount() throws DataAccessException;
-	public Integer commentCount(String plan_no) throws DataAccessException;
 	public List<D_P001_4VO_5> selectAnswerList(Map<String,String> searchMap) throws DataAccessException;
+	public String selectArticleCd(String menuname) throws DataAccessException;
+	public String selectCommentTotal(Map<String, String> searchMap) throws DataAccessException;
+	public void insertAnswer(D_P001_4VO_5 d_p001_4VO_5) throws DataAccessException;
+	public int deleteAnswer(String answer_no) throws DataAccessException;
 }

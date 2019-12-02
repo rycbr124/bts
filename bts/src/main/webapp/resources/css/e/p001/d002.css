@@ -9,8 +9,36 @@
 	font-family:"binggrae";
 }
 #accImage{
-	width:700px;
+	padding:auto;
+	width:1000px;
 	height:300px;
 	border-radius:1em;
-	text-align:center;
+	vertical-align:middle;
+}
+#imgContainer{
+	position:relative;
+}
+
+#imgText{
+	position:absolute;
+	text-align:left;
+	top: 15%;
+	padding-left:10px;
+}
+#h4text{
+	color:white;
+	text-align:left;
+}
+#popUpdel{
+	font-family:"binggrae";
+	padding-top:200px;
+}
+#delInput{
+	padding-left:20px;
+}
+#delbutton,#modbutton{
+	background:#666666;
+	border-radius:1em;
+	border:1px solid #666666;
+	color:white;
 }

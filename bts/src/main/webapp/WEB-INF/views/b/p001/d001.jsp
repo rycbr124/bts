@@ -99,8 +99,8 @@
 				<label for="inputPhoneNumber" class="col-lg-2 control-label">성별</label>
 				<div class="col-lg-10">
 					<select class="form-control" id="gender" name="gender">
-						<option value="M">남</option>
-						<option value="F">여</option>
+						<option value="남">남</option>
+						<option value="여">여</option>
 					</select>
 				</div>
 			</div>

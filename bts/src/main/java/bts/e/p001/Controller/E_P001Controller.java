@@ -12,11 +12,11 @@ import bts.e.p001.VO.E_P001VO;
 import bts.e.p001.VO.PagingVO;
 
 public interface E_P001Controller {
-	public ModelAndView accWrite(HttpServletRequest request, HttpServletResponse response)throws Exception;
+	public ModelAndView accWrite(HttpServletRequest request, HttpServletResponse response, HttpSession session)throws Exception;
 //	public ModelAndView listEvent(PagingVO vo, String nowPage, String cntPerPage, HttpServletRequest request,
 //	         HttpServletResponse response) throws Exception;
 	public ModelAndView selectAccompanyList(PagingVO pagingVO, @RequestParam(value="nowPage", required=false)String nowPage
 			, @RequestParam(value="cntPerPage", required=false)String cntPerPage) throws Exception;
 	
-	public ModelAndView accView(@RequestParam("article_no") int article_no ) throws Exception;
+	public ModelAndView accView(@RequestParam("article_no") int article_no,@RequestParam("member_id")String member_id ) throws Exception;
 }
