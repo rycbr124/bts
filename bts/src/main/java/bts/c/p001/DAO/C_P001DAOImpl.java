@@ -18,13 +18,7 @@ import bts.c.p001.vo.C_P001VO;
 public class C_P001DAOImpl implements C_P001DAO{
 	@Autowired
 	private SqlSession sqlSession;
-	
-//	@Override
-//	public B_P001VO selectMember(String memberId) throws DataAccessException {
-//		B_P001VO d001VO = (B_P001VO)sqlSession.selectOne("mapper.member.seleteMember",memberId);
-//		return d001VO;
-//	}
-	
+
 	@Override
 	public void updateMember(B_P001VO d001vo) throws DataAccessException {
 		sqlSession.update("mapper.member.updateMember",d001vo);
@@ -83,6 +77,11 @@ public class C_P001DAOImpl implements C_P001DAO{
 		public List<C_P001VO> selectCheckBoxList(String member_id) throws DataAccessException {
 			List<C_P001VO> list = sqlSession.selectList("mapper.myPage.selectCheckBoxList",member_id);
 			return list;
+		}
+		@Override
+		public B_P001VO selectMember(String member_id) {
+			B_P001VO b_p001VO = sqlSession.selectOne("mapper.myPage.selectMember",member_id);
+			return b_p001VO;
 		}
 	}
 

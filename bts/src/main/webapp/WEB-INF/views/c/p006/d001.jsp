@@ -351,7 +351,12 @@ $(document).ready(function(){
 	         				<img src="${contextPath}/resources/image/no_img.jpg">
 	         			</c:when>
 	         			<c:otherwise>
-			         		<img src="${memberVO.profile_image}">	         			
+							<c:if test="${result.member_type=='naver' || result.member_type=='kakao'}">
+								<img src="${memberVO.profile_image}">
+							</c:if>
+							<c:if test="${result.member_type!='naver' && result.member_type!='kakao'}">
+								<img src="${contextPath}${memberVO.profile_image}">
+							</c:if>    			
 	         			</c:otherwise>
 	         		</c:choose>
 	         		<div class="info">

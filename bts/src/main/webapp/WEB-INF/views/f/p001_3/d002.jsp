@@ -239,14 +239,14 @@
 			<div id="header-info">
 				<h1 id="title">${result.title}</h1>
 				<c:choose>
-					<c:when test="${com.profile_image==null}">
+					<c:when test="${result.profile_image==null}">
 						<img id="profile-image" src="${contextPath}/resources/image/no_img.jpg">
 					</c:when>
 					<c:otherwise>
-						<c:if test="${com.member_type=='naver' || com.member_type=='kakao'}">
+						<c:if test="${result.member_type=='naver' || result.member_type=='kakao'}">
 							<img id="profile-image" src="${result.profile_image}">
 						</c:if>
-						<c:if test="${com.member_type!='naver' && com.member_type!='kakao'}">
+						<c:if test="${result.member_type!='naver' && result.member_type!='kakao'}">
 							<img id="profile-image" src="${contextPath}${result.profile_image}">
 						</c:if>
 					</c:otherwise>

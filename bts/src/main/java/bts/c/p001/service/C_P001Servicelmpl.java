@@ -66,6 +66,12 @@ public class C_P001Servicelmpl implements C_P001Service{
 		List<C_P001VO> list = c_p001DAO.selectCheckBoxList(member_id);
 		return list;
 	}
+
+	@Override
+	public B_P001VO selectMember(String member_id) {
+		B_P001VO b_p001VO = c_p001DAO.selectMember(member_id);
+		return b_p001VO;
+	}
 	
 	
 }

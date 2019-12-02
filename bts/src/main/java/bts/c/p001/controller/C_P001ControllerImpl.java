@@ -99,7 +99,8 @@ public class C_P001ControllerImpl implements C_P001Controller {
 			String id = ((B_P001VO) session.getAttribute("memberInfo")).getMember_id();
 			member.setMember_id(id);
 			c_p001Service.updateMember(member);
-			session.setAttribute("memberInfo", member);
+			B_P001VO modMember = c_p001Service.selectMember(id);
+			session.setAttribute("memberInfo", modMember);
 			
 			List<C_P001VO> searchList = new ArrayList<>();
 			List<C_P001VO> groupList = c_p001Service.selectCheckList();
