@@ -29,7 +29,7 @@ public class UploadUtil {
 		    String savedPath = calcPath(uploadPath);
 
 		    File target = new File(uploadPath +savedPath,savedName);
-
+ 
 		    FileCopyUtils.copy(fileData, target);
 
 		    String formatName = originalName.substring(originalName.lastIndexOf(".")+1);

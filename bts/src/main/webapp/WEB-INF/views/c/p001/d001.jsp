@@ -66,7 +66,7 @@
 					<form id="frm-profile" autocomplete="off" method="post">
 						<input type="hidden" name="email_id" id="email_id"> <input
 							type="hidden" name="email_host" id="email_host">
-						<div class="mypage-picture" action="${contextPath}/my/image">
+						<div class="mypage-picture">
 
 							<c:choose>
 								<c:when
@@ -77,7 +77,7 @@
 									</c:if>
 									<c:if test="${sessionScope.memberInfo.member_type !='kakao' }">
 										<img
-											src="${contextPath}/${sessionScope.memberInfo.profile_image }"
+											src="${contextPath}${sessionScope.memberInfo.profile_image }"
 											id="profImg">
 									</c:if>
 								</c:when>

@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller("a_p002")
-@RequestMapping(value="/admin")
+@RequestMapping(value="/admin/report")
 public class A_P002ControllerImpl implements A_P002Controller{
 
 	@Override
+	@RequestMapping(value="/main")
 	public ModelAndView adminReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		ModelAndView mav = new ModelAndView("/a/p002/d001");
+		return mav;
 	}
 	
 

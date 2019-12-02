@@ -31,4 +31,6 @@ public interface C_P001Service {
 
 
 		public List<C_P001VO> selectCheckBoxList(String string);
+
+		public B_P001VO selectMember(String member_id);
 }

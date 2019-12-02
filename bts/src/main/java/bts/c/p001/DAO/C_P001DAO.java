@@ -38,5 +38,7 @@ public interface C_P001DAO {
 		public void insertCheckMemberList(List<C_P001VO> member_id) throws DataAccessException;
 
 		public List<C_P001VO> selectCheckBoxList(String member_id)throws DataAccessException;
+
+		B_P001VO selectMember(String member_id);
 	
 }
