@@ -29,7 +29,7 @@
 		<result property="profile_image" column="profile_image" />
 	</resultMap>
 	
-	<select id="selectMember" resultMap="memberResult">
+	<select id="selectMember" parameterType="String" resultMap="memberResult">
 	  <![CDATA[
 			SELECT *
 			FROM b_member
