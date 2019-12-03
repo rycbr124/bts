@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
 	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	
+
 <mapper namespace="mapper.myPage">
 	<resultMap id="inclnResult" type="c_p001vo">
 		<result property="incln_cd" column="incln_cd" />
@@ -11,7 +11,7 @@
 		<result property="group_desc" column="group_desc" />
 		<result property="member_id" column="member_id" />
 	</resultMap>
-	
+
 	<resultMap id="memberResult" type="d001VO">
 		<result property="member_id" column="member_id" />
 		<result property="password" column="password" />
@@ -28,7 +28,35 @@
 
 		<result property="profile_image" column="profile_image" />
 	</resultMap>
+
+	<resultMap id="accListResult" type="c_p007VO">
+		<result property="article_no" column="article_no" />
+		<result property="acc_title" column="acc_title" />
+		<result property="member_id" column="member_id" />
+		<result property="register_date" column="register_date" />
+	</resultMap>
+
+	<!-- 동행신청리스트 -->
+	<select id="myaccReq" resultMap="accListResult" parameterType="c_p007VO">
+	<![CDATA[
+	select article_no, acc_title, member_id, register_date
+	from
+	(select rownum rn, b.* from
+	(select a.* from accompany a, accompany_list al
+	where al.member_id = #{member_id, jdbcType=VARCHAR}
+	and a.article_no = al.article_no order by a.article_no desc) b )
+	where rn between #{start} and #{end}
+	]]>	
+	</select>
 	
+	<!-- 동행신청 리스트 카운트-->
+	<select id="accListCount" resultType="java.lang.Integer">
+	<![CDATA[
+	select count(*) from accompany_list al, accompany a 
+	where al.member_id = #{member_id} and a.article_no = al.article_no
+	]]>
+	
+	</select>
 	<select id="selectMember" resultMap="memberResult">
 	  <![CDATA[
 			SELECT *
@@ -53,33 +81,33 @@
 			ORDER BY TO_NUMBER(incln_cd)
 	    ]]>
 	</select>
-	
+
 	<select id="deleteMemberList" parameterType="String">
 	  <![CDATA[
 		DELETE FROM incln_member
 		WHERE member_id=#{member_id}
 	    ]]>
 	</select>
-	
-	<select id="insertCheckMemberList" parameterType="java.util.List">
-		<foreach collection="list" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
-	  <!-- 
-		INSERT INTO incln_member(member_id,incln_cd)
-		VALUES (#{member_id},#{incln_cd})
-	   -->
+
+	<select id="insertCheckMemberList"
+		parameterType="java.util.List">
+		<foreach collection="list" item="item" separator=" "
+			open="INSERT ALL" close="SELECT * FROM DUAL">
+			<!-- INSERT INTO incln_member(member_id,incln_cd) VALUES (#{member_id},#{incln_cd}) -->
 	  <![CDATA[
 	   		INTO incln_member(member_id,incln_cd)
 	   		VALUES (#{item.member_id},#{item.incln_cd})
    		]]>
 		</foreach>
 	</select>
-	
-		<select id="selectCheckBoxList" parameterType="String" resultMap="inclnResult">
+
+	<select id="selectCheckBoxList" parameterType="String"
+		resultMap="inclnResult">
 	  <![CDATA[
 		SELECT incln_cd
 		FROM incln_member
 		WHERE member_id=#{member_id}
 		]]>
 	</select>
-	
+
 </mapper>
