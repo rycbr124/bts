@@ -11,6 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap/bootstrap.css" />
+<link rel="stylesheet" href="${contextPath}/resources/css/mypage/myAccList.css" />
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>마이페이지 동행목록</title>
 </head>
@@ -32,8 +33,8 @@
 						<c:forEach var="result" items="${accList }" varStatus="status">
 							<tr>
 								<td><c:out value="${result.article_no }" /></td>
-								<td><a href="${contextPath}/accompany/accView"><c:out value="${result.acc_title }" /></a></td>
-								<td><c:out value="${result.nick_name }" /></td>
+								<td><a id="acc_title" href="${contextPath}/accompany/accView?article_no=${result.article_no}&member_id=${result.member_id}"><c:out value="${result.acc_title }" /></a></td>
+								<td><c:out value="${result.member_id }" /></td>
 								<td><c:out value="${result.register_date }" /></td>
 							</tr>
 						</c:forEach>
@@ -46,7 +47,7 @@
 				<ul class="pagination" id="pagination">
 					<!-- 이전버튼 -->
 					<c:if test="${paging.startPage != 1}">
-						<li class="page-item"><a href="${contextPath}/my/accList?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous" id="prev">이전</a></li>
+						<li class="page-item"><a href="${contextPath}/my/accompany/accList?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous" id="prev">이전</a></li>
 					</c:if>
 					<!-- 페이지 번호 -->
 					<c:forEach var="idx" begin="${paging.startPage}" end="${paging.endPage}">
@@ -55,13 +56,13 @@
 								<li class="page-item"><a class="page-link" href="#" id="pageNo">${idx}</a></li>
 							</c:when>
 							<c:when test="${idx != paging.nowPage }">
-								<li class="page-item"><a class="page-link" href="${contextPath}/my/accList?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" id="pageNo">${idx}</a></li>
+								<li class="page-item"><a class="page-link" href="${contextPath}/my/accompany/accList?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" id="pageNo">${idx}</a></li>
 							</c:when>
 						</c:choose>
 					</c:forEach>
 					<!-- 이후 -->
 					<c:if test="${paging.endPage != paging.lastPage}">
-						<li class="page-item"><a href="${contextPath}/my/accList?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
+						<li class="page-item"><a href="${contextPath}/my/accompany/accList?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
 					</c:if>
 				</ul>
 			</div>
