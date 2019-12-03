@@ -1,6 +1,7 @@
 package bts.a.p002.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,5 +18,10 @@ public class A_P002ServiceImpl implements A_P002Service{
 	public List<PnishVO> selectPnishList(String p_name) {
 		List<PnishVO> list = a_p002DAO.selectPnishList(p_name);
 		return list;
+	}
+
+	@Override
+	public void savePnishList(Map<String, String[]> dataMap) {
+
 	}
 }

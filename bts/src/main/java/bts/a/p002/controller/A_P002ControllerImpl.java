@@ -24,13 +24,13 @@ public class A_P002ControllerImpl implements A_P002Controller{
 	A_P002Service a_p002Service;
 	
 	@Override
-	@RequestMapping(value="/main")
+	@RequestMapping(value="/pnish")
 	public ModelAndView adminReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p002/d001");
 		return mav;
 	}
 	
-	@RequestMapping(value="/search")
+	@RequestMapping(value="/pnish/search")
 	@ResponseBody
 	public Map<String, Object> selectPnishList(@RequestParam(value="p_name",required=false) String p_name,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -39,5 +39,24 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		resultMap.put("Data", data);
 		return resultMap;
 	}
+
+	@RequestMapping(value="/pnish/save")
+	@ResponseBody
+	public Map<String, Object> savePnishList(@RequestParam Map<String,String[]> dataMap,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, String> result = new HashMap<String, String>();
+		try {
+			System.out.println("=============>"+dataMap);
+//			a_p002Service.savePnishList(dataMap);	
+			result.put("Code","0");
+			result.put("Message","저장되었습니다");
+		}catch(Exception e) {
+			result.put("Code","-1");
+			result.put("Message","저장에 실패하였습니다");
+			e.printStackTrace();
+		}
+		resultMap.put("Result", result);  
+		return resultMap;
+	}	
 	
 }

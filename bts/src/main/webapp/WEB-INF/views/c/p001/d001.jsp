@@ -17,22 +17,18 @@
 	$(document).ready(function() {
 		tagInit();
 		
+		if("${sessionScope.memberInfo.member_type=='kakao' || sessionScope.memberInfo.member_type=='naver'}"=="true"){
+			$("#input_img").on("click", function(){
+				alert('프로필 이미지 등록은 일반 회원만 가능합니다.');
+				return false;
+			});
+		}
+		
 		$('#btn-form-submit').click(function() {
 			var profile = $('#frm-profile')[0];
 			profile.action = "${contextPath }/my/update";
 			profile.submit();
-			/*
-			console.log(profile);
-			console.log(profile.profile_image);
-			 */
 		});
-		/*
-		$('.btn-primary').click(function(){
-			$('.btn-primary').removeClass('active');
-			$(this).addClass('active');
-			
-		})
-		*/
 	})
 	
 	function tagInit(){

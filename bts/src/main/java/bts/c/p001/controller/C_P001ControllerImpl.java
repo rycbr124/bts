@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.inject.Provider;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,6 +47,8 @@ public class C_P001ControllerImpl implements C_P001Controller {
 	Provider<C_P001VO> c_p001Provider;
 	@Value("${file.myImage}")
 	private String uploadPath;
+	@Value("${file.myMetaImage}")
+	private String metaPath;
 	
 	private static final Logger logger = LoggerFactory.getLogger(C_P001ControllerImpl.class);
 
@@ -117,7 +118,9 @@ public class C_P001ControllerImpl implements C_P001Controller {
 			
 
 			c_p001Service.deleteMemberList(id);
-			c_p001Service.insertCheckMemberList(searchList);
+			if(!searchList.isEmpty()) {
+				c_p001Service.insertCheckMemberList(searchList);
+			}
 			
 			
 			response.sendRedirect("/bts/my/profile");
@@ -156,7 +159,6 @@ public class C_P001ControllerImpl implements C_P001Controller {
 		searchData.put("password", password);
 		searchData.put("member_id", b_p001VO.getMember_id());
 		
-		//searchData.put("member_id", )
 		String result = c_p001Service.passCheck(searchData);
 		//
 		return result;
@@ -189,11 +191,10 @@ public class C_P001ControllerImpl implements C_P001Controller {
 	@RequestMapping(value = "/uploadAjax", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
 	public String uploadAjax(MultipartFile file, String str, HttpSession session,
 			HttpServletRequest request, B_P001VO vo) throws Exception {
-
 		logger.info("originalName: " + file.getOriginalFilename());
-			System.out.println("uploadPath===========================>"+uploadPath);
+			
 			ResponseEntity<String> img_path = new ResponseEntity<>(
-					UploadUtil.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
+					UploadUtil.uploadFile(uploadPath, metaPath, file.getOriginalFilename(), file.getBytes()),
 					HttpStatus.CREATED);
 			String user_imgPath = (String) img_path.getBody();
 			
@@ -204,6 +205,7 @@ public class C_P001ControllerImpl implements C_P001Controller {
 			vo.setMember_id(id.getMember_id());
 			logger.info("file name : " + user_imgPath);
 			c_p001Service.updateimage(vo);
+			id.setProfile_image(localhost+user_imgPath);
 			return user_imgPath;
 	}
 	

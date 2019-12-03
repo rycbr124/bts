@@ -113,7 +113,7 @@ function comPaging(paging){
                profile=globalValue.getContextPath()+'/resources/image/no_img.jpg';
             }else{
                if(comment.member_type!='kakao' && comment.member_type!='naver'){
-                  imgSrc=globalValue.getContextPath()+'/'+imgSrc;
+            	   profile=globalValue.getContextPath()+profile;
                }                     
             }
             
