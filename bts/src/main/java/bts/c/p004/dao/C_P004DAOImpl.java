@@ -9,8 +9,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import bts.c.p004.vo.C_P004VO;
+import bts.e.p001.VO.PagingVO;
 
 @Repository("c_p004DAO")
 public class C_P004DAOImpl implements C_P004DAO{
@@ -18,8 +20,16 @@ public class C_P004DAOImpl implements C_P004DAO{
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<C_P004VO> selectQuestion(String member_id)throws DataAccessException{
-		  return sqlSession.selectList("c.p004.selectQuestion",member_id);
+	public List<C_P004VO> selectQuestion(String member_id,PagingVO pagingVO)throws DataAccessException{
+		  Map<String,Object> param = new HashMap<>();
+		  param.put("member_id", member_id);
+		  param.put("start", pagingVO.getStart());
+		  param.put("end", pagingVO.getEnd());
+		return sqlSession.selectList("c.p004.selectQuestion",param);
+	}
+	@Override
+	public Integer pageCount(String member_id)throws DataAccessException{
+		return sqlSession.selectOne("c.p004.listCount",member_id);
 	}
 	@Override
 	public List<C_P004VO> questionDetail(String contact_no)throws DataAccessException{

@@ -82,15 +82,6 @@ to {
 </style>
 </head>
 <body>
-
-  <!-- Page Wrapper -->
-  <div id="wrapper">
-
-    <!-- End of Sidebar -->
-
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
-
       <!-- Main Content -->
       <div id="content">
 
@@ -112,8 +103,8 @@ to {
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Earnings (Monthly)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">$40,000</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">현재 총 회원수</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">${countMember}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -129,8 +120,8 @@ to {
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1 style: j">현재 총 문의수</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">${countContact}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -172,8 +163,8 @@ to {
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Requests</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">현재 총 신고수</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800">${countReport}</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -320,12 +311,6 @@ to {
       </footer>
       <!-- End of Footer -->
 
-    </div>
-    <!-- End of Content Wrapper -->
-
-  </div>
-  <!-- End of Page Wrapper -->
-
   <!-- Scroll to Top Button-->
   <a class="scroll-to-top rounded" href="#page-top">
     <i class="fas fa-angle-up"></i>
@@ -349,16 +334,6 @@ to {
       </div>
     </div>
   </div>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="${contextPath}/resources/js/admin/jquery.min.js"></script>
-  <script src="${contextPath}/resources/js/admin/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="${contextPath}/resources/js/admin/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="${contextPath}/resources/js/admin/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
   <script src="${contextPath}/resources/js/admin/Chart.min.js"></script>

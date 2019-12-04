@@ -37,6 +37,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="${contextPath}/resources/js/report/report.js"></script> <!-- 커스텀 js -->
+<script src="${contextPath}/resources/js/c/p006/d001.js"></script><!-- 소켓 js -->
 <title>동행 게시글 조회</title>
 </head>
 <body onload="showImage()">
@@ -113,7 +114,29 @@
 				async : false,
 				data : alldata,
 				success : function(){
-					alert("신청이 완료되었습니다.");
+					var url="ws://"+"${pageContext.request.serverName}"+":"+${pageContext.request.serverPort}+"${pageContext.request.contextPath}"+"/msg";		
+					var con = new socketConn(url);
+					var ws=con.getWs();
+					var textMessage='${sessionScope.memberInfo.member_id}'+'님이 매칭을 신청하였습니다.'
+					ws.onopen=function(){
+						sendText(ws,"send_message",sendForm(textMessage,target_id));
+						ws.close();
+					}
+					ws.onclose=function(){
+						alert("신청이 완료되었습니다.");
+						
+						var form = document.createElement('form');
+						var hidden = document.createElement('input');
+						$(hidden).attr('type','hidden');
+						$(hidden).attr('name','target_id');			
+						form.append(hidden);
+						
+						form.target_id.value=target_id;
+						form.action="${contextPath}/my/message/main";
+						form.method="post";
+						$('body').append(form);
+						form.submit();				
+					}
 				},
 				error: function(){
 					alert("다시 시도해주세요.");

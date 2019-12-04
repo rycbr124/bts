@@ -132,7 +132,15 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		
 		int totalCount = Integer.parseInt(f_p001_3Service.selectCommentTotal(searchMap));
 		PagingVO pvo = pagingProvider.get();
-		pvo.setPaging(Integer.parseInt(selectPage), totalCount, comRangePage, comRangeRow);
+		int curPage = totalCount;
+		try {
+			if(selectPage!=null) {
+				curPage = Integer.parseInt(selectPage);
+			}
+		}catch(NumberFormatException e) {
+			e.printStackTrace();
+		}
+		pvo.setPaging(curPage, totalCount, comRangePage, comRangeRow);
 		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
 		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
 		
@@ -143,6 +151,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String result = mapper.writeValueAsString(resultMap);
+		System.out.println("=====================>"+result);
 		return result;
 	}
 	

@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main/main.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/layout/layout.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/main/footer.css">
@@ -13,8 +14,10 @@
 <!--  <link rel="stylesheet" href="${contextPath}/resources/css/main/loginPopup.css">-->
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="${contextPath}/resources/js/main/logo.js"></script>
+<script src="${contextPath}/resources/js/main/main.js"></script>
 <link rel="canonical" href="http://www.alessioatzeni.com/wp-content/tutorials/jquery/login-box-modal-dialog-window/index.html" />
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <style>
@@ -44,35 +47,11 @@ h3.title {
 	font-family: "Binggrae";
 	margin-bottom: 100px;
 }
+
 </style>
 <meta charset="UTF-8">
 <title>Best Travel Seoul</title>
-<script>
-	function search_value() {
-		var text = $("#tab1").text();
-		$('#search_text').val(text);
-	}
-	function search_value1() {
-		var text2 = $("#tab2").text();
-		$('#search_text').val(text2);
-	}
-	function search_value2() {
-		var text3 = $("#tab3").text();
-		$('#search_text').val(text3);
-	}
-	function search_value3() {
-		var text4 = $("#tab4").text();
-		$('#search_text').val(text4);
-	}
-	function search_value4() {
-		var text5 = $("#tab5").text();
-		$('#search_text').val(text5);
-	}
 
-	$(document).on('click', 'a[href="#"]', function(e) {
-		e.preventDefault();
-	});
-</script>
 <c:if test='${not empty message }'>
 	<script>
 		window.onload = function() {
@@ -83,7 +62,30 @@ h3.title {
 		}
 	</script>
 </c:if>
-
+<script>
+$(document).ready(function(){
+	var accompany = ${bestAccompany};
+    var main = accompany.bestAccompany;
+    for(var i in main){
+    var best = main[i];
+    var title = best["ACC_TITLE"];
+    var thumbnail = best['THUMB'];
+    var gender = best['GENDER'];
+    var age = best['AGE'];
+    var whlrs_no = best['WHLRS_NO'];
+    var member_id = best['MEMBER_ID'];
+    var register_date = best['REGISTER_DATE'];
+    var nick_name = best['NICK_NAME'];
+    
+    var div = document.createElement('div');
+    var img = document.createElement('img');
+    $('.lately-accompany').append(div);
+    $(div).prop('class','accompany');
+    $(div).append(img);
+    $(img).prop('src','/bts/'+thumbnail);
+    }
+});
+</script>
 </head>
 <body>
 	<div id="header">
@@ -98,17 +100,31 @@ h3.title {
 				<li class="menu_planner"><a href="${contextPath}/planner/planner">플래너</a></li>
 				
 			</ul>
-			<div class="member_menu">
+			<div class="member_menu" style="top:30px;">
 				<c:choose>
 
 					<c:when test="${isLogOn== true and not empty memberInfo }">
-						<a href="${contextPath }/my/profile" class="mypage"><span>마이페이지</span></a>
-						<a href="${contextPath }/signup/logout" class="logout"><span>로그아웃</span></a>
+						<img src="${contextPath}/resources/image/icon/user.png">
+						<p style="display:inline-block; color:#fff;">어서오세요  ${member_id} 님</p>
+						<div class="memberArea" style="position:relative; left:25px;">
+						<c:set var="member" value="${member_id}"/>
+						<c:choose>
+						<c:when test="${member_id != 'admin'}">
+						<a href="${contextPath }/my/profile" class="mypage" style=" position:absolute; display:block;font-size:10px; padding-right:7px;border-right:1px solid #fff; line-height:10px;"><span>마이페이지</span></a>
+						<a href="${contextPath }/signup/logout" class="logout" style="position:absolute; left:70px; font-size:10px; line-height:10px;"><span>로그아웃</span></a>
+						</c:when>
+						<c:when test="${member_id == 'admin'}">
+						<a href="${contextPath}/admin/main" class="mypage" style=" position:absolute; display:block;font-size:10px;padding-right:5px;border-right:1px solid #fff;left:-5px; line-height:10px;"><span>관리자 페이지</span></a>
+						<a href="${contextPath }/signup/logout" class="logout" style="position:absolute; left:75px; font-size:10px; line-height:10px;"><span>로그아웃</span></a>
+						</c:when>
+						</c:choose>
+						
+						</div>
 					</c:when>
 					<c:otherwise>
 						<!--  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#popUpWindow">Log IN</button>-->
-						<a href="#popUpWindow" class="signup" data-toggle="modal"><span>LOGIN</span></a>
-						<a href="${contextPath }/signup/signup" class="signup"><span>SIGN UP</span></a>
+						<a href="#popUpWindow" class="login" data-toggle="modal"><span>LOGIN</span></a>
+						<a href="${contextPath}/signup/signup" class="signup"><span>SIGN UP</span></a>
 					</c:otherwise>
 				</c:choose>
 			</div>
@@ -118,16 +134,16 @@ h3.title {
 	</div>
 
 
-	<div class="modal fade" id="popUpWindow">
+	<div class="modal fade" id="popUpWindow" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<!-- header -->
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
 					<h3 class="modal-title">BTS Login</h3>
 				</div>
 				<!-- body -->
-				<div class="modal-header">
+				<div class="modal-body">
 					<form role="form" method="post" action="${contextPath}/signup/login">
 						<div class="form-group">
 							<label class="member_id"> <span>ID</span> <input type="text" class="form-control" id="member_id" name="member_id" placeholder="ID" /></label> <br> <label class="password"> <span>Password</span> 
@@ -140,12 +156,12 @@ h3.title {
 				<div class="modal-footer">
 
 					<p id="findId_Pw">
-						<a class="forgotpw" href="${contextPath }/find/findPwMain" style="color: white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp; <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>
+						<a class="forgotpw" href="${contextPath}/find/findPwMain" style="color: white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp; <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>
 					</p>
 				</div>
 
 				<div id="kakao_id_login" style="text-align: center">
-					<a href="https://kauth.kakao.com/oauth/authorize?client_id=6a0602e55acf9e0f00406d7fb1f93b3d&redirect_uri=http://localhost:8088/bts/signup/kakaoLogin&response_type=code"> <img width="223" src="${contextPath}/resources/image/main/kakao_login.png" /></a> <a href="${contextPath}/signup/naverLogin"> <img width="223" src="${contextPath}/resources/image/main/naver_login.PNG" /></a>
+					<a href="https://kauth.kakao.com/oauth/authorize?client_id=6a0602e55acf9e0f00406d7fb1f93b3d&redirect_uri=http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/signup/kakaoLogin&response_type=code"> <img width="223" src="${contextPath}/resources/image/main/kakao_login.png" /></a> <a href="${contextPath}/signup/naverLogin"> <img width="223" src="${contextPath}/resources/image/main/naver_login.PNG" /></a>
 				</div>
 			</div>
 		</div>
@@ -215,14 +231,22 @@ h3.title {
 				<div class="city_selct" id="city_select">
 					<p>다른 도시 보기</p>
 					<p class="box_tab">
-						<a href="#" id="tab1" onclick="search_value()">#을지로</a> <a href="#" id="tab2" onclick="search_value1()">#종로구</a> <a href="#" id="tab3" onclick="search_value2()">#강남구</a> <a href="#" id="tab4" onclick="search_value3()">#홍대</a> <a href="#" id="tab5" onclick="search_value4()">#서초구</a>
+						<a href="#" id="tab" value="을지로">#을지로</a> 
+						<a href="#" id="tab" value="종로구">#종로구</a> 
+						<a href="#" id="tab" value="강남구">#강남구</a> 
+						<a href="#" id="tab" value="홍대">#홍대</a> 
+						<a href="#" id="tab" value="서초구">#서초구</a>
 					</p>
 				</div>
 			</li>
 			<div class="hot-place-tab" id="hot-palce-tab">
 				<span class="hotplace_title">지금 핫한 곳!</span>
 				<p class="box_tab">
-					<a href="#" id="tab1" onclick="search_value()">#을지로</a> <a href="#" id="tab2" onclick="search_value1()">#종로구</a> <a href="#" id="tab3" onclick="search_value2()">#강남구</a> <a href="#" id="tab4" onclick="search_value3()">#홍대</a> <a href="#" id="tab5" onclick="search_value4()">#서초구</a>
+					<a href="#" id="tab">#을지로</a>
+					<a href="#" id="tab">#종로구</a>
+					<a href="#" id="tab">#강남구</a>
+					<a href="#" id="tab">#홍대</a>
+					<a href="#" id="tab">#서초구</a>
 				</p>
 				<button type="button" class="btn search_city" id="search_city">검색하기</button>
 			</div>
@@ -230,27 +254,23 @@ h3.title {
 	</div>
 
 	<!-- Scroll down_1 Reservation -->
-	<div class="main_section_reservation" id="main_section main_section_reservation" style="position: relative;">
-		<div class="caption">
-			<h1 style="font-weight: bold;">RESERVATION</h1>
-		</div>
-		<p>BTS는 완벽한 여행이 되도록 최선을 다합니다.</p>
-		<p style="color: gray; text-decoration: underline;">새로운 곳에서 새로운 사람과 새로운 경험</p>
-		<div>
-			<h3 class="title">BTS와 함께 성공적인 여행을 경험하세요!</h3>
-		</div>
+	<div class="main_section_reservation" id="main_section main_section_reservation">
+	
 		<hr style="border: solid 1px gray;">
-		<h3 style="font-weight: bold">지금 가장 인기있는 숙소</h3>
-		<div style="margin-left: 100px; margin-bottom: 200px">
-			<div class="imageGroup_1">
-				<img class="detail" src="${contextPath}/resources/image/main/reservation_1.PNG" alt="first-image"> <img class="detail" src="${contextPath}/resources/image/main/reservation_2.PNG" alt="second-image"> <img class="detail" src="${contextPath}/resources/image/main/reservation_3.PNG" alt="third-image">
+		<h3 style="font-weight:bold; text-align:center; width:100%; height:100px;">지금 가장 인기있는 숙소 TOP&nbsp;6</h3>
+		<div style="width:100%; margin-left: 100px;">
+			<div class="best_recommend" style="width:100%; height:auto;">
 			</div>
-			<button type="button" class="btn btn-secondary" style="float: right; margin-right: 200px; margin-top: 50px;">more</button>
+		</div>
+		<h3 style="font-weight: bold; text-align:center; width:100%; height:100px; line-height:100px;">감동을 높혀줄 크리스마스 축제!!</h3>
+		<div style="margin-left: 100px; margin-bottom: 200px">
+			<div class="best_festival"></div>
+		<button type="button" class="more" onclick="location='/bts/recommend_main'">MORE<P>>></P></button>
 		</div>
 	</div>
 
 	<!-- Scroll down_2 Accompany -->
-	<div class="main_section_accompany" id="main_section main_section_accompany">
+	<div class="main_section_accompany" id="main_section main_section_accompany" style="position:relative;">
 		<div class="caption">
 			<h1 style="font-weight: bold; margin-top: 150px;">ACCOMPANY</h1>
 		</div>
@@ -262,8 +282,8 @@ h3.title {
 		<hr style="border: solid 1px gray;">
 		<h3 style="font-weight: bold">가장 최근에 등록된 글</h3>
 		<div style="margin-left: 100px; margin-bottom: 200px">
-			<div class="imageGroup_2">
-				<img class="detail" src="${contextPath}/resources/image/main/image_1.jpg" alt="first-image"> <img class="detail" src="${contextPath}/resources/image/main/image_2.jpg" alt="second-image"> <img class="detail" src="${contextPath}/resources/image/main/image_3.jpg" alt="third-image">
+			<div class="lately-accompany">
+				
 			</div>
 			<button type="button" class="btn btn-secondary" style="float: right; margin-right: 200px; margin-top: 50px;">more</button>
 		</div>

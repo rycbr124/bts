@@ -113,7 +113,7 @@
 	]]>
 	</select>
 
-	<!-- 동행신청 리스트 카운트 -->
+	<!-- 동행신청 리스트 카운트-->
 	<select id="accListCount" resultType="java.lang.Integer">
 	<![CDATA[
 	select count(*) from accompany_list al, accompany a 
@@ -121,7 +121,7 @@
 	]]>
 	</select>
 	
-	<select id="selectMember" resultMap="memberResult">
+	<select id="selectMember" parameterType="String" resultMap="memberResult">
 	  <![CDATA[
 			SELECT *
 			FROM b_member

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import bts.a.p002.service.A_P002Service;
 import bts.common.report.vo.PnishVO;
 
@@ -24,13 +26,13 @@ public class A_P002ControllerImpl implements A_P002Controller{
 	A_P002Service a_p002Service;
 	
 	@Override
-	@RequestMapping(value="/main")
-	public ModelAndView adminReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	@RequestMapping(value="/pnish")
+	public ModelAndView showPnishList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p002/d001");
 		return mav;
 	}
 	
-	@RequestMapping(value="/search")
+	@RequestMapping(value="/pnish/search")
 	@ResponseBody
 	public Map<String, Object> selectPnishList(@RequestParam(value="p_name",required=false) String p_name,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -39,5 +41,34 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		resultMap.put("Data", data);
 		return resultMap;
 	}
+
+	@RequestMapping(value="/pnish/save")
+	@ResponseBody
+	public Map<String, Object> savePnishList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, String[]> dataMap = new HashMap<String, String[]>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, String> result = new HashMap<String, String>();
+		
+		dataMap = request.getParameterMap();
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			System.out.println("=============>"+mapper.writeValueAsString(dataMap));
+			a_p002Service.savePnishList(dataMap);	
+			result.put("Code","0");
+			result.put("Message","저장되었습니다");
+		}catch(Exception e) {
+			result.put("Code","-1");
+			result.put("Message","저장에 실패하였습니다");
+			e.printStackTrace();
+		}
+		resultMap.put("Result", result);  
+		return resultMap;
+	}	
+
+	@RequestMapping(value="/history")
+	public ModelAndView showHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/a/p002/d002");
+		return mav;
+	}	
 	
 }

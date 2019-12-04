@@ -13,7 +13,15 @@ public class I_P002VO_1 {
 	private String person_se; 
 	private String range_date;
 	private String open_val;
+	private String rownum;
 	
+	public String getRownum() {
+		return rownum;
+	}
+	public void setRownum(String rownum) {
+		this.rownum = rownum;
+	}
+
 	public String getOpen_val() {
 		return open_val;
 	}

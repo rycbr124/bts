@@ -1,5 +1,6 @@
 package bts.i.p001.controller;
 
+import javax.inject.Provider;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import bts.b.p001.VO.B_P001VO;
+import bts.e.p001.VO.PagingVO;
 import bts.i.p002.VO.I_P002VO_1;
 import bts.i.p002.VO.I_P002VO_2;
 import bts.i.p002.VO.I_P002VO_3;
@@ -34,17 +36,25 @@ public class I_P001ControllerImpl implements I_P001Controller {
 	I_P002VO_2 i_p002VO_2;
 	@Autowired
 	I_P002VO_3 i_p002VO_3;
+	@Autowired
+	Provider<bts.common.PagingVO> pagingProvider;
+
+	
 	@Override
 	@RequestMapping(value="/planner" , method = {RequestMethod.POST , RequestMethod.GET})
 	public ModelAndView I_P001_D001(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		
 		HttpSession session = request.getSession();
 		b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
 		String member_id = b_p001VO.getMember_id();
+		
+		int count = i_p002Service.listCount(member_id);
 		Map<String,List<String>> searchPlan = i_p002Service.planList(member_id);
 		JSONObject totalObject = new JSONObject(searchPlan);
 		ModelAndView mav = new ModelAndView("/i/p001/d001");
+		
 		mav.addObject("list", totalObject.toJSONString());
-		return mav; 
+		return mav;
 	}
 	@Override
 	@RequestMapping(value="/delete_plan", method= {RequestMethod.POST, RequestMethod.GET})

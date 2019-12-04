@@ -106,7 +106,7 @@ float:left;
             <h6 class="collapse-header">Report:</h6>
             <a class="collapse-item" href="#">신고내역조회</a>
             <a class="collapse-item" href="#">제재 내역 조회/변경</a>
-            <a class="collapse-item" href="#">제재 내역 추가</a>
+            <a class="collapse-item" href="${contextPath}/admin/report/pnish">제재 기준 조회/변경</a>
           </div>
         </div>
       </li>
