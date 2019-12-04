@@ -47,7 +47,7 @@ $(function(){
 			<li><a href="${contextPath}/question/questionMain"> <i class="icon icon-question"></i>
 					<span>문의 내역 관리</span>
 			</a></li>
-			<li><a href="coupon.html"> <i class="icon icon-wishlist"></i>
+			<li><a href="${contextPath}/my/wishList"> <i class="icon icon-wishlist"></i>
 					<span>위시리스트 관리</span>
 			</a></li>
 			<li><a href="${contextPath}/my/message/main"> <i class="icon icon-message"></i>
