@@ -87,6 +87,7 @@ public class E_P003ControllerImpl implements E_P003Controller{
 			
 			ArrayList tagList = mapper.readValue(request.getParameter("tagList"),ArrayList.class);
 			e_p003VO.setContent(request.getParameter("editor"));
+			e_p003VO.setThumb(thumb);
 			e_p003Service.insertAcc(e_p003VO);
 			List<E_P003VO_2> tagInsert = new ArrayList<>();
 			for(int i=0; i<tagList.size(); i++) {

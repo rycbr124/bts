@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import bts.e.p001.VO.PagingVO;
 import bts.i.p002.VO.I_P002VO_1;
 import bts.i.p002.VO.I_P002VO_2;
 import bts.i.p002.VO.I_P002VO_3;
@@ -26,6 +27,10 @@ public class I_P002ServiceImpl implements I_P002Service{
 		result.put("plan_no", planList);
 		
 		return result;
+	}
+	@Override
+	public Integer listCount(String member_id)throws Exception{
+		return i_p002DAO.paging(member_id);
 	}
 	@Override
 	public Map<String, List<String>> planRoot(String plan_no)throws Exception{

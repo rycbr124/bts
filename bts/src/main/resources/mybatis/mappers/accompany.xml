@@ -45,9 +45,27 @@
 		<result property="tag" column="tag" />
 		<result property="member_id" column="member_id" />
 		<result property="content" column="content" />
+		<result property="thumb" column="thumb" />
 		<result property="register_date" column="register" />
 	</resultMap>
-
+	
+	<resultMap id="accReqResult" type="e_p002VO">
+	<result property="register_date" column="register_date" />
+	<result property="article_no" column="article_no" />
+	<result property="article_cd" column="article_cd" />
+	<result property="member_id" column="member_id" />
+	</resultMap>
+	
+	<!-- 매칭 신청 -->
+	<insert id="accompanyReq" parameterType="e_p002VO" >
+	<![CDATA[
+	insert into accompany_list(register_date, article_no, article_cd, member_id)
+	 values(sysdate, #{article_no}, 'E_00', #{member_id, jdbcType=VARCHAR})
+	]]>
+	
+	</insert>
+	
+	
 	<!-- 페이징 처리 쿼리 -->
 	<select id="selectAccompany" resultMap="accompanyResult">
 	<![CDATA[
@@ -59,12 +77,12 @@
 	<!-- 글작성 쿼리 -->
 	<insert id="accInsert" parameterType="e_p003VO">
 	<![CDATA[
-	insert into accompany(article_no, acc_title, article_cd, gender, age, traffic, whlrs_no, member_id, register_date, content, nick_name, viewcnt)
+	insert into accompany(article_no, acc_title, article_cd, gender, age, traffic, whlrs_no, member_id, register_date, content, nick_name, viewcnt, thumb)
 	values(article_no.nextval, #{acc_title, jdbcType=VARCHAR}, 'E_00', 
 	#{gender, jdbcType=VARCHAR}, #{age , jdbcType=VARCHAR}, #{traffic, jdbcType=VARCHAR}
 	, #{whlrs_no, jdbcType=VARCHAR}, 
 	#{member_id, jdbcType=VARCHAR}, sysdate, #{content, jdbcType=VARCHAR}
-	,(select nick_name from b_member where member_id = #{member_id, jdbcType=VARCHAR}),0)
+	,(select nick_name from b_member where member_id = #{member_id, jdbcType=VARCHAR}),0, #{thumb, jdbcType=VARCHAR})
 	]]>
 		<selectKey resultType="int" keyProperty="article_no"
 			order="AFTER">

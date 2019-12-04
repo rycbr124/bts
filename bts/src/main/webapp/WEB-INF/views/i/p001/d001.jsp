@@ -16,8 +16,6 @@ $(document).ready(function(){
 	var planList = ${list};
 	plan_list(planList);
 });
-
-
 </script>
 </head>
 <body>
@@ -34,10 +32,28 @@ $(document).ready(function(){
 		</div> <!-- top_content -->
 		
 		<div class="plan_myPlan"id="plan_myPlan">
-			<h1>다른 일정 보기</h1>
+			<h1>MY PLAN</h1>
 			<div class="my_plan">
 			</div>
 		</div>
+		<div style="display: block; text-align: center;">		
+		<c:if test="${paging.startPage != 1 }">
+			<a href="${contsxtPath}/planner/planner?nowPage=${paging.startPage - 1 }&cntPerPage=${paging.cntPerPage}">&lt;</a>
+		</c:if>
+		<c:forEach begin="${paging.startPage }" end="${paging.endPage }" var="p">
+			<c:choose>
+				<c:when test="${p == paging.nowPage }">
+					<b>${p}</b>
+				</c:when>
+				<c:when test="${p != paging.nowPage }">
+					<a href="${contsxtPath}/planner/planner?nowPage=${p }&cntPerPage=${paging.cntPerPage}">${p}</a>
+				</c:when>
+			</c:choose>
+		</c:forEach>
+		<c:if test="${paging.endPage != paging.lastPage}">
+			<a href="${contsxtPath}/planner/planner?nowPage=${paging.endPage+1 }&cntPerPage=${paging.cntPerPage}">&gt;</a>
+		</c:if>
+	</div>
 	</div>
 </body>
 </html>

@@ -206,19 +206,19 @@
 			var popup = openReport(reqUrl,contents_cd,target_id);
 		});
 		
-	      function init(){
-	          var date = '${result.register_date}';
-	          date = date.substr(0,date.lastIndexOf('.'));
-	          $('#register-date').text(date);
-	          
-	          var context="${contextPath}";
-	          var no=${result.article_no};
-	          var id="${sessionScope.memberInfo.member_id}";
-	          var url="${reqUrl}";
-	          setInit(context,no,id,url);
-	          var paging = ${initTotal};
-	          comPaging(paging);
-	       }
+		function init(){
+			var date = '${result.register_date}';
+			date = date.substr(0,date.lastIndexOf('.'));
+			$('#register-date').text(date);
+			
+			var context="${contextPath}";
+			var no=${result.article_no};
+			var id="${sessionScope.memberInfo.member_id}";
+			var url="${reqUrl}";
+			setInit(context,no,id,url);
+			var paging = ${initTotal};
+			comPaging(paging);
+		}	
 	})
 	
 </script>
@@ -239,14 +239,14 @@
 			<div id="header-info">
 				<h1 id="title">${result.title}</h1>
 				<c:choose>
-					<c:when test="${com.profile_image==null}">
+					<c:when test="${result.profile_image==null}">
 						<img id="profile-image" src="${contextPath}/resources/image/no_img.jpg">
 					</c:when>
 					<c:otherwise>
-						<c:if test="${com.member_type=='naver' || com.member_type=='kakao'}">
+						<c:if test="${result.member_type=='naver' || result.member_type=='kakao'}">
 							<img id="profile-image" src="${result.profile_image}">
 						</c:if>
-						<c:if test="${com.member_type!='naver' && com.member_type!='kakao'}">
+						<c:if test="${result.member_type!='naver' && result.member_type!='kakao'}">
 							<img id="profile-image" src="${contextPath}${result.profile_image}">
 						</c:if>
 					</c:otherwise>
@@ -269,7 +269,7 @@
 			<div id='contents-info'>
 				<span id="comment-count">
 					<i class="far fa-comment-dots fa-2x"></i>
-					<span>${paging.totalCount}</span>
+					<span></span>
 				</span>
 				<span id="view-count"></span>
 				<span id="contents-report">게시글 신고</span>

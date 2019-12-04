@@ -12,6 +12,8 @@
 		<result property="person_se" column="person_se"/>
 		<result property="range_date" column="range_date"/>
 		<result property="open_val" column="open_val"/>
+		<result property="rownum" column="rownum"/>
+		<result property="view_cnt" column="view_cnt" />
 	</resultMap>
 	<resultMap id="planDetail" type="i_p002VO_2">
 		<result property="plan_no" column="plan_no"/>
@@ -72,6 +74,7 @@
 </select>
 <!-- plan_no별로 가장 상위 컬럼 select-->
 <select id="planList" resultType="Map">
+	<![CDATA[
 	SELECT *
 	FROM planner p, planner_detail pd,
 	(
@@ -83,7 +86,15 @@
 	AND t.dt = pd.detail_no
 	AND member_id = #{member_id,jdbcType=VARCHAR}
 	ORDER BY TO_NUMBER(p.plan_no) desc
+	]]>
 </select>
+	<select id="pageCount" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM planner
+			WHERE member_id = #{member_id,jdbcType=VARCHAR}
+		]]>
+	</select>
 
 <!-- plan_no 별로 planner_detail컬럼 select -->
 <select id="planRoot" parameterType="String" resultType="Map">

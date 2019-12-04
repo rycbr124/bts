@@ -19,7 +19,8 @@ article, aside, details, figcaption, figure, footer, header, hgroup,
 }
 
 @font-face {
-	
+ 	src: url("/bts/resouces/fonts/Binggrae/Binggrae.otf");
+ 	font-family: "Binggraefont";
 }
 
 audio, canvas, progress, video {
@@ -7802,7 +7803,69 @@ to {
 	display:inline-block;
 	border-left:1px solid gray;
 }
-
-
-
-
+.main_section_reservation{
+	position: relative;
+	height:1100px;
+	margin:0 auto;
+}
+.best_recommend{
+	position:relative;
+	width:100%;
+	height:auto;
+	left:50%;
+	transform:translate(-53%,0);
+}
+.best_festival{
+	position:relative;
+	width:100%;
+	height:auto;
+	margin:0 auto;
+}
+.best_festival .fs-container{
+	position:relative;
+	display:inline-block;
+	width:220px;
+	height:250px;
+	margin:10px;
+	cursor:pointer;
+}
+.best_festival .fs-container .fs-img{
+	position:relative;
+	width:220px;
+	height:auto;
+	max-height:250px;
+	min-height:250px;
+	
+}
+.best_festival .fs-container .fs-body{
+	position:absolute;
+	display:none;
+	bottom:0;
+	width:100%;
+	height:100px;
+	background:rgba(100,100,100,0.8);
+	color:#fff;
+	text-align:center;
+}
+.best_festival .fs-container .fs-body p{
+	font-size:12px;
+}
+.more{
+	position:absolute;
+	width:150px;
+	height:50px;
+	text-align:left;
+	left:50%;
+	transform:translate(-50%,0);
+	line-height:50px;
+	font-family: "Binggrae";
+	background-color:#203341;
+	color:#fff;
+	outline:none;
+	border:none;
+	margin-top:20px;
+}
+.more p{
+	display:none;
+	float:right;
+}

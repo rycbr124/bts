@@ -51,18 +51,12 @@
 		<beans:property name="defaultEncoding" value="utf-8" />
 		<beans:property name="maxUploadSize" value="10000000"/>
 	</beans:bean>
-	
-	<!-- 이미지 업로드 경로 설정 -->
-	<beans:bean id="uploadPath" class="java.lang.String">
-		<beans:constructor-arg
-			value="resources\image\mypage\profileImage">
-		</beans:constructor-arg>
-	</beans:bean>
-	
+
 	<interceptors>
 		<interceptor>
 			<mapping path="/my/**" />
 			<mapping path="/community/**" />
+			<mapping path="/planner/**" />
 			<exclude-mapping path="/community/review/list"/>
 			<exclude-mapping path="/community/plan_list"/>			
 			<beans:bean class="bts.common.interceptor.CheckLoginInterceptor"/>

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,9 +55,12 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 	@Autowired
 	F_P001_3Service f_p001_3Service;
 	
-	private static final String imageUrl = "D:\\git\\bts\\bts\\src\\main\\webapp\\resources\\image\\board";
-	private static final String metaUrl = "D:\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\bts\\resources\\image\\board";
-	private static final String mappingUrl = "/resources/image/board";
+	@Value("${file.image}")
+	private String imageUrl;
+	@Value("${file.metaImage}")
+	private String metaUrl;
+	@Value("${file.imageUrl}")
+	private String mappingUrl;
 	private static final String menuName="review";
 	private static final int rangeRow = 6;
 	private static final int rangePage = 5;
@@ -112,7 +116,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		
 		int totalCount = Integer.parseInt(f_p001_3Service.selectCommentTotal(searchMap));
 		mav.addObject("initTotal",totalCount);
-	    mav.addObject("reqUrl","/community/review");
+		mav.addObject("reqUrl","/community/review");
 		return mav;
 	}
 

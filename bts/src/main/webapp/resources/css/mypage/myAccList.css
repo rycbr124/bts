@@ -1,0 +1,22 @@
+@charset "UTF-8";
+@font-face{
+	src:url("/resources/fonts/Binggrae/Binggrae-Bold.ttf");
+	font-family:"binggrae";	
+}
+
+.container{
+	font-family:"binggrae";
+}
+
+#acc_title{
+	color:#666666;
+}
+#prev,#next,#pageNo{
+	color:#666666;
+}
+.h1{
+	font-family:"binggrae";
+}
+#boardForm{
+	font-family:"binggrae";
+}
