@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
 
-import javax.annotation.Resource;
 import javax.inject.Provider;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +45,10 @@ public class C_P001ControllerImpl implements C_P001Controller {
 	C_P001Service c_p001Service;
 	@Autowired
 	Provider<C_P001VO> c_p001Provider;
-	
+	@Value("${file.myImage}")
+	private String uploadPath;
+	@Value("${file.myMetaImage}")
+	private String metaPath;
 	
 	private static final Logger logger = LoggerFactory.getLogger(C_P001ControllerImpl.class);
 
@@ -97,7 +100,8 @@ public class C_P001ControllerImpl implements C_P001Controller {
 			String id = ((B_P001VO) session.getAttribute("memberInfo")).getMember_id();
 			member.setMember_id(id);
 			c_p001Service.updateMember(member);
-			session.setAttribute("memberInfo", member);
+			B_P001VO modMember = c_p001Service.selectMember(id);
+			session.setAttribute("memberInfo", modMember);
 			
 			List<C_P001VO> searchList = new ArrayList<>();
 			List<C_P001VO> groupList = c_p001Service.selectCheckList();
@@ -114,7 +118,9 @@ public class C_P001ControllerImpl implements C_P001Controller {
 			
 
 			c_p001Service.deleteMemberList(id);
-			c_p001Service.insertCheckMemberList(searchList);
+			if(!searchList.isEmpty()) {
+				c_p001Service.insertCheckMemberList(searchList);
+			}
 			
 			
 			response.sendRedirect("/bts/my/profile");
@@ -153,19 +159,11 @@ public class C_P001ControllerImpl implements C_P001Controller {
 		searchData.put("password", password);
 		searchData.put("member_id", b_p001VO.getMember_id());
 		
-		//searchData.put("member_id", )
 		String result = c_p001Service.passCheck(searchData);
 		//
 		return result;
 	}
-
-	@Resource(name = "uploadPath")
-	private String uploadPath;
-
-	@RequestMapping(value = "/uploadForm", method = RequestMethod.GET)
-	public void uploadForm() throws Exception {
-	}
-
+	
 	@RequestMapping(value = "/uploadForm", method = RequestMethod.POST)
 	public String uploadForm(MultipartFile file, Model model) throws Exception {
 
@@ -194,17 +192,21 @@ public class C_P001ControllerImpl implements C_P001Controller {
 	public String uploadAjax(MultipartFile file, String str, HttpSession session,
 			HttpServletRequest request, B_P001VO vo) throws Exception {
 			logger.info("originalName: " + file.getOriginalFilename());
+			
 			ResponseEntity<String> img_path = new ResponseEntity<>(
-					UploadUtil.uploadFile(uploadPath, file.getOriginalFilename(), file.getBytes()),
+					UploadUtil.uploadFile(uploadPath, metaPath, file.getOriginalFilename(), file.getBytes()),
 					HttpStatus.CREATED);
 			String user_imgPath = (String) img_path.getBody();
 //			String localhost = "resources/image/mypage/profileImage";
+			
+			String localhost = "/resources/image/mypage/profileImage";
 			logger.info(user_imgPath);
 			vo.setProfile_image(uploadPath + user_imgPath);
 			B_P001VO id = (B_P001VO)session.getAttribute("memberInfo");
 			vo.setMember_id(id.getMember_id());
 			logger.info("file name : " + user_imgPath);
 			c_p001Service.updateimage(vo);
+			id.setProfile_image(localhost+user_imgPath);
 			return user_imgPath;
 	}
 	

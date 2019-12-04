@@ -22,10 +22,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bts.e.p002.Service.E_P002Service;
+import bts.e.p002.VO.E_P002VO;
 import bts.e.p003.Service.E_P003Service;
 import bts.e.p003.VO.E_P003VO;
 import bts.e.p003.VO.E_P003VO_2;
@@ -147,4 +149,20 @@ public class E_P002ControllerImpl implements E_P002Controller{
 		return resEntity;
 	}
 
+	@Override
+	@RequestMapping(value="/accReq", method= {RequestMethod.GET, RequestMethod.POST})
+	public void accReq(@RequestParam("article_no")int article_no,@RequestParam("target_id")String target_id, E_P002VO e_p002VO, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		String member_id = (String)session.getAttribute("member_id");
+		e_p002VO.setArticle_no(article_no);
+		e_p002VO.setMember_id(member_id);
+		try {
+			e_p002Service.accReq(e_p002VO);
+	
+		}catch(Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+	}
 }

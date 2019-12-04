@@ -217,7 +217,7 @@ to {
 					<input type="submit" class="modal__btn modal__btn-primary" value="Login">
 				</footer>
 				<div id="kakao_id_login" style="text-align: center">
-					<a href="https://kauth.kakao.com/oauth/authorize?client_id=6a0602e55acf9e0f00406d7fb1f93b3d&redirect_uri=http://localhost:8088/bts/signup/kakaoLogin&response_type=code"> <img width="223" src="${contextPath}/resources/image/main/kakao_login.png" /></a> <a href="${contextPath}/signup/naverLogin"><img width="223" src="${contextPath}/resources/image/main/naver_login.PNG" /></a>
+					<a href="https://kauth.kakao.com/oauth/authorize?client_id=6a0602e55acf9e0f00406d7fb1f93b3d&redirect_uri=http://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/signup/kakaoLogin&response_type=code"> <img width="223" src="${contextPath}/resources/image/main/kakao_login.png" /></a> <a href="${contextPath}/signup/naverLogin"><img width="223" src="${contextPath}/resources/image/main/naver_login.PNG" /></a>
 				</div>
 			</form>
 		</div>

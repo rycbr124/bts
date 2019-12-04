@@ -19,6 +19,13 @@ public class E_P003VO {
 	private String member_id;
 	private Date register_date;
 	private String content;
+	private String thumb;
+	public String getThumb() {
+		return thumb;
+	}
+	public void setThumb(String thumb) {
+		this.thumb = thumb;
+	}
 	private List<String> tag_list;
 	
 	public List<String> getTag_list() {

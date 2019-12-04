@@ -10,8 +10,8 @@
 <title></title>
 
 <!-- 부트스트랩 -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
@@ -33,47 +33,34 @@
 	<script src="${contextPath}/resources/js/admin/chart-pie-demo.js"></script>
 
 <style>
+*{
+	box-sizing: border-box;
+}
 
 body{
-	overflow-y : hidden;
-}
-
-#header{
-	width : 88%;
-	float : right;
-	display : block;
-	position : relative;
 
 }
 
-#side{
-	width: 224px;
-	margin-right : 0;
-	position : relative;
+#wrapper{
+	display:flex;
 }
 
-
-#body{
-	display : inline-block;
-	width : 88%;
-	float : right;
-	position : relative;
+#contents{
+    overflow-x: hidden;
+    width:100%;
 }
 
 </style>
 </head>
 <body>
-<div id = "container">
-	<div id="header">
-			<tiles:insertAttribute name="header" />
-	</div>
-	
+<div id ="wrapper">
 	<div id="side">
 			<tiles:insertAttribute name="side" />
 	</div>
 
-	<div id="body">
-			<tiles:insertAttribute name="body" />
+	<div id="contents" class="d-flex flex-column">
+		<tiles:insertAttribute name="header" />
+		<tiles:insertAttribute name="body" />
 	</div>
 </div>
 </body>

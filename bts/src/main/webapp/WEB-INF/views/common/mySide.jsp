@@ -82,7 +82,7 @@ $(function(){
 			<li><a href="${contextPath}/my/message/main"> <i class="icon icon-message"></i>
 					<span>쪽지 관리</span>
 			</a></li>
-			<li><a href="point.html"> <i class="icon icon-matching"></i>
+			<li><a href="${contextPath}/my/accompany/accList"> <i class="icon icon-matching"></i>
 					<span>매칭 신청 목록 관리</span>
 			</a></li>
 			<!--<li >

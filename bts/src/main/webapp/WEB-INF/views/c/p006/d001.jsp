@@ -11,38 +11,36 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/c/p006/d001.css"> <!-- 커스텀 css -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<script src="${contextPath}/resources/js/c/p006/d001.js"></script>
 <script>
 $(document).ready(function(){
-	init();	
+	init();
+	
 	$("#chat-header>i").on("click",addMember);
 	
 	function addMember(){
 		$('#user-add').fadeIn();
 	}
-	function socketConn(){
-		var ws;
-		openSocket();
-		
-		function openSocket(){
-			if(ws!==undefined && ws.readyState!==WebSocket.CLOSED){
-				console.log("WebSocket is already opened.");
-			}else{
-				var url="ws://"+"${pageContext.request.serverName}"+":"+${pageContext.request.serverPort}+"${pageContext.request.contextPath}"+"/msg";		
-				ws = new WebSocket(url);
-			}
-		};
-		
-		this.getWs=function(){
-			return ws;
-		};	
-	}
 	
 	function init(){
-		var con = new socketConn();
+		var url="ws://"+"${pageContext.request.serverName}"+":"+${pageContext.request.serverPort}+"${pageContext.request.contextPath}"+"/msg";		
+		var con = new socketConn(url);
 		var ws=con.getWs();
 		
 		ws.onopen=function(message){
-			console.log(message);
+			if("${target_id.member_id==null}"!="true"){
+				var imgSrc="${target_id.profile_image}";
+				if(imgSrc==null){
+					imgSrc='${contextPath}/resources/image/no_img.jpg';
+				}else{
+					if("${target_id.member_type}"!='kakao' && "${target_id.member_type}"!='naver'){
+						imgSrc='${contextPath}'+imgSrc;
+					}
+				}
+				var divForm = new memberDivForm('discussion',imgSrc,"${target_id.nick_name}","${target_id.member_id}");
+				var resultForm = prependMember(divForm);
+				memberClick(resultForm,ws);
+			}
 		}
 		ws.onclose=function(message){
 			alert("end");
@@ -76,7 +74,7 @@ $(document).ready(function(){
 	    
 		//유저목록 클릭이벤트
 		$(document).on("click",".discussion",function(){
-			memberClick(this);
+			memberClick(this,ws);
 		});//end discussion event
 		
 		//유저 검색
@@ -87,10 +85,7 @@ $(document).ready(function(){
 	    	var textMessage = $('#chat-footer>textarea').val();
 	    	var other = $('#chat-header .member-id').text();
 	    	if(textMessage!==''){
-	    		var contents={
-	    			message : textMessage,
-	    			receiver : other
-	    		}
+	    		var contents=sendForm(textMessage,other);
 		    	sendText(ws,"send_message",contents);
 	    	}
 	    });
@@ -123,42 +118,43 @@ $(document).ready(function(){
 			
 			var divForm = new memberDivForm('discussion',selectedSrc,selectedNick,selectedid);
 			var resultForm = prependMember(divForm);
-			memberClick(resultForm);
+			memberClick(resultForm,ws);
 			
 			closePopup();
 		});
 		
-		function memberClick(clickNode){
-			if(!$(clickNode).hasClass("clicked")){
-				//채팅 header에 유저 정보 표시
-				$('#user-info').empty();
-				var information = $(clickNode).children();
-				for(var i=0; i<information.length; i++){
-					$('#user-info').append(information[i].cloneNode(true));
-				}
-				
-			    $("#chat-footer>input[type=button]").prop('disabled',false);//전송버튼 사용가능
-				$('#chat-message').empty();//메시지 창 비우기
-				$('.discussion').removeClass("clicked");//이전에 선택된 노드의 클래스 제거
-				$(clickNode).addClass('clicked');//클래스 붙이기
-	
-				if($(clickNode).parent().is('#search-list')){//search의 discuss일경우 people-list에서도 변경
-					var people=$('#people-list>.discussion .member-id').toArray();
-					for(var i in people){						
-						if($(people[i]).text()===$(clickNode).find('div.member-id').text()){
-							$(people[i]).parent().parent().addClass('clicked');
-							break;
-						}				
-					}//end for
-				}//end inner if
-				
-				var contents = {
-					member_id:$(clickNode).find('div.member-id').text()
-				}
-				sendText(ws,"chat_list",contents);
-			}//end if
-		}
 	}//end init
+	
+	function memberClick(clickNode,ws){
+		if(!$(clickNode).hasClass("clicked")){
+			//채팅 header에 유저 정보 표시
+			$('#user-info').empty();
+			var information = $(clickNode).children();
+			for(var i=0; i<information.length; i++){
+				$('#user-info').append(information[i].cloneNode(true));
+			}
+			
+		    $("#chat-footer>input[type=button]").prop('disabled',false);//전송버튼 사용가능
+			$('#chat-message').empty();//메시지 창 비우기
+			$('.discussion').removeClass("clicked");//이전에 선택된 노드의 클래스 제거
+			$(clickNode).addClass('clicked');//클래스 붙이기
+
+			if($(clickNode).parent().is('#search-list')){//search의 discuss일경우 people-list에서도 변경
+				var people=$('#people-list>.discussion .member-id').toArray();
+				for(var i in people){						
+					if($(people[i]).text()===$(clickNode).find('div.member-id').text()){
+						$(people[i]).parent().parent().addClass('clicked');
+						break;
+					}				
+				}//end for
+			}//end inner if
+			
+			var contents = {
+				member_id:$(clickNode).find('div.member-id').text()
+			}
+			sendText(ws,"chat_list",contents);
+		}//end if
+	}
 	
 	
 	function memberDivForm(desc,imgSrc,nick,id){
@@ -220,7 +216,7 @@ $(document).ready(function(){
 				imgSrc='${contextPath}/resources/image/no_img.jpg';
 			}else{
 				if(recData.body.sender_info.member_type!='kakao' && recData.body.sender_info.member_type!='naver'){
-					imgSrc='${contextPath}/'+imgSrc;
+					imgSrc='${contextPath}'+imgSrc;
 				}
 			}
 			divData = new memberDivForm('discussion',imgSrc,recData.body.sender_info.nick_name,res.sender);
@@ -248,16 +244,7 @@ $(document).ready(function(){
 	function closePopup(){
 		$('#user-add').css('display','none');
 	}
-	
-	function sendText(/*웹소켓 객체*/ws,/*String*/head,/*Object*/contents){
-		var result={
-			header : head,
-			body : contents
-		}
-		result=JSON.stringify(result);
-		ws.send(result);
-	}
-	
+
 	function popSearchMember(/*회원 정보 객체 배열*/members){
 		$('#pop-list').empty();
 		if(members.length==0){
@@ -274,7 +261,7 @@ $(document).ready(function(){
 					imgSrc='${contextPath}/resources/image/no_img.jpg';
 				}else{
 					if(mem.member_type!='kakao' && mem.member_type!='naver'){
-						imgSrc='${contextPath}/'+imgSrc;
+						imgSrc='${contextPath}'+imgSrc;
 					}
 				}
 
@@ -351,7 +338,12 @@ $(document).ready(function(){
 	         				<img src="${contextPath}/resources/image/no_img.jpg">
 	         			</c:when>
 	         			<c:otherwise>
-			         		<img src="${memberVO.profile_image}">	         			
+							<c:if test="${result.member_type=='naver' || result.member_type=='kakao'}">
+								<img src="${memberVO.profile_image}">
+							</c:if>
+							<c:if test="${result.member_type!='naver' && result.member_type!='kakao'}">
+								<img src="${contextPath}${memberVO.profile_image}">
+							</c:if>    			
 	         			</c:otherwise>
 	         		</c:choose>
 	         		<div class="info">

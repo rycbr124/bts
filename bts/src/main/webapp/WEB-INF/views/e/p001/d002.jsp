@@ -36,6 +36,8 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="${contextPath}/resources/js/report/report.js"></script> <!-- 커스텀 js -->
+<script src="${contextPath}/resources/js/c/p006/d001.js"></script><!-- 소켓 js -->
 <title>동행 게시글 조회</title>
 </head>
 <body onload="showImage()">
@@ -82,26 +84,76 @@
 			<br> <br>
 			<h3>게시글 내용 :</h3>
 			${accView.content} <br> <br> 
-			<a class="btn btn-success" href="#" style="background-color: #666666; border-color: #666666">매칭신청하기</a> &nbsp;&nbsp;&nbsp; 
+			<a class="btn btn-success" id="contentReq" href="#" style="background-color: #666666; border-color: #666666">매칭신청하기</a> &nbsp;&nbsp;&nbsp; 
 			<a class="btn btn-success" href="${contextPath}/accompany/accMain" style="background-color: #666666; border-color: #666666">목록으로 돌아가기</a>&nbsp;&nbsp;&nbsp; 
-			<a class="btn btn-success" href="#popUpReport" style="background-color: #666666; border-color: #666666" data-toggle="modal">게시글 신고하기</a>&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-success" id="contents-report" href="#" style="background-color: #666666; border-color: #666666" data-toggle="modal">게시글 신고하기</a>&nbsp;&nbsp;&nbsp;
 			<c:choose>
-			<c:when test="${sessionScope.memberInfo.member_id eq member_id}">
-			 		
+			<c:when test="${sessionScope.memberInfo.member_id eq member_id}">		 		
 			<a class="btn btn-success" href="${contextPath }/accompany3/accUpdateForm?article_no=${accView.article_no}" style="background-color: #666666; border-color: #666666" >게시글 수정하기</a>&nbsp;&nbsp;&nbsp;
 			<a class="btn btn-success" onclick="accDel();" id="accDelBtn" href="#" style="background-color: #666666; border-color: #666666" >게시글 삭제하기</a>
 			</c:when>
 			</c:choose>
 		</div>
 	</div>
+	<script>
+	$(document).ready(function(){
+		$('#contents-report').on('click',function(){
+			var reqUrl = "${contextPath}/report/article/accompany";
+			var contents_cd = ${accView.article_no};
+			var target_id = "${accView.member_id}";
+			var popup = openReport(reqUrl, contents_cd, target_id);
+		});
+		$('#contentReq').on('click',function(){
+			var target_id = "${accView.member_id}";
+			var article_no = "${accView.article_no}";
+			var alldata = {target_id:target_id, article_no:article_no};
+			$.ajax({
+				url : "${contextPath}/accompany3/accReq",
+				type : "GET",
+				datatype : "text",
+				async : false,
+				data : alldata,
+				success : function(){
+					var url="ws://"+"${pageContext.request.serverName}"+":"+${pageContext.request.serverPort}+"${pageContext.request.contextPath}"+"/msg";		
+					var con = new socketConn(url);
+					var ws=con.getWs();
+					var textMessage='${sessionScope.memberInfo.member_id}'+'님이 매칭을 신청하였습니다.'
+					ws.onopen=function(){
+						sendText(ws,"send_message",sendForm(textMessage,target_id));
+						ws.close();
+					}
+					ws.onclose=function(){
+						alert("신청이 완료되었습니다.");
+						
+						var form = document.createElement('form');
+						var hidden = document.createElement('input');
+						$(hidden).attr('type','hidden');
+						$(hidden).attr('name','target_id');			
+						form.append(hidden);
+						
+						form.target_id.value=target_id;
+						form.action="${contextPath}/my/message/main";
+						form.method="post";
+						$('body').append(form);
+						form.submit();				
+					}
+				},
+				error: function(){
+					alert("다시 시도해주세요.");
+				}
+				
+			})
+		})
+	})
 	
-	<div class="modal fade" id="popUpReport">
+	</script>
+	<div class="modal fade" id="popUpAccReq">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<!-- header -->
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h3 class="modal-title">아이디와 비밀번호를 입력하세요.</h3>
+					<h3 class="modal-title">동행 신청 하기</h3>
 				</div>
 				<!-- body -->
 				<form role="form" method="post" action="#">

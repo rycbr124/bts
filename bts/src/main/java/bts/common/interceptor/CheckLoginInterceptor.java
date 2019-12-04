@@ -14,7 +14,8 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
 		HttpSession session = request.getSession();
 		Object obj = session.getAttribute("isLogOn");
-		if(obj == null) {
+		Object obj2 = session.getAttribute("memberInfo");
+		if(obj == null || obj2==null) {
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.write("<script>alert('로그인 후 이용가능합니다.'); window.location.href='"+request.getContextPath()+"/main/main';</script>");
