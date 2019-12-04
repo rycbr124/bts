@@ -27,7 +27,7 @@ public class A_P002ControllerImpl implements A_P002Controller{
 	
 	@Override
 	@RequestMapping(value="/pnish")
-	public ModelAndView adminReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView showPnishList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p002/d001");
 		return mav;
 	}
@@ -63,6 +63,12 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		}
 		resultMap.put("Result", result);  
 		return resultMap;
+	}	
+
+	@RequestMapping(value="/history")
+	public ModelAndView showHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/a/p002/d002");
+		return mav;
 	}	
 	
 }

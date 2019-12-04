@@ -6,5 +6,5 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.ModelAndView;
 
 public interface A_P002Controller {
-	public ModelAndView adminReport(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ModelAndView showPnishList(HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

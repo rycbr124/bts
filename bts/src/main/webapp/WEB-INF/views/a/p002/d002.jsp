@@ -52,7 +52,7 @@
 			//MultiLineText설정하면 shift+enter 누를 때 하나의 셀 안에 여러 값을 넣을 수 있음.
 			//Wrap은 컬럼 사이즈가 정해져 있지만 데이터 길이가 더 길 때, 뒷 부분은 알아서 줄 바꿈 해줌.
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"}, //모든 그리드에 들어감
-			{Header:"제재코드",Type:"Text", SaveName:"pnish_cd",Edit:0,MinWidth:80,Align:"Center"},
+			{Header:"신고번호",Type:"Text", SaveName:"pnish_cd",Edit:0,MinWidth:80,Align:"Center"},
 			{Header:"제재명",Type:"Text",SaveName:"name",MinWidth:80,KeyField:1 ,MultiLineText:1}, //필수값을 체크하고자 할 때 keyField사용			
 			{Header:"제재일수",Type:"Int", Format:"#일", SaveName:"day_cnt",MinWidth:150,KeyField:1,MultiLineText:1, Wrap:1}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50}, //모든 그리드에 들어감

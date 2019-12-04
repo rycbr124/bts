@@ -7,7 +7,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class CommonExceptionHandler {
 
 	@ExceptionHandler(Exception.class)
-	public String handleErrorCommon() {
+	public String handleErrorCommon(Exception e) {
+		e.printStackTrace();
 		return "redirect:/error";
 	}
 }
