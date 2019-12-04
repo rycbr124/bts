@@ -50,6 +50,10 @@
 	<session-timeout>30</session-timeout>
 	</session-config>
 	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/404</location>
+	</error-page>
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>

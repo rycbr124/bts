@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import bts.a.p002.service.A_P002Service;
 import bts.common.report.vo.PnishVO;
 
@@ -42,12 +44,16 @@ public class A_P002ControllerImpl implements A_P002Controller{
 
 	@RequestMapping(value="/pnish/save")
 	@ResponseBody
-	public Map<String, Object> savePnishList(@RequestParam Map<String,String[]> dataMap,HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Map<String, Object> savePnishList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, String[]> dataMap = new HashMap<String, String[]>();
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Map<String, String> result = new HashMap<String, String>();
+		
+		dataMap = request.getParameterMap();
 		try {
-			System.out.println("=============>"+dataMap);
-//			a_p002Service.savePnishList(dataMap);	
+			ObjectMapper mapper = new ObjectMapper();
+			System.out.println("=============>"+mapper.writeValueAsString(dataMap));
+			a_p002Service.savePnishList(dataMap);	
 			result.put("Code","0");
 			result.put("Message","저장되었습니다");
 		}catch(Exception e) {

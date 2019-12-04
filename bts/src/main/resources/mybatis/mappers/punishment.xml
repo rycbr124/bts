@@ -19,5 +19,28 @@
 			name LIKE '%'||#{p_name}||'%'
 		</where>
 	</select>	
+	
+	<insert id="insertPnish" parameterType="java.util.Map">
+		<![CDATA[
+			INSERT INTO punishment (pnish_cd,name,day_cnt)
+			VALUES ( 'PN' || punishment_seq.nextval, #{name}, #{day_cnt})
+	    ]]>
+	</insert>	
+
+	<update id="updatePnish" parameterType="java.util.Map">
+		<![CDATA[
+			UPDATE punishment
+			SET  name = #{name}
+			   , day_cnt = #{day_cnt}
+			WHERE pnish_cd = #{pnish_cd}
+	    ]]>
+	</update>	
+	
+	<delete id="deletePnish" parameterType="java.util.Map">
+		<![CDATA[
+			DELETE punishment
+			WHERE pnish_cd = #{pnish_cd}
+	    ]]>
+	</delete>	
 
 </mapper>
