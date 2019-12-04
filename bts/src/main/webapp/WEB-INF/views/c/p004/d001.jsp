@@ -110,7 +110,7 @@ $(function(){
 			<ul class="pagination justify-content-center" id="pagination">
 				<!-- 이전버튼 -->
 				<c:if test="${paging.startPage != 1}">
-					<li class="page-item"><a href="${contextPath}/community/plan_list?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous" id="prev">이전</a></li>
+					<li class="page-item"><a href="${contextPath}/question/questionMain?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous" id="prev">이전</a></li>
 				</c:if>
 				<!-- 페이지 번호 -->
 				<c:forEach var="idx" begin="${paging.startPage}" end="${paging.endPage}">
@@ -119,13 +119,13 @@ $(function(){
 							<li class="page-item"><a class="page-link" href="#" id="pageNo">${idx}</a></li>
 						</c:when>
 						<c:when test="${idx != paging.nowPage }">
-							<li class="page-item"><a class="page-link" href="${contextPath}/community/plan_list?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" id="pageNo">${idx}</a></li>
+							<li class="page-item"><a class="page-link" href="${contextPath}/question/questionMain?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" id="pageNo">${idx}</a></li>
 						</c:when>
 					</c:choose>
 				</c:forEach>
 				<!-- 이후 -->
 				<c:if test="${paging.endPage != paging.lastPage}">
-					<li class="page-item"><a href="${contextPath}/community/plan_list?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
+					<li class="page-item"><a href="${contextPath}/question/questionMain?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
 				</c:if>
 			</ul>
 		</div>

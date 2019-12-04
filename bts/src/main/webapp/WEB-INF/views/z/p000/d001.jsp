@@ -47,6 +47,7 @@ h3.title {
 	font-family: "Binggrae";
 	margin-bottom: 100px;
 }
+
 </style>
 <meta charset="UTF-8">
 <title>Best Travel Seoul</title>
@@ -61,7 +62,30 @@ h3.title {
 		}
 	</script>
 </c:if>
-
+<script>
+$(document).ready(function(){
+	var accompany = ${bestAccompany};
+    var main = accompany.bestAccompany;
+    for(var i in main){
+    var best = main[i];
+    var title = best["ACC_TITLE"];
+    var thumbnail = best['THUMB'];
+    var gender = best['GENDER'];
+    var age = best['AGE'];
+    var whlrs_no = best['WHLRS_NO'];
+    var member_id = best['MEMBER_ID'];
+    var register_date = best['REGISTER_DATE'];
+    var nick_name = best['NICK_NAME'];
+    
+    var div = document.createElement('div');
+    var img = document.createElement('img');
+    $('.lately-accompany').append(div);
+    $(div).prop('class','accompany');
+    $(div).append(img);
+    $(img).prop('src','/bts/'+thumbnail);
+    }
+});
+</script>
 </head>
 <body>
 	<div id="header">
@@ -86,11 +110,11 @@ h3.title {
 						<c:set var="member" value="${member_id}"/>
 						<c:choose>
 						<c:when test="${member_id != 'admin'}">
-						<a href="${contextPath }/my/profile" class="mypage" style=" position:absolute; display:block;font-size:10px; padding-right:5px;border-right:1px solid #fff; line-height:10px;"><span>마이페이지</span></a>
-						<a href="${contextPath }/signup/logout" class="logout" style="position:absolute; left:60px; font-size:10px; line-height:10px;"><span>로그아웃</span></a>
+						<a href="${contextPath }/my/profile" class="mypage" style=" position:absolute; display:block;font-size:10px; padding-right:7px;border-right:1px solid #fff; line-height:10px;"><span>마이페이지</span></a>
+						<a href="${contextPath }/signup/logout" class="logout" style="position:absolute; left:70px; font-size:10px; line-height:10px;"><span>로그아웃</span></a>
 						</c:when>
 						<c:when test="${member_id == 'admin'}">
-						<a href="${contextPath}/admin/main" class="mypage" style=" position:absolute; display:block;font-size:10px;padding-right:5px;border-right:1px solid #fff; line-height:10px;"><span>관리자 페이지</span></a>
+						<a href="${contextPath}/admin/main" class="mypage" style=" position:absolute; display:block;font-size:10px;padding-right:5px;border-right:1px solid #fff;left:-5px; line-height:10px;"><span>관리자 페이지</span></a>
 						<a href="${contextPath }/signup/logout" class="logout" style="position:absolute; left:75px; font-size:10px; line-height:10px;"><span>로그아웃</span></a>
 						</c:when>
 						</c:choose>
@@ -99,7 +123,7 @@ h3.title {
 					</c:when>
 					<c:otherwise>
 						<!--  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#popUpWindow">Log IN</button>-->
-						<a href="#exampleModal" class="signup" data-toggle="modal"><span>LOGIN</span></a>
+						<a href="#popUpWindow" class="login" data-toggle="modal"><span>LOGIN</span></a>
 						<a href="${contextPath}/signup/signup" class="signup"><span>SIGN UP</span></a>
 					</c:otherwise>
 				</c:choose>
@@ -110,7 +134,7 @@ h3.title {
 	</div>
 
 
-	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="popUpWindow" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<!-- header -->
@@ -132,7 +156,7 @@ h3.title {
 				<div class="modal-footer">
 
 					<p id="findId_Pw">
-						<a class="forgotpw" href="${contextPath }/find/findPwMain" style="color: white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp; <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>
+						<a class="forgotpw" href="${contextPath}/find/findPwMain" style="color: white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp; <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>
 					</p>
 				</div>
 
@@ -230,32 +254,23 @@ h3.title {
 	</div>
 
 	<!-- Scroll down_1 Reservation -->
-	<div class="main_section_reservation" id="main_section main_section_reservation" style="position: relative;">
-		<div class="caption">
-			<h1 style="font-weight: bold;">RECOMMEND</h1>
-		</div>
-		<p>BTS는 완벽한 여행이 되도록 최선을 다합니다.</p>
-		<p style="color: gray; text-decoration: underline;">새로운 곳에서 새로운 사람과 새로운 경험</p>
-		<div>
-			<h3 class="title">BTS와 함께 성공적인 여행을 경험하세요!</h3>
-		</div>
+	<div class="main_section_reservation" id="main_section main_section_reservation">
+	
 		<hr style="border: solid 1px gray;">
-		<h3 style="font-weight: bold">지금 가장 인기있는 숙소 TOP5</h3>
+		<h3 style="font-weight:bold; text-align:center; width:100%; height:100px;">지금 가장 인기있는 숙소 TOP&nbsp;6</h3>
 		<div style="width:100%; margin-left: 100px;">
 			<div class="best_recommend" style="width:100%; height:auto;">
 			</div>
 		</div>
-		<h3 style="font-weight: bold">새로운 여행지 TOP5</h3>
+		<h3 style="font-weight: bold; text-align:center; width:100%; height:100px; line-height:100px;">감동을 높혀줄 크리스마스 축제!!</h3>
 		<div style="margin-left: 100px; margin-bottom: 200px">
-			<div class="best_place">
-			
-			</div>
+			<div class="best_festival"></div>
+		<button type="button" class="more" onclick="location='/bts/recommend_main'">MORE<P>>></P></button>
 		</div>
-			<button type="button" class="btn btn-secondary" style="float: right; margin-right: 200px; margin-top: 50px;">more</button>
 	</div>
 
 	<!-- Scroll down_2 Accompany -->
-	<div class="main_section_accompany" id="main_section main_section_accompany">
+	<div class="main_section_accompany" id="main_section main_section_accompany" style="position:relative;">
 		<div class="caption">
 			<h1 style="font-weight: bold; margin-top: 150px;">ACCOMPANY</h1>
 		</div>

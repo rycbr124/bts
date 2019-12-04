@@ -27,19 +27,28 @@
 	VALUES (#{contact_no}, #{title}, #{contents}, 'N', #{member_id}, TO_CHAR(SYSDATE,'YYYY-MM-DD'), #{contact_type})
 	]]>
 </insert>
-<select id="selectQuestion" resultMap="questionInfo">
+<select id="selectQuestion" resultMap="questionInfo" parameterType="java.util.HashMap">
 	<![CDATA[
-	SELECT *
-	FROM CONTACT
-	WHERE member_id = #{member_id,jdbcType=VARCHAR}
+	SELECT rownum , contact_no, member_id, title, contents ,answer_at, contact_date, contact_type
+	FROM (select rownum rn, a.*
+          FROM (SELECT *
+               FROM contact
+               where member_id = #{member_id,jdbcType=VARCHAR}
+               order by contact_no desc)a)
+    WHERE rn between #{start,jdbcType=INTEGER} and #{end,jdbcType=INTEGER}
 	ORDER BY TO_NUMBER(contact_no) desc
 	]]>
+</select>
+<select id="listCount" resultType="java.lang.Integer">
+	SELECT COUNT(*)
+    FROM contact
+    WHERE member_id = #{member_id,jdbcType=VARCHAR}
 </select>
 <select id="questionDetail" resultMap="questionInfo">
 	<![CDATA[
 	SELECT contact_no,contact_date,contact_type,contents,member_id,title,DECODE(answer_at,'N','처리중','Y','처리완료')AS answer_at
 	FROM CONTACT
-	WHERE contact_no = #{contact_no, jdbcType=VARCHAR}
+	WHERE TO_NUMBER(contact_no) = #{contact_no, jdbcType=INTEGER}
 	]]>
 </select>
 <select id="questionSeq" resultType="String">
@@ -52,7 +61,7 @@
 	<![CDATA[
 		SELECT contents
 		FROM answer_contact
-		WHERE contact_no = #{contact_no,jdbcType=VARCHAR}
+		WHERE TO_NUMBER(contact_no) = #{contact_no,jdbcType=INTEGER}
 	]]>
 </select>
 </mapper>

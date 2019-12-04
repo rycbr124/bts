@@ -52,6 +52,7 @@ body {
 	line-height: 1;
 	text-align: center;
 	z-index: 1;
+
 }
 
 #menu {
@@ -163,17 +164,29 @@ html .member_menu a:last-child {
 	margin-right: 0;
 }
 
-.member_menu a:before {
+.member_menu .login:before {
 	font-family: 'jt-font';
 	font-size: 20px;
-	font-weight: narmal;
+	font-weight: normal;
 	text-align: center;
 	color: lightgray;
 	display: block;
-	position: absolue;
+	position: absolute;
 	left: 0;
+	content:url("/bts/resources/image/icon/login.png");
+	
 }
-
+.member_menu .signup:before {
+	font-family: 'jt-font';
+	font-size: 20px;
+	font-weight: normal;
+	text-align: center;
+	color: lightgray;
+	display: block;
+	position: absolute;
+	left: 0;
+	content:url("/bts/resources/image/icon/signup.png");
+}
 html .member_menu a:hover {
 	color: rgb(127, 127, 127);
 }
