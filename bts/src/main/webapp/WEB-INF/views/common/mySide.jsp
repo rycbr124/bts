@@ -29,13 +29,42 @@ $(function(){
 		}
 		$('#side').animate({'top':position},{duration:speed, easing, queue:false});
 	});
+	$('#side ul li a').on('click',function(){
+		var className = $(this).parent().attr('class')
+		if(className != 'active'){
+			$(this).parent().addClass('active');
+		}else{
+			$(this).parenr().removeClass();
+		}
+	});
 });
 </script>
+<style>
+.submenu{
+	width:100%;
+}
+.submenu li{
+	font-size:14px;
+	width:100%;
+}
+.submenu li a{
+	width:100%;
+}
+.title{
+	color:#fff;
+	letter-spacing:2px;
+}
+.active{
+	background-color:rgb(210,210,210);
+	color:#fff;
+	width:100%;
+}
+</style>
 </head>
 <body>
 		<span class="title">마이페이지</span>
 		<ul class="submenu">
-			<li class="active"><a href="${contextPath}/my/profile"> <i
+			<li><a href="${contextPath}/my/profile"> <i
 					class="icon icon-update-profile"></i> <span>여행자 정보 조회/수정</span>
 			</a></li>
 			<li><a href="order.html"> <i class="icon icon-post-list"></i>
@@ -47,7 +76,7 @@ $(function(){
 			<li><a href="${contextPath}/question/questionMain"> <i class="icon icon-question"></i>
 					<span>문의 내역 관리</span>
 			</a></li>
-			<li><a href="coupon.html"> <i class="icon icon-wishlist"></i>
+			<li><a href="${contextPath}/my/wishList"> <i class="icon icon-wishlist"></i>
 					<span>위시리스트 관리</span>
 			</a></li>
 			<li><a href="${contextPath}/my/message/main"> <i class="icon icon-message"></i>

@@ -11,6 +11,11 @@
 		<result property="upper_category_cd" column="upper_category_cd" />		
 	</resultMap>
 	
+	<resultMap id="wishlistResult" type="g_p001_2VO">
+		<result property="content_id" column="content_id" />
+		<result property="member_id" column="member_id" />
+	</resultMap>
+	
 	<!-- 상위 카테고리 -->
 	<select id="selectUpperCategory" resultMap="categoryResult">
 		<![CDATA[
@@ -39,7 +44,7 @@
 		]]>	
 	</select>
 	
-	<!-- 위시리스트 조회 -->
+	<!-- 위시리스트 중복조회 -->
 	<select id="findWishlist" resultType="String" parameterType="g_p001_2VO">
 		<![CDATA[
 			SELECT DECODE(COUNT(*), 0, 'false', 'true')
@@ -56,5 +61,13 @@
 			VALUES (#{content_id}, #{member_id})
 		]]>
 	</insert>
-
+	
+	<!-- 본인 위시리스트 조회 -->
+	<select id="searchWishlist" parameterType="String" resultMap="wishlistResult">
+		<![CDATA[
+			SELECT content_id
+			FROM recommend_wish_list
+			WHERE member_id = #{member_id}
+		]]>
+	</select>
 </mapper>

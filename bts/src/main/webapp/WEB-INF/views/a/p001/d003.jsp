@@ -32,7 +32,7 @@ var ib = {
 	                "Width": 300,
 	                "SaveName": "group_desc",
 	                "TreeCol": 1,
-	                "LevelSaveName": "TREELEVEL"
+	                "LevelSaveName": "TREELEVEL",
 	            }, {
 	                "Header": "성향코드",
 	                "Type": "Text",
@@ -166,7 +166,11 @@ var ib = {
 	            Sync: 1
 	        });
 	    }
+	    
+	   
 	};
+
+
 	ib.initialize();
 
 	// jsfiddle에서 ib 접근을 위해 window에 등록

@@ -26,7 +26,7 @@
 		
 		$('#btn-form-submit').click(function() {
 			var profile = $('#frm-profile')[0];
-			profile.action = "${contextPath }/my/update";
+			profile.action = "/bts/my/update";
 			profile.submit();
 		});
 	})
@@ -34,7 +34,6 @@
 	function tagInit(){
 		var input = ${selected};
 		var radioList = $('input[type=radio]').toArray();
-		console.log(radioList);
 		for(var i in input){
 			var cd = input[i].incln_cd;
 			for(var j in radioList){
@@ -75,6 +74,7 @@
 										<img
 											src="${contextPath}${sessionScope.memberInfo.profile_image }"
 											id="profImg">
+s										<input type="hidden" name="profileImage" value=""/>
 									</c:if>
 								</c:when>
 

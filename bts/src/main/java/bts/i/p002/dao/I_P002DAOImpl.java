@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import bts.e.p001.VO.PagingVO;
 import bts.i.p002.VO.I_P002VO_1;
 import bts.i.p002.VO.I_P002VO_2;
 import bts.i.p002.VO.I_P002VO_3;
@@ -20,6 +21,10 @@ public class I_P002DAOImpl implements I_P002DAO{
 		List<String> planList = new ArrayList<>();
 		planList = sqlSession.selectList("i.p002.planList", member_id);
 		return planList;
+	}
+	@Override
+	public Integer paging(String member_id)throws DataAccessException{
+		return sqlSession.selectOne("i.p002.pageCount",member_id);
 	}
 	@Override
 	public List<String> planRoot(String plan_no)throws Exception{
