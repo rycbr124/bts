@@ -38,7 +38,7 @@ $(function(){
 			<li class="active"><a href="${contextPath}/my/profile"> <i
 					class="icon icon-update-profile"></i> <span>여행자 정보 조회/수정</span>
 			</a></li>
-			<li><a href="order.html"> <i class="icon icon-post-list"></i>
+			<li><a href="${contextPath}/my/myBoardList"> <i class="icon icon-post-list"></i>
 					<span>내 글목록 관리</span>
 			</a></li>
 			<li><a href="wishlist.html"> <i
