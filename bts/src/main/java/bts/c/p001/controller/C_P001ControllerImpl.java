@@ -48,7 +48,7 @@ public class C_P001ControllerImpl implements C_P001Controller {
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(C_P001ControllerImpl.class);
-
+	
 	@Override
 	@RequestMapping(value = "/profile")
 	public ModelAndView pageInit(HttpServletRequest request, HttpServletResponse response) throws Exception {

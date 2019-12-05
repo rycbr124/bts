@@ -1,0 +1,47 @@
+@charset "UTF-8";
+@font-face{
+	src:url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
+	font-family:"binggrae";	
+}
+
+.sr_flex_layout.sr_item{
+	flex-wrap:wrap;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
+	min-height: auto;
+	position: relative;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+}
+
+.sr_item_default{
+	background-color:#fff;
+}
+
+.sr_item{
+	width: 80%;
+	height: 300px;
+	padding: 16px;
+	margin : 16px;
+	border: 1px solid #666666;
+	border-radius: 3px;
+	box-sizing: border-box;
+	cursor: default;
+	clear: both;
+}
+
+.ko{
+	color: #383838;
+	font-size: small;
+	line- height: 1.2;
+}
+
+body{
+	font-size: small;
+	line-height: 1.2;
+	font-family: "binggrae";
+}
+
+

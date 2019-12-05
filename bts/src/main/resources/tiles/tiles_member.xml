@@ -22,6 +22,14 @@
       <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
    </definition>
    
+   <!-- 예약페이지 기본 레이아웃 적용 화면 템플릿 -->
+	<definition name="resveInfoLayout" template="/WEB-INF/views/common/resveInfoLayout.jsp">
+		<put-attribute name="title" value="예약페이지" />
+		<put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+	</definition>
+   
    <!-- 관리자페이지 기본 레이아웃 적용 화면 템플릿 -->
    <definition name="adminLayout"  template="/WEB-INF/views/common/adminLayout.jsp">
       <put-attribute name="side" value="/WEB-INF/views/common/adminSide.jsp" />
@@ -39,6 +47,12 @@
       <put-attribute name="body"
          value="/WEB-INF/views/c/{1}/{2}.jsp" />
    </definition>
+   
+   <!-- 예약페이지 레이아웃 적용 -->
+	<definition name="/h/p001/d001" extends="resveInfoLayout">
+	   <put-attribute name="body"
+		 value="/WEB-INF/views/h/p001/d001.jsp" />
+	</definition>
    
    <!-- 관리자페이지 레이아웃 적용 -->
    <definition name="/a/*/*" extends="adminLayout">
