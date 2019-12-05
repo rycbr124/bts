@@ -16,6 +16,8 @@
 <title>마이페이지 동행목록</title>
 </head>
 <body>
+	<br>
+	<br>
 	<div class="container" id="container">
 		<div id="headsubject">
 			<h1 id="subjectText">내글 동행 신청자 리스트</h1>
@@ -41,8 +43,7 @@
 					</tbody>
 				</table>
 			</form>
-			<br>
-			<br>
+			<br> <br>
 			<div id="paging" style="display: block; text-align: center;">
 				<ul class="pagination" id="pagination">
 					<!-- 이전버튼 -->

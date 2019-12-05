@@ -28,7 +28,6 @@ import bts.d.p001_4.vo.D_P001_4VO;
 import bts.d.p001_4.vo.D_P001_4VO_2;
 import bts.d.p001_4.vo.D_P001_4VO_5;
 import bts.e.p001.VO.PagingVO;
-import bts.f.p001_3.vo.F_P001_3VO_3;
 
 
 
@@ -254,7 +253,15 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 		
 		int totalCount = Integer.parseInt(d_p001_4Service.selectCommentTotal(searchMap));
 		bts.common.PagingVO pvo = pagingProvider.get();
-		pvo.setPaging(Integer.parseInt(selectPage), totalCount, comRangePage, comRangeRow);
+		int curPage = totalCount;
+		try {
+			if(selectPage!=null) {
+				curPage = Integer.parseInt(selectPage);
+			}
+		}catch(NumberFormatException e) {
+			e.printStackTrace();
+		}
+		pvo.setPaging(curPage, totalCount, comRangePage, comRangeRow);
 		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
 		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
 		
