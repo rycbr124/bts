@@ -56,10 +56,11 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
 
    @Override
    @RequestMapping(value="/place_detail" ,method={RequestMethod.POST,RequestMethod.GET})
-   public ModelAndView P001_D003(@RequestParam("contentid") String contentid, HttpServletRequest request, HttpServletResponse response) throws Exception {
+   public ModelAndView P001_D003(@RequestParam(value="contentid",required=false) String contentid, @RequestParam(value="contenttypeid",required=false) String contenttypeid, HttpServletRequest request, HttpServletResponse response) throws Exception {
       System.out.println("place param 값 : " + contentid);
       ModelAndView mav = new ModelAndView("/g/p001_2/d003");
       mav.addObject("contentid", contentid);
+      mav.addObject("contenttypeid", contenttypeid);
       return mav;
    }
 

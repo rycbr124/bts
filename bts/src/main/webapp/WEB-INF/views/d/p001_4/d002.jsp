@@ -14,8 +14,44 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<link rel="stylesheet" href="${contextPath}/resources/css/comment/comment.css"> <!-- 커스텀 css -->
+<script src="${contextPath}/resources/js/comment/comment.js"></script> <!-- 커스텀 js -->
+<script src="${contextPath}/resources/js/report/report.js"></script> <!-- 커스텀 js -->
+
+
 <script>
 	$(document).ready(function (){
+		init();
+		
+		function init(){
+          var context="${contextPath}";
+          var no="${plan_no}";
+          var id="${sessionScope.memberInfo.member_id}";
+          var url="${reqUrl}";
+          setInit(context,no,id,url);
+          var paging = ${initTotal};
+          comPaging(paging);
+	    }
+		
+		$(document).on('click','span.comment-report',function(){
+			var reqUrl="${contextPath}/report/comment"
+			var contents_cd=$(this).parent().parent().data('no');
+			var target_id=$(this).parent().find('.comment-author').text();
+			var popup = openReport(reqUrl,contents_cd,target_id);			
+		});
+		
+		$('#contents-report').on('click',function(){
+			var reqUrl="${contextPath}/report/article/plan"
+			var contents_cd="${plan_no}";
+			var target_id="${result[0].member_id}";
+			var popup = openReport(reqUrl,contents_cd,target_id);
+		});
+		
+		
+		
+		
+		
 		var arr_content = new Array();
 		var arr_day = new Array();
 		var arr_desc = new Array();
@@ -47,7 +83,6 @@
 		
 		
 		
-
 		for(var i in arr_content){
 			console.log("1111 : " + arr_content[i]);
 			var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
@@ -84,7 +119,15 @@
 			         var text = document.createElement('div');
 			         $(text).prop('class', 'content_text');
 			         var desc_text = document.createTextNode(arr_desc[i]);
+			         var left = document.createTextNode('❝ ');
+			         var right = document.createTextNode(' ❞');
+			         
+			         
+			         
+			         text.appendChild(left);
 			         text.appendChild(desc_text);
+			         text.appendChild(right);
+			         
 			         
 			         
 			         $('.thumb_nail').prop('src', resultArray.firstimage);
@@ -94,7 +137,6 @@
 			         $(hidden).prop('name', 'content_id' + i);
 			         $(hidden).prop('value', arr_content[i]);
 			         			         
-
 			         $('.planner_detail').append(day_div);
 			         $('.planner_detail').append(div);
 			         $('#content_div' + i).append(a);
@@ -140,19 +182,7 @@
 		$('.planner_detail').append(list_button);	
 		
 	});
-	
-	/* 댓글 구현 함수 */
-	
-	function commentList(){
-		$.ajax({
-			type : "post",
-			async : false,
-			url : "${contextPath}/community/comment_list",
-			data : {
-				
-			},
-		})
-	}
+
 	
 	
 	
@@ -164,27 +194,22 @@
 	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
     font-family: "NanumSquareRoundEB";
 }
-
 @font-face {
 	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundB.ttf");
     font-family: "NanumSquareRoundB";
 }
-
 @font-face {
     src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
     font-family: "NanumSquareRoundR";
 }
-
 h1{
 	font-family: "NanumSquareRoundB";
 	
 	margin-left : 30px;	
 }
-
 h2{
 	font-family : "NanumSquareRoundEB";
 }
-
 h3.font-weight-light{
 	color : black;
 }
@@ -195,21 +220,16 @@ strong{
 	display : block;
 	margin-left : 30px;
 }
-
 a:hover{
 	color : black;
 }
-
 *{
 	font-family: "NanumSquareRoundR";
 }
-
-
 img.thumb_nail{
 	width : 1110px;
 	height : 400px;
 }
-
 div.title{
 	width : 1110px;
 	height : 200px;
@@ -221,42 +241,45 @@ div.title{
     bottom : 0px;s
 	
 }
-
 img.content_image{
 	width : 300px;
 	height : 150px;
 }
-
 div.content_text{
 	display : inline-block;
 	float : right;
 	text-align : center;
 }
-
 div.planner_detail{
 	padding : 80px;	
 	background-color : #F8F8FA;
 }
-
+div.mx-auto{
+	background-color : #F8F8FA;
+}
+#contents-info{
+	background-color : #F8F8FA;
+}
+div.comment{
+	background-color : #F8F8FA;
+	margin : 0px;
+}
 div.content_div{
 	border : solid 0.8px #D5D5D5;
 	padding : 20px;
 	margin-bottom : 20px;
 	background-color : white;
 }
-
 div.day_div{
 	width : 80px;
 	background-color : #003399;
 	color : white;
 	text-align : center;
 }
-
 div.quoatation{
 	display : inline-block;
 	font-size : 50px;
 }
-
 div.titleBox{
 	margin-bottom : 10px;
 }
@@ -265,7 +288,6 @@ img.titleImage{
 	height : 50px;
 	margin-right : 10px;
 }
-
 h2.titleDesc{
 	display : inline-block;
 }
@@ -288,31 +310,33 @@ h2.titleDesc{
 		<!-- javascript로 처리할 부분 -->
 		<div class="planner_detail">
 		
-			
-			
 		</div>
 		
+		<div id='contents-info'>
+			<span id="comment-count">
+				<i class="far fa-comment-dots fa-2x"></i>
+				<span>${paging.totalCount}</span>
+			</span>
+			<span id="view-count"></span>
+			<span id="contents-report">게시글 신고</span>
+		</div>
+		<div class="comment">
+		<div id="comment-form" class="mx-auto">
+			<form name="frmCom" class="row justify-content-md-end"  action="${contextPath}/community/comment/write" method="post">
+				<textarea name="input-comment"></textarea>
+				<input type="submit" class="btn btn-outline-secondary btn-sm" value="작성하기">
+				<input type="hidden" name="article_no" value="${plan_no}">
+			</form>
+		</div>
 		
-        <label for="content">comment</label>
-        <form name="commentInsertForm">
-            <div class="input-group">
-               <input type="hidden" name="bno" value="${detail.bno}"/>
-               <input type="text" class="form-control" id="content" name="content" placeholder="내용을 입력하세요.">
-               <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" name="commentInsertBtn">등록</button>
-               </span>
-              </div>
-        </form>
-    
-    
-    
-        <div class="commentList"></div>
-    
+		<div id="comments">
+		</div>
+		</div>
+		<div id="comment-paging">
+			<ul id="paging-list" class="pagination justify-content-center pagination-sm">
+			</ul>
+		</div>
 
-
-
-		
-		
 	</div>
 </body>
 </html>

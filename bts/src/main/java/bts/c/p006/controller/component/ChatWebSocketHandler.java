@@ -122,7 +122,9 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		body.clear();
 		body.put("result", c_p006VO);
 		String result = mapper.writeValueAsString(c_p006FormVO);
-		session.sendMessage(new TextMessage(result));
+		if(session.isOpen()) {
+			session.sendMessage(new TextMessage(result));
+		}
 	}
 	
 	private void searchMember(C_P006FormVO c_p006FormVO,WebSocketSession session,B_P001VO b_p001VO,ObjectMapper mapper) throws Exception {

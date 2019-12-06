@@ -28,6 +28,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <style type="text/css">/* Chart.js */
+body{
+overflow-y:hidden;
+}
 @
 keyframes chartjs-render-animation {
 	from {opacity: .99
@@ -36,7 +39,12 @@ keyframes chartjs-render-animation {
 to {
 	opacity: 1
 }
-
+}
+#side{
+	float:left;
+}
+#side{
+float:left;
 }
 #accordinonSidebar{
 	margin-right : 0px;
@@ -47,7 +55,7 @@ to {
 	<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
-      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+      <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${contextPath}/main/main">
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
@@ -81,8 +89,8 @@ to {
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Member:</h6>
-            <a class="collapse-item" href="#">회원 목록 조회</a>
-            <a class="collapse-item" href="#">회원 목록 상세/수정</a>
+            <a class="collapse-item" href="${contextPath}/admin/mainMember">회원 목록 조회</a>
+            <a class="collapse-item" href="${contextPath}/admin/updateMember">회원 목록 상세/수정</a>
           </div>
         </div>
       </li>
@@ -98,7 +106,7 @@ to {
             <h6 class="collapse-header">Report:</h6>
             <a class="collapse-item" href="#">신고내역조회</a>
             <a class="collapse-item" href="#">제재 내역 조회/변경</a>
-            <a class="collapse-item" href="#">제재 내역 추가</a>
+            <a class="collapse-item" href="${contextPath}/admin/report/pnish">제재 기준 조회/변경</a>
           </div>
         </div>
       </li>
@@ -120,7 +128,7 @@ to {
         <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Contact:</h6>
-            <a class="collapse-item" href="#">문의 목록 조회</a>
+            <a class="collapse-item" href="${contextPath}/admin/question">문의 목록 조회</a>
             <a class="collapse-item" href="#">문의 내역 답변 작성</a>
           </div>
         </div>
@@ -134,8 +142,8 @@ to {
           <div id="collapseMember" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Inclination:</h6>
-            <a class="collapse-item" href="#">성향 목록 조회</a>
-            <a class="collapse-item" href="#">성향 추가</a>
+            <a class="collapse-item" href="${contextPath}/admin/inclnMain">성향 목록 조회</a>
+            <a class="collapse-item" href="${contextPath}/admin/updateIncln">성향 추가</a>
           </div>
         </div>
       </li>

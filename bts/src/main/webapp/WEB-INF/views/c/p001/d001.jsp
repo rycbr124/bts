@@ -17,28 +17,23 @@
 	$(document).ready(function() {
 		tagInit();
 		
+		if("${sessionScope.memberInfo.member_type=='kakao' || sessionScope.memberInfo.member_type=='naver'}"=="true"){
+			$("#input_img").on("click", function(){
+				alert('프로필 이미지 등록은 일반 회원만 가능합니다.');
+				return false;
+			});
+		}
+		
 		$('#btn-form-submit').click(function() {
 			var profile = $('#frm-profile')[0];
-			profile.action = "${contextPath }/my/update";
+			profile.action = "/bts/my/update";
 			profile.submit();
-			/*
-			console.log(profile);
-			console.log(profile.profile_image);
-			 */
 		});
-		/*
-		$('.btn-primary').click(function(){
-			$('.btn-primary').removeClass('active');
-			$(this).addClass('active');
-			
-		})
-		*/
 	})
 	
 	function tagInit(){
 		var input = ${selected};
 		var radioList = $('input[type=radio]').toArray();
-		console.log(radioList);
 		for(var i in input){
 			var cd = input[i].incln_cd;
 			for(var j in radioList){
@@ -68,7 +63,7 @@
 					<form id="frm-profile" autocomplete="off" method="post">
 						<input type="hidden" name="email_id" id="email_id"> <input
 							type="hidden" name="email_host" id="email_host">
-						<div class="mypage-picture" action="${contextPath}/my/image">
+						<div class="mypage-picture">
 
 							<c:choose>
 								<c:when
@@ -79,8 +74,9 @@
 									</c:if>
 									<c:if test="${sessionScope.memberInfo.member_type !='kakao' }">
 										<img
-											src="${contextPath}/${sessionScope.memberInfo.profile_image }"
+											src="${contextPath}${sessionScope.memberInfo.profile_image }"
 											id="profImg">
+s										<input type="hidden" name="profileImage" value=""/>
 									</c:if>
 								</c:when>
 

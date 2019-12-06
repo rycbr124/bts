@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="mapper.a_p002">
+	<resultMap id="pnishResult" type="pnishVO">
+		<result property="pnish_cd" column="pnish_cd" />
+		<result property="name" column="name" />
+		<result property="day_cnt" column="day_cnt" />
+	</resultMap>
+	
+	<select id="selectPnishList" parameterType="string" resultMap="pnishResult">
+	    <![CDATA[
+			SELECT pnish_cd,name,day_cnt
+			FROM punishment
+	    ]]>
+   		<where>
+			name LIKE '%'||#{p_name}||'%'
+		</where>
+	</select>	
+	
+	<insert id="insertPnish" parameterType="java.util.Map">
+		<![CDATA[
+			INSERT INTO punishment (pnish_cd,name,day_cnt)
+			VALUES ( 'PN' || punishment_seq.nextval, #{name}, #{day_cnt})
+	    ]]>
+	</insert>	
+
+	<update id="updatePnish" parameterType="java.util.Map">
+		<![CDATA[
+			UPDATE punishment
+			SET  name = #{name}
+			   , day_cnt = #{day_cnt}
+			WHERE pnish_cd = #{pnish_cd}
+	    ]]>
+	</update>	
+	
+	<delete id="deletePnish" parameterType="java.util.Map">
+		<![CDATA[
+			DELETE punishment
+			WHERE pnish_cd = #{pnish_cd}
+	    ]]>
+	</delete>	
+
+</mapper>

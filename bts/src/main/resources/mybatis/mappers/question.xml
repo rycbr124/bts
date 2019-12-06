@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="c.p004">
+	<resultMap id="questionInfo" type="c_p004VO">
+		<result property="contact_no" column="contact_no"/>
+		<result property="title" column="title"/>
+		<result property="contents" column="contents"/>
+		<result property="answer_at" column="answer_at"/>
+		<result property="member_id" column="member_id"/>
+		<result property="contact_date" column="contact_date"/>
+		<result property="contact_type" column="contact_type"/>
+	</resultMap>
+	<resultMap id="answerInfo" type ="a_p004VO">
+		<result property="contents" column="contents"/>
+		<result property="contact_no" column="contact_no"/>
+		<result property="member_id" column="member_id"/>
+		<result property="register_date" column="register_date"/>
+	</resultMap>
+	
+	
+<insert id="addQuestion" parameterType="c_p004VO">
+	<![CDATA[
+	INSERT INTO contact(contact_no, title, contents, answer_at, member_id, contact_date, contact_type)
+	VALUES (#{contact_no}, #{title}, #{contents}, 'N', #{member_id}, TO_CHAR(SYSDATE,'YYYY-MM-DD'), #{contact_type})
+	]]>
+</insert>
+<select id="selectQuestion" resultMap="questionInfo" parameterType="java.util.HashMap">
+	<![CDATA[
+	SELECT rownum , contact_no, member_id, title, contents ,answer_at, contact_date, contact_type
+	FROM (select rownum rn, a.*
+          FROM (SELECT *
+               FROM contact
+               where member_id = #{member_id,jdbcType=VARCHAR}
+               order by contact_no desc)a)
+    WHERE rn between #{start,jdbcType=INTEGER} and #{end,jdbcType=INTEGER}
+	ORDER BY TO_NUMBER(contact_no) desc
+	]]>
+</select>
+<select id="listCount" resultType="java.lang.Integer">
+	SELECT COUNT(*)
+    FROM contact
+    WHERE member_id = #{member_id,jdbcType=VARCHAR}
+</select>
+<select id="questionDetail" resultMap="questionInfo">
+	<![CDATA[
+	SELECT contact_no,contact_date,contact_type,contents,member_id,title,DECODE(answer_at,'N','처리중','Y','처리완료')AS answer_at
+	FROM CONTACT
+	WHERE TO_NUMBER(contact_no) = #{contact_no, jdbcType=INTEGER}
+	]]>
+</select>
+<select id="questionSeq" resultType="String">
+	<![CDATA[
+	SELECT question_seq.nextval
+	FROM dual
+	]]>
+</select>
+<select id="select_answer" resultType="String" parameterType="c_p004VO">
+	<![CDATA[
+		SELECT contents
+		FROM answer_contact
+		WHERE TO_NUMBER(contact_no) = #{contact_no,jdbcType=INTEGER}
+	]]>
+</select>
+</mapper>

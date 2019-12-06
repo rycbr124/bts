@@ -1,6 +1,7 @@
 package bts.d.p001_4.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,11 +12,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -23,8 +26,10 @@ import bts.b.p001.VO.B_P001VO;
 import bts.d.p001_4.service.D_P001_4Service;
 import bts.d.p001_4.vo.D_P001_4VO;
 import bts.d.p001_4.vo.D_P001_4VO_2;
-import bts.d.p001_4.vo.D_P001_4VO_4;
+import bts.d.p001_4.vo.D_P001_4VO_5;
 import bts.e.p001.VO.PagingVO;
+
+
 
 @Controller("d_p001_4")
 @RequestMapping(value="/community")
@@ -41,12 +46,30 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 	
 	@Autowired
 	Provider<D_P001_4VO_2> d_p001_4VO_2;
+	
+	@Autowired
+	Provider<bts.common.PagingVO> pagingProvider;
+	
+	@Autowired
+	Provider<D_P001_4VO_5> ansProvider;
+	
+	
+	private static final String menuName = "plan";
+	private static final int comRangeRow=10;
+	private static final int comRangePage=5;	
+	
+	@ModelAttribute("article_cd")
+	public String getArticle_cd() throws Exception {
+		String article_cd = d_p001_4Service.selectArticleCd(menuName);
+		return article_cd;
+	}
 
 	@Override
 	@RequestMapping(value="/plan_list" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView searchArticle(PagingVO pagingVO
 			,@RequestParam(value="nowPage", required=false)String nowPage
-			,@RequestParam(value="cntPerPage",required=false) String cntPerPage, HttpServletRequest request, HttpServletResponse response) throws Exception {
+			,@RequestParam(value="cntPerPage",required=false) String cntPerPage, HttpServletRequest request, HttpServletResponse response)throws Exception {
+		
 		int total = d_p001_4Service.listCount();
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
@@ -56,38 +79,58 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 		}else if(cntPerPage == null) {
 			cntPerPage = "5";			
 		}
+			HttpSession session = request.getSession();
+			b_p001VO = (B_P001VO) session.getAttribute("memberInfo");
+			
+			ModelAndView mav = new ModelAndView("/d/p001_4/d001");
+			pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			mav.addObject("paging", pagingVO);
+			List<D_P001_4VO> listArticle = d_p001_4Service.searchArticle(pagingVO);
+			mav.addObject("listArticle", listArticle);
+			if(b_p001VO == null) {
+				System.out.println("hi"); 
+			}else {
+				
+				String member_id = b_p001VO.getMember_id();
+				List<D_P001_4VO> myPlan = d_p001_4Service.selectMyplan(member_id);
+				mav.addObject("myPlan", myPlan);
+			}
+			return mav;
 		
-		ModelAndView mav = new ModelAndView("/d/p001_4/d001");
-		pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		mav.addObject("paging", pagingVO);
 		
-		List<D_P001_4VO> listArticle = d_p001_4Service.searchArticle(pagingVO);
-		mav.addObject("listArticle", listArticle);
-		return mav;
 	}
 
 	@Override
 	@RequestMapping(value="/plan_contents" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView contentsArticle(@RequestParam String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView contentsArticle(@ModelAttribute("article_cd") String article_cd, @RequestParam("plan_no") String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		List<D_P001_4VO> result = d_p001_4Service.contentsArticle(plan_no);
 		List<D_P001_4VO_2> detailPlanner = d_p001_4Service.detailPlanner(plan_no);
 		d_p001_4Service.increaseCnt(plan_no);
+		System.out.println("1111111111 : " + plan_no);
+		Map<String,String> searchMap = new HashMap<>();
+		searchMap.put("article_no", plan_no);
+		searchMap.put("article_cd", article_cd);
+		
+		
+		int totalCount = Integer.parseInt(d_p001_4Service.selectCommentTotal(searchMap));
+		
 		ModelAndView mav = new ModelAndView("/d/p001_4/d002");
 		mav.addObject("result", result);
 		mav.addObject("detailPlanner", detailPlanner);
+		mav.addObject("initTotal",totalCount);
+		mav.addObject("plan_no", plan_no);
+	    mav.addObject("reqUrl","/community");
 		return mav;
 	}
 	
 	@Override
 	@RequestMapping(value="/plan_write" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView writeArticle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = request.getSession();
-		b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
-		String member_id = b_p001VO.getMember_id();
-		List<D_P001_4VO> myPlan = d_p001_4Service.selectMyplan(member_id);
+	public ModelAndView writeArticle(@RequestParam("plan_no") String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		
 		
 		ModelAndView mav = new ModelAndView("/d/p001_4/d003");
-		mav.addObject("myPlan", myPlan);
+		mav.addObject("plan_no", plan_no);
 		return mav;
 	}
 	
@@ -195,6 +238,74 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 		
 		return mav;
 	}
+
+	@Override
+	@ResponseBody
+	@RequestMapping(value="/comment" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String commentPaging(@ModelAttribute("article_cd") String article_cd, HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		String selectPage = request.getParameter("curPage");
+		String article_no = request.getParameter("article_no");
+		
+		Map<String,String> searchMap = new HashMap<>();
+		searchMap.put("article_no", article_no);
+		searchMap.put("article_cd", article_cd);
+		
+		int totalCount = Integer.parseInt(d_p001_4Service.selectCommentTotal(searchMap));
+		bts.common.PagingVO pvo = pagingProvider.get();
+		int curPage = totalCount;
+		try {
+			if(selectPage!=null) {
+				curPage = Integer.parseInt(selectPage);
+			}
+		}catch(NumberFormatException e) {
+			e.printStackTrace();
+		}
+		pvo.setPaging(curPage, totalCount, comRangePage, comRangeRow);
+		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
+		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
+		
+		List<D_P001_4VO_5> comments = d_p001_4Service.selectAnswerList(searchMap);
+		Map<String,Object> resultMap = new HashMap<>();
+		resultMap.put("comments", comments);
+		resultMap.put("paging", pvo);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String result = mapper.writeValueAsString(resultMap);
+		return result;
+	}
+
+	@Override
+	@RequestMapping(value="/comment/write" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String commentWrite(@ModelAttribute("article_cd") String article_cd, RedirectAttributes redirect, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
+		String comment = request.getParameter("input-comment");
+		int nowpage = Integer.parseInt(request.getParameter("article_no"));
+		B_P001VO b_p001VO= (B_P001VO) request.getSession().getAttribute("memberInfo");
+
+		D_P001_4VO_5 d_p001_4VO_5 = ansProvider.get();
+		d_p001_4VO_5.setAnswer_desc(comment);
+		d_p001_4VO_5.setArticle_cd(article_cd);
+		d_p001_4VO_5.setArticle_no(nowpage);
+		d_p001_4VO_5.setMember_id(b_p001VO.getMember_id());
+		d_p001_4Service.insertAnswer(d_p001_4VO_5);
+		
+		redirect.addAttribute("plan_no",nowpage);
+		return "redirect:/community/plan_contents";
+	}
+
+	@Override
+	@ResponseBody
+	@RequestMapping(value="/comment/delete" ,method={RequestMethod.POST})
+	public String commentDelete(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String answer_no = request.getParameter("answer_no");
+		int result = d_p001_4Service.deleteAnswer(answer_no);
+		if(result==1) {
+			return "true";						
+		}else {
+			return "false";			
+		}
+	}	
 
 
 

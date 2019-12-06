@@ -19,9 +19,6 @@
 		<div id="header">
 			<tiles:insertAttribute name="header" />
 		</div>
-		
-		<div class="wrapper-subheader headimage" id="privacy"
-			style="background-image: url(/bts/resources/image/mypage/myimage.jpg)"></div>
 			
 		<div id="side">
 			<tiles:insertAttribute name="side" />

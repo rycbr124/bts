@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,9 +55,12 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 	@Autowired
 	F_P001_3Service f_p001_3Service;
 	
-	private static final String imageUrl = "D:\\git\\bts\\bts\\src\\main\\webapp\\resources\\image\\board";
-	private static final String metaUrl = "D:\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\bts\\resources\\image\\board";
-	private static final String mappingUrl = "/resources/image/board";
+	@Value("${file.image}")
+	private String imageUrl;
+	@Value("${file.metaImage}")
+	private String metaUrl;
+	@Value("${file.imageUrl}")
+	private String mappingUrl;
 	private static final String menuName="review";
 	private static final int rangeRow = 6;
 	private static final int rangePage = 5;
@@ -108,17 +112,11 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		searchMap.put("article_no", articleNo);
 		searchMap.put("article_cd", article_cd);
 		F_P001_3VO resultVO = f_p001_3Service.selectReviewContents(searchMap);
-
-		int totalCount = Integer.parseInt(f_p001_3Service.selectCommentTotal(searchMap));
-		PagingVO pvo = pagingProvider.get();
-		pvo.setPaging(totalCount, totalCount, comRangePage, comRangeRow);
-		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
-		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
-		
-		List<F_P001_3VO_3> comments = f_p001_3Service.selectAnswerList(searchMap);
 		mav.addObject("result", resultVO);
-		mav.addObject("comments", comments);
-		mav.addObject("paging", pvo);
+		
+		int totalCount = Integer.parseInt(f_p001_3Service.selectCommentTotal(searchMap));
+		mav.addObject("initTotal",totalCount);
+		mav.addObject("reqUrl","/community/review");
 		return mav;
 	}
 
@@ -134,7 +132,15 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		
 		int totalCount = Integer.parseInt(f_p001_3Service.selectCommentTotal(searchMap));
 		PagingVO pvo = pagingProvider.get();
-		pvo.setPaging(Integer.parseInt(selectPage), totalCount, comRangePage, comRangeRow);
+		int curPage = totalCount;
+		try {
+			if(selectPage!=null) {
+				curPage = Integer.parseInt(selectPage);
+			}
+		}catch(NumberFormatException e) {
+			e.printStackTrace();
+		}
+		pvo.setPaging(curPage, totalCount, comRangePage, comRangeRow);
 		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
 		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
 		
@@ -145,6 +151,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String result = mapper.writeValueAsString(resultMap);
+		System.out.println("=====================>"+result);
 		return result;
 	}
 	

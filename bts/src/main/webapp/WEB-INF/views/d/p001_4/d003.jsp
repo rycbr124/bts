@@ -17,91 +17,7 @@
 <script>
 /* 팝업 js */
 	$(document).ready(function (){
-		$('.btn-example').click(function(){
-	        var $href = $(this).attr('href');
-	        layer_popup($href);
-	    });
-	    function layer_popup(el){
-
-	        var $el = $(el);		//레이어의 id를 $el 변수에 저장
-	        var isDim = $el.prev().hasClass('dimBg');	//dimmed 레이어를 감지하기 위한 boolean 변수
-
-	        isDim ? $('.dim-layer').fadeIn() : $el.fadeIn();
-
-	        var $elWidth = ~~($el.outerWidth()),
-	            $elHeight = ~~($el.outerHeight()),
-	            docWidth = $(document).width(),
-	            docHeight = $(document).height();
-
-	        // 화면의 중앙에 레이어를 띄운다.
-	        if ($elHeight < docHeight || $elWidth < docWidth) {
-	            $el.css({
-	                marginTop: -$elHeight /2,
-	                marginLeft: -$elWidth/2
-	            })
-	        } else {
-	            $el.css({top: 0, left: 0});
-	        }
-
-	        $el.find('a.btn-layerClose').click(function(){
-	            isDim ? $('.dim-layer').fadeOut() : $el.fadeOut(); // 닫기 버튼을 클릭하면 레이어가 닫힌다.
-	            return false;
-	        });
-
-	        $('.layer .dimBg').click(function(){
-	            $('.dim-layer').fadeOut();
-	            return false;
-	        });
-
-	    }
 		
-	    /* 팝업 안 내용 */
-	    var arr_title = new Array();
-	    var arr_no = new Array();
-	    var arr_register = new Array();
-	    <c:forEach var="myPlan" items="${myPlan}" varStatus="status">
-			arr_title[${status.index}] = "${myPlan.title}";
-			arr_no[${status.index}] = "${myPlan.plan_no}";
-			arr_register[${status.index}] = "${myPlan.register_date}";
-		</c:forEach>
-		
-		for(var i in arr_title){
-			
-			var tr = document.createElement('tr');
-			$(tr).prop('class', 'content_' + i);
-			var td_no = document.createElement('td');
-			var td_title = document.createElement('td');
-			var td_register = document.createElement('td');
-			
-			var c_no = document.createTextNode(arr_no[i]);
-			var c_title = document.createTextNode(arr_title[i]);
-			var c_register = document.createTextNode(arr_register[i]);
-			var a = document.createElement('a');
-			$(a).prop("href", "javascript:load_plan(" + arr_no[i] + ")");
-			
-
-			td_no.appendChild(c_no);
-			td_title.appendChild(c_title);
-			td_register.appendChild(c_register);
-			$(tr).append(td_no);
-			$(a).append(td_title);
-			$(tr).append(a);
-			$(tr).append(td_register);
-			
-			$('.table_content').append(tr);
-			
-		}
-			
-		var div = document.createElement('div');
-		$(div).prop('class', 'btn-r');
-		$('.pop-conts').append(div);
-		
-		var href = document.createElement('a');
-		$(href).prop('href', '#');
-		$(href).prop('class', 'btn-layerClose');
-		var close = document.createTextNode('Close');
-		href.appendChild(close);
-		$('.btn-r').append(href);
 	});
 
 
@@ -114,13 +30,16 @@
 		frmSave.submit();
 	});
 	
-	function load_plan(plan_no){
+	
+	$(function load_plan(plan_no){
+		var plan_no = ${plan_no};
 		console.log(plan_no);
 		var plan_content = new Array();
 		var plan_day = new Array();
 		var title = null;
 		var p_no = null;
 		var plan_date = null;
+		console.log("1. plan_no : " + plan_no);
 		$.ajax({
 			type : "post",
 			async : false,
@@ -212,7 +131,8 @@
 			      }
 			   });
 		}
-	};
+	});
+	
 </script>
 <style>
 @font-face {
@@ -372,8 +292,7 @@ a.btn-layerClose:hover {
 			<div class="mb-3">
 				<label for="content">내용</label>
 				<div class="planner_detail">
-				<img class="file" src="${contextPath}/resources/image/community/file.png">
-				<a href="#layer2" class="btn-example">플래너 불러오기</a>
+
 				</div>	
 			</div>
 			

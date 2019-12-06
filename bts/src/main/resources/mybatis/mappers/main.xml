@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="z.p000">
+	<resultMap id = "mainAccompany" type="e_p001VO">
+		<result property="gender" column="gender"/>
+		<result property="age" column="gender"/>
+		<result property="traffic" column="traffic"/>
+		<result property="whlrs_no" column="whlrs_no"/>
+		<result property="article_no" column="article_no"/>
+		<result property="acc_title" column="acc_title"/>
+		<result property="member_id" column="member_id"/>
+		<result property="content" column="content"/>
+		<result property="incln_no" column="incln_no"/>
+		<result property="register_date" column="register_date"/>
+		<result property="viewcnt" column="viewcnt"/>
+		<result property="nick_name" column="nick_name"/>
+		<result property="thumb" column="thumb"/>
+	</resultMap>
+
+<select id="searchAccompany" resultType="Map">
+	<![CDATA[
+	SELECT ROWNUM,gender,age, traffic, whlrs_no,article_no, acc_title,member_id,TO_CHAR(register_date,'YYYY-MM-DD') register_date,viewcnt,nick_name,thumb
+	FROM (
+		  SELECT rownum rn,a.*
+          FROM (
+          	    SELECT *
+                FROM accompany
+                WHERE viewcnt is not null
+                AND thumb is not null
+                ORDER BY register_date desc)a)
+	WHERE rn BETWEEN '1' AND '5'
+	ORDER BY register_date desc
+	]]>
+</select>		
+		
+</mapper>
