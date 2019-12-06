@@ -76,7 +76,7 @@
 										<img
 											src="${contextPath}${sessionScope.memberInfo.profile_image }"
 											id="profImg">
-s										<input type="hidden" name="profileImage" value=""/>
+										<input type="hidden" name="profileImage" value=""/>
 									</c:if>
 								</c:when>
 
