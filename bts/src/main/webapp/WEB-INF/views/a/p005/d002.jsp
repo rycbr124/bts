@@ -106,7 +106,7 @@
 	</div>
 
 	<div class="clear hidden"></div>
-	<div class="ib_product"><script>createIBSheet("mySheet", "100%", "100%");</script></div>
+	<div><script>createIBSheet("mySheet", "100%", "100%");</script></div>
   </div>
 </body>
 </html>

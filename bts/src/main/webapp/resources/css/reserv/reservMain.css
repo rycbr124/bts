@@ -1,0 +1,24 @@
+@charset "UTF-8";
+@font-face{
+	src:url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
+	font-family:"binggrae";	
+}
+.card{
+	position:relative;
+	width:100%;
+	height:auto;
+	max-height:500px;
+	margin:150px;
+}
+.card-body{
+	position:absolute;
+	display:inline-block;
+}
+.card-img-top{
+	width:300px;
+	hetight:auto;
+	max-height:200px;
+}
+.card-text{
+	margin:0 0 20px;
+}

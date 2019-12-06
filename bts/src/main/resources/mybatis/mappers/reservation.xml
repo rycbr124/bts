@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.reservation">
+
+	<resultMap id="lodgingResult" type="h_p001VO">
+		<result property="lodging_id" column="lodging_id" />
+		<result property="description" column="description" />
+		<result property="address" column="address" />
+		<result property="resve_cnt" column="resve_cnt" />
+		<result property="lodging_se" column="lodging_se" />
+		<result property="name" column="name" />
+		<result property="room_no" column="room_type" />
+		<result property="room_type" column="room_type" />
+		<result property="whlrs_no" column="whlrs_no" />
+		<result property="price" column="price" />
+	</resultMap>
+	
+	<select id="hotelList" parameterType="h_p001VO" resultMap="lodgingResult">
+	<![CDATA[
+	select * from (select rownum rn, a.* from (select * from lodging_business order by lodging_no desc) a) where rn between #{start} and #{end}
+	]]>		
+	</select>
+	
+	<select id="hotelListCount" resultType="java.lang.Integer">
+	<![CDATA[
+	select count(*) from lodging_business
+	]]>
+	</select>
+
+</mapper>

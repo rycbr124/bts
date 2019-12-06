@@ -26,6 +26,11 @@
 	font-family: "Binggrae";
 }
 
+@font-face {
+    src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    font-family: "NanumSquareRoundR";
+}
+
 div.main_section_accompany {
 	margin-left: 250px;
 	margin-right: 250px;
@@ -46,6 +51,10 @@ img.detail {
 h3.title {
 	font-family: "Binggrae";
 	margin-bottom: 100px;
+}
+
+h5.card-title {
+	font-family: "NanumSquareRoundR";
 }
 
 </style>
@@ -94,7 +103,7 @@ $(document).ready(function(){
 		<div class="header_control_container">
 			<ul id="menu" class="menu">
 				<li class="menu_recommend"><a href="${contextPath}/recommend_main">추천</a></li>
-				<li class="menu_reservation"><a href="#">예약</a></li>
+				<li class="menu_reservation"><a href="${contextPath}/resve/Info">예약</a></li>
 				<li class="menu_accompany"><a href="${contextPath }/accompany/accMain">동행</a></li>
 				<li class="menu_community"><a href="${contextPath}/community/plan_list">커뮤니티</a></li>
 				<li class="menu_planner"><a href="${contextPath}/planner/planner">플래너</a></li>
@@ -257,12 +266,12 @@ $(document).ready(function(){
 	<div class="main_section_reservation" id="main_section main_section_reservation">
 	
 		<hr style="border: solid 1px gray;">
-		<h3 style="font-weight:bold; text-align:center; width:100%; height:100px;">지금 가장 인기있는 숙소 TOP&nbsp;6</h3>
+		<h3 style="font-weight:bold; text-align:center; width:100%; height:100px; font-family: NanumSquareRoundR; font-size: 30px">지금 가장 인기있는 숙소 TOP&nbsp;6</h3>
 		<div style="width:100%; margin-left: 100px;">
 			<div class="best_recommend" style="width:100%; height:auto;">
 			</div>
 		</div>
-		<h3 style="font-weight: bold; text-align:center; width:100%; height:100px; line-height:100px;">감동을 높혀줄 크리스마스 축제!!</h3>
+		<h3 style="font-weight: bold; text-align:center; width:100%; height:100px; line-height:100px; font-family: NanumSquareRoundR; font-size: 30px">감동을 높혀줄 크리스마스 축제!!</h3>
 		<div style="margin-left: 100px; margin-bottom: 200px">
 			<div class="best_festival"></div>
 		<button type="button" class="more" onclick="location='/bts/recommend_main'">MORE<P>>></P></button>
@@ -280,7 +289,7 @@ $(document).ready(function(){
 			<h3 class="title">BTS와 함께 성공적인 여행을 경험하세요!</h3>
 		</div>
 		<hr style="border: solid 1px gray;">
-		<h3 style="font-weight: bold">가장 최근에 등록된 글</h3>
+		<h3 style="font-weight: bold; font-family: NanumSquareRoundR; font-size: 30px">가장 최근에 등록된 글</h3>
 		<div style="margin-left: 100px; margin-bottom: 200px">
 			<div class="lately-accompany">
 				

@@ -14,6 +14,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="${contextPath}/resources/js/community_plan/community.js"></script>
 
 <style>
 @font-face {
@@ -131,11 +132,36 @@ div#paging{
 				</c:if>
 			</ul>
 		</div>
-	<p align="right">
-		<input type="button" value="글쓰기" class="btn btn-default" onClick="location.href='${contextPath}/community/plan_write'">
-	</p>
-
-
+		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">글쓰기</button>
+		
+		
+		  <!-- Modal -->
+  		<div class="modal fade" id="myModal" role="dialog">
+    		<div class="modal-dialog">
+    
+     	 		<!-- Modal content-->
+     		 	<div class="modal-content">
+       			 	<div class="modal-header">
+         				 <h4 class="modal-title">글쓰기</h4>
+         			 	<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+        			</div>
+        			<div class="modal-body">
+          				<!-- 여기가 내용들어갈 부분 -->
+          				<select class="form-control" id="myPlanList">
+          					<option value="">플랜 선택하기</option>
+          					<c:forEach var="myPlan" items="${myPlan}">
+          						<option value="${myPlan.plan_no}">${myPlan.title}</option>
+          					</c:forEach>
+          				</select>
+          				
+        			</div>
+        			<div class="modal-footer">
+         				 <button type="button" class="btn btn-default" onclick="javascript:go_write()">선택완료</button>
+        			</div>
+      			</div>
+      
+    		</div>
+  		</div>
 </div>
 </body>
 </html>

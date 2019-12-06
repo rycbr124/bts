@@ -19,7 +19,9 @@
 <script>
 	$(document).ready(function(){
 		var id = ${contentid};
+		var contenttypeid = ${contenttypeid};
 		image_init(id);
+		operation(contenttypeid, id);
 
 	});
 	
@@ -65,18 +67,48 @@ h1{
 p{
 	font-family: "NanumSquareRoundR";	
 }
-col-lg-7{
-	height:665px;
-	width:580pd;
-}
+
 .my-5{
-height:600px;
-border-bottom:1px solid rbg(127,127,127);
+	position:relative;
+	width:100%;
+	height:auto;
 
 }
+.col-lg-7{
+	position:relative;
+	height:auto;
+	top:0;
+	
+}
+.col-lg-5{
+	position:relative;
+	display:inline-block;
+	width:100%;
+	height:auto;
+	top:0;
+	right:0;
+
+
+}
+.info_container{
+line-height: 20px;
+margin-top:20px;
+
+}
+.card-body{
+	position:relative;
+	width:100%;
+	height:auto;
+	left:50%;
+	transform:translate(-50%,0);
+	min-height:500px;
+}
 .mb-lg-0{
+	position:relative;
 	width:603px;
 	height:480px;
+	max-width:560px;
+	max-height:560px;
 }
                                                                                              
 .detail_image_container{
@@ -88,15 +120,24 @@ border-bottom:1px solid rbg(127,127,127);
 	width:80px;
 	height:50px;
 }
-
-.title{
-	float : left;
+#map{
+	position:relative;
+	display:block;
+	padding-top:50px;
+	margin:0 auto;
 }
 
+.content_container{
+	position:relative;
+	width:900px;
+	height:auto;
+	margin:0 auto;
+}
 .content{
-	float : right;
-	display : inline-block;
-	float : right;
+	position:relative;
+	width:100%;
+	height:auto;
+	margin:0 auto;
 }
 [id='toggle-heart'] {
   position: absolute;
@@ -120,7 +161,9 @@ border-bottom:1px solid rbg(127,127,127);
 [for='toggle-heart'] { 
   align-self: center; 
 }
-
+#footer{
+	margin-top:50px;
+}
 </style>
 
 </head>
@@ -145,25 +188,16 @@ border-bottom:1px solid rbg(127,127,127);
 
     <!-- Call to Action Well -->
     <hr>
-    <div class="card-body" style="background-color:white; padding:0; margin-right:50%; transform:translate(20%);">
-     	<div id="map" style="width:900px;height:300px; position:relative;">
-    </div>
+    <div class="card-body">
+     	<div id="map" style="width:900px;height:300px;"></div>
     <!-- Content Row -->
-    <div>
-    
-	    
-	    	<h1>소개</h1>
-	    
-	    
-	    
-	    <div class="content">
-	    	
-	    	
-	    </div>
+    <div class="content_container">
+	    <h1>소개</h1>
+	    <div class="content"></div>
+    </div>
     </div>
 
   </div>
   <!-- /.container -->
-</div>
 </body>
 </html>

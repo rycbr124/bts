@@ -119,7 +119,15 @@
 			         var text = document.createElement('div');
 			         $(text).prop('class', 'content_text');
 			         var desc_text = document.createTextNode(arr_desc[i]);
+			         var left = document.createTextNode('❝ ');
+			         var right = document.createTextNode(' ❞');
+			         
+			         
+			         
+			         text.appendChild(left);
 			         text.appendChild(desc_text);
+			         text.appendChild(right);
+			         
 			         
 			         
 			         $('.thumb_nail').prop('src', resultArray.firstimage);
@@ -246,6 +254,16 @@ div.planner_detail{
 	padding : 80px;	
 	background-color : #F8F8FA;
 }
+div.mx-auto{
+	background-color : #F8F8FA;
+}
+#contents-info{
+	background-color : #F8F8FA;
+}
+div.comment{
+	background-color : #F8F8FA;
+	margin : 0px;
+}
 div.content_div{
 	border : solid 0.8px #D5D5D5;
 	padding : 20px;
@@ -302,6 +320,7 @@ h2.titleDesc{
 			<span id="view-count"></span>
 			<span id="contents-report">게시글 신고</span>
 		</div>
+		<div class="comment">
 		<div id="comment-form" class="mx-auto">
 			<form name="frmCom" class="row justify-content-md-end"  action="${contextPath}/community/comment/write" method="post">
 				<textarea name="input-comment"></textarea>
@@ -309,7 +328,9 @@ h2.titleDesc{
 				<input type="hidden" name="article_no" value="${plan_no}">
 			</form>
 		</div>
+		
 		<div id="comments">
+		</div>
 		</div>
 		<div id="comment-paging">
 			<ul id="paging-list" class="pagination justify-content-center pagination-sm">
