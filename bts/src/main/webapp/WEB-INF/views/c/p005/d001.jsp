@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
+   pageEncoding="UTF-8"
     isELIgnored="false"
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath"  value="${pageContext.request.contextPath}" />	
+<c:set var="contextPath"  value="${pageContext.request.contextPath}" />   
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,73 +18,73 @@
 
 <script>
 $(document).ready(function (){
-	$(".hover").mouseleave(
-			  function () {
-			    $(this).removeClass("hover");
-			  }
-	);
-	
-	var arr_content = new Array();
-	
-	
-	<c:forEach var="wish" items="${result}" varStatus="status">
-		arr_content[${status.index}] = "${wish.content_id}";
-	</c:forEach>
-	
-	for(var i in arr_content){
-		var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
-		var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + arr_content[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
-		
-		$.ajax({
-		      async : false,
-		      url : reqUrl,
-		      dataType : 'json',
-		      success : function(data, textStatus) {
-		         var resultArray = data.response.body.items.item;
-		         
-		         var figure = document.createElement('figure');
-		         $(figure).prop('class', 'snip1321');
-		         $(figure).prop('id', 'snip' + i);
-		         
-		         var img = document.createElement('img');
-		         $(img).prop('src', resultArray.firstimage);
-		         $(img).prop('alt', 'sq-sample26');
-		         $(img).prop('id', 'image' + i);
-		         
-		         var figcaption = document.createElement('figcaption');
-		         $(figcaption).prop('class', 'fig' + i);
-		         
-		         var addr = document.createElement('h4');
-		         var addr_text = document.createTextNode(resultArray.addr1);
-		         addr.appendChild(addr_text);
-		         
-		         var title = document.createElement('h2');
-		         var title_text = document.createTextNode(resultArray.title);
-		         title.appendChild(title_text);
-		         
-		         var href = document.createElement('a');
-		         $(href).prop('href', '${contextPath}/recommend/place_detail?contentid=' + resultArray.contentid);
-		         
-		         $('.content').append(figure);
-		         $('#snip' + i).append(img);
-		         $('#snip' + i).append(figcaption);
-		         $('.fig' + i).append(addr);
-		         $('.fig' + i).append(title);
-		         $('#snip' + i).append(href);		         
-		         
-		      },
-		      error : function(data, textStatus) {
-		         alert("잘못된 접근입니다.")
-		      }
-		});
-	}
-		
+   $(".hover").mouseleave(
+           function () {
+             $(this).removeClass("hover");
+           }
+   );
+   
+   var arr_content = new Array();
+   
+   
+   <c:forEach var="wish" items="${result}" varStatus="status">
+      arr_content[${status.index}] = "${wish.content_id}";
+   </c:forEach>
+   
+   for(var i in arr_content){
+      var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+      var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + arr_content[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
+      
+      $.ajax({
+            async : false,
+            url : reqUrl,
+            dataType : 'json',
+            success : function(data, textStatus) {
+               var resultArray = data.response.body.items.item;
+               
+               var figure = document.createElement('figure');
+               $(figure).prop('class', 'snip1321');
+               $(figure).prop('id', 'snip' + i);
+               
+               var img = document.createElement('img');
+               $(img).prop('src', resultArray.firstimage);
+               $(img).prop('alt', 'sq-sample26');
+               $(img).prop('id', 'image' + i);
+               
+               var figcaption = document.createElement('figcaption');
+               $(figcaption).prop('class', 'fig' + i);
+               
+               var addr = document.createElement('h4');
+               var addr_text = document.createTextNode(resultArray.addr1);
+               addr.appendChild(addr_text);
+               
+               var title = document.createElement('h2');
+               var title_text = document.createTextNode(resultArray.title);
+               title.appendChild(title_text);
+               
+               var href = document.createElement('a');
+               $(href).prop('href', '${contextPath}/recommend/place_detail?contentid=' + resultArray.contentid + "&contenttypeid=" + resultArray.contenttypeid);
+               
+               $('.content').append(figure);
+               $('#snip' + i).append(img);
+               $('#snip' + i).append(figcaption);
+               $('.fig' + i).append(addr);
+               $('.fig' + i).append(title);
+               $('#snip' + i).append(href);               
+               
+            },
+            error : function(data, textStatus) {
+               alert("잘못된 접근입니다.")
+            }
+      });
+   }
+      
 });
 </script>
 
 <style>
 @font-face {
-	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+   src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
     font-family: "NanumSquareRoundEB";
 }
 
@@ -94,39 +94,39 @@ $(document).ready(function (){
 }
 
 h1{
-	font-family : "NanumSquareRoundEB";
-	display : inline-block;
+   font-family : "NanumSquareRoundEB";
+   display : inline-block;
 }
 
 h2{
-	font-family : "NanumSquareRoundEB";
+   font-family : "NanumSquareRoundEB";
 }
 
 p{
-	font-family: "NanumSquareRoundR";
-	font-size : 16px;
+   font-family: "NanumSquareRoundR";
+   font-size : 16px;
 }
 
 img.heart{
-	width : 45px;
-	height : 45px;
-	margin-right : 15px;
+   width : 45px;
+   height : 45px;
+   margin-right : 15px;
 }
 
 div.outContent{
-	height : auto;
-	background-color : #F8F8FA;
-	margin : 0px;
-	text-align : center;
-	padding-bottom : 100px;
+   height : auto;
+   background-color : #F8F8FA;
+   margin : 0px;
+   text-align : center;
+   padding-bottom : 100px;
 }
 
 div.content{
-	margin : 0 auto;
+   margin : 0 auto;
 }
 
 img{
-	display : inline-block;
+   display : inline-block;
 }
 
 @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
@@ -152,9 +152,9 @@ figure.snip1321 * {
   transition: all 0.2s ease-out;
 }
 figure.snip1321 img {
-	width:100%;
-	height:auto;
-	max-height:210px;
+   width:100%;
+   height:auto;
+   max-height:210px;
   vertical-align: top;
 }
 figure.snip1321 figcaption {
@@ -221,25 +221,25 @@ figure.snip1321.hover:after {
 }
 
 div.container{
-	position : relative;
-	align : center;
+   position : relative;
+   align : center;
 }
 </style>
 </head>
 <body>
 <div class="container">
-	<div class="title">
-		<img src="${contextPath}/resources/image/mypage/heart.png" class="heart">
-		<h1>나의 위시리스트</h1>
-	</div>	
-	<div class="outContent">
-		<div class="content">
-		<hr>
-		<h2>Wish List</h2>
-		<p>내가 선택한 나만의 명소</p>
-		
-		</div>
-	</div>
+   <div class="title">
+      <img src="${contextPath}/resources/image/mypage/heart.png" class="heart">
+      <h1 style="color:#000;">나의 위시리스트</h1>
+   </div>   
+   <div class="outContent">
+      <div class="content">
+      <hr>
+      <h2>Wish List</h2>
+      <p>내가 선택한 나만의 명소</p>
+      
+      </div>
+   </div>
 </div>
 
 </body>
