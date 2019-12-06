@@ -3,45 +3,22 @@
 	src:url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
 	font-family:"binggrae";	
 }
-
-.sr_flex_layout.sr_item{
-	flex-wrap:wrap;
-	-webkit-box-pack: justify;
-	justify-content: space-between;
-	min-height: auto;
-	position: relative;
-	top:0;
-	right:0;
-	bottom:0;
-	left:0;
+.card{
+	position:relative;
+	width:100%;
+	height:auto;
+	max-height:500px;
+	margin:150px;
 }
-
-.sr_item_default{
-	background-color:#fff;
+.card-body{
+	position:absolute;
+	display:inline-block;
 }
-
-.sr_item{
-	width: 80%;
-	height: 300px;
-	padding: 16px;
-	margin : 16px;
-	border: 1px solid #666666;
-	border-radius: 3px;
-	box-sizing: border-box;
-	cursor: default;
-	clear: both;
+.card-img-top{
+	width:300px;
+	hetight:auto;
+	max-height:200px;
 }
-
-.ko{
-	color: #383838;
-	font-size: small;
-	line- height: 1.2;
+.card-text{
+	margin:0 0 20px;
 }
-
-body{
-	font-size: small;
-	line-height: 1.2;
-	font-family: "binggrae";
-}
-
-

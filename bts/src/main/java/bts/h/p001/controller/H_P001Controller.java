@@ -9,10 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.ModelAndView;
 
+import bts.e.p001.VO.PagingVO;
 import bts.h.p001.vo.H_P001VO;
 
 public interface H_P001Controller {
 
-	public ModelAndView pageInit( HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+	public ModelAndView pageInit( PagingVO pagingVO, String nowPage, String cntPerPage,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	
 }
