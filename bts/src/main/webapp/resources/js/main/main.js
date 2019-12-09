@@ -7,6 +7,7 @@ $(document).ready(function(){
         + serviceKey
         + '&contentTypeId=32&areaCode=1&sigunguCode=&cat1=B02&cat2=B0201&cat3=B02010100&listYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTest&arrange=P&numOfRows=6&pageNo=1&_type=json';
 	var resultArray;
+	var contenttypeid;
 	$.ajax({
 		async : false,
 		url : reqUrl,
@@ -15,6 +16,7 @@ $(document).ready(function(){
 			resultArray = data.response.body.items.item;
 			for(var i in resultArray){
 				//recommend 숙소 top3
+				contenttypeid = resultArray[i].contenttypeid;
 				var card = document.createElement('div');
 				var card_img_top = document.createElement('img');
 				var card_body = document.createElement('div');
@@ -48,7 +50,8 @@ $(document).ready(function(){
 			}
 			$('.card').on('click',function(){
 				var contentid = $(this).attr('id');
-				location.href = "/bts/recommend/place_detail?contentid="+contentid;
+				console.log(contenttypeid);
+				location.href = "/bts/recommend/place_detail?contentid="+contentid + "&contenttypeid=" + contenttypeid;
 			});
 		},
 		error : function(data, textStatus){

@@ -94,4 +94,9 @@ public class D_P001_4ServiceImpl implements D_P001_4Service{
 		return d_p001_4DAO.deleteAnswer(answer_no);
 	}
 
+	@Override
+	public List<String> findContentId() throws Exception {
+		return d_p001_4DAO.findContentId();
+	}
+
 }

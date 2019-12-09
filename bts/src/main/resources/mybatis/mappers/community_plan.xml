@@ -42,6 +42,11 @@
 		<result property="member_type" column="member_type" />	
 		<result property="profile_image" column="profile_image" />
 	</resultMap>
+	
+	<resultMap id="findThumnail" type="java.util.HashMap">
+		<result property="plan_no" column="plan_no" />
+		<result property="content_id" column="content_id" />
+	</resultMap>
 
 	<!-- 게시글 조회 -->
 	<select id="searchArticle" resultMap="articleResult">
@@ -208,6 +213,16 @@
 			WHERE answer_no = #{answer_no}
 		]]>
 	</delete>
+	
+	<!-- 썸네일 가져오기 -->
+	<select id="findContentId" parameterType="String" resultMap="findThumnail">
+		<![CDATA[
+			SELECT DISTINCT(p.plan_no), FIRST_VALUE(content_id) OVER(PARTITION BY p.plan_no) AS content_id
+			FROM planner p, planner_detail pd
+			WHERE p.plan_no = pd.plan_no
+			AND open_val = 'Y'
+		]]>
+	</select>
 	
 	
 	

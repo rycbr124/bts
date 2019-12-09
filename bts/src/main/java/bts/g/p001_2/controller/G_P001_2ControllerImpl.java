@@ -66,19 +66,22 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
 
    @Override
    @RequestMapping(value="/course_detail" ,method={RequestMethod.POST,RequestMethod.GET})
-   public ModelAndView P001_D004(@RequestParam("contentid") String contentid, HttpServletRequest request, HttpServletResponse response) throws Exception {
+   public ModelAndView P001_D004(@RequestParam("contentid") String contentid, @RequestParam("contenttypeid") String contenttypeid, HttpServletRequest request, HttpServletResponse response) throws Exception {
       System.out.println("course param 값 : " + contentid);
+      System.out.println("contentType : " + contenttypeid);
       ModelAndView mav = new ModelAndView("/g/p001_2/d004");
       mav.addObject("contentid", contentid);
+      mav.addObject("contenttypeid", contenttypeid);
       return mav;
    }
 
    @Override
    @RequestMapping(value="/insert_wishlist" ,method={RequestMethod.POST,RequestMethod.GET}, produces = "text/html; charset=utf8")
-   public @ResponseBody String wishList(@RequestParam("contentid") String contentid, HttpServletRequest request, HttpServletResponse response)
+   public @ResponseBody String wishList(@RequestParam("contentid") String contentid, @RequestParam("contenttypeid") String contenttypeid, HttpServletRequest request, HttpServletResponse response)
          throws Exception {
 	   String message = null;
 	   String member_id = null;
+	   System.out.println("contentType : " + contenttypeid);
 
 	   try {
 		   HttpSession session = request.getSession();

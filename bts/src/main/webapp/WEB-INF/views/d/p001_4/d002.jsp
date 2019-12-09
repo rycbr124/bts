@@ -85,7 +85,7 @@
 		
 		for(var i in arr_content){
 			console.log("1111 : " + arr_content[i]);
-			var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+			var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D'
 			var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + arr_content[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 			
 			$.ajax({
@@ -109,7 +109,7 @@
 			         title.appendChild(title_text);
 			         
 			         var a = document.createElement('a');
-			         $(a).prop('href', '${contextPath}/recommend/place_detail?contentid=' + arr_content[i]);
+			         $(a).prop('href', '${contextPath}/recommend/place_detail?contentid=' + arr_content[i] + '&contenttypeid=' + resultArray.contenttypeid);
 			         a.appendChild(title);
 			         		         
 			         var img= document.createElement('img');

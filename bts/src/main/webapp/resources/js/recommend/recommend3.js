@@ -189,41 +189,6 @@ function image_init(idNumber) {
       });
 }
 
-//function image_list(idNumber){
-//   var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
-//   var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailImage?ServiceKey=' + serviceKey + '&contentId=' + idNumber + '&imageYN=Y&MobileOS=ETC&MobileApp=AppTest';
-//   
-//   $.ajax({
-//      async : false,
-//      url : reqUrl,
-//      dataType : 'json',
-//      success : function(data, textStatus) {
-//         var result_length = data.response.body.items.item.length
-//         var div = document.createElement('div');
-//         $('.col-lg-7').append(div);
-//         $(div).prop('class','detail_image_container');
-//         $(div).prop('id','detail_image_container');
-//         for(var i = 0; i < result_length; i++){
-//            var resultArray = data.response.body.items.item[i];
-//            
-//            var div = document.createElement('div');
-//            var image = document.createElement('img');
-//            $(image).prop('class', 'detail_image_' + i);
-//            $(image).prop('id', 'detail_image');
-//            $(image).prop('src', resultArray.originimgurl);
-//                        
-//            $('.detail_image_container').append(image);
-//            $('.detail_image_'+i).on('click', function(){
-//               $('.mb-lg-0').attr('src', resultArray);
-//            });
-//         }
-//         
-//      },
-//      error : function(data, textStatus) {
-//         alert("잘못된 접근입니다.")
-//      }
-//   });
-//}
 
 function map_print(title, mapx, mapy){
    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스

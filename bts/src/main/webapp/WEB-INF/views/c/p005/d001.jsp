@@ -53,17 +53,36 @@ $(document).ready(function (){
 		         
 		         var figcaption = document.createElement('figcaption');
 		         $(figcaption).prop('class', 'fig' + i);
+
+		         var contenttypeid = resultArray.contenttypeid;
+		         if(contenttypeid == '25'){
+		        	 var addr = document.createElement('h4');
+			         var addr_text = document.createTextNode('코스정보');
+			         addr.appendChild(addr_text);
+		         }
+		         if(contenttypeid != '25'){
+		        	 var addr = document.createElement('h4');
+			         var addr_text = document.createTextNode(resultArray.addr1);
+			         addr.appendChild(addr_text);
+		         }
 		         
-		         var addr = document.createElement('h4');
-		         var addr_text = document.createTextNode(resultArray.addr1);
-		         addr.appendChild(addr_text);
+		         
+		         
+		         
 		         
 		         var title = document.createElement('h2');
 		         var title_text = document.createTextNode(resultArray.title);
 		         title.appendChild(title_text);
 		         
-		         var href = document.createElement('a');
-		         $(href).prop('href', '${contextPath}/recommend/place_detail?contentid=' + resultArray.contentid);
+		         console.log(contenttypeid);
+		         if(contenttypeid == '25'){
+			         var href = document.createElement('a');
+			         $(href).prop('href', '${contextPath}/recommend/course_detail?contentid=' + resultArray.contentid + "&contenttypeid=" + resultArray.contenttypeid);
+		         }
+		         if(contenttypeid != '25'){
+			         var href = document.createElement('a');
+			         $(href).prop('href', '${contextPath}/recommend/place_detail?contentid=' + resultArray.contentid + "&contenttypeid=" + resultArray.contenttypeid);
+		         }
 		         
 		         $('.content').append(figure);
 		         $('#snip' + i).append(img);
@@ -230,7 +249,7 @@ div.container{
 <div class="container">
 	<div class="title">
 		<img src="${contextPath}/resources/image/mypage/heart.png" class="heart">
-		<h1>나의 위시리스트</h1>
+		<h1 style="color:#000;">나의 위시리스트</h1>
 	</div>	
 	<div class="outContent">
 		<div class="content">
