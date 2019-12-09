@@ -51,7 +51,7 @@ public class C_P001ControllerImpl implements C_P001Controller {
 	private String metaPath;
 	
 	private static final Logger logger = LoggerFactory.getLogger(C_P001ControllerImpl.class);
-
+	
 	@Override
 	@RequestMapping(value = "/profile")
 	public ModelAndView pageInit(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -197,11 +197,9 @@ public class C_P001ControllerImpl implements C_P001Controller {
 					UploadUtil.uploadFile(uploadPath, metaPath, file.getOriginalFilename(), file.getBytes()),
 					HttpStatus.CREATED);
 			String user_imgPath = (String) img_path.getBody();
-//			String localhost = "resources/image/mypage/profileImage";
-			
 			String localhost = "/resources/image/mypage/profileImage";
 			logger.info(user_imgPath);
-			vo.setProfile_image(uploadPath + user_imgPath);
+			vo.setProfile_image(localhost + user_imgPath);
 			B_P001VO id = (B_P001VO)session.getAttribute("memberInfo");
 			vo.setMember_id(id.getMember_id());
 			logger.info("file name : " + user_imgPath);

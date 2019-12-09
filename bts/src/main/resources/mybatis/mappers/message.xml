@@ -10,6 +10,7 @@
 		<result property="receiver" column="receiver" />
 		<result property="contents" column="contents" />
 		<result property="writing_date" column="writing_date" />
+		<result property="accompany_at" column="accompany_at" />
 		<result property="me_at" column="me_at" />		
 	</resultMap>
 	<resultMap id="membersResult" type="d001VO">
@@ -22,7 +23,7 @@
 		<result property="profile_image" column="profile_image" />
 	</resultMap>
 	
-	<select id="selectMemberList" parameterType="string" resultMap="membersResult">
+	<select id="selectMemberList" parameterType="map" resultMap="membersResult">
 	    <![CDATA[
 			SELECT  member_id, name, nick_name, gender, birth, member_type, profile_image
 			FROM b_member b1,
@@ -32,11 +33,13 @@
 			    (
 			        SELECT sender other_id, item_no
 			        FROM chat_list
-			        WHERE receiver=#{id}
+			        WHERE receiver=#{member_id}
+					AND accompany_at=#{accompany_at}
 			        UNION ALL
 			        SELECT receiver other_id, item_no
 			        FROM chat_list
-			        WHERE sender=#{id}
+			        WHERE sender=#{member_id}
+			        AND accompany_at=#{accompany_at}
 			    )
 			    GROUP BY other_id
 			)  b2
@@ -54,11 +57,13 @@
 			    FROM chat_list
 			    WHERE sender=#{sender}
 			    AND receiver=#{receiver}
+			    AND accompany_at=#{accompany_at}
 			    UNION ALL
 			    SELECT item_no,sender,receiver,contents,writing_date,'false' me_at
 			    FROM chat_list
 			    WHERE sender=#{receiver}
 			    AND receiver=#{sender}
+			    AND accompany_at=#{accompany_at}
 			) t
 			ORDER BY item_no
 	    ]]>
@@ -71,8 +76,8 @@
 		    ]]>
 		</selectKey>
 	    <![CDATA[
-		INSERT INTO chat_list (CONTENTS, RECEIVER, SENDER, WRITING_DATE, ITEM_NO) 
-		VALUES (#{contents}, #{receiver}, #{sender}, #{writing_date}, chat_list_seq.nextval)
+		INSERT INTO chat_list (CONTENTS, RECEIVER, SENDER, WRITING_DATE, ITEM_NO, accompany_at) 
+		VALUES (#{contents}, #{receiver}, #{sender}, #{writing_date}, chat_list_seq.nextval, #{accompany_at})
 	    ]]>
 	</insert>
 	

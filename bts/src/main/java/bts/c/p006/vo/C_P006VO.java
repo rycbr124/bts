@@ -13,12 +13,21 @@ public class C_P006VO {
 	private String receiver;
 	private String contents;
 	private Timestamp writing_date;
+	private String accompany_at;
 	private String me_at;
 	
 	public C_P006VO(){
 	
 	}
 	
+	public String getAccompany_at() {
+		return accompany_at;
+	}
+
+	public void setAccompany_at(String accompany_at) {
+		this.accompany_at = accompany_at;
+	}
+
 	public String getMe_at() {
 		return me_at;
 	}

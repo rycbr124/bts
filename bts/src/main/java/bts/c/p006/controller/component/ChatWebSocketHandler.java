@@ -34,12 +34,18 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	C_P006Service c_p006Service;
 
 	private static final Map<WebSocketSession,B_P001VO> sessionList = new HashMap<>();
+	private static final Map<WebSocketSession,B_P001VO> AccsessionList = new HashMap<>();
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
 		Map<String, Object> map = session.getAttributes();
 		B_P001VO b_p001VO= (B_P001VO) map.get("memberInfo");
-		sessionList.put(session, b_p001VO);
+		String accompany_at = (String) map.get("accompany_at");
+		if(accompany_at.equals("Y")) {
+			AccsessionList.put(session, b_p001VO);									
+		}else {
+			sessionList.put(session, b_p001VO);						
+		}
 	}
 	
 	@Override
@@ -52,15 +58,23 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		//message.getPayload(); 보낸 메시지
 		//session.sendMessage(message);클라이언트로 메시지 전송
 		//provider.get(); prototype으로 빈 가져오기
-		B_P001VO b_p001VO = sessionList.get(session);
+		Map<String, Object> map = session.getAttributes();
+		String accompany_at = (String) map.get("accompany_at");
+		Map<WebSocketSession,B_P001VO> memberList = new HashMap<>();
+		if(accompany_at.equals("Y")) {
+			memberList = AccsessionList;									
+		}else {
+			memberList = sessionList;									
+		}
+		B_P001VO b_p001VO = memberList.get(session);
 		ObjectMapper mapper = new ObjectMapper();
 		C_P006FormVO c_p006FormVO = mapper.readValue(message.getPayload(), C_P006FormVO.class);
 		String header=c_p006FormVO.getHeader();
 		
 		if(header.equals("chat_list")){
-			showChatList(c_p006FormVO,session,b_p001VO,mapper);
+			showChatList(c_p006FormVO,session,b_p001VO,mapper,accompany_at);
 		}else if(header.equals("send_message")) {
-			sendMessage(c_p006FormVO,session,b_p001VO,mapper);
+			sendMessage(c_p006FormVO,session,b_p001VO,mapper,accompany_at,memberList);
 		}else if(header.equals("search_member")) {
 			searchMember(c_p006FormVO,session,b_p001VO,mapper);
 		}
@@ -72,13 +86,14 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		exception.printStackTrace();
 	}
 	
-	private void showChatList(C_P006FormVO c_p006FormVO,WebSocketSession session,B_P001VO b_p001VO,ObjectMapper mapper) throws Exception {
+	private void showChatList(C_P006FormVO c_p006FormVO,WebSocketSession session,B_P001VO b_p001VO,ObjectMapper mapper,String accompany_at) throws Exception {
 		HashMap<String,Object> body = c_p006FormVO.getBody();
 		String member_id= (String) body.get("member_id");
-
 		C_P006VO c_p006VO = c_p006Provider.get();
 		c_p006VO.setSender(b_p001VO.getMember_id());
 		c_p006VO.setReceiver(member_id);
+		c_p006VO.setAccompany_at(accompany_at);
+
 		List<C_P006VO> msgResult = c_p006Service.selectMessageList(c_p006VO);
 		body.clear();
 		body.put("result",msgResult);		
@@ -87,7 +102,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		session.sendMessage(new TextMessage(result));
 	}
 	
-	private void sendMessage(C_P006FormVO c_p006FormVO,WebSocketSession session,B_P001VO b_p001VO,ObjectMapper mapper) throws Exception {
+	private void sendMessage(C_P006FormVO c_p006FormVO,WebSocketSession session,B_P001VO b_p001VO,ObjectMapper mapper,String accompany_at,Map<WebSocketSession,B_P001VO> memberList) throws Exception {
 		HashMap<String,Object> body = c_p006FormVO.getBody();
 		String receiver=(String) body.get("receiver");
 		String message=(String) body.get("message");
@@ -96,9 +111,10 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		c_p006VO.setSender(b_p001VO.getMember_id());
 		c_p006VO.setReceiver(receiver);
 		c_p006VO.setContents(message);
+		c_p006VO.setAccompany_at(accompany_at);
 		c_p006Service.insertMessage(c_p006VO);
 		
-		for(Entry<WebSocketSession, B_P001VO> entry : ChatWebSocketHandler.sessionList.entrySet()) {
+		for(Entry<WebSocketSession, B_P001VO> entry : memberList.entrySet()) {
 			WebSocketSession recSession = entry.getKey();
 			B_P001VO recVO = entry.getValue();
 

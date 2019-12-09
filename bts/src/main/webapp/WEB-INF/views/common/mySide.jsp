@@ -85,12 +85,7 @@ $(function(){
 			<li><a href="${contextPath}/my/accompany/accList"> <i class="icon icon-matching"></i>
 					<span>매칭 신청 목록 관리</span>
 			</a></li>
-			<!--<li >
-	     <a href="reviews.html">
-	        <i class="fa fa-comments-o"></i>
-	        <span>Reviews</span>
-	     </a>
-	  	</li>-->
+		
 		</ul>
 </body>
 </html>

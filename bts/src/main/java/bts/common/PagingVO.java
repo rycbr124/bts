@@ -105,6 +105,9 @@ public class PagingVO {
 	private void calStartEndRow() {
 		int endRow = this.curPage*this.rangeRow;
 		int startRow = (endRow-this.rangeRow)+1;
+		if(startRow<0) {
+			startRow=0;
+		}
 		this.startRow=startRow;
 		this.endRow=endRow;
 	}

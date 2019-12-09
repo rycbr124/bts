@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
+   pageEncoding="UTF-8"
     isELIgnored="false"
     %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath"  value="${pageContext.request.contextPath}" />	
+<c:set var="contextPath"  value="${pageContext.request.contextPath}" />   
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,10 +66,6 @@ $(document).ready(function (){
 			         addr.appendChild(addr_text);
 		         }
 		         
-		         
-		         
-		         
-		         
 		         var title = document.createElement('h2');
 		         var title_text = document.createTextNode(resultArray.title);
 		         title.appendChild(title_text);
@@ -97,13 +93,12 @@ $(document).ready(function (){
 		      }
 		});
 	}
-		
 });
 </script>
 
 <style>
 @font-face {
-	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+   src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
     font-family: "NanumSquareRoundEB";
 }
 
@@ -113,39 +108,39 @@ $(document).ready(function (){
 }
 
 h1{
-	font-family : "NanumSquareRoundEB";
-	display : inline-block;
+   font-family : "NanumSquareRoundEB";
+   display : inline-block;
 }
 
 h2{
-	font-family : "NanumSquareRoundEB";
+   font-family : "NanumSquareRoundEB";
 }
 
 p{
-	font-family: "NanumSquareRoundR";
-	font-size : 16px;
+   font-family: "NanumSquareRoundR";
+   font-size : 16px;
 }
 
 img.heart{
-	width : 45px;
-	height : 45px;
-	margin-right : 15px;
+   width : 45px;
+   height : 45px;
+   margin-right : 15px;
 }
 
 div.outContent{
-	height : auto;
-	background-color : #F8F8FA;
-	margin : 0px;
-	text-align : center;
-	padding-bottom : 100px;
+   height : auto;
+   background-color : #F8F8FA;
+   margin : 0px;
+   text-align : center;
+   padding-bottom : 100px;
 }
 
 div.content{
-	margin : 0 auto;
+   margin : 0 auto;
 }
 
 img{
-	display : inline-block;
+   display : inline-block;
 }
 
 @import url(https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css);
@@ -171,9 +166,9 @@ figure.snip1321 * {
   transition: all 0.2s ease-out;
 }
 figure.snip1321 img {
-	width:100%;
-	height:auto;
-	max-height:210px;
+   width:100%;
+   height:auto;
+   max-height:210px;
   vertical-align: top;
 }
 figure.snip1321 figcaption {
@@ -240,13 +235,14 @@ figure.snip1321.hover:after {
 }
 
 div.container{
-	position : relative;
-	align : center;
+   position : relative;
+   align : center;
 }
 </style>
 </head>
 <body>
 <div class="container">
+<<<<<<< HEAD
 	<div class="title">
 		<img src="${contextPath}/resources/image/mypage/heart.png" class="heart">
 		<h1 style="color:#000;">나의 위시리스트</h1>
@@ -259,6 +255,20 @@ div.container{
 		
 		</div>
 	</div>
+=======
+   <div class="title">
+      <img src="${contextPath}/resources/image/mypage/heart.png" class="heart">
+      <h1 style="color:#000;">나의 위시리스트</h1>
+   </div>   
+   <div class="outContent">
+      <div class="content">
+      <hr>
+      <h2>Wish List</h2>
+      <p>내가 선택한 나만의 명소</p>
+      
+      </div>
+   </div>
+>>>>>>> refs/remotes/origin/master
 </div>
 
 </body>

@@ -97,11 +97,11 @@
  -->
 	<div class="page_title">
 		<span><a class="closeDepth" href="#">closeDepth</a></span> 
-		<span class="title">불량회원관리 > <b>제재 기준 조회/변경</b></span>
+		<span class="title">불량회원관리 > <b>제재 내역 조회/변경</b></span>
 	</div>
 	
 	<div class="main_content">
-		<div class="exp_product">신고 기준 조회 및 변경이 가능합니다.</div>
+		<div class="exp_product">제재 내역 조회 및 변경이 가능합니다.</div>
 		<div class="exp_product">
 			<form name='frm'>
 				제재명 : <input type='text' id="p_name" name="p_name" />

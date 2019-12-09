@@ -25,6 +25,12 @@
 		<result property="member_type" column="member_type" />	
 		<result property="profile_image" column="profile_image" />
 	</resultMap>
+
+	<resultMap id="planResult" type="d_p001_4VO">
+		<result property="rownum" column="rnum" />
+		<result property="plan_no" column="plan_no" />
+		<result property="title" column="title" />
+	</resultMap>
 	
 	<insert id="insertArticle" parameterType="f_p001_3VO">
 	    <![CDATA[
@@ -168,6 +174,64 @@
 			FROM menu
 			WHERE name=#{name}
 	    ]]>
+	</select>
+
+	<select id="selectRecommendTotal" parameterType="map" resultType="_int">
+	    <![CDATA[
+			SELECT COUNT(*) totalCount
+			FROM recommend_wish_list
+			WHERE member_id=#{member_id}
+	    ]]>
+	</select>
+
+	<select id="selectPlanTotal" parameterType="map" resultType="_int">
+	    <![CDATA[
+			SELECT COUNT(*) totalCount
+			FROM planner
+			WHERE member_id=#{member_id}
+			AND open_val='Y'
+	    ]]>
+	</select>
+
+	<select id="selectRecommend" parameterType="map" resultType="map">
+		<![CDATA[
+			SELECT b.* 
+			FROM
+			(
+			    SELECT rownum "rnum", a.*
+			    FROM 
+			    (
+			        SELECT content_id "content_id"
+			        FROM recommend_wish_list
+			        WHERE member_id=#{member_id}
+			        ORDER BY content_id
+			    ) a
+			    WHERE rownum<=#{endRow}
+			) b
+			WHERE b."rnum">=#{startRow}
+			ORDER BY "rnum" DESC
+		]]>
+	</select>
+
+	<select id="selectPlan" parameterType="map" resultMap="planResult">
+		<![CDATA[
+			SELECT b.* 
+			FROM
+			(
+			    SELECT rownum as rnum, a.*
+			    FROM 
+			    (
+			        SELECT plan_no,title
+			        FROM planner
+			        WHERE member_id=#{member_id}
+                    AND open_val='Y'
+			        ORDER BY plan_no
+			    ) a
+			    WHERE rownum<=#{endRow}
+			) b
+			WHERE b.rnum>=#{startRow}
+            ORDER BY rnum DESC	
+		]]>
 	</select>
 
 </mapper>

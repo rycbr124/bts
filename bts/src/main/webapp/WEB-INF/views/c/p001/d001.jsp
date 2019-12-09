@@ -47,6 +47,8 @@
 		}
 	}
 </script>
+
+
 <body>
 	<!--<div id = "container">
 <img src ="http://www.artinsight.co.kr/data/tmp/1703/96103d28d38e5fb86a31b713cde7626c_sRZKrRWIDpl7sJnjq5rz2yR.jpg?s=1400x467">
@@ -74,7 +76,7 @@
 										<img
 											src="${contextPath}${sessionScope.memberInfo.profile_image }"
 											id="profImg">
-s										<input type="hidden" name="profileImage" value=""/>
+										<input type="hidden" name="profileImage" value=""/>
 									</c:if>
 								</c:when>
 
@@ -159,7 +161,7 @@ s										<input type="hidden" name="profileImage" value=""/>
 									<font size="3.5em" color="green">${data.key}</font><br>
 									<div class="btn-group btn-group-toggle" data-toggle="buttons">
 										<c:forEach var="data2" items="${data.value}">
-											<label class="btn btn-info btn-lg" >
+											<label class="btn btn-info btn-lg">
 												<input type="radio" name="${data2.group_name}" value="${data2.incln_cd}">${data2.name}
 											</label>
 										</c:forEach>
