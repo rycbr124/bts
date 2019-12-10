@@ -206,35 +206,6 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		mav.addObject("uri",request.getRequestURI());
 		return mav;
 	}	
-	
-//	@ResponseBody
-//	@RequestMapping(value="/my/recommend" ,method={RequestMethod.POST})
-//	public Map<String,Object> selectMyRecommend(@RequestParam(value="curPage") String selectPage, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		B_P001VO b_p001VO= (B_P001VO) request.getSession().getAttribute("memberInfo");
-//		Map<String,String> searchMap = new HashMap<>();
-//		Map<String,Object> resultMap = new HashMap<>();
-//		
-//		searchMap.put("member_id", b_p001VO.getMember_id());
-//		int totalCount = f_p001_3Service.selectRecommendTotal(searchMap);
-//		PagingVO pvo = pagingProvider.get();
-//		int curPage = 1;
-//		
-//		try {
-//			if(selectPage!=null) {
-//				curPage = Integer.parseInt(selectPage);
-//			}
-//		}catch(NumberFormatException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		pvo.setPaging(curPage, totalCount, modalRangePage, modalRangeRow);
-//		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
-//		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
-//		List<Map<String,String>> recResult = f_p001_3Service.selectRecommend(searchMap);
-//		resultMap.put("result", recResult);
-//		resultMap.put("paging", pvo);
-//		return resultMap;
-//	}	
 
 	@ResponseBody
 	@RequestMapping(value="/my/recommend" ,method={RequestMethod.POST})
@@ -276,7 +247,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		}catch(NumberFormatException e) {
 			e.printStackTrace();
 		}
-		pvo.setPaging(curPage, totalCount, modalRangePage, modalRangeRow);
+		pvo.setPagingDesc(curPage, totalCount, modalRangePage, modalRangeRow);
 		
 		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
 		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
