@@ -242,7 +242,7 @@ div.container{
 </head>
 <body>
 <div class="container">
-<<<<<<< HEAD
+
 	<div class="title">
 		<img src="${contextPath}/resources/image/mypage/heart.png" class="heart">
 		<h1 style="color:#000;">나의 위시리스트</h1>
@@ -255,20 +255,7 @@ div.container{
 		
 		</div>
 	</div>
-=======
-   <div class="title">
-      <img src="${contextPath}/resources/image/mypage/heart.png" class="heart">
-      <h1 style="color:#000;">나의 위시리스트</h1>
-   </div>   
-   <div class="outContent">
-      <div class="content">
-      <hr>
-      <h2>Wish List</h2>
-      <p>내가 선택한 나만의 명소</p>
-      
-      </div>
-   </div>
->>>>>>> refs/remotes/origin/master
+
 </div>
 
 </body>

@@ -291,6 +291,10 @@ img.titleImage{
 h2.titleDesc{
 	display : inline-block;
 }
+
+#contents-info{
+	margin-bottom : 0px;
+}
 </style>
 </head>
 <body>

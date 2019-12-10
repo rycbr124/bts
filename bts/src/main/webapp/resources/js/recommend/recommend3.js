@@ -24,7 +24,7 @@ function operation(contenttypeid, idNumber){
 	    	var info_array = new Array();
 	    	console.log(resultArray);
 	    	if(resultArray['playtime'] == null || resultArray['playtime'] == ""){
-	    		console.log('playtime이 없지롱')
+	    		
 	    	}else{
 	    		var start = resultArray.eventstartdate;
 		    	var end = resultArray.eventenddate;
@@ -128,6 +128,11 @@ function image_init(idNumber) {
          $(hidden).prop('name', 'contentid');
          $(hidden).prop('value', 'id');
          
+         var hidden2 = document.createElement('input');
+         $(hidden2).prop('type', 'hidden');
+         $(hidden2).prop('name', 'contenttypeid');
+         $(hidden2).prop('value', resultArray.contenttypeid);
+         
          
          
                
@@ -142,6 +147,7 @@ function image_init(idNumber) {
          $(form).append(input_heart);
          $(form).append(label_heart);
          $(form).append(hidden);
+         $(form).append(hidden2);
          $('.content').html(resultArray.overview);
          
          map_print(resultArray.title, resultArray.mapx, resultArray.mapy);
@@ -159,7 +165,9 @@ function image_init(idNumber) {
          url : reqUrl,
          dataType : 'json',
          success : function(data, textStatus) {
-            var result_length = data.response.body.items.item.length
+            var result_length = data.response.body.items.item.length;
+            console.log("길이 : " + result_length);
+            
             var div = document.createElement('div');
             $('.col-lg-7').append(div);
             $(div).prop('class','detail_image_container');

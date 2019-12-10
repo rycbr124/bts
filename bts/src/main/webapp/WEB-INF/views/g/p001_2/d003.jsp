@@ -13,9 +13,6 @@
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script> <!-- jQuery -->
 <script type="text/javascript" src="${contextPath}/resources/js/recommend/recommend3.js"></script>  <!-- 커스텀 js --> 
 
-
-
-
 <script>
 	$(document).ready(function(){
 		var id = ${contentid};

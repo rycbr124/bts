@@ -31,115 +31,62 @@ console.log(arr_contentId);
 console.log(arr_contentId.length);
 
 <c:forEach var="article" items="${listArticle}" varStatus="status">
-
+var plan_no = '${article.plan_no}';
+console.log(plan_no);
+var content_id = thumNail.get(plan_no);
+console.log(content_id);
 
 var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
-	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + arr_contentId[${status.index}] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
-	
-	$.ajax({
-	    async : false,
-	    url : reqUrl,
-	    dataType : 'json',
-	    success : function(data, textStatus) {
-	    	var resultArray = data.response.body.items.item;
-	    	console.log("1222111 : " + resultArray.title);
-	   
-	    	var figure = document.createElement('figure');
-	    	$(figure).prop('class', 'snip1321');
-	    	$(figure).prop('id', 'snip' + ${status.index});
-	    	
-	    	var img = document.createElement('img');
-	    	$(img).prop('src', resultArray.firstimage);
-	    	$(img).prop('alt', 'sq-sample26');
-	    	$(img).prop('id', 'image' + ${status.index});
-	    	
-	    	var figcaption = document.createElement('figcaption');
-	    	$(figcaption).prop('class', 'fig' + ${status.index});
-	    	
-	    	var id = document.createElement('h4');
-	    	$(id).prop('class', 'id');
-	    	var id_text = document.createTextNode('${article.member_id}');
-	    	id.appendChild(id_text);
-	    	
-	    	var title = document.createElement('h2');
-	    	$(title).prop('class', 'title');
-	    	var title_text = document.createTextNode('${article.title}');
-	    	title.appendChild(title_text);
-	    	
-	    	var href = document.createElement('a');
-	    	$(href).prop('href', '${contextPath}/community/plan_contents?plan_no=${article.plan_no}');
-	    		    	
-	    	$('.content').append(figure);
-	        $('#snip' + ${status.index}).append(img);
-	        $('#snip' + ${status.index}).append(figcaption);
-	        $('.fig' + ${status.index}).append(id);
-	        $('.fig' + ${status.index}).append(title);
-	        $('#snip' + ${status.index}).append(href);		
-	    
-	    },
-	    error : function(data, textStatus) {
-	        alert("잘못된 접근입니다.")
-	     }
-	});
+var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + content_id + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 
-
-
+$.ajax({
+    async : false,
+    url : reqUrl,
+    dataType : 'json',
+    success : function(data, textStatus) {
+    	var resultArray = data.response.body.items.item;
+    	console.log("1222111 : " + resultArray.title);
+   
+    	var figure = document.createElement('figure');
+    	$(figure).prop('class', 'snip1321');
+    	$(figure).prop('id', 'snip' + ${status.index});
+    	
+    	var img = document.createElement('img');
+    	$(img).prop('src', resultArray.firstimage);
+    	$(img).prop('alt', 'sq-sample26');
+    	$(img).prop('id', 'image' + ${status.index});
+    	$(img).prop('class', 'thumImage');
+    	
+    	var figcaption = document.createElement('figcaption');
+    	$(figcaption).prop('class', 'fig' + ${status.index});
+    	
+    	var id = document.createElement('h4');
+    	$(id).prop('class', 'id');
+    	var id_text = document.createTextNode('${article.member_id}');
+    	id.appendChild(id_text);
+    	
+    	var title = document.createElement('h2');
+    	$(title).prop('class', 'title');
+    	var title_text = document.createTextNode('${article.title}');
+    	title.appendChild(title_text);
+    	
+    	var href = document.createElement('a');
+    	$(href).prop('href', '${contextPath}/community/plan_contents?plan_no=${article.plan_no}');
+    		    	
+    	$('.content').append(figure);
+        $('#snip' + ${status.index}).append(img);
+        $('#snip' + ${status.index}).append(figcaption);
+        $('.fig' + ${status.index}).append(id);
+        $('.fig' + ${status.index}).append(title);
+        $('#snip' + ${status.index}).append(href);		
+    
+    },
+    error : function(data, textStatus) {
+        alert("잘못된 접근입니다.");
+     }
+});
 
 </c:forEach>
-/*
-var length = arr_contentId.length;
-
-for(var i in arr_contentId){
-	
-	var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
-	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + arr_contentId[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
-	
-	$.ajax({
-	    async : false,
-	    url : reqUrl,
-	    dataType : 'json',
-	    success : function(data, textStatus) {
-	    	var resultArray = data.response.body.items.item;
-	    	console.log("1222111 : " + resultArray.title);
-	   
-	    	var figure = document.createElement('figure');
-	    	$(figure).prop('class', 'snip1321');
-	    	$(figure).prop('id', 'snip' + i);
-	    	
-	    	var img = document.createElement('img');
-	    	$(img).prop('src', resultArray.firstimage);
-	    	$(img).prop('alt', 'sq-sample26');
-	    	$(img).prop('id', 'image' + i);
-	    	
-	    	var figcaption = document.createElement('figcaption');
-	    	$(figcaption).prop('class', 'fig' + i);
-	    	
-	    	var addr = document.createElement('h4');
-	    	var addr_text = document.createTextNode(resultArray.addr1);
-	    	addr.appendChild(addr_text);
-	    	
-	    	var title = document.createElement('h2');
-	    	var title_text = document.createTextNode(resultArray.title);
-	    	title.appendChild(title_text);
-	    	
-	    	var href = document.createElement('a');
-	    	$(href).prop('href', '${contextPath}/recommend/course_detail?contentid=' + resultArray.contentid + "&contenttypeid=" + resultArray.contenttypeid);
-	    		    	
-	    	$('.content').append(figure);
-	        $('#snip' + i).append(img);
-	        $('#snip' + i).append(figcaption);
-	        $('.fig' + i).append(addr);
-	        $('.fig' + i).append(title);
-	        $('#snip' + i).append(href);		
-	    
-	    },
-	    error : function(data, textStatus) {
-	        alert("잘못된 접근입니다.")
-	     }
-	});
-
-}
-*/
 });
 
 </script>
@@ -186,6 +133,11 @@ img{
 	margin-bottom : 50px;
 }
 
+img.thumImage{
+	width : 100%;
+	height : 100%;
+}
+
 li.nav-item{
 	width : 250px;
 }
@@ -195,8 +147,8 @@ div#paging{
 	text-align: center;
 }
 
-#content{
-	height : 800px;
+.content{
+	margin : 0 auto;
 }
 
 h4.id{
@@ -213,9 +165,9 @@ figure.snip1321 {
   font-family: 'Raleway', Arial, sans-serif;
   position: relative;
   overflow: hidden;
-  height : auto;
-  width: 310px;
-  max-height : 210px;
+  height : 210px;
+  width: 350px;
+  max-height : 300px;
   margin: 10px;
   color: #000000;
   text-align: center;
@@ -304,43 +256,21 @@ figure.snip1321.hover:after {
 </head>
 <body>
 
-<div class="container">
-	<h2>커뮤니티</h2>
-  <p>BTS와 함께 나만의 여행계획을 공유하세요!</p>
-  <img src="${contextPath}/resources/image/community/community_main.jpg">
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a class="nav-link active" href="${contextPath}/community/plan_list">계획</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="${contextPath}/community/review/list">후기</a>
-    </li>
-    
-  </ul>
+	<div class="container">
+		<h2>커뮤니티</h2>
+		<p>BTS와 함께 나만의 여행계획을 공유하세요!</p>
+		<img src="${contextPath}/resources/image/community/community_main.jpg">
+		<ul class="nav nav-tabs">
+			<li class="nav-item"><a class="nav-link active"
+				href="${contextPath}/community/plan_list">계획</a></li>
+			<li class="nav-item"><a class="nav-link"
+				href="${contextPath}/community/review/list">후기</a></li>
+		</ul>
 
-
-	
-	<table class="table table-striped">
-		<tr>
-			<th>글번호</th>
-			<th>제목</th>
-			<th>작성자</th>
-			<th>작성일</th>
-			<th>조회수</th>
-		</tr>
+		<div class="content">
 		
-		<c:forEach var="article" items="${listArticle}">
-		<tr>
-			<td>${article.rownum}</td>
-			<td><a href='${contextPath}/community/plan_contents?plan_no=${article.plan_no}'>${article.title}</a></td>
-			<td>${article.member_id}</td>
-			<td>${article.register_date}</td>
-			<td>${article.view_cnt}</td>
-		</tr>
-
-		</c:forEach>
-	</table>
-	
+		</div>
+		
 		<div id="paging">
 			<ul class="pagination justify-content-center" id="pagination">
 				<!-- 이전버튼 -->
@@ -394,12 +324,7 @@ figure.snip1321.hover:after {
       
     		</div>
   		</div>
-  		
-			
-  		<div class="content">
-		
-		</div>
-  		
-</div>
+  			
+	</div>
 </body>
 </html>

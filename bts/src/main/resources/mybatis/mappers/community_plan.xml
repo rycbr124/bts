@@ -51,14 +51,20 @@
 	<!-- 게시글 조회 -->
 	<select id="searchArticle" resultMap="articleResult">
 		<![CDATA[
-			SELECT rownum, member_id, title, plan_no, register_date, range_date, open_val, view_cnt
-			FROM (SELECT ROWNUM RN, A.*
-      			  FROM (SELECT * 
-            			FROM planner
-            			WHERE open_val = 'Y'
-            			ORDER BY register_date) A)
-			WHERE RN between #{start} and #{end}
-			ORDER BY ROWNUM desc	
+			SELECT b.* 
+			FROM
+			(
+			    SELECT rownum as rnum, a.*
+			    FROM 
+			    (
+			        SELECT member_id, title, plan_no, register_date, range_date, open_val, view_cnt
+			        FROM planner
+			        WHERE open_val='Y'
+			        ORDER BY register_date DESC
+			    ) a
+			    WHERE rownum<=#{end}
+			) b
+			WHERE b.rnum>=#{start}	
 		]]>	
 	</select>
 	
@@ -96,9 +102,9 @@
 	<update id="insertDesc" parameterType="list">
 		<foreach collection="list" item="item" separator=";" open="DECLARE BEGIN" close="; END;">
 		UPDATE planner_detail
-		SET plan_desc = #{item.plan_desc}
-		WHERE plan_no = #{item.plan_no}
-		AND content_id = #{item.content_id}
+		SET plan_desc = #{item.plan_desc,jdbcType=VARCHAR}
+		WHERE plan_no = #{item.plan_no,jdbcType=VARCHAR}
+		AND content_id = #{item.content_id,jdbcType=VARCHAR}
 		</foreach>
 	</update>
 	

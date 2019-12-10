@@ -48,7 +48,7 @@ $(document).ready(function(){
          }
          $('.card').on('click',function(){
             var contentid = $(this).attr('id');
-            location.href = "/bts/recommend/place_detail?contentid="+contentid;
+            location.href = "/bts/recommend/place_detail?contentid=" + contentid + "&contenttypeid=" + resultArray[i].contenttypeid;
          });
       },
       error : function(data, textStatus){
@@ -131,7 +131,7 @@ $(document).ready(function(){
          });
          $('.fs-container').on('click',function(){
             var id = $(this).attr('id');
-            location.href = "/bts/recommend/place_detail?contentid="+id;
+            location.href = "/bts/recommend/place_detail?contentid=" + id + "&contenttypeid=" + resultDetail.contenttypeid;
          });
       },
       error : function(data, textStatus){
