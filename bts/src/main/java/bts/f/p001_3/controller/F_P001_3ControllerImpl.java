@@ -91,7 +91,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 			e.printStackTrace();
 			curPage=1;
 		}
-		int totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal(article_cd));
+		int totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal());
 		PagingVO pvo = pagingProvider.get();
 		pvo.setPaging(curPage, totalCount, rangePage, rangeRow);
 
@@ -206,35 +206,6 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		mav.addObject("uri",request.getRequestURI());
 		return mav;
 	}	
-	
-//	@ResponseBody
-//	@RequestMapping(value="/my/recommend" ,method={RequestMethod.POST})
-//	public Map<String,Object> selectMyRecommend(@RequestParam(value="curPage") String selectPage, HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		B_P001VO b_p001VO= (B_P001VO) request.getSession().getAttribute("memberInfo");
-//		Map<String,String> searchMap = new HashMap<>();
-//		Map<String,Object> resultMap = new HashMap<>();
-//		
-//		searchMap.put("member_id", b_p001VO.getMember_id());
-//		int totalCount = f_p001_3Service.selectRecommendTotal(searchMap);
-//		PagingVO pvo = pagingProvider.get();
-//		int curPage = 1;
-//		
-//		try {
-//			if(selectPage!=null) {
-//				curPage = Integer.parseInt(selectPage);
-//			}
-//		}catch(NumberFormatException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		pvo.setPaging(curPage, totalCount, modalRangePage, modalRangeRow);
-//		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
-//		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
-//		List<Map<String,String>> recResult = f_p001_3Service.selectRecommend(searchMap);
-//		resultMap.put("result", recResult);
-//		resultMap.put("paging", pvo);
-//		return resultMap;
-//	}	
 
 	@ResponseBody
 	@RequestMapping(value="/my/recommend" ,method={RequestMethod.POST})
@@ -276,7 +247,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		}catch(NumberFormatException e) {
 			e.printStackTrace();
 		}
-		pvo.setPaging(curPage, totalCount, modalRangePage, modalRangeRow);
+		pvo.setPagingDesc(curPage, totalCount, modalRangePage, modalRangeRow);
 		
 		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
 		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
@@ -372,6 +343,8 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		vo.setTitle(request.getParameter("title"));
 		vo.setContents(request.getParameter("editor"));
 		vo.setThumbnail_img(thumb);
+		vo.setRefer_link(request.getParameter("refer_link"));
+		vo.setRefer_title(request.getParameter("refer_title"));
 		vo.setArticle_no(Integer.parseInt(request.getParameter("article_no")));
 		
 		ArrayList tagList = mapper.readValue(request.getParameter("tagList"), ArrayList.class);
@@ -447,6 +420,8 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		vo.setTitle(request.getParameter("title"));
 		vo.setContents(request.getParameter("editor"));
 		vo.setThumbnail_img(thumb);
+		vo.setRefer_link(request.getParameter("refer_link"));
+		vo.setRefer_title(request.getParameter("refer_title"));
 		
 		ArrayList tagList = mapper.readValue(request.getParameter("tagList"), ArrayList.class);
 		f_p001_3Service.insertArticle(vo);

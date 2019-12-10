@@ -50,8 +50,8 @@ public class F_P001_3DAOImpl implements F_P001_3DAO{
 	}		
 	
 	@Override
-	public String selectReviewTotal(String article_cd) throws DataAccessException{
-		String totalCount = sqlSession.selectOne("mapper.f_p001_3.selectReviewTotal",article_cd);
+	public String selectReviewTotal() throws DataAccessException{
+		String totalCount = sqlSession.selectOne("mapper.f_p001_3.selectReviewTotal");
 		return totalCount;
 	}
 

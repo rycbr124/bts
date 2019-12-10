@@ -52,8 +52,8 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 	}	
 	
 	@Override
-	public String selectReviewTotal(String article_cd) throws DataAccessException{
-		String totalCount = f_p001_3DAO.selectReviewTotal(article_cd);
+	public String selectReviewTotal() throws DataAccessException{
+		String totalCount = f_p001_3DAO.selectReviewTotal();
 		return totalCount;
 	}
 
@@ -68,6 +68,7 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 		List<F_P001_3VO> list = f_p001_3DAO.selectReviewList(searchMap);			
 		for(int i=0; i<list.size();i++) {
 			F_P001_3VO vo = list.get(i);
+			vo.setArticle_cd(searchMap.get("article_cd"));
 			List<String> tagList = new ArrayList<>();
 			tagList = f_p001_3DAO.selectTagList(vo);
 			vo.setTag_list(tagList);
@@ -78,6 +79,7 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 	@Override
 	public F_P001_3VO selectReviewContents(Map<String,String> searchMap) throws DataAccessException{
 		F_P001_3VO f_p001_3VO = f_p001_3DAO.selectReviewContents(searchMap);
+		f_p001_3VO.setArticle_cd(searchMap.get("article_cd"));
 		List<String> tagList = new ArrayList<>();
 		tagList = f_p001_3DAO.selectTagList(f_p001_3VO);
 		f_p001_3VO.setTag_list(tagList);
