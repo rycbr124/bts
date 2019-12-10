@@ -34,8 +34,8 @@
 	
 	<insert id="insertArticle" parameterType="f_p001_3VO">
 	    <![CDATA[
-		INSERT INTO article (article_no, article_cd, register_date, title, contents, member_id,thumbnail_img) 
-		VALUES (article_review_seq.nextval, #{article_cd}, sysdate, #{title}, #{contents}, #{member_id}, #{thumbnail_img,jdbcType=VARCHAR})
+		INSERT INTO article (article_no, register_date, title, contents, member_id,thumbnail_img) 
+		VALUES (article_review_seq.nextval, sysdate, #{title}, #{contents}, #{member_id}, #{thumbnail_img,jdbcType=VARCHAR})
 	    ]]>
 		<selectKey resultType="int" keyProperty="article_no" order="AFTER">
 			<![CDATA[
@@ -86,8 +86,7 @@
 		</set>
 		<where>
 			<![CDATA[
-				 article_cd=#{article_cd}
-				 AND article_no=#{article_no}
+				 article_no=#{article_no}
 		    ]]>	
 		</where>
 	</update>
@@ -100,9 +99,8 @@
 			    SELECT rownum as rnum, a.*
 			    FROM 
 			    (
-			        SELECT article_no,title,thumbnail_img,article_cd
+			        SELECT article_no,title,thumbnail_img
 			        FROM article
-			        WHERE article_cd=#{article_cd}
 			        ORDER BY article_no DESC
 			    ) a
 			    WHERE rownum<=#{endRow}
@@ -111,11 +109,10 @@
 	    ]]>
 	</select>
 	
-	<select id="selectReviewTotal" parameterType="string" resultType="string">
+	<select id="selectReviewTotal" resultType="string">
 	    <![CDATA[
 			SELECT COUNT(*) totalCount
 			FROM article
-			WHERE article_cd=#{article_cd}
 	    ]]>
 	</select>
 
@@ -139,10 +136,9 @@
 
 	<select id="selectReviewContents" parameterType="map" resultMap="reviewResult">
 	    <![CDATA[
-			SELECT register_date,title,contents,ar.member_id,thumbnail_img,article_no,article_cd,profile_image,member_type
+			SELECT register_date,title,contents,ar.member_id,thumbnail_img,article_no,profile_image,member_type
 			FROM article ar,b_member mem
 			WHERE ar.member_id=mem.member_id 
-			AND article_cd=#{article_cd}
 			AND article_no=#{article_no}
 	    ]]>
 	</select>

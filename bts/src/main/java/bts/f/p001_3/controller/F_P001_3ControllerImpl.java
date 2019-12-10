@@ -91,7 +91,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 			e.printStackTrace();
 			curPage=1;
 		}
-		int totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal(article_cd));
+		int totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal());
 		PagingVO pvo = pagingProvider.get();
 		pvo.setPaging(curPage, totalCount, rangePage, rangeRow);
 

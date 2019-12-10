@@ -17,7 +17,7 @@ public interface F_P001_3DAO {
 	public void deleteTagList(F_P001_3VO f_p001_3VO);
 	public int deleteAnswer(String answer_no) throws DataAccessException;
 	public void updateArticle(F_P001_3VO f_p001_3VO);
-	public String selectReviewTotal(String article_cd) throws DataAccessException;
+	public String selectReviewTotal() throws DataAccessException;
 	public String selectCommentTotal(Map<String,String> searchMap) throws DataAccessException;
 	public List<F_P001_3VO> selectReviewList(Map<String,String> searchMap) throws DataAccessException;
 	public List<String> selectTagList(F_P001_3VO f_p001_3VO) throws DataAccessException;

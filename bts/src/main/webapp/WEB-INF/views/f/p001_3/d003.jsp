@@ -234,6 +234,11 @@
       $(document).on('click','span.delete',function(){
     	  $(this).parent().empty();
       });       
+
+		//팝업 검색결과 클릭
+		$(document).on("click",".tag-result>a",function(){
+			$(this).parent().remove();
+		});      
       
       function makeTarget(href,title){
     	  $('#review-target').empty();
