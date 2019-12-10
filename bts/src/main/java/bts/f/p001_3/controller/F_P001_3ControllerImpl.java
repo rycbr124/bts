@@ -343,6 +343,8 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		vo.setTitle(request.getParameter("title"));
 		vo.setContents(request.getParameter("editor"));
 		vo.setThumbnail_img(thumb);
+		vo.setRefer_link(request.getParameter("refer_link"));
+		vo.setRefer_title(request.getParameter("refer_title"));
 		vo.setArticle_no(Integer.parseInt(request.getParameter("article_no")));
 		
 		ArrayList tagList = mapper.readValue(request.getParameter("tagList"), ArrayList.class);
@@ -418,6 +420,8 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		vo.setTitle(request.getParameter("title"));
 		vo.setContents(request.getParameter("editor"));
 		vo.setThumbnail_img(thumb);
+		vo.setRefer_link(request.getParameter("refer_link"));
+		vo.setRefer_title(request.getParameter("refer_title"));
 		
 		ArrayList tagList = mapper.readValue(request.getParameter("tagList"), ArrayList.class);
 		f_p001_3Service.insertArticle(vo);

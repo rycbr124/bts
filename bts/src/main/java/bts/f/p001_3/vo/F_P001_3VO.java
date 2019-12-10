@@ -18,8 +18,22 @@ public class F_P001_3VO {
 	private String member_type;	
 	private String article_cd;
 	private String thumbnail_img;
+	private String refer_link;
+	private String refer_title;
 	private List<String> tag_list;
 	
+	public String getRefer_link() {
+		return refer_link;
+	}
+	public void setRefer_link(String refer_link) {
+		this.refer_link = refer_link;
+	}
+	public String getRefer_title() {
+		return refer_title;
+	}
+	public void setRefer_title(String refer_title) {
+		this.refer_title = refer_title;
+	}
 	public String getProfile_image() {
 		return profile_image;
 	}

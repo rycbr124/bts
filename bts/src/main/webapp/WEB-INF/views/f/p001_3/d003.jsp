@@ -154,13 +154,19 @@
       });
       
       $('#end').on('click',function(){
-         var frm = submitAction();
+    	 if(isSiteEmpty()){
+    	 	return;
+    	 }
+    	 var frm = submitAction();
          frm.action="${contextPath}/community/review/upload";
          frm.submit();
       })
       
       $('#endMod').on('click',function(){
-         var frm = submitAction();
+    	 if(isSiteEmpty()){
+    	 	return;
+    	 }
+    	 var frm = submitAction();
          frm.action="${contextPath}/community/review/upload/mod";
          frm.submit();
       })
@@ -177,7 +183,7 @@
          }
       });
       
-      $("input:radio[name=test]").click(function(){
+      $("input:radio[name=review_se]").click(function(){
          if($(this).prop('value')=='siteRev'){
             $('#review-type>input:button').attr('disabled',false);
             $('#review-type>input:button').removeClass('disabled');
@@ -248,9 +254,8 @@
     	  var spanDesc = document.createElement('span');
     	  var spanDel = document.createElement('span');
     	  
-    	  $(aLink).prop('href',href);
-    	  $(aLink).prop('title',title);
-    	  $(aLink).prop('target','_blank');
+    	  $(aLink).attr('href',href);
+    	  $(aLink).attr('target','_blank');
     	  $(aLink).text(title);
     	  $(spanDesc).text('에 대한 후기글입니다.');
     	  $(spanDel).addClass('delete');
@@ -281,6 +286,22 @@
          frm.tagList.value=JSON.stringify(tagResult);
          return frm;
       }
+      
+		function isSiteEmpty(){
+			if($('#siteRev').is(':checked')){
+				if($('#review-target').is(':empty')){
+					alert('사이트 후기의 경우 대상을 선택해야 합니다.');
+					return true;
+				}else{
+					var href=$('#review-target>a').attr('href');
+					href = href.replace('${contextPath}','');
+					document.frmWrite.refer_link.value=href;
+					document.frmWrite.refer_title.value=$('#review-target>a').text();
+				}
+			}else{
+				return false;
+			}
+		}
       
       function isTagExist(inputText){
          var inputTag = $('.tag-input').toArray();
@@ -436,19 +457,27 @@
 		</div>
 		<div id="review-type">
 			<div class="custom-control custom-radio custom-control-inline">
-				<input type="radio" id="myRev" name="test" value="myRev" class="custom-control-input">
+				<input type="radio" id="myRev" name="review_se" value="myRev" class="custom-control-input">
 				<label class="custom-control-label" for="myRev">나만의 후기</label>
 			</div>
 			<div class="custom-control custom-radio custom-control-inline">
-				<input type="radio" id="siteRev" name="test" value="siteRev" class="custom-control-input">
+				<input type="radio" id="siteRev" name="review_se" value="siteRev" class="custom-control-input">
 				<label class="custom-control-label" for="siteRev">사이트 후기</label>
 			</div>
 			<input type="button" class="btn btn-sm btn-outline-primary disabled" data-toggle="modal" data-target="#targetModal" value="가져오기">
-			<span id="review-target"></span>
+			<span id="review-target">
+				<c:if test="${contentsMod.refer_link!=null}">
+					<a href="${contextPath}${contentsMod.refer_link}" target="_blank">${contentsMod.refer_title}</a>
+					<span>에 대한 후기글입니다.</span>
+					<span class="delete">삭제</span>
+				</c:if>
+			</span>
 		</div>
 		<textarea id="editor" name="editor">${contentsMod.contents}</textarea>
 		<input type="hidden" name="imageList">
 		<input type="hidden" name="tagList">
+		<input type="hidden" name="refer_link">
+		<input type="hidden" name="refer_title">
 		<input type="hidden" name="article_no" value="${contentsMod.article_no}">
 	</form>
 	<div id="tag-list">

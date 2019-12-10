@@ -13,6 +13,8 @@
 		<result property="member_id" column="member_id" />		
 		<result property="member_type" column="member_type" />	
 		<result property="profile_image" column="profile_image" />
+		<result property="refer_link" column="refer_link" />
+		<result property="refer_title" column="refer_title" />
 	</resultMap>
 
 	<resultMap id="ansResult" type="f_p001_3VO_3">
@@ -34,12 +36,13 @@
 	
 	<insert id="insertArticle" parameterType="f_p001_3VO">
 	    <![CDATA[
-		INSERT INTO article (article_no, register_date, title, contents, member_id,thumbnail_img) 
-		VALUES (article_review_seq.nextval, sysdate, #{title}, #{contents}, #{member_id}, #{thumbnail_img,jdbcType=VARCHAR})
+			INSERT INTO article (article_no, register_date, title, contents, member_id,thumbnail_img, refer_link, refer_title) 
+			VALUES (article_review_seq.nextval, sysdate, #{title}, #{contents}, #{member_id}
+			, #{thumbnail_img,jdbcType=VARCHAR}, #{refer_link,jdbcType=VARCHAR}, #{refer_title,jdbcType=VARCHAR})
 	    ]]>
 		<selectKey resultType="int" keyProperty="article_no" order="AFTER">
 			<![CDATA[
-			SELECT article_review_seq.currval FROM dual
+				SELECT article_review_seq.currval FROM dual
 		    ]]>
 		</selectKey>
 	</insert>
@@ -81,7 +84,9 @@
 			<![CDATA[
 				title=#{title},
 				contents=#{contents},
-				thumbnail_img=#{thumbnail_img},
+				thumbnail_img=#{thumbnail_img,jdbcType=VARCHAR},
+				refer_link=#{refer_link,jdbcType=VARCHAR},
+				refer_title=#{refer_title,jdbcType=VARCHAR}								
 		    ]]>	
 		</set>
 		<where>
@@ -136,7 +141,7 @@
 
 	<select id="selectReviewContents" parameterType="map" resultMap="reviewResult">
 	    <![CDATA[
-			SELECT register_date,title,contents,ar.member_id,thumbnail_img,article_no,profile_image,member_type
+			SELECT register_date,title,contents,ar.member_id,thumbnail_img,article_no,profile_image,member_type,refer_link,refer_title
 			FROM article ar,b_member mem
 			WHERE ar.member_id=mem.member_id 
 			AND article_no=#{article_no}
