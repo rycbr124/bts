@@ -104,7 +104,7 @@
 				
 				
 				for(var i in data){
-					var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D'
+					var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
 					var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + content_arr[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 					
 					$.ajax({
@@ -158,13 +158,13 @@
 					      }
 					   });
 				}
+			
 				var button = document.createElement('button');
 				$(button).prop('type', 'button');
 				$(button).prop('class', 'btn btn-outline-secondary');
 				$(button).prop('id', 'btnSave');
 				$(button).text('저장');
 				$(form).append(button);
-				
 			},
 			error : function(data, textStatus) {
 		         alert("잘못된 접근입니다.")
@@ -279,6 +279,10 @@ div.box{
 	width : 400px;
 	text-align : center;
 }
+
+button{
+	margin-top : 10px;
+}
 </style>
 </head>
 <body>
@@ -291,7 +295,6 @@ div.box{
 				<input type="hidden" name="length" value="length">
 				<input type="hidden" name="p_no" id="p_no" value="">
 			</div>
-
 		</form>
 	</div>
 </body>

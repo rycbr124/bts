@@ -36,7 +36,7 @@ console.log(plan_no);
 var content_id = thumNail.get(plan_no);
 console.log(content_id);
 
-var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+var serviceKey = '8MlvFH5fs4groXQuW9uCj0jvncbl0Pk9sppAzxq0jolCi5lsMOdlpLHgX3wC0rTwyrMHAPkLBm7lmsY44FwxGg%3D%3D'
 var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + content_id + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 
 $.ajax({
@@ -294,8 +294,9 @@ figure.snip1321.hover:after {
 				</c:if>
 			</ul>
 		</div>
-		<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" onclick="log_check('${sessionScope.memberInfo.member_id}')">글쓰기</button>
-		
+		<div class="row justify-content-md-end">
+			<input type="button" data-toggle="modal" data-target="#myModal" class="btn btn-outline-secondary" onclick="log_check('${sessionScope.memberInfo.member_id}')" value="글쓰기">
+		</div>
 		
 		  <!-- Modal -->
   		<div class="modal fade" id="myModal" role="dialog">

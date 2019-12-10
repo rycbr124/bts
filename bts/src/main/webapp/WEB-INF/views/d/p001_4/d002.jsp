@@ -60,7 +60,7 @@
 			arr_content[${status.index}] = "${planner.content_id}";
 			arr_day[${status.index}] = "${planner.day_no}";
 			arr_desc[${status.index}] = "${planner.plan_desc}";
-			arr_no[${status.index}] = "${planner.plan_no}"
+			arr_no[${status.index}] = "${planner.plan_no}";
 		</c:forEach>
 		console.log(arr_content);
 		console.log(arr_day);
@@ -85,7 +85,7 @@
 		
 		for(var i in arr_content){
 			console.log("1111 : " + arr_content[i]);
-			var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D'
+			var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
 			var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + arr_content[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 			
 			$.ajax({
@@ -170,8 +170,8 @@
 			$(d_button).prop('value', '삭제');
 			$(d_button).prop('class', 'btn btn-default btn-sm');
 			$(d_button).attr('onclick', 'location.href="${contextPath}/community/plan_delete?plan_no=' + arr_no[0] + '"');
-			$('.planner_detail').append(m_button);
-			$('.planner_detail').append(d_button);	
+			$('div.justify-content-md-end').append(m_button);
+			$('div.justify-content-md-end').append(d_button);	
 			
 		}
 		var list_button = document.createElement('input');
@@ -179,7 +179,7 @@
 		$(list_button).prop('value', '목록');
 		$(list_button).prop('class', 'btn btn-default btn-sm');
 		$(list_button).attr('onclick', 'location.href="${contextPath}/community/plan_list"');
-		$('.planner_detail').append(list_button);	
+		$('div.justify-content-md-end').append(list_button);	
 		
 	});
 
@@ -254,6 +254,10 @@ div.planner_detail{
 	padding : 80px;	
 	background-color : #F8F8FA;
 }
+div.justify-content-md-end{
+	background-color : #F8F8FA;
+	padding-bottom : 10px;
+}
 div.mx-auto{
 	background-color : #F8F8FA;
 }
@@ -315,6 +319,10 @@ h2.titleDesc{
 		<div class="planner_detail">
 		
 		</div>
+		<div class="row justify-content-md-end">
+		
+		</div>
+		
 		
 		<div id='contents-info'>
 			<span id="comment-count">
