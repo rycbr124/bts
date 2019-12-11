@@ -31,4 +31,32 @@ public class ReportServiceImpl implements ReportService{
 		List<PnishVO> list = reportDAO.selectPnishList();
 		return list;
 	}
+
+	@Override
+	public String selectReviewContents(ReportVO vo) {
+		String contents = reportDAO.selectReviewContents(vo);
+		return contents;
+	}
+
+	@Override
+	public String selectAccContents(ReportVO vo) {
+		String contents = reportDAO.selectAccContents(vo);
+		return contents;
+	}
+
+	@Override
+	public String selectPlanContents(ReportVO vo) {
+		List<String> list = reportDAO.selectPlanContents(vo);
+		String contents = null;
+		for(String con : list) {
+			contents+=con;
+		}
+		return contents;
+	}
+
+	@Override
+	public String selectCommentContents(ReportVO vo) {
+		String contents = reportDAO.selectCommentContents(vo);
+		return contents;
+	}
 }

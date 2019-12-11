@@ -49,14 +49,16 @@ public class ReportControllerImpl implements ReportController {
 	@RequestMapping(value="/article/review", method= {RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView reportArticle(@ModelAttribute ReportVO vo,HttpServletRequest request, HttpServletResponse response)throws Exception{
 		ModelAndView mav = new ModelAndView("/common/report");
-		makeReportForm(reviewName,vo,mav);
+		String contents=repService.selectReviewContents(vo);
+		makeReportForm(reviewName,vo,mav,contents);
 		return mav;
 	}
 	
 	@RequestMapping(value="/article/accompany", method= {RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView reportAccompany(@ModelAttribute ReportVO vo,HttpServletRequest request, HttpServletResponse response)throws Exception{
 		ModelAndView mav = new ModelAndView("/common/report");
-		makeReportForm(accompanyName,vo,mav);
+		String contents=repService.selectAccContents(vo);
+		makeReportForm(accompanyName,vo,mav,contents);
 		return mav;
 	}
 
@@ -65,7 +67,8 @@ public class ReportControllerImpl implements ReportController {
 	@RequestMapping(value="/article/plan", method= {RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView reportPlan(@ModelAttribute ReportVO vo,HttpServletRequest request, HttpServletResponse response)throws Exception{
 		ModelAndView mav = new ModelAndView("/common/report");
-		makeReportForm(planName,vo,mav);
+		String contents=repService.selectPlanContents(vo);
+		makeReportForm(planName,vo,mav,contents);
 		return mav;
 	}
 	
@@ -84,19 +87,17 @@ public class ReportControllerImpl implements ReportController {
 	@RequestMapping(value="/comment", method= {RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView reportComment(@ModelAttribute ReportVO vo,HttpServletRequest request, HttpServletResponse response)throws Exception{
 		ModelAndView mav = new ModelAndView("/common/report");
-		makeReportForm(commentName,vo,mav);
+		String contents=repService.selectCommentContents(vo);
+		makeReportForm(commentName,vo,mav,contents);
 		return mav;
 	}	
 	
-	private void makeReportForm(String se_name,ReportVO vo,ModelAndView mav) {
+	private void makeReportForm(String se_name,ReportVO vo,ModelAndView mav,String target_contents) {
 		String report_se=repService.selectMenuCd(se_name);
 		vo.setReport_se(report_se);
+		vo.setTarget_contents(target_contents);
 		List<PnishVO> pnish = repService.selectPnishList();
 		mav.addObject("initValue",vo);
 		mav.addObject("pnish",pnish);
-	}
-	
-	private void accReportForm(String se_name, ReportVO vo, ModelAndView mav) {
-		String report_se=repService.selectMenuCd(se_name);
 	}
 }

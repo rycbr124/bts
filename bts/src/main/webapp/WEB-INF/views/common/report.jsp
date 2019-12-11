@@ -106,6 +106,7 @@ body {
 						</div>
 						<input type="hidden" name="report_se" value="${initValue.report_se}">
 						<input type="hidden" name="contents_cd" value="${initValue.contents_cd}">
+						<input type="hidden" name="target_contents" value="${initValue.target_contents}">						
 						<input type="button" id="endWrite" class="btn btn-outline-success" value="등록하기">
 						<input type="reset" class="btn btn-outline-secondary" value="다시입력">
 						<input type="button" id="cancelWrite" class="btn btn-outline-danger" value="취소">				  

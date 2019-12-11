@@ -65,6 +65,12 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		return resultMap;
 	}	
 
+	@RequestMapping(value="/list")
+	public ModelAndView showReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/a/p002/d003");
+		return mav;
+	}	
+	
 	@RequestMapping(value="/history")
 	public ModelAndView showHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p002/d002");
