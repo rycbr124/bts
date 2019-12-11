@@ -9,6 +9,20 @@
 		<result property="name" column="name" />
 		<result property="day_cnt" column="day_cnt" />
 	</resultMap>
+
+	<resultMap id="reportResult" type="reportVO">
+		<result property="report_no" column="report_no" />
+		<result property="report_date" column="report_date" />
+		<result property="title" column="title" />
+		<result property="report_se" column="report_se" />
+		<result property="contents" column="contents" />
+		<result property="pnish_cd" column="pnish_cd" />
+		<result property="reporter_id" column="reporter_id" />
+		<result property="target_id" column="target_id" />
+		<result property="report_at" column="report_at" />	
+		<result property="contents_cd" column="contents_cd" />	
+		<result property="target_contents" column="target_contents" />			
+	</resultMap>
 	
 	<select id="selectPnishList" parameterType="string" resultMap="pnishResult">
 	    <![CDATA[
@@ -42,5 +56,16 @@
 			WHERE pnish_cd = #{pnish_cd}
 	    ]]>
 	</delete>	
+
+	<select id="selectReportList" parameterType="map" resultMap="reportResult">
+	    <![CDATA[
+			SELECT report_no,report_date,title,report_se,contents,pnish_cd,reporter_id
+			,target_id,report_at,contents_cd,target_contents
+			FROM report_list
+	    ]]>
+   		<where>
+			title LIKE '%'||#{p_title}||'%'
+		</where>
+	</select>	
 
 </mapper>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import bts.a.p002.dao.A_P002DAO;
 import bts.common.report.vo.PnishVO;
+import bts.common.report.vo.ReportVO;
 
 @Service("a_p002Service")
 public class A_P002ServiceImpl implements A_P002Service{
@@ -49,5 +50,11 @@ public class A_P002ServiceImpl implements A_P002Service{
 			}
 		}		
 		return row;
+	}
+
+	@Override
+	public List<ReportVO> selectReportList(Map<String, String> searchMap) {
+		List<ReportVO> list = a_p002DAO.selectReportList(searchMap);
+		return list;
 	}	
 }

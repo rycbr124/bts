@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import bts.common.report.vo.PnishVO;
+import bts.common.report.vo.ReportVO;
 
 public interface A_P002DAO {
 
@@ -14,5 +15,7 @@ public interface A_P002DAO {
 	void updatePnish(Map<String, String> row);
 
 	void deletePnish(Map<String, String> row);
+
+	List<ReportVO> selectReportList(Map<String, String> searchMap);
 
 }

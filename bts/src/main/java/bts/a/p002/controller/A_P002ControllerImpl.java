@@ -15,10 +15,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import bts.a.p002.service.A_P002Service;
 import bts.common.report.vo.PnishVO;
+import bts.common.report.vo.ReportVO;
 import bts.f.p001_3.vo.F_P001_3VO;
 
 @Controller("a_p002")
@@ -56,8 +55,6 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		
 		dataMap = request.getParameterMap();
 		try {
-			ObjectMapper mapper = new ObjectMapper();
-			System.out.println("=============>"+mapper.writeValueAsString(dataMap));
 			a_p002Service.savePnishList(dataMap);	
 			result.put("Code","0");
 			result.put("Message","저장되었습니다");
@@ -70,16 +67,26 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		return resultMap;
 	}	
 
-	@RequestMapping(value="/list")
-	public ModelAndView showReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mav = new ModelAndView("/a/p002/d003");
-		return mav;
-	}	
-	
 	@RequestMapping(value="/history")
 	public ModelAndView showHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p002/d002");
 		return mav;
 	}	
 	
+	@RequestMapping(value="/list")
+	public ModelAndView showReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/a/p002/d003");
+		return mav;
+	}	
+	
+	@RequestMapping(value="/list/search")
+	@ResponseBody
+	public Map<String, Object> selectReportList(@RequestParam(value="p_title",required=false) String p_title,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, String> searchMap = new HashMap<String, String>();
+		searchMap.put("p_title", p_title);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<ReportVO> data = a_p002Service.selectReportList(searchMap);		
+		resultMap.put("Data", data);
+		return resultMap;
+	}		
 }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import bts.common.report.vo.PnishVO;
+import bts.common.report.vo.ReportVO;
 
 @Repository("a_p002DAO")
 public class A_P002DAOImpl implements A_P002DAO{
@@ -33,6 +34,12 @@ public class A_P002DAOImpl implements A_P002DAO{
 	@Override
 	public void deletePnish(Map<String, String> row) {
 		sqlSession.insert("mapper.a_p002.deletePnish",row);		
+	}
+
+	@Override
+	public List<ReportVO> selectReportList(Map<String, String> searchMap) {
+		List<ReportVO> list = sqlSession.selectList("mapper.a_p002.selectReportList",searchMap);
+		return list;
 	}
 	
 }
