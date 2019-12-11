@@ -47,11 +47,11 @@ public class ReportServiceImpl implements ReportService{
 	@Override
 	public String selectPlanContents(ReportVO vo) {
 		List<String> list = reportDAO.selectPlanContents(vo);
-		String contents = null;
-		for(String con : list) {
-			contents+=con;
+		StringBuffer contents = new StringBuffer();
+		for(int i=0;i<(list.size()-1);i++) {
+			contents.append(list.get(i));
 		}
-		return contents;
+		return contents.toString();
 	}
 
 	@Override

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import bts.b.p001.VO.B_P001VO;
@@ -21,6 +22,7 @@ import bts.common.report.vo.PnishVO;
 import bts.common.report.vo.ReportVO;
 
 @Controller("reportController")
+@SessionAttributes("reportForm")
 @RequestMapping(value="/report")
 public class ReportControllerImpl implements ReportController {
 	@Autowired
@@ -62,7 +64,6 @@ public class ReportControllerImpl implements ReportController {
 		return mav;
 	}
 
-
 	
 	@RequestMapping(value="/article/plan", method= {RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView reportPlan(@ModelAttribute ReportVO vo,HttpServletRequest request, HttpServletResponse response)throws Exception{
@@ -74,7 +75,7 @@ public class ReportControllerImpl implements ReportController {
 	
 	@ResponseBody
 	@RequestMapping(value="/write", method= {RequestMethod.POST,RequestMethod.GET})
-	public String reportSubmit(@ModelAttribute("member_id") String reporter_id,@ModelAttribute ReportVO reportVO,HttpServletRequest request, HttpServletResponse response)throws Exception{
+	public String reportSubmit(@ModelAttribute("member_id") String reporter_id,@ModelAttribute("reportForm") ReportVO reportVO,HttpServletRequest request, HttpServletResponse response)throws Exception{
 		reportVO.setReporter_id(reporter_id);
 		int result = repService.insertReport(reportVO);
 		if(result==1) {
@@ -97,7 +98,7 @@ public class ReportControllerImpl implements ReportController {
 		vo.setReport_se(report_se);
 		vo.setTarget_contents(target_contents);
 		List<PnishVO> pnish = repService.selectPnishList();
-		mav.addObject("initValue",vo);
+		mav.addObject("reportForm",vo);
 		mav.addObject("pnish",pnish);
 	}
 }

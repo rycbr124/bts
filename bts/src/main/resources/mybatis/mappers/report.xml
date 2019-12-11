@@ -48,7 +48,7 @@
 	</select>
 
 	<select id="selectPlanContents" parameterType="reportVO" resultType="string">
-	    <![CDATA[a
+	    <![CDATA[
 			SELECT DECODE(GROUPING(detail_no),1,'<h3>'||day_no,'<p>'||ROW_NUMBER() OVER(ORDER BY detail_no)||' : ') || DECODE(GROUPING(detail_no),1,'</h3>',plan_desc||'</p>')
 			FROM planner_detail
 			WHERE plan_no=#{contents_cd}
