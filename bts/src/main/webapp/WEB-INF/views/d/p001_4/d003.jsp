@@ -22,7 +22,7 @@
 
 
 	$(document).on('click', '#btnSave', function(){
-		var length = $('.content_div').length;
+		var length = $('div.by_dayInfo > div').length;
 		console.log(length);
 		var frmSave = document.form;
 		frmSave.action="${contextPath}/community/plan_save";
@@ -104,7 +104,7 @@
 				
 				
 				for(var i in data){
-					var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D'
+					var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
 					var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + content_arr[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 					
 					$.ajax({
@@ -150,33 +150,21 @@
 					         $(hidden).prop('name', 'content_id' + i);
 					         $(hidden).prop('value', content_arr[i]);
 					         
-					         $('.content_div' + i).append(text);
-							 
-
-							 
-							 
-								
-								
-					         
-					         
+					         $('.content_div' + i).append(text);		
+					         $('.content_div' + i).append(hidden);		
 					      },
 					      error : function(data, textStatus) {
 					         alert("잘못된 접근입니다.")
 					      }
 					   });
 				}
-				
-				
-				
-				
-				
-				
-				var date = document.createElement('h2');
-				$(date).prop('class', 'date');
-				var date_text = document.createTextNode(plan_date);
-				date.appendChild(date_text);
-				$('.planner_detail').append(date);
-				
+			
+				var button = document.createElement('button');
+				$(button).prop('type', 'button');
+				$(button).prop('class', 'btn btn-outline-secondary');
+				$(button).prop('id', 'btnSave');
+				$(button).text('저장');
+				$(form).append(button);
 			},
 			error : function(data, textStatus) {
 		         alert("잘못된 접근입니다.")
@@ -291,6 +279,10 @@ div.box{
 	width : 400px;
 	text-align : center;
 }
+
+button{
+	margin-top : 10px;
+}
 </style>
 </head>
 <body>
@@ -299,10 +291,10 @@ div.box{
 		<h1>글쓰기</h1>
 			<div class="mb-3">
 				<label for="title">제목</label>
-				<input type="text" class="form-control" name="title" id="title" placeholder="제목을 입력해 주세요">
+				<input type="text" class="form-control bg-light border-0" name="title" id="title" placeholder="제목을 입력해 주세요">
+				<input type="hidden" name="length" value="length">
+				<input type="hidden" name="p_no" id="p_no" value="">
 			</div>
-
-			
 		</form>
 	</div>
 </body>

@@ -50,11 +50,16 @@ img.detail {
 
 h3.title {
 	font-family: "Binggrae";
-	margin-bottom: 100px;
 }
 
 h5.card-title {
 	font-family: "NanumSquareRoundR";
+}
+
+img.acc_img{
+	width : 350px;
+	height : 200px;
+	margin-bottom : 10px;
 }
 
 </style>
@@ -76,22 +81,29 @@ $(document).ready(function(){
 	var accompany = ${bestAccompany};
     var main = accompany.bestAccompany;
     for(var i in main){
-    var best = main[i];
-    var title = best["ACC_TITLE"];
-    var thumbnail = best['THUMB'];
-    var gender = best['GENDER'];
-    var age = best['AGE'];
-    var whlrs_no = best['WHLRS_NO'];
-    var member_id = best['MEMBER_ID'];
-    var register_date = best['REGISTER_DATE'];
-    var nick_name = best['NICK_NAME'];
-    
-    var div = document.createElement('div');
-    var img = document.createElement('img');
-    $('.lately-accompany').append(div);
-    $(div).prop('class','accompany');
-    $(div).append(img);
-    $(img).prop('src','/bts/'+thumbnail);
+	    var best = main[i];
+	    var title = best["ACC_TITLE"];
+	    var thumbnail = best['THUMB'];
+	    var gender = best['GENDER'];
+	    var age = best['AGE'];
+	    var whlrs_no = best['WHLRS_NO'];
+	    var member_id = best['MEMBER_ID'];
+	    var register_date = best['REGISTER_DATE'];
+	    var nick_name = best['NICK_NAME'];
+	    var article_no = best['ARTICLE_NO'];
+	    
+	    var div = document.createElement('div');
+	    var img = document.createElement('img');
+	    var href = document.createElement('a');
+	    $(href).prop('href', '${contextPath}/accompany/accView?article_no=' + article_no + '&member_id=' + member_id);
+	    
+	    
+	    $('.row').append(div);
+	    $(div).prop('class','col-md-4');
+	    $(div).append(href);
+	    $(href).append(img);
+	    $(img).prop('src','/bts'+thumbnail);
+	    $(img).prop('class', 'acc_img');
     }
 });
 </script>
@@ -285,14 +297,13 @@ $(document).ready(function(){
 		</div>
 		<p>BTS는 완벽한 여행이 되도록 최선을 다합니다.</p>
 		<p style="color: gray; text-decoration: underline;">새로운 곳에서 새로운 사람과 새로운 경험</p>
+		<h3 class="title">BTS와 함께 성공적인 여행을 경험하세요!</h3>		
+		<h4 style="font-weight: bold; font-family: NanumSquareRoundR;">가장 최근에 등록된 글</h4>
 		<div>
-			<h3 class="title">BTS와 함께 성공적인 여행을 경험하세요!</h3>
-		</div>
-		<hr style="border: solid 1px gray;">
-		<h3 style="font-weight: bold; font-family: NanumSquareRoundR; font-size: 30px">가장 최근에 등록된 글</h3>
-		<div style="margin-left: 100px; margin-bottom: 200px">
 			<div class="lately-accompany">
+				<div class="row">
 				
+				</div>
 			</div>
 			<button type="button" class="btn btn-secondary" style="float: right; margin-right: 200px; margin-top: 50px;">more</button>
 		</div>

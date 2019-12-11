@@ -31,7 +31,7 @@
                 WHERE viewcnt is not null
                 AND thumb is not null
                 ORDER BY register_date desc)a)
-	WHERE rn BETWEEN '1' AND '5'
+	WHERE rn BETWEEN '1' AND '6'
 	ORDER BY register_date desc
 	]]>
 </select>		
