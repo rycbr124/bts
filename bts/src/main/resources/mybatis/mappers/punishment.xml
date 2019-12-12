@@ -21,7 +21,10 @@
 		<result property="target_id" column="target_id" />
 		<result property="report_at" column="report_at" />	
 		<result property="contents_cd" column="contents_cd" />	
-		<result property="target_contents" column="target_contents" />			
+		<result property="target_contents" column="target_contents" />
+		<result property="showContents" column="showContents" />			
+		<result property="pnish_name" column="pnish_name" />	
+		<result property="day_cnt" column="day_cnt" />	
 	</resultMap>
 	
 	<select id="selectPnishList" parameterType="string" resultMap="pnishResult">
@@ -57,15 +60,42 @@
 	    ]]>
 	</delete>	
 
-	<select id="selectReportList" parameterType="map" resultMap="reportResult">
+	<select id="selectReportContent" parameterType="_int" resultMap="reportResult">
 	    <![CDATA[
-			SELECT report_no,report_date,title,report_se,contents,pnish_cd,reporter_id
-			,target_id,report_at,contents_cd,target_contents
-			FROM report_list
+			SELECT report_no,report_date,title,report_se,contents,reporter_id,report_at
+			,contents_cd,target_id,target_contents,p.name pnish_name,p.day_cnt
+			FROM report_list r, punishment p
 	    ]]>
    		<where>
-			title LIKE '%'||#{p_title}||'%'
+			r.pnish_cd=p.pnish_cd(+)
+			AND report_no=#{report_no}
+		</where>
+	</select>
+
+	<select id="selectReportList" parameterType="map" resultMap="reportResult">
+	    <![CDATA[
+		    SELECT report_no,report_date,title,reporter_id,target_id,report_at
+		    ,DECODE(report_at,'N','상세보기','처리완료') showContents, p.name pnish_name
+		    FROM report_list r,punishment p
+	    ]]>
+   		<where>
+   			<![CDATA[
+				r.pnish_cd=p.pnish_cd(+)
+				AND title LIKE '%'||#{p_title}||'%'
+	    	]]>
 		</where>
 	</select>	
+
+	<select id="selectMenuName" parameterType="string" resultType="string">
+	    <![CDATA[
+		    SELECT m.name
+			FROM menu m
+	    ]]>
+   		<where>
+   			<![CDATA[
+				menu_cd=#{menu_cd}
+	    	]]>
+		</where>
+	</select>
 
 </mapper>

@@ -18,4 +18,8 @@ public interface A_P002DAO {
 
 	List<ReportVO> selectReportList(Map<String, String> searchMap);
 
+	ReportVO selectReportContent(int report_no);
+
+	String selectMenuName(String report_se);
+
 }

@@ -56,5 +56,17 @@ public class A_P002ServiceImpl implements A_P002Service{
 	public List<ReportVO> selectReportList(Map<String, String> searchMap) {
 		List<ReportVO> list = a_p002DAO.selectReportList(searchMap);
 		return list;
+	}
+
+	@Override
+	public ReportVO selectReportContent(int report_no) {
+		ReportVO result = a_p002DAO.selectReportContent(report_no);
+		return result;
+	}
+
+	@Override
+	public String selectMenuName(String report_se) {
+		String result = a_p002DAO.selectMenuName(report_se);
+		return result;
 	}	
 }

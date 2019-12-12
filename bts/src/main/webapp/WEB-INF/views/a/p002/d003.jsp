@@ -52,24 +52,43 @@
 			//align은 데이터를 정렬하는 방법.
 			//MultiLineText설정하면 shift+enter 누를 때 하나의 셀 안에 여러 값을 넣을 수 있음.
 			//Wrap은 컬럼 사이즈가 정해져 있지만 데이터 길이가 더 길 때, 뒷 부분은 알아서 줄 바꿈 해줌.
-			{Header:"신고번호",Type:"Int", SaveName:"report_no",MultiLineText:1, Wrap:1}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
-			{Header:"제목",Type:"Text", SaveName:"title",MinWidth:150},
-			{Header:"신고자ID",Type:"Text", SaveName:"reporter_id"},
-			{Header:"신고대상ID",Type:"Text", SaveName:"target_id"},
-			{Header:"신고일자",Type:"Date", SaveName:"report_date"},
-			{Header:"확인여부",Type:"CheckBox", TrueValue:"Y", FalseValue:"N", SaveName:"report_at", MinWidth:80}, //필수값을 체크하고자 할 때 keyField사용			
-			{Header:"신고구분",Type:"Text", Hidden:1, SaveName:"report_se"},
-			{Header:"내용",Type:"Text", Hidden:1, SaveName:"contents"},
-			{Header:"신고사유",Type:"Text", Hidden:1, SaveName:"pnish_cd"},
-			{Header:"신고대상키",Type:"Text", Hidden:1, SaveName:"contents_cd"},
-			{Header:"신고내용",Type:"Text", Hidden:1, SaveName:"target_contents"},
-			{Header:"내용확인",Type:"Button", Align:"Center", SaveName:"showContents"}
+			{Header:"신고번호",Type:"Int", SaveName:"report_no",MultiLineText:1, Wrap:1, Edit:0}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
+			{Header:"제목",Type:"Text", SaveName:"title",MinWidth:150, Edit:0},
+			{Header:"신고자ID",Type:"Text", SaveName:"reporter_id", Edit:0},
+			{Header:"신고대상ID",Type:"Text", SaveName:"target_id", Edit:0},
+			{Header:"신고일자",Type:"Date", SaveName:"report_date", Edit:0},
+			{Header:"확인여부",Type:"CheckBox", TrueValue:"Y", FalseValue:"N", SaveName:"report_at", MinWidth:80, Edit:0}, //필수값을 체크하고자 할 때 keyField사용			
+			{Header:"신고사유",Type:"Text", SaveName:"pnish_name", Edit:0},
+			{Header:"내용확인",Type:"Button", Align:"Center", SaveName:"showContents", Edit:1}
 		];   
 		IBS_InitSheet( mySheet , initSheet);
 
-		mySheet.SetEditable(false);
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
 		mySheet.SetFocusAfterProcess(0);
+		 
+	}
+	
+	function mySheet_OnButtonClick(Row, Col){
+		console.log("[" + Row + "," + Col + "] 셀의 버튼 클릭");
+		console.log(mySheet.GetRowData(Row));
+		var url="${contextPath}/admin/report/list/contents?report_no="+mySheet.GetRowData(Row).report_no;
+		window.open(url,"_blank");
+		/*
+		var title="detailForm";
+		var form = document.createElement('form');
+		var detailInfo = document.createElement('input');
+		$(detailInfo).attr('type','hidden');
+		$(detailInfo).attr('name','detailInfo');
+		form.append(detailInfo);
+		form.detailInfo.value=JSON.stringify(mySheet.GetRowData(Row));			
+		form.target=title;
+		form.action="${contextPath}/admin/report/list/contents";
+		form.method="post";
+		$('body').append(form);
+		form.submit();
+		
+		window.open("",title);
+		*/
 	}
 	
 	function doAction(sAction) {
@@ -104,7 +123,7 @@
 <body>
 	<div class="page_title">
 		<span><a class="closeDepth" href="#">closeDepth</a></span> 
-		<span class="title">불량회원관리 > <b>제재 기준 조회/변경</b></span>
+		<span class="title">불량회원관리 > <b>신고 목록 조회/변경</b></span>
 	</div>
 	
 	<div class="main_content">

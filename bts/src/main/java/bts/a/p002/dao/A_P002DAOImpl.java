@@ -41,5 +41,17 @@ public class A_P002DAOImpl implements A_P002DAO{
 		List<ReportVO> list = sqlSession.selectList("mapper.a_p002.selectReportList",searchMap);
 		return list;
 	}
+
+	@Override
+	public ReportVO selectReportContent(int report_no) {
+		ReportVO result = sqlSession.selectOne("mapper.a_p002.selectReportContent",report_no);
+		return result;
+	}
+
+	@Override
+	public String selectMenuName(String report_se) {
+		String result = sqlSession.selectOne("mapper.a_p002.selectMenuName",report_se);
+		return result;
+	}
 	
 }

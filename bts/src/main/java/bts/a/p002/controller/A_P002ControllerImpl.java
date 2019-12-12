@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import bts.a.p002.service.A_P002Service;
 import bts.common.report.vo.PnishVO;
 import bts.common.report.vo.ReportVO;
@@ -25,9 +27,14 @@ import bts.f.p001_3.vo.F_P001_3VO;
 public class A_P002ControllerImpl implements A_P002Controller{
 	@Autowired
 	A_P002Service a_p002Service;
-
+	
+	private static final String reviewName="review";
+	private static final String commentName="comment";
+	private static final String planName="plan";
+	private static final String accompanyName="accompany";	
+	
 	@Autowired
-	Provider<F_P001_3VO> f_p001_3Provider;	
+	Provider<ReportVO> reportProvider;	
 	
 	@Override
 	@RequestMapping(value="/pnish")
@@ -77,6 +84,32 @@ public class A_P002ControllerImpl implements A_P002Controller{
 	public ModelAndView showReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p002/d003");
 		return mav;
+	}	
+
+	@RequestMapping(value="/list/contents")
+	public ModelAndView showReportContents(@RequestParam(value="report_no",required=false) int report_no,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/a/p002/d004");
+		System.out.println("===================>"+report_no);
+		ReportVO result = a_p002Service.selectReportContent(report_no);
+		mav.addObject("detailInfo",result);
+		return mav;
+	}	
+
+	@RequestMapping(value="/list/contents/target")
+	@ResponseBody
+	public String showReportTarget(@RequestParam(value="report_se") String report_se,@RequestParam(value="contents_cd") String contents_cd
+			,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String menu_name = a_p002Service.selectMenuName(report_se);
+		if(menu_name.equals(reviewName)) {
+			return request.getContextPath()+"/community/plan_contents";
+		}else if(menu_name.equals(accompanyName)){
+			return request.getContextPath()+"/accompany/accView";
+		}else if(menu_name.equals(planName)){
+			return request.getContextPath()+"/community/review/contents";			
+		}else if(menu_name.equals(commentName)){	
+			//String contents_name = a_p002Service.selectAnswerInfo(contents_cd);		
+		}
+		return "/error/404";
 	}	
 	
 	@RequestMapping(value="/list/search")
