@@ -1,6 +1,7 @@
 @charset "UTF-8";
 body{
 	margin:0 auto;
+	overflow-x:hidden;
 }
 .plan_detail_header{
 	width:100%;
@@ -68,22 +69,53 @@ body{
 	left:195px;
 }
 .plan_detail_info{
-	width:1110px;
+	width:1490px;
 	heigth:auto;
 	margin:0 auto;
 	margin-top:100px;
-	border:1px solid lightgray;
+	transform : translate(-200px,0);
+}
+.plan_detail_info #map{
+	position:absolute;
+	display: inline-block;
+	right: 0;
+	z-index:100;
+}
+.plan_detail_info #map .date_select{
+	position:absolute;
+	width:80px;
+	height:25px;
+	z-index:100;
+	right:0;
+	margin:10px;
 }
 .plan_detail_info #compare_day{
 	position:relative;
 	height:auto;
-	width:100%;
+	width:700px;
 	left:50%;
 	transform:translate(-50%,0);
+	border:1px solid lightgray;
+	border-bottom:0;
 	
 }
 .day_info_box{
 	border-bottom:1px solid lightgray;
+}
+
+.day_sch_box .day_sch_num .sch_num{
+	position:absolute;
+	width:25px;
+	height:25px;
+	border-radius: 50%;
+    color: white;
+    background: #223b68;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 23px;
+    text-align: center;
+    margin-top: 35px;
+    margin-left:15px;
 }
 .plan_detail_info #compare_day .day_text{
 	position:relative;

@@ -59,22 +59,19 @@
 					<h3 class="space-5">여행자 정보 등록</h3>
 					<hr />
 					<form id="frm-profile" autocomplete="off" method="post">
-						<input type="hidden" name="email_id" id="email_id"> <input
-							type="hidden" name="email_host" id="email_host">
+						<input type="hidden" name="email_id" id="email_id"> 
+						<input type="hidden" name="email_host" id="email_host">
 						<div class="mypage-picture">
 
 							<c:choose>
-								<c:when
-									test="${not empty sessionScope.memberInfo.profile_image }">
+								<c:when test="${not empty sessionScope.memberInfo.profile_image }">
 									<c:if test="${sessionScope.memberInfo.member_type =='kakao' }">
-										<img src="${sessionScope.memberInfo.profile_image }"
-											id="profImg">
+										<img src="${sessionScope.memberInfo.profile_image }"id="profImg">
 									</c:if>
 									<c:if test="${sessionScope.memberInfo.member_type !='kakao' }">
 										<img
-											src="${contextPath}${sessionScope.memberInfo.profile_image }"
-											id="profImg">
-s										<input type="hidden" name="profileImage" value=""/>
+											src="${contextPath}${sessionScope.memberInfo.profile_image }"id="profImg">
+										<input type="hidden" name="profileImage" value=""/>
 									</c:if>
 								</c:when>
 

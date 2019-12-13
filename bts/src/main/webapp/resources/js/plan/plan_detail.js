@@ -2,6 +2,25 @@
  * 
  */
 //href = # 막기
+$(function(){
+	var top = $(window).scrollTop();
+	var speed = 300;
+	var easing = 'linear';
+	var layer = $('#map');
+	var layerTopOffset = 394;
+	if(top > 0)
+		$(window).scrollTop(layerTopOffset + top);
+	else
+		$(window).scrollTop(0);
+	
+	$(window).scroll(function(){
+		var position = $(window).scrollTop()-394;
+		if(position < 0){
+			position = 0;
+		}
+		$('#map').animate({'top':position},{duration:speed, easing, queue:false});
+	});
+});
 $(document).on('click', 'a[href="#"]', function(e) {
 		e.preventDefault();
 	});
@@ -30,7 +49,7 @@ function planRoot(plan_root,planner,e){
 	var endDate = new Date(endDt_arr[0],Number(endDt_arr[1])-1, endDt_arr[2]);
 	
 	var diff = ((endDate.getTime() - startDate.getTime())/1000/60/60/24)+1;
-	
+	e
 	var week = ['일', '월', '화', '수', '목', '금', '토'];
 	var nowDate = startDate;
 	for(var i=0, j=nowDate.getDay(); i<diff; i++,j++){
@@ -79,7 +98,7 @@ function planRoot(plan_root,planner,e){
 	var array = new Array();
 	var arr_location = new Array();
 	var info = document.createElement('div');
-	var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D'
+	var serviceKey = 'w%2B4Xokx8kJ3u6YPu2ytz%2FRb%2FsNwEfbMwq9l7vuyKmRN%2BVpDGuDH8tK%2FO%2B5ZosooJ%2B%2FcG5%2BhXLRSlNViGwkjjxA%3D%3D'
 	var day_arr = new Array();
 	var day;
 	var desc;
@@ -125,6 +144,7 @@ function planRoot(plan_root,planner,e){
 				$(add_content).append(by_day);
 				$(by_day).prop('class','day_sch_box');
 				$(by_day).attr('data-no',detail_no);
+				$(by_day).prop('id',contentid);
 				$(by_day).append(day_sch_num);
 				$(day_sch_num).prop('class','day_sch_num');
 				$(day_sch_num).append(sch_num);
@@ -170,6 +190,7 @@ function planRoot(plan_root,planner,e){
 		});
 	}
 	
+	
 	//hearder에 들어갈 information
 	var header_title = document.createElement('h1');
 	var header_rangeDt = document.createElement('p');
@@ -197,11 +218,66 @@ function planRoot(plan_root,planner,e){
 	$(modified).attr('href','/bts/plan_detail/plan_modify?plan_no=' + plan_no );
 	$(modified).text('수정하기');
 	
-
+	//day별로 번호 매기기
+	var findClass = document.getElementsByClassName('plan_detail_info');
+	var length = $(findClass).children('#compare_day').length;
+	$('.date_select').attr('onChange','markerChange()');
+	for(var i=0; i<length; i++){
+		var text = 'DAY'+(i+1);
+		var option = document.createElement('option');
+		$(option).text(text);
+		$(option).prop('value',text);
+		$('.date_select').append(option);
+		var plan_day = document.getElementsByClassName(text)[0];
+		var number_box = $(plan_day).children('.day_sch_box');
+		var number = $(number_box).children('.day_sch_num').children();
+		var num = new Array();
+		for(var j=0; j<number.length;j++){
+			num[j] = (j+1);
+		}
+		for(var k=0; k<num.length; k++){
+			$(number[k]).text(num[k]);
+		}
+	}
+	
+	//좌표를 받아 map에 찍어 주기
+	var dayNum = $('.date_select').val();
+	var plan = document.getElementsByClassName(dayNum)[0];
+	var plan_box = $(plan).children('.day_sch_box');
+	var result_arr = new Array();
+	for(var i=0; i<plan_box.length;i++){
+		var contentid = $(plan_box[i]).attr('id');
+		var serviceKey = 'w%2B4Xokx8kJ3u6YPu2ytz%2FRb%2FsNwEfbMwq9l7vuyKmRN%2BVpDGuDH8tK%2FO%2B5ZosooJ%2B%2FcG5%2BhXLRSlNViGwkjjxA%3D%3D'
+		var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey='
+			   + serviceKey + '&contentId='+ contentid +'&defaultYN=Y&firstImageYN=Y&overviewYN=Y&mapinfoYN=Y&MobileOS=ETC&MobileApp=AppTest';
+		$.ajax({
+			async:false,
+			url: reqUrl,
+			dataType: 'json',
+			success : function(data, textStatus){
+				var resultArray = data.response.body.items.item;
+				var result_obj = new Object();
+				result_obj['mapx'] = resultArray.mapx;
+				result_obj['mapy'] = resultArray.mapy;
+				result_obj['title'] = resultArray.title;
+				
+				result_arr.push(result_obj);
+				
+			},
+			error : function(data, textStatus){
+				alert('잘못 된 접근입니다.');
+			}
+		
+			});
+		}
+		showing_marker(result_arr);
+		
+		
+		
 	$('.btn_memo').on('click',function(){
 		var toggleArea = $(this).parent();
 		var dropdown = toggleArea.next();
-		$(dropdown).toggle();
+		$(dropdown).slideToggle('slow');
 	});
 	$('.save_memo').on('click',function(e){
 		var frm_desc = document.desc;
@@ -221,7 +297,92 @@ function planRoot(plan_root,planner,e){
  		frm_desc.plan_desc.value = desc_value;
 		frm_desc.submit();
 	});
-}
 	
+}
+function markerChange(){
+	var option_val = $('.date_select option:selected').val();
+	var plan = document.getElementsByClassName(option_val)[0];
+	var plan_box = $(plan).children('.day_sch_box');
+	var result_arr = new Array();
+	for(var i=0; i<plan_box.length;i++){
+		var contentid = $(plan_box[i]).attr('id');
+		var serviceKey = 'w%2B4Xokx8kJ3u6YPu2ytz%2FRb%2FsNwEfbMwq9l7vuyKmRN%2BVpDGuDH8tK%2FO%2B5ZosooJ%2B%2FcG5%2BhXLRSlNViGwkjjxA%3D%3D'
+		var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey='
+			   + serviceKey + '&contentId='+ contentid +'&defaultYN=Y&firstImageYN=Y&overviewYN=Y&mapinfoYN=Y&MobileOS=ETC&MobileApp=AppTest';
+		$.ajax({
+			async:false,
+			url: reqUrl,
+			dataType: 'json',
+			success : function(data, textStatus){
+				var resultArray = data.response.body.items.item;
+				var result_obj = new Object();
+				result_obj['mapx'] = resultArray.mapx;
+				result_obj['mapy'] = resultArray.mapy;
+				result_obj['title'] = resultArray.title;
+				
+				result_arr.push(result_obj);
+				
+			},
+			error : function(data, textStatus){
+				alert('잘못 된 접근입니다.');
+			}
+		
+			});
+		}
+	showing_marker(result_arr);
+}
+var markers_arr = [];
+function showing_marker(result_arr){
+	 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+	 mapOption = { 
+	 	center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+	 	level: 8 // 지도의 확대 레벨
+	 	
+	 };
+
+	var map = new kakao.maps.Map(mapContainer, mapOption);// 지도를 생성합니다
+	
+	var arr_length = result_arr.length;
+	
+	var positions = new Array();
+	var bounds = new kakao.maps.LatLngBounds();
+	
+	for(var i = 0; i < arr_length; i++){
+	   positions[i] = { content: '<div>' + result_arr[i].title + '</div>', latlng: new kakao.maps.LatLng(result_arr[i].mapy, result_arr[i].mapx)}
+	   bounds.extend(positions[i].latlng);
+    }
+	for (var i = 0; i < positions.length; i ++) {
+	// 마커를 생성합니다
+	var marker = new kakao.maps.Marker({
+	    map:map, // 마커를 표시할 지도
+	    position: positions[i].latlng // 마커의 위치
+	});
+	markers_arr[i] = marker;
+	 // 마커에 표시할 인포윈도우를 생성합니다
+	var infowindow = new kakao.maps.InfoWindow({
+	    content: positions[i].content // 인포윈도우에 표시할 내용
+	});
+	// 마커에 mouseover 이벤트와 mouseout 이벤트를 등록합니다
+	 // 이벤트 리스너로는 클로저를 만들어 등록합니다
+	 // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
+	kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
+	kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
+	}
+	map.setBounds(bounds);
+	
+	// 인포윈도우를 표시하는 클로저를 만드는 함수입니다
+	function makeOverListener(map, marker, infowindow) {
+	return function() {
+	    infowindow.open(map, marker);
+	};
+	}
+	
+	// 인포윈도우를 닫는 클로저를 만드는 함수입니다
+	function makeOutListener(infowindow) {
+	return function() {
+	    infowindow.close();
+	};
+	}
+}	
 	
 

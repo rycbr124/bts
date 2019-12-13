@@ -1,7 +1,5 @@
 package bts.z.p000.controller;
 
-import java.security.KeyStore.Entry;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -12,12 +10,11 @@ import javax.servlet.http.HttpSession;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import bts.b.p001.Controller.B_P001ControllerImpl;
+import bts.b.p001.VO.B_P001VO;
 import bts.z.p000.service.Z_P000Service;
 
 
@@ -26,14 +23,15 @@ import bts.z.p000.service.Z_P000Service;
 public class Z_P000ControllerImpl implements Z_p000Controller{
 	@Autowired
 	Z_P000Service z_p000Service;
+	@Autowired
+	B_P001VO b_p001VO;
 	
 	@Override
 	@RequestMapping(value="/main" , method= {RequestMethod.POST , RequestMethod.GET})
 	public ModelAndView Z_P000_D001(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		
+		ModelAndView mav = new ModelAndView("/z/p000/d001");
 		Map<String,List<String>> mainAccompany = z_p000Service.mainAccompany();
 		JSONObject bestAccompany = new JSONObject(mainAccompany);
-		ModelAndView mav = new ModelAndView("/z/p000/d001");
 		mav.addObject("bestAccompany",bestAccompany);
 		return mav;
 	}		

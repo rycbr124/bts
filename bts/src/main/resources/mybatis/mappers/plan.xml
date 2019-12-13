@@ -85,7 +85,7 @@
 	WHERE p.plan_no = pd.plan_no
 	AND t.dt = pd.detail_no
 	AND member_id = #{member_id,jdbcType=VARCHAR}
-	ORDER BY TO_NUMBER(p.plan_no) desc
+	ORDER BY p.register_date desc
 	]]>
 </select>
 	<select id="pageCount" resultType="java.lang.Integer">

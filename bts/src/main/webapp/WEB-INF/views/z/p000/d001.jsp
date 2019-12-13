@@ -83,14 +83,14 @@ $(document).ready(function(){
     $(div).prop('class','accompany');
     $(div).append(img);
     $(img).prop('src','/bts/'+thumbnail);
+    
     }
 });
 </script>
 </head>
 <body>
 	<div id="header">
-		<a href="${contextPath}/main/main" class="header_logo"> <img src="${contextPath}/resources/image/logo/흰색/logo_white_all.png" alt="BTS">
-		</a>
+		<a href="${contextPath}/main/main" class="header_logo"> <img src="${contextPath}/resources/image/logo/흰색/logo_white_all.png" alt="BTS"></a>
 		<div class="header_control_container">
 			<ul id="menu" class="menu">
 				<li class="menu_recommend"><a href="${contextPath}/recommend_main">추천</a></li>
@@ -104,7 +104,15 @@ $(document).ready(function(){
 				<c:choose>
 
 					<c:when test="${isLogOn== true and not empty memberInfo }">
-						<img src="${contextPath}/resources/image/icon/user.png">
+					<c:set var="member" value="${member_info}"/>
+						<c:choose>
+							<c:when test="${member.profile_image != null}">	
+							<img src="${contextPath}${member.profile_image}" style="width:30px;height:30px; border-radius:30px;"/>
+							</c:when>
+							<c:when test="${member.profile_image == null}">
+							<img src="${contextPath}/resources/image/icon/user.png">
+							</c:when>
+						</c:choose>
 						<p style="display:inline-block; color:#fff;">어서오세요  ${member_id} 님</p>
 						<div class="memberArea" style="position:relative; left:25px;">
 						<c:set var="member" value="${member_id}"/>

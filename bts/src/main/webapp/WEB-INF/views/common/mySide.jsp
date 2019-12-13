@@ -27,7 +27,7 @@ $(function(){
 		if(position < 0){
 			position = 0;
 		}
-		$('#side').animate({'top':position},{duration:speed, easing, queue:false});
+		$('#side').animate({'top':position},{duration:speed , easing, queue:false});
 	});
 	$('#side ul li a').on('click',function(){
 		var className = $(this).parent().attr('class')
