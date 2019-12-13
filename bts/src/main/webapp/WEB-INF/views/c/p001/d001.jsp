@@ -174,7 +174,7 @@ form{
 					<form id="frm-profile" autocomplete="off" method="post">
 						<input type="hidden" name="email_id" id="email_id"> 
 						<input type="hidden" name="email_host" id="email_host">
-					<div class="profile">
+						<div class="profile">
 						<h3 class="space-5">여행자 정보 등록</h3>
 						<hr/>
 					
