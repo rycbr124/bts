@@ -182,25 +182,23 @@ div.col-md-6{
 			<div class="row">
 				<div class="col-md-9 sub-container">
 					<form id="frm-profile" autocomplete="off" method="post">
-					<div class="profile">
+						<input type="hidden" name="email_id" id="email_id"> 
+						<input type="hidden" name="email_host" id="email_host">
+						<div class="profile">
 						<h3 class="space-5">여행자 정보 등록</h3>
-						<hr />
+						<hr/>
 					
-						<input type="hidden" name="email_id" id="email_id"> <input
-							type="hidden" name="email_host" id="email_host"> 
+						<input type="hidden" name="email_id" id="email_id">
+						<input type="hidden" name="email_host" id="email_host"> 
 						<div class="mypage-picture">
 
 							<c:choose>
-								<c:when
-									test="${not empty sessionScope.memberInfo.profile_image }">
+								<c:when test="${not empty sessionScope.memberInfo.profile_image }">
 									<c:if test="${sessionScope.memberInfo.member_type =='kakao' }">
-										<img src="${sessionScope.memberInfo.profile_image }"
-											id="profImg">
+										<img src="${sessionScope.memberInfo.profile_image }"id="profImg">
 									</c:if>
 									<c:if test="${sessionScope.memberInfo.member_type !='kakao' }">
-										<img
-											src="${contextPath}${sessionScope.memberInfo.profile_image }"
-											id="profImg">
+										<img src="${contextPath}${sessionScope.memberInfo.profile_image }"id="profImg">
 										<input type="hidden" name="profileImage" value=""/>
 									</c:if>
 								</c:when>
