@@ -16,7 +16,6 @@ public class InterceptorServiceImpl implements InterceptorService{
 	@Override
 	public boolean hasAuth(String member_id, String menu_url) throws Exception {
 		String menu_cd = interceptorDAO.selectMenuCd(menu_url);
-		System.out.println("=========menu_cd===================>"+menu_cd);
 		if(menu_cd==null) {
 			return false;
 		}
@@ -24,7 +23,6 @@ public class InterceptorServiceImpl implements InterceptorService{
 		searchMap.put("member_id", member_id);
 		searchMap.put("menu_cd", menu_cd);		
 		int authCount = interceptorDAO.selectAuthCount(searchMap);
-		System.out.println("==========authCount===========>"+authCount);
 		if(authCount<=0) {
 			return false;
 		}

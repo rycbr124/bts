@@ -7,8 +7,10 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import bts.a.p002.vo.A_P002VO_1;
 import bts.common.report.vo.PnishVO;
 import bts.common.report.vo.ReportVO;
+import bts.f.p001_3.vo.F_P001_3VO_3;
 
 @Repository("a_p002DAO")
 public class A_P002DAOImpl implements A_P002DAO{
@@ -28,7 +30,7 @@ public class A_P002DAOImpl implements A_P002DAO{
 
 	@Override
 	public void updatePnish(Map<String, String> row) {
-		sqlSession.insert("mapper.a_p002.updatePnish",row);
+		sqlSession.update("mapper.a_p002.updatePnish",row);
 	}
 
 	@Override
@@ -61,9 +63,19 @@ public class A_P002DAOImpl implements A_P002DAO{
 	}
 
 	@Override
-	public String selectAnswerInfo(String report_se) {
-		String result = sqlSession.selectOne("mapper.a_p002.selectAnswerInfo",report_se);
+	public F_P001_3VO_3 selectAnswerInfo(String report_se) {
+		F_P001_3VO_3 result = sqlSession.selectOne("mapper.a_p002.selectAnswerInfo",report_se);
 		return result;
+	}
+
+	@Override
+	public void insertPnishHistory(A_P002VO_1 a_p002VO_1) {
+		sqlSession.insert("mapper.a_p002.insertPnishHistory",a_p002VO_1);
+	}
+
+	@Override
+	public void updateReportEnd(int report_no) {
+		sqlSession.update("mapper.a_p002.updateReportEnd", report_no);
 	}
 	
 }

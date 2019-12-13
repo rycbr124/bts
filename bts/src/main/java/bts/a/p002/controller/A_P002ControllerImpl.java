@@ -1,5 +1,7 @@
 package bts.a.p002.controller;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,15 +22,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bts.a.p002.service.A_P002Service;
+import bts.a.p002.vo.A_P002VO_1;
+import bts.common.report.service.ReportService;
 import bts.common.report.vo.PnishVO;
 import bts.common.report.vo.ReportVO;
-import bts.f.p001_3.vo.F_P001_3VO;
+import bts.f.p001_3.vo.F_P001_3VO_3;
 
 @Controller("a_p002")
 @RequestMapping(value="/admin/report")
 public class A_P002ControllerImpl implements A_P002Controller{
 	@Autowired
 	A_P002Service a_p002Service;
+	
+	@Autowired
+	ReportService repService;
 	
 	private static final String reviewName="review";
 	private static final String commentName="comment";
@@ -90,48 +98,69 @@ public class A_P002ControllerImpl implements A_P002Controller{
 	@RequestMapping(value="/list/contents")
 	public ModelAndView showReportContents(@RequestParam(value="report_no",required=false) int report_no,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p002/d004");
-		System.out.println("===================>"+report_no);
 		ReportVO result = a_p002Service.selectReportContent(report_no);
+		List<PnishVO> pnish = repService.selectPnishList();
 		mav.addObject("detailInfo",result);
+		mav.addObject("pnish",pnish);
 		return mav;
 	}	
 
 	@RequestMapping(value="/list/contents/target")
-	@ResponseBody
 	public String showReportTarget(@RequestParam(value="report_se") String report_se,@RequestParam(value="contents_cd") String contents_cd
 			,RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String url="redirect:";
 		String menu_name = a_p002Service.selectMenuName(report_se);
-//		if(menu_name.equals(reviewName)) {
-//			return request.getContextPath()+"/community/plan_contents";
-//		}else if(menu_name.equals(accompanyName)){
-//			return request.getContextPath()+"/accompany/accView";
-//		}else if(menu_name.equals(planName)){
-//			return request.getContextPath()+"/community/review/contents";			
-//		}else if(menu_name.equals(commentName)){	
-//			String contents_name = a_p002Service.selectAnswerInfo(contents_cd);		
-//		}
 		if(menu_name.equals(reviewName)) {
 			url+=makeReviewForm(redirect,contents_cd);
 		}else if(menu_name.equals(accompanyName)){
 			url+=makeAccForm(redirect,contents_cd);
 		}else if(menu_name.equals(planName)){
-			url+="/community/plan_contents";	
-			redirect.addAttribute("plan_no",contents_cd);
+			url+=makePlanForm(redirect,contents_cd);
 		}else if(menu_name.equals(commentName)){	
-			String contents_name = a_p002Service.selectAnswerInfo(report_se);
+			F_P001_3VO_3 ansResult = a_p002Service.selectAnswerInfo(contents_cd);
+			String contents_name = ansResult.getMenu_name();
 			if(contents_name.equals(reviewName)) {
-				
-			}else if(contents_name.equals(accompanyName)) {
-				
+				url+=makeReviewForm(redirect,Integer.toString(ansResult.getArticle_no()));
 			}else if(contents_name.equals(planName)) {
-				
+				url+=makePlanForm(redirect,Integer.toString(ansResult.getArticle_no()));
+			}else {
+				url+="/error/404";							
 			}
 		}else {
 			url+="/error/404";			
 		}
 		return url;
 	}	
+	
+	@RequestMapping(value="/list/contents/save")
+	@ResponseBody
+	public String insertPnishHistory (@ModelAttribute A_P002VO_1 a_p002VO_1,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ObjectMapper mapper = new ObjectMapper();
+		if(a_p002VO_1.getPnish_type()==3) {
+			Calendar cal = Calendar.getInstance();
+			a_p002VO_1.setBegin_date(new Timestamp(cal.getTimeInMillis()));
+			cal.set(9999, 11, 31);
+			a_p002VO_1.setEnd_date(new Timestamp(cal.getTimeInMillis()));
+		}else {
+			setPnishDate(a_p002VO_1);
+		}
+		a_p002Service.insertPnishHistory(a_p002VO_1);
+		System.out.println("============>"+mapper.writeValueAsString(a_p002VO_1));
+		a_p002Service.updateReportEnd(a_p002VO_1.getReport_no());
+		return "true";
+	}
+	
+	private void setPnishDate(A_P002VO_1 a_p002VO_1) {
+		int day_cnt = Integer.parseInt(a_p002VO_1.getDay_cnt());
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.MILLISECOND, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		a_p002VO_1.setBegin_date(new Timestamp(cal.getTimeInMillis()));
+		cal.add(Calendar.DATE, day_cnt);
+		a_p002VO_1.setEnd_date(new Timestamp(cal.getTimeInMillis()));
+	}
 	
 	private String makeReviewForm(RedirectAttributes redirect,String article) {
 		String url="/community/review/contents";
@@ -147,12 +176,12 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		return url;
 	}
 	
-//	private String makePlanForm(RedirectAttributes redirect,String article_no) {
-//		String url="/community/plan_contents";
-//		redirect.addAttribute("article",article);
-//		return url;
-//	}	
-//	
+	private String makePlanForm(RedirectAttributes redirect,String plan_no) {
+		String url="/community/plan_contents";
+		redirect.addAttribute("plan_no",plan_no);
+		return url;
+	}	
+	
 	@RequestMapping(value="/list/search")
 	@ResponseBody
 	public Map<String, Object> selectReportList(@RequestParam(value="p_title",required=false) String p_title,HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -162,5 +191,5 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		List<ReportVO> data = a_p002Service.selectReportList(searchMap);		
 		resultMap.put("Data", data);
 		return resultMap;
-	}		
+	}
 }

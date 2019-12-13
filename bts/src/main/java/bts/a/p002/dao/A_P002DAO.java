@@ -3,8 +3,10 @@ package bts.a.p002.dao;
 import java.util.List;
 import java.util.Map;
 
+import bts.a.p002.vo.A_P002VO_1;
 import bts.common.report.vo.PnishVO;
 import bts.common.report.vo.ReportVO;
+import bts.f.p001_3.vo.F_P001_3VO_3;
 
 public interface A_P002DAO {
 
@@ -24,6 +26,10 @@ public interface A_P002DAO {
 
 	String selectAccWriter(String article_no);
 
-	String selectAnswerInfo(String report_se);
+	F_P001_3VO_3 selectAnswerInfo(String report_se);
+
+	void insertPnishHistory(A_P002VO_1 a_p002VO_1);
+
+	void updateReportEnd(int report_no);
 
 }

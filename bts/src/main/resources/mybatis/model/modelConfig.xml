@@ -27,6 +27,7 @@
 	  <typeAlias type="bts.f.p001_3.vo.F_P001_3VO_2" alias="f_p001_3VO_2" />
 	  <typeAlias type="bts.f.p001_3.vo.F_P001_3VO_3" alias="f_p001_3VO_3" />
 	  <typeAlias type="bts.a.p001.vo.A_P001VO" alias="a_p001VO"/>
+	  <typeAlias type="bts.a.p002.vo.A_P002VO_1" alias="a_p002VO_1"/>
 	  <typeAlias type="bts.a.p004.vo.A_P004VO" alias="a_p004VO"/>
 	  <typeAlias type="bts.a.p005.vo.A_P005VO" alias="a_p005VO" />
 	  <typeAlias type="bts.common.PagingVO" alias="pagingVO" />	 

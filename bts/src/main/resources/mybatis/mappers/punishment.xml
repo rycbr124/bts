@@ -26,6 +26,11 @@
 		<result property="pnish_name" column="pnish_name" />	
 		<result property="day_cnt" column="day_cnt" />	
 	</resultMap>
+
+	<resultMap id="ansResult" type="f_p001_3VO_3">
+		<result property="article_no" column="article_no" />
+		<result property="menu_name" column="menu_name" />
+	</resultMap>
 	
 	<select id="selectPnishList" parameterType="string" resultMap="pnishResult">
 	    <![CDATA[
@@ -44,6 +49,13 @@
 	    ]]>
 	</insert>	
 
+	<insert id="insertPnishHistory" parameterType="a_p002VO_1">
+	    <![CDATA[
+			INSERT INTO punishment_history (begin_date, end_date, member_id, report_no, pnish_desc) 
+			VALUES (#{begin_date}, #{end_date}, #{member_id}, #{report_no,jdbcType=VARCHAR}, #{pnish_desc,jdbcType=VARCHAR})
+	    ]]>
+	</insert>
+
 	<update id="updatePnish" parameterType="java.util.Map">
 		<![CDATA[
 			UPDATE punishment
@@ -52,6 +64,22 @@
 			WHERE pnish_cd = #{pnish_cd}
 	    ]]>
 	</update>	
+
+	<update id="updateReportEnd" parameterType="f_p001_3VO">
+	    <![CDATA[  
+	    	UPDATE report_list
+	    ]]>		
+		<set>
+			<![CDATA[
+				report_at='Y',						
+		    ]]>	
+		</set>
+		<where>
+			<![CDATA[
+				 report_no=#{report_no}
+		    ]]>	
+		</where>
+	</update>
 	
 	<delete id="deletePnish" parameterType="java.util.Map">
 		<![CDATA[
@@ -63,7 +91,7 @@
 	<select id="selectReportContent" parameterType="_int" resultMap="reportResult">
 	    <![CDATA[
 			SELECT report_no,report_date,title,report_se,contents,reporter_id,report_at
-			,contents_cd,target_id,target_contents,p.name pnish_name,p.day_cnt
+			,contents_cd,target_id,target_contents, r.pnish_cd, p.name pnish_name,p.day_cnt
 			FROM report_list r, punishment p
 	    ]]>
    		<where>
@@ -110,14 +138,15 @@
 		</where>
 	</select>
 
-	<select id="selectAnswerInfo" parameterType="string" resultType="string">
+	<select id="selectAnswerInfo" parameterType="string" resultMap="ansResult">
 	    <![CDATA[
-		    SELECT name
-			FROM menu
+			SELECT a.article_no, m.name menu_name
+			FROM menu m, answer_article a
 	    ]]>
    		<where>
    			<![CDATA[
-				menu_cd=#{menu_cd}
+				a.article_cd=m.menu_cd(+)
+				AND answer_no=#{answer_no}
 	    	]]>
 		</where>
 	</select>
