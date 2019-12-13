@@ -27,6 +27,11 @@
 }
 
 @font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+    font-family: "NanumSquareRoundEB";
+}
+
+@font-face {
     src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
     font-family: "NanumSquareRoundR";
 }
@@ -56,10 +61,120 @@ h5.card-title {
 	font-family: "NanumSquareRoundR";
 }
 
+h2, p{
+	font-family: "NanumSquareRoundR";
+}
+
 img.acc_img{
 	width : 350px;
 	height : 200px;
 	margin-bottom : 10px;
+}
+
+div.main_section_accompany{
+	margin-bottom : 300px;
+}
+
+button.more{
+	text-align : center;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,500);
+figure.snip1206 {
+  font-family: 'Raleway', Arial, sans-serif;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+  margin: 10px;
+  min-width: 220px;
+  max-width: 310px;
+  max-height: 220px;
+  width: 100%;
+  color: #000000;
+  text-align: center;
+}
+figure.snip1206 * {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.6s ease;
+  transition: all 0.6s ease;
+}
+figure.snip1206 img {
+  opacity: 1;
+  width: 100%;
+  -webkit-transition: opacity 0.35s;
+  transition: opacity 0.35s;
+}
+figure.snip1206:after {
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  content: '';
+  opacity: 0.75;
+  -webkit-transform: skew(-45deg) scaleX(0);
+  transform: skew(-45deg) scaleX(0);
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+figure.snip1206 figcaption {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+figure.snip1206 h2,
+figure.snip1206 p {
+  margin: 0;
+  width: 100%;
+  opacity: 0;
+}
+figure.snip1206 h2 {
+  padding: 0 30px;
+  display: inline-block;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+figure.snip1206 p {
+  padding: 0 50px;
+  font-size: 0.8em;
+  font-weight: 500;
+}
+figure.snip1206 a {
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 1;
+}
+figure.snip1206:hover:after,
+figure.snip1206.hover:after {
+  -webkit-transform: skew(-45deg) scaleX(1);
+  transform: skew(-45deg) scaleX(1);
+  transition: all 400ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+figure.snip1206:hover figcaption h2,
+figure.snip1206.hover figcaption h2,
+figure.snip1206:hover figcaption p,
+figure.snip1206.hover figcaption p {
+  -webkit-transform: translate3d(0%, 0%, 0);
+  transform: translate3d(0%, 0%, 0);
+  -webkit-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+}
+figure.snip1206:hover figcaption h2,
+figure.snip1206.hover figcaption h2 {
+  opacity: 1;
+}
+figure.snip1206:hover figcaption p,
+figure.snip1206.hover figcaption p {
+  opacity: 0.7;
 }
 
 </style>
@@ -68,6 +183,7 @@ img.acc_img{
 
 <c:if test='${not empty message }'>
 	<script>
+		
 		window.onload = function() {
 			result();
 		}
@@ -79,7 +195,12 @@ img.acc_img{
 <script>
 $(document).ready(function(){
 	var accompany = ${bestAccompany};
+	//var icon = ${searchIcon};
+	
+	console.log(${bestAccompany});
     var main = accompany.bestAccompany;
+	console.log(main);
+	
     for(var i in main){
 	    var best = main[i];
 	    var title = best["ACC_TITLE"];
@@ -93,19 +214,44 @@ $(document).ready(function(){
 	    var article_no = best['ARTICLE_NO'];
 	    
 	    var div = document.createElement('div');
+	    var figure = document.createElement('figure');
+	    $(figure).prop('class', 'snip1206');	    
+	    
 	    var img = document.createElement('img');
+	    $(img).prop('src','/bts'+thumbnail);
+	    $(img).prop('class', 'acc_img');
+	    
+	    var caption = document.createElement('figcaption');
+	    
+	    var h2 = document.createElement('h2');
+	    $(h2).text(title);
+	    
+	    var p = document.createElement('p');
+	    $(p).text(member_id);
+	    
+	    
 	    var href = document.createElement('a');
 	    $(href).prop('href', '${contextPath}/accompany/accView?article_no=' + article_no + '&member_id=' + member_id);
 	    
 	    
 	    $('.row').append(div);
 	    $(div).prop('class','col-md-4');
-	    $(div).append(href);
-	    $(href).append(img);
-	    $(img).prop('src','/bts'+thumbnail);
-	    $(img).prop('class', 'acc_img');
+	    $(div).append(figure);
+	    $(figure).append(img);
+	    $(figure).append(caption);
+	    $(caption).append(h2);
+	    $(caption).append(p);
+	    $(figure).append(href);
+	    
+	    
     }
 });
+
+$(".hover").mouseleave(
+    function () {
+      $(this).removeClass("hover");
+    }
+);
 </script>
 </head>
 <body>
@@ -222,7 +368,7 @@ $(document).ready(function(){
 					<div class="carousel-caption animatedFadeInUp fadeInUp">
 						<h1>
 							BTS와 함께하는 <br /> 재미난
-							<p style="color: pink; display: inline-block;">서울여행</p>
+							<p style="color: pink; display: inline-block; font-family: Binggrae;">서울여행</p>
 							에<br /> 여러분을 초대합니다.
 						</h1>
 					</div>
@@ -276,9 +422,10 @@ $(document).ready(function(){
 
 	<!-- Scroll down_1 Reservation -->
 	<div class="main_section_reservation" id="main_section main_section_reservation">
-	
 		<hr style="border: solid 1px gray;">
+		
 		<h3 style="font-weight:bold; text-align:center; width:100%; height:100px; font-family: NanumSquareRoundR; font-size: 30px">지금 가장 인기있는 숙소 TOP&nbsp;6</h3>
+		
 		<div style="width:100%; margin-left: 100px;">
 			<div class="best_recommend" style="width:100%; height:auto;">
 			</div>
@@ -305,7 +452,7 @@ $(document).ready(function(){
 				
 				</div>
 			</div>
-			<button type="button" class="btn btn-secondary" style="float: right; margin-right: 200px; margin-top: 50px;">more</button>
+			<button type="button" class="more" onclick="location='/bts/accompany/accMain'">MORE<P>>></P></button>
 		</div>
 	</div>
 

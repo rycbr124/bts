@@ -33,8 +33,14 @@ public class Z_P000ControllerImpl implements Z_p000Controller{
 		
 		Map<String,List<String>> mainAccompany = z_p000Service.mainAccompany();
 		JSONObject bestAccompany = new JSONObject(mainAccompany);
+		
+		//Map<String, List<String>> searchIcon = z_p000Service.searchIcon();
+		//JSONObject iconList = new JSONObject(searchIcon);
+		
 		ModelAndView mav = new ModelAndView("/z/p000/d001");
 		mav.addObject("bestAccompany",bestAccompany);
+		//mav.addObject("searchIcon", iconList);
+		
 		return mav;
 	}		
 }

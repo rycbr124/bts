@@ -35,5 +35,14 @@
 	ORDER BY register_date desc
 	]]>
 </select>		
+
+<select id="searchIcon" parameterType="String" resultType="Map">
+	<![CDATA[
+		SELECT il.name, icon
+		FROM incln_list il, incln_member im
+		WHERE il.incln_cd = im.incln_cd
+		AND member_id = #{member_id}
+	]]>
+</select>
 		
 </mapper>

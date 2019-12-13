@@ -50,7 +50,7 @@ $(function(){
 .submenu li a{
 	width:100%;
 }
-.title{
+.sideTitle{
 	color:#fff;
 	letter-spacing:2px;
 }
@@ -62,7 +62,7 @@ $(function(){
 </style>
 </head>
 <body>
-		<span class="title">마이페이지</span>
+		<span class="sideTitle">마이페이지</span>
 		<ul class="submenu">
 			<li><a href="${contextPath}/my/profile"> <i
 					class="icon icon-update-profile"></i> <span>여행자 정보 조회/수정</span>
