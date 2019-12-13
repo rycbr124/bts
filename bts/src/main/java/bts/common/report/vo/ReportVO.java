@@ -18,7 +18,14 @@ public class ReportVO {
 	private String target_id;
 	private String report_at;
 	private String contents_cd;
+	private String target_contents;
 	
+	public String getTarget_contents() {
+		return target_contents;
+	}
+	public void setTarget_contents(String target_contents) {
+		this.target_contents = target_contents;
+	}
 	public int getReport_no() {
 		return report_no;
 	}

@@ -11,4 +11,12 @@ public interface ReportService {
 	int insertReport(ReportVO reportVO);
 
 	List<PnishVO> selectPnishList();
+
+	String selectReviewContents(ReportVO vo);
+
+	String selectAccContents(ReportVO vo);
+
+	String selectPlanContents(ReportVO vo);
+
+	String selectCommentContents(ReportVO vo);
 }

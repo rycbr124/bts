@@ -1,4 +1,4 @@
-package bts.common.interceptor;
+package bts.common.interceptor.controller;
 
 import java.io.PrintWriter;
 

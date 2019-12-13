@@ -104,9 +104,9 @@ float:left;
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Report:</h6>
-            <a class="collapse-item" href="#">신고내역조회</a>
-            <a class="collapse-item" href="#">제재 내역 조회/변경</a>
             <a class="collapse-item" href="${contextPath}/admin/report/pnish">제재 기준 조회/변경</a>
+            <a class="collapse-item" href="${contextPath}/admin/report/history">제재 내역 조회/변경</a>
+            <a class="collapse-item" href="${contextPath}/admin/report/list">신고내역조회</a>
           </div>
         </div>
       </li>

@@ -20,9 +20,6 @@
 		$('#reload').on('click',function(){
 			doAction('reload');
 		})
-		$('#insert').on('click',function(){
-			doAction('insert');
-		})
 		$('#search').on('click',function(){
 			doAction('search');
 		})
@@ -52,7 +49,7 @@
 			//MultiLineText설정하면 shift+enter 누를 때 하나의 셀 안에 여러 값을 넣을 수 있음.
 			//Wrap은 컬럼 사이즈가 정해져 있지만 데이터 길이가 더 길 때, 뒷 부분은 알아서 줄 바꿈 해줌.
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"}, //모든 그리드에 들어감
-			{Header:"신고번호",Type:"Text", SaveName:"pnish_cd",Edit:0,MinWidth:80,Align:"Center"},
+			{Header:"제재코드",Type:"Text", SaveName:"pnish_cd",Edit:0,MinWidth:80,Align:"Center"},
 			{Header:"제재명",Type:"Text",SaveName:"name",MinWidth:80,KeyField:1 ,MultiLineText:1}, //필수값을 체크하고자 할 때 keyField사용			
 			{Header:"제재일수",Type:"Int", Format:"#일", SaveName:"day_cnt",MinWidth:150,KeyField:1,MultiLineText:1, Wrap:1}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50}, //모든 그리드에 들어감
@@ -97,11 +94,11 @@
  -->
 	<div class="page_title">
 		<span><a class="closeDepth" href="#">closeDepth</a></span> 
-		<span class="title">불량회원관리 > <b>제재 내역 조회/변경</b></span>
+		<span class="title">불량회원관리 > <b>제재 기준 조회/변경</b></span>
 	</div>
 	
 	<div class="main_content">
-		<div class="exp_product">제재 내역 조회 및 변경이 가능합니다.</div>
+		<div class="exp_product">신고 기준 조회 및 변경이 가능합니다.</div>
 		<div class="exp_product">
 			<form name='frm'>
 				제재명 : <input type='text' id="p_name" name="p_name" />
@@ -110,7 +107,6 @@
 		</div>
 		<div class="ib_function float_right">
 			<a id="reload" class="f1_btn_gray lightgray">초기화</a>
-			<a id="insert" class="f1_btn_gray lightgray">추가</a>
 			<a id="search" class="f1_btn_white gray">조회</a>
 			<a id="save" class="f1_btn_white gray">저장</a>
 		</div>

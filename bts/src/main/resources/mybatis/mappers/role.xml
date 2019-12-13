@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="mapper.role">
+	<select id="selectMenuCd" parameterType="string" resultType="string">
+	    <![CDATA[
+			SELECT t.menu_cd
+			FROM
+			(
+			    SELECT menu_cd,
+			        NVL(
+			            LENGTH(
+			                SUBSTR(#{menu_url},LENGTH(menu_url)+1)
+			            ),0   --end LENGTH
+			        ) --end NVL
+			    AS len
+			    FROM menu
+			    WHERE INSTR(#{menu_url},menu_url)=1
+			    ORDER BY len
+			) t
+			WHERE rownum=1
+	    ]]>
+	</select>
+	
+	<select id="selectAuthCount" parameterType="map" resultType="_int">
+	    <![CDATA[
+			SELECT COUNT(*)
+			FROM role_member
+			WHERE member_id=#{member_id}
+			AND role_cd IN
+			(
+			    SELECT role_cd
+			    FROM role_menu
+			    WHERE menu_cd=#{menu_cd}
+			)
+	    ]]>
+	</select>	
+</mapper>

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Provider;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -18,12 +19,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bts.a.p002.service.A_P002Service;
 import bts.common.report.vo.PnishVO;
+import bts.f.p001_3.vo.F_P001_3VO;
 
 @Controller("a_p002")
 @RequestMapping(value="/admin/report")
 public class A_P002ControllerImpl implements A_P002Controller{
 	@Autowired
 	A_P002Service a_p002Service;
+
+	@Autowired
+	Provider<F_P001_3VO> f_p001_3Provider;	
 	
 	@Override
 	@RequestMapping(value="/pnish")
@@ -65,6 +70,12 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		return resultMap;
 	}	
 
+	@RequestMapping(value="/list")
+	public ModelAndView showReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/a/p002/d003");
+		return mav;
+	}	
+	
 	@RequestMapping(value="/history")
 	public ModelAndView showHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p002/d002");
