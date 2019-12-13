@@ -44,8 +44,7 @@ function plan_list(planList){
 		plan_arr.push(plan_no);
 		
 
-		var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D';
-
+		var serviceKey = 'w%2B4Xokx8kJ3u6YPu2ytz%2FRb%2FsNwEfbMwq9l7vuyKmRN%2BVpDGuDH8tK%2FO%2B5ZosooJ%2B%2FcG5%2BhXLRSlNViGwkjjxA%3D%3D';
 		var contentid = plan['CONTENT_ID'];
 		var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey='
 					+ serviceKey + '&contentId='+ contentid +'&defaultYN=Y&firstImageYN=Y&overviewYN=Y&mapinfoYN=Y&MobileOS=ETC&MobileApp=AppTest';

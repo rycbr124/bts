@@ -27,7 +27,7 @@ $(function(){
 		if(position < 0){
 			position = 0;
 		}
-		$('#side').animate({'top':position},{duration:speed, easing, queue:false});
+		$('#side').animate({'top':position},{duration:speed , easing, queue:false});
 	});
 	$('#side ul li a').on('click',function(){
 		var className = $(this).parent().attr('class')
@@ -50,9 +50,14 @@ $(function(){
 .submenu li a{
 	width:100%;
 }
-.title{
+.sideTitle{
+	position:relative;
 	color:#fff;
+	background-color:#203341;
 	letter-spacing:2px;
+	text-align:center;
+	padding:10px 85px;
+	border-radius:0 9px 9px 0;
 }
 .active{
 	background-color:rgb(210,210,210);
@@ -62,16 +67,14 @@ $(function(){
 </style>
 </head>
 <body>
-		<span class="title">마이페이지</span>
+		<span class="sideTitle">마이페이지</span>
 		<ul class="submenu">
-			<li><a href="${contextPath}/my/profile"> <i
-					class="icon icon-update-profile"></i> <span>여행자 정보 조회/수정</span>
+			<li><a href="${contextPath}/my/profile"> <i class="icon icon-update-profile"></i> <span>여행자 정보 조회/수정</span>
 			</a></li>
 			<li><a href="${contextPath}/my/myBoardList"> <i class="icon icon-post-list"></i>
 					<span>내 글목록 관리</span>
 			</a></li>
-			<li><a href="wishlist.html"> <i
-					class="icon icon-reservation"></i> <span>예약 내역 관리</span>
+			<li><a href="wishlist.html"> <i class="icon icon-reservation"></i> <span>예약 내역 관리</span>
 			</a></li>
 			<li><a href="${contextPath}/question/questionMain"> <i class="icon icon-question"></i>
 					<span>문의 내역 관리</span>

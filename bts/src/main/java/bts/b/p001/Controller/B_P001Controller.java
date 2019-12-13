@@ -14,9 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import bts.b.p001.VO.B_P001VO;
 
 public interface B_P001Controller {
-	public ModelAndView login(@RequestParam Map<String, String> loginMap,HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public String login(@RequestParam Map<String, String> loginMap,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView b_p001_d001(HttpServletRequest request, HttpServletResponse response)throws Exception;
-	public ResponseEntity  addMember(@ModelAttribute("member") B_P001VO member,
-            HttpServletRequest request, HttpServletResponse response) throws Exception;
+	public ResponseEntity  addMember(@ModelAttribute("member") B_P001VO member,HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 }

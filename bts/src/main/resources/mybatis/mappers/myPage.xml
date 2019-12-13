@@ -10,6 +10,8 @@
 		<result property="group_name" column="group_name" />
 		<result property="group_desc" column="group_desc" />
 		<result property="member_id" column="member_id" />
+		<result property="icon_col" column="icon_col" />
+		<result property="icon_bla" column="icon_bla" />
 	</resultMap>
 
 	<resultMap id="memberResult" type="d001VO">
