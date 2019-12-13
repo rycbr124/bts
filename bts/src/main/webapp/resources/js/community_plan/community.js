@@ -15,3 +15,13 @@ function go_write(){
 	console.log("121212 : " + plan_no);
 	location.href="/bts/community/plan_write?plan_no=" + plan_no;
 }
+
+function searchPlan(){
+	/*
+	var frmSave = document.form;
+	frmSave.action="${contextPath}/community/plan_modify";
+	frmSave.length.value=length;		
+	frmSave.submit();
+	*/
+	
+}

@@ -208,7 +208,7 @@ $(document).ready(function(){
 <title>동행 게시글 작성</title>
 </head>
 <body>
-	<div id="container">
+	<div id="container" class="container">
 		<h1 id="subject">동행 게시글 작성</h1>
 		<form name="frmWrite" method="post">
 			<div id="form-group">
