@@ -16,6 +16,19 @@
 		var id = ${contentid};
 		image_init(id);
 	});
+	function wish_list(){
+		
+		var contentid = ${contentid};
+		
+		console.log(contentid);
+		
+		console.log("성공 !");
+		var frmWish = document.wish;
+		
+		frmWish.action = "/bts/recommend/insert_wishlist";
+		frmWish.contentid.value = contentid;
+		frmWish.submit();
+	};
 
 </script>
 
@@ -95,6 +108,28 @@ margin-left : 100px;
 }
 .content{
 	margin-left : 80px;
+}
+[id='toggle-heart'] {
+  position: absolute;
+  left: -100vw;
+  vertical-align:bottom;
+}
+
+[for='toggle-heart'] {
+  color: #aab8c2;
+}
+
+[id='toggle-heart']:checked + label {
+  color: #e2264d;
+}
+
+[for='toggle-heart'] {
+  font-size: 2em;
+  cursor: pointer;
+}
+
+[for='toggle-heart'] { 
+  align-self: center; 
 }
 </style>
 </head>

@@ -1,4 +1,4 @@
-package bts.d.p001_4.controller;
+  package bts.d.p001_4.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +28,6 @@ import bts.d.p001_4.vo.D_P001_4VO;
 import bts.d.p001_4.vo.D_P001_4VO_2;
 import bts.d.p001_4.vo.D_P001_4VO_5;
 import bts.e.p001.VO.PagingVO;
-import bts.f.p001_3.vo.F_P001_3VO_3;
 
 
 
@@ -69,29 +68,39 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 	@RequestMapping(value="/plan_list" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView searchArticle(PagingVO pagingVO
 			,@RequestParam(value="nowPage", required=false)String nowPage
-			,@RequestParam(value="cntPerPage",required=false) String cntPerPage, HttpServletRequest request, HttpServletResponse response) throws Exception {
+			,@RequestParam(value="cntPerPage",required=false) String cntPerPage, HttpServletRequest request, HttpServletResponse response)throws Exception {
 		
 		int total = d_p001_4Service.listCount();
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
-			cntPerPage = "5";
+			cntPerPage = "6";
 		}else if(nowPage == null) {
 			nowPage = "1";
 		}else if(cntPerPage == null) {
-			cntPerPage = "5";			
+			cntPerPage = "6";			
 		}
+			HttpSession session = request.getSession();
+			b_p001VO = (B_P001VO) session.getAttribute("memberInfo");
+			
+			ModelAndView mav = new ModelAndView("/d/p001_4/d001");
+			pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+			mav.addObject("paging", pagingVO);
+			List<D_P001_4VO> listArticle = d_p001_4Service.searchArticle(pagingVO);
+			List<String> listThumnail = d_p001_4Service.findContentId();
+			
+			mav.addObject("listArticle", listArticle);
+			mav.addObject("listThumnail", listThumnail);
+			
+			if(b_p001VO == null) {
+				System.out.println("hi"); 
+			}else {
+				String member_id = b_p001VO.getMember_id();
+				List<D_P001_4VO> myPlan = d_p001_4Service.selectMyplan(member_id);
+				mav.addObject("myPlan", myPlan);
+			}
+			return mav;
 		
 		
-		ModelAndView mav = new ModelAndView("/d/p001_4/d001");
-		pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
-		mav.addObject("paging", pagingVO);
-		
-		List<D_P001_4VO> listArticle = d_p001_4Service.searchArticle(pagingVO);
-		
-		
-		mav.addObject("listArticle", listArticle);
-		
-		return mav;
 	}
 
 	@Override
@@ -119,14 +128,12 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 	
 	@Override
 	@RequestMapping(value="/plan_write" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView writeArticle(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		HttpSession session = request.getSession();
-		b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
-		String member_id = b_p001VO.getMember_id();
-		List<D_P001_4VO> myPlan = d_p001_4Service.selectMyplan(member_id);
+	public ModelAndView writeArticle(@RequestParam("plan_no") String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		
 		
 		ModelAndView mav = new ModelAndView("/d/p001_4/d003");
-		mav.addObject("myPlan", myPlan);
+		mav.addObject("plan_no", plan_no);
 		return mav;
 	}
 	
@@ -151,6 +158,7 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 	public ModelAndView saveArticle(@RequestParam Map<String, String> result, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		String size = request.getParameter("length");
 		int length = Integer.parseInt(size); 
+		System.out.println("사이즈 : " + length);
 		
 		List<String> desc = new ArrayList<String>();
 		List<String> id = new ArrayList<String>();
@@ -161,6 +169,7 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 			id.add(i, result.get("content_id" + i));
 		};
 		System.out.println("p_no : " + result.get("p_no"));
+		
 		for(int i = 0; i < desc.size(); i++) {
 			D_P001_4VO_2 vo = d_p001_4VO_2.get(); 
 			vo.setPlan_no(result.get("p_no"));
@@ -169,6 +178,7 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 			vo.setTitle(result.get("title"));
 			
 			voList.add(i, vo);
+			System.out.println("vo테스트 : " + vo.getPlan_desc());
 		}
 		d_p001_4Service.insertContent(voList);
 		
@@ -249,7 +259,15 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 		
 		int totalCount = Integer.parseInt(d_p001_4Service.selectCommentTotal(searchMap));
 		bts.common.PagingVO pvo = pagingProvider.get();
-		pvo.setPaging(Integer.parseInt(selectPage), totalCount, comRangePage, comRangeRow);
+		int curPage = totalCount;
+		try {
+			if(selectPage!=null) {
+				curPage = Integer.parseInt(selectPage);
+			}
+		}catch(NumberFormatException e) {
+			e.printStackTrace();
+		}
+		pvo.setPaging(curPage, totalCount, comRangePage, comRangeRow);
 		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
 		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
 		

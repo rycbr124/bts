@@ -31,4 +31,28 @@ public class ReportDAOImpl implements ReportDAO{
 		List<PnishVO> list = sqlSession.selectList("mapper.report.selectPnishList");
 		return list;
 	}
+
+	@Override
+	public String selectReviewContents(ReportVO vo) {
+		String contents = sqlSession.selectOne("mapper.report.selectReviewContents",vo);
+		return contents;
+	}
+
+	@Override
+	public String selectAccContents(ReportVO vo) {
+		String contents = sqlSession.selectOne("mapper.report.selectAccContents",vo);
+		return contents;
+	}
+
+	@Override
+	public List<String> selectPlanContents(ReportVO vo) {
+		List<String> contents = sqlSession.selectList("mapper.report.selectPlanContents",vo);
+		return contents;
+	}
+
+	@Override
+	public String selectCommentContents(ReportVO vo) {
+		String contents = sqlSession.selectOne("mapper.report.selectCommentContents",vo);
+		return contents;
+	}
 }

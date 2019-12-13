@@ -114,29 +114,19 @@
 				async : false,
 				data : alldata,
 				success : function(){
-					var url="ws://"+"${pageContext.request.serverName}"+":"+${pageContext.request.serverPort}+"${pageContext.request.contextPath}"+"/msg";		
-					var con = new socketConn(url);
-					var ws=con.getWs();
-					var textMessage='${sessionScope.memberInfo.member_id}'+'님이 매칭을 신청하였습니다.'
-					ws.onopen=function(){
-						sendText(ws,"send_message",sendForm(textMessage,target_id));
-						ws.close();
-					}
-					ws.onclose=function(){
-						alert("신청이 완료되었습니다.");
-						
-						var form = document.createElement('form');
-						var hidden = document.createElement('input');
-						$(hidden).attr('type','hidden');
-						$(hidden).attr('name','target_id');			
-						form.append(hidden);
-						
-						form.target_id.value=target_id;
-						form.action="${contextPath}/my/message/main";
-						form.method="post";
-						$('body').append(form);
-						form.submit();				
-					}
+					alert("신청이 완료되었습니다.");
+					
+					var form = document.createElement('form');
+					var hidden = document.createElement('input');
+					$(hidden).attr('type','hidden');
+					$(hidden).attr('name','target_id');			
+					form.append(hidden);
+					
+					form.target_id.value=target_id;
+					form.action="${contextPath}/my/message/accompany";
+					form.method="post";
+					$('body').append(form);
+					form.submit();				
 				},
 				error: function(){
 					alert("다시 시도해주세요.");

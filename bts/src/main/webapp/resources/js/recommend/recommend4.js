@@ -45,10 +45,47 @@ $("#image_grid").empty();
 			var overview_text = document.createTextNode(resultArray.overview);
 			$(overview).html(resultArray.overview);
 			
+			var form = document.createElement('form');
+	         $(form).prop('name', 'wish');
+	         $(form).prop('action', '/bts/recommend/insert_wishlist');
+	         $(form).prop('method', 'post');
+	   
+	                  
+	         var input_heart = document.createElement('input');
+	         $(input_heart).prop('id', 'toggle-heart');
+	         $(input_heart).prop('type', 'checkbox');
+	         $(input_heart).attr('onclick','wish_list()');
+	         
+	         var label_heart = document.createElement('label');
+	         $(label_heart).prop('for', 'toggle-heart');
+	         $(label_heart).prop('id', 'heart');
+	         var heart_text = document.createTextNode('위시리스트 추가 : ');
+	         var heart = document.createTextNode('♥');
+	         form.appendChild(heart_text);
+	         label_heart.appendChild(heart);
+	         
+	         var hidden = document.createElement('input');
+	         $(hidden).prop('type', 'hidden');
+	         $(hidden).prop('name', 'contentid');
+	         $(hidden).prop('value', 'id');
+	         
+	         var hidden2 = document.createElement('input');
+	         $(hidden2).prop('type', 'hidden');
+	         $(hidden2).prop('name', 'contenttypeid');
+	         $(hidden2).prop('value', resultArray.contenttypeid);
+			
+			
 			$('.col-lg-7').append(img_1);
 
 			$('.col-lg-5').append(title);
 			$('.col-lg-5').append(overview);
+			$('.col-lg-5').append(form);
+	        $(form).append(input_heart);
+	        $(form).append(label_heart);
+	        $(form).append(hidden);
+	        $(form).append(hidden2);
+	        
+	        console.log(resultArray.contenttypeid);
 			
 			
 		},

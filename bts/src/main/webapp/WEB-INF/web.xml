@@ -50,9 +50,17 @@
 	<session-timeout>30</session-timeout>
 	</session-config>
 	
+	<error-page>
+		<error-code>404</error-code>
+		<location>/error/404</location>
+	</error-page>
 		
 	<servlet-mapping>
 		<servlet-name>appServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
+	<servlet> <servlet-name>jsp</servlet-name> <servlet-class>org.apache.jasper.servlet.JspServlet</servlet-class> <init-param> <param-name>mappedfile</param-name> <param-value>false</param-value> </init-param> </servlet>
+
+
 </web-app>

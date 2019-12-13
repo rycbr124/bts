@@ -30,4 +30,5 @@ public interface D_P001_4Service {
 	public String selectCommentTotal(Map<String, String> searchMap) throws Exception;
 	public void insertAnswer(D_P001_4VO_5 d_p001_4VO_5) throws Exception;
 	public int deleteAnswer(String answer_no) throws Exception;
+	public List<String> findContentId() throws Exception;
 }

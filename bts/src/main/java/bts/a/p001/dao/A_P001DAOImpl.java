@@ -22,19 +22,19 @@ public class A_P001DAOImpl implements A_P001DAO{
 	}
 
 	@Override
-	public void insertData(Map<String, String> row) {
+	public void insertData(Map<String, String> row) throws DataAccessException {
 		sqlSession.insert("a.p000.insertIncln", row);
 		
 	}
 
 	@Override
-	public void updateData(Map<String, String> row) {
+	public void updateData(Map<String, String> row) throws DataAccessException {
 		sqlSession.update("a.p000.updateIncln", row);
 		
 	}
 
 	@Override
-	public void deleteData(Map<String, String> row) {
+	public void deleteData(Map<String, String> row) throws DataAccessException {
 		sqlSession.update("a.p000.deleteIncln", row);
 		
 	}

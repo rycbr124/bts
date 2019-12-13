@@ -34,7 +34,7 @@
 			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50}, //모든 그리드에 들어감
 			{Header:"성향코드",Type:"Text",SaveName:"incln_cd",MinWidth:50,KeyField:1, Align:"Center"},
 			{Header:"성향이름",Type:"Text",SaveName:"name",MinWidth:300,KeyField:1 ,MultiLineText:1}, //필수값을 체크하고자 할 때 keyField사용			
-			{Header:"성향그룹",Type:"Combo",SaveName:"group_name",MinWidth:50,KeyField:1 ,MultiLineText:1, Align:"Center", ComboCode:"security|plan|food|friend|safety|scenery|time|theme"}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
+			{Header:"성향그룹",Type:"Combo",SaveName:"group_name",MinWidth:50,KeyField:1 ,MultiLineText:1, Align:"Center", ComboCode:"money|plan|food|friend|safety|scenery|time|theme"}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
 			{Header:"성향내용",Type:"Combo",SaveName:"group_desc",MinWidth:50, Align:"Center", ComboCode:"경비|계획|음식|사람|안전|풍경|시간|스타일"},
 		];   
 		IBS_InitSheet( mySheet , initSheet);
@@ -89,7 +89,7 @@
 <body onload="LoadPage()">
   <div class="page_title">
     <span><a class="closeDepth" href="#">closeDepth</a></span> 
-    <span class="title">성향관리 > <b>성향 추가</b></span>
+    <span class="title">성향관리 > <b>성향 목록 조회/추가</b></span>
   </div>
   <div class="main_content">
     <div class="exp_product">각 행의 데이터를 수정하거나 입력,삭제시 상태컬럼의 변화를
@@ -118,7 +118,7 @@
 	</div>
 
 	<div class="clear hidden"></div>
-	<div class="ib_product"><script>createIBSheet("mySheet", "100%", "100%");</script></div>
+	<div><script>createIBSheet("mySheet", "100%", "100%");</script></div>
   </div>
 </body>
 </html>

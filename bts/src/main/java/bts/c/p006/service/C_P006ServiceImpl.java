@@ -17,8 +17,8 @@ public class C_P006ServiceImpl implements C_P006Service{
 	C_P006DAO c_p006DAO;
 	
 	@Override
-	public List<B_P001VO> selectMemberList(String id) throws DataAccessException {
-		List<B_P001VO> list=c_p006DAO.selectMemberList(id);		
+	public List<B_P001VO> selectMemberList(Map<String,String> searchMap) throws DataAccessException {
+		List<B_P001VO> list=c_p006DAO.selectMemberList(searchMap);		
 		return list;
 	}
 	

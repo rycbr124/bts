@@ -32,6 +32,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import bts.b.p001.VO.B_P001VO;
 import bts.common.PagingVO;
+import bts.d.p001_4.vo.D_P001_4VO;
 import bts.f.p001_3.service.F_P001_3Service;
 import bts.f.p001_3.vo.F_P001_3VO;
 import bts.f.p001_3.vo.F_P001_3VO_2;
@@ -66,6 +67,8 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 	private static final int rangePage = 5;
 	private static final int comRangeRow=10;
 	private static final int comRangePage=5;
+	private static final int modalRangeRow=10;
+	private static final int modalRangePage=5;
 	
 	@ModelAttribute("article_cd")
 	public String getArticle_cd() {
@@ -88,7 +91,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 			e.printStackTrace();
 			curPage=1;
 		}
-		int totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal(article_cd));
+		int totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal());
 		PagingVO pvo = pagingProvider.get();
 		pvo.setPaging(curPage, totalCount, rangePage, rangeRow);
 
@@ -132,7 +135,15 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		
 		int totalCount = Integer.parseInt(f_p001_3Service.selectCommentTotal(searchMap));
 		PagingVO pvo = pagingProvider.get();
-		pvo.setPaging(Integer.parseInt(selectPage), totalCount, comRangePage, comRangeRow);
+		int curPage = totalCount;
+		try {
+			if(selectPage!=null) {
+				curPage = Integer.parseInt(selectPage);
+			}
+		}catch(NumberFormatException e) {
+			e.printStackTrace();
+		}
+		pvo.setPaging(curPage, totalCount, comRangePage, comRangeRow);
 		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
 		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
 		
@@ -143,6 +154,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String result = mapper.writeValueAsString(resultMap);
+		System.out.println("=====================>"+result);
 		return result;
 	}
 	
@@ -194,7 +206,56 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		mav.addObject("uri",request.getRequestURI());
 		return mav;
 	}	
+
+	@ResponseBody
+	@RequestMapping(value="/my/recommend" ,method={RequestMethod.POST})
+	public Map<String,Object> selectMyRecommend(@RequestParam(value="curPage") String selectPage, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		B_P001VO b_p001VO= (B_P001VO) request.getSession().getAttribute("memberInfo");
+		Map<String,String> searchMap = new HashMap<>();
+		
+		searchMap.put("member_id", b_p001VO.getMember_id());
+		int totalCount = f_p001_3Service.selectRecommendTotal(searchMap);
+		Map<String,Object> resultMap = setPaging(searchMap,selectPage,totalCount);
+		List<Map<String,String>> recResult = f_p001_3Service.selectRecommend(searchMap);
+		resultMap.put("result", recResult);
+		return resultMap;
+	}		
 	
+	@ResponseBody
+	@RequestMapping(value="/my/plan" ,method={RequestMethod.POST})
+	public Map<String,Object> selectMyPlan(@RequestParam(value="curPage") String selectPage, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		B_P001VO b_p001VO= (B_P001VO) request.getSession().getAttribute("memberInfo");
+		Map<String,String> searchMap = new HashMap<>();
+		
+		searchMap.put("member_id", b_p001VO.getMember_id());
+		int totalCount = f_p001_3Service.selectPlanTotal(searchMap);
+		Map<String,Object> resultMap = setPaging(searchMap,selectPage,totalCount);
+		List<D_P001_4VO> recResult = f_p001_3Service.selectPlan(searchMap);
+		resultMap.put("result", recResult);
+		return resultMap;
+	}	
+	
+	private Map<String,Object> setPaging(Map<String,String> searchMap, String selectPage, int totalCount) {
+		Map<String,Object> resultMap = new HashMap<>();
+		PagingVO pvo = pagingProvider.get();
+		int curPage = 1;
+		
+		try {
+			if(selectPage!=null) {
+				curPage = Integer.parseInt(selectPage);
+			}
+		}catch(NumberFormatException e) {
+			e.printStackTrace();
+		}
+		pvo.setPagingDesc(curPage, totalCount, modalRangePage, modalRangeRow);
+		
+		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
+		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
+		
+		resultMap.put("paging", pvo);
+		return resultMap;
+	}
+
 	@ResponseBody
 	@RequestMapping(value="/image" ,method={RequestMethod.POST,RequestMethod.GET}, produces="application/json;charset=UTF-8")
 	public String upload(HttpServletRequest request, HttpServletResponse response,@RequestParam MultipartFile upload) throws Exception {
@@ -282,6 +343,8 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		vo.setTitle(request.getParameter("title"));
 		vo.setContents(request.getParameter("editor"));
 		vo.setThumbnail_img(thumb);
+		vo.setRefer_link(request.getParameter("refer_link"));
+		vo.setRefer_title(request.getParameter("refer_title"));
 		vo.setArticle_no(Integer.parseInt(request.getParameter("article_no")));
 		
 		ArrayList tagList = mapper.readValue(request.getParameter("tagList"), ArrayList.class);
@@ -357,6 +420,8 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		vo.setTitle(request.getParameter("title"));
 		vo.setContents(request.getParameter("editor"));
 		vo.setThumbnail_img(thumb);
+		vo.setRefer_link(request.getParameter("refer_link"));
+		vo.setRefer_title(request.getParameter("refer_title"));
 		
 		ArrayList tagList = mapper.readValue(request.getParameter("tagList"), ArrayList.class);
 		f_p001_3Service.insertArticle(vo);
@@ -373,5 +438,4 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		}
 		response.sendRedirect("/bts/community/review/list");
 	}
-	
 }

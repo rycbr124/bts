@@ -16,4 +16,9 @@ public class Z_P000DAOImpl implements Z_P000DAO{
 	public List<String> mainAccompany()throws DataAccessException{
 		return sqlSession.selectList("z.p000.searchAccompany");
 	}
+
+	@Override
+	public List<String> searchIcon() throws Exception {
+		return sqlSession.selectList("z.p000.searchIcon");
+	}
 }

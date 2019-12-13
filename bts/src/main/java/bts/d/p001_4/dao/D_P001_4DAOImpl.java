@@ -98,4 +98,9 @@ public class D_P001_4DAOImpl implements D_P001_4DAO{
 	public int deleteAnswer(String answer_no) throws DataAccessException {
 		return sqlSession.delete("d.p001_4.deleteAnswer", answer_no);
 	}
+
+	@Override
+	public List<String> findContentId() throws DataAccessException {
+		return sqlSession.selectList("d.p001_4.findContentId");
+	}
 }

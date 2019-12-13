@@ -11,6 +11,8 @@ public class C_P001VO {
 	private String group_name;
 	private String name;
 	private String group_desc;
+	private String icon_col;
+	private String icon_bla;
 	
 	
 	public String getGroup_desc() {
@@ -43,5 +45,18 @@ public class C_P001VO {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getIcon_col() {
+		return icon_col;
+	}
+	public void setIcon_col(String icon_col) {
+		this.icon_col = icon_col;
+	}
+	public String getIcon_bla() {
+		return icon_bla;
+	}
+	public void setIcon_bla(String icon_bla) {
+		this.icon_bla = icon_bla;
+	}
+
 	
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.inject.Provider;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,18 +15,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import bts.a.p002.service.A_P002Service;
 import bts.common.report.vo.PnishVO;
+import bts.f.p001_3.vo.F_P001_3VO;
 
 @Controller("a_p002")
 @RequestMapping(value="/admin/report")
 public class A_P002ControllerImpl implements A_P002Controller{
 	@Autowired
 	A_P002Service a_p002Service;
+
+	@Autowired
+	Provider<F_P001_3VO> f_p001_3Provider;	
 	
 	@Override
 	@RequestMapping(value="/pnish")
-	public ModelAndView adminReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView showPnishList(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p002/d001");
 		return mav;
 	}
@@ -42,12 +49,16 @@ public class A_P002ControllerImpl implements A_P002Controller{
 
 	@RequestMapping(value="/pnish/save")
 	@ResponseBody
-	public Map<String, Object> savePnishList(@RequestParam Map<String,String[]> dataMap,HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public Map<String, Object> savePnishList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, String[]> dataMap = new HashMap<String, String[]>();
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		Map<String, String> result = new HashMap<String, String>();
+		
+		dataMap = request.getParameterMap();
 		try {
-			System.out.println("=============>"+dataMap);
-//			a_p002Service.savePnishList(dataMap);	
+			ObjectMapper mapper = new ObjectMapper();
+			System.out.println("=============>"+mapper.writeValueAsString(dataMap));
+			a_p002Service.savePnishList(dataMap);	
 			result.put("Code","0");
 			result.put("Message","저장되었습니다");
 		}catch(Exception e) {
@@ -57,6 +68,18 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		}
 		resultMap.put("Result", result);  
 		return resultMap;
+	}	
+
+	@RequestMapping(value="/list")
+	public ModelAndView showReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/a/p002/d003");
+		return mav;
+	}	
+	
+	@RequestMapping(value="/history")
+	public ModelAndView showHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		ModelAndView mav = new ModelAndView("/a/p002/d002");
+		return mav;
 	}	
 	
 }

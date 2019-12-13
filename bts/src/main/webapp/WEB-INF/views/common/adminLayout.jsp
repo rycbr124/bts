@@ -33,11 +33,14 @@
 	<script src="${contextPath}/resources/js/admin/chart-pie-demo.js"></script>
 
 <style>
+
 *{
 	box-sizing: border-box;
 }
 
+
 body{
+
 
 }
 

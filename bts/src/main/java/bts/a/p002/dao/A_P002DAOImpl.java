@@ -1,6 +1,7 @@
 package bts.a.p002.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,21 @@ public class A_P002DAOImpl implements A_P002DAO{
 	public List<PnishVO> selectPnishList(String p_name) {
 		List<PnishVO> list = sqlSession.selectList("mapper.a_p002.selectPnishList",p_name.trim());
 		return list;
+	}
+
+	@Override
+	public void insertPnish(Map<String, String> row) {
+		sqlSession.insert("mapper.a_p002.insertPnish",row);
+	}
+
+	@Override
+	public void updatePnish(Map<String, String> row) {
+		sqlSession.insert("mapper.a_p002.updatePnish",row);
+	}
+
+	@Override
+	public void deletePnish(Map<String, String> row) {
+		sqlSession.insert("mapper.a_p002.deletePnish",row);		
 	}
 	
 }

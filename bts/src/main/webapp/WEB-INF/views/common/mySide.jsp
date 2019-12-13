@@ -50,9 +50,14 @@ $(function(){
 .submenu li a{
 	width:100%;
 }
-.title{
+.sideTitle{
+	position:relative;
 	color:#fff;
+	background-color:#203341;
 	letter-spacing:2px;
+	text-align:center;
+	padding:10px 85px;
+	border-radius:0 9px 9px 0;
 }
 .active{
 	background-color:rgb(210,210,210);
@@ -62,21 +67,19 @@ $(function(){
 </style>
 </head>
 <body>
-		<span class="title">마이페이지</span>
+		<span class="sideTitle">마이페이지</span>
 		<ul class="submenu">
-			<li><a href="${contextPath}/my/profile"> <i
-					class="icon icon-update-profile"></i> <span>여행자 정보 조회/수정</span>
+			<li><a href="${contextPath}/my/profile"> <i class="icon icon-update-profile"></i> <span>여행자 정보 조회/수정</span>
 			</a></li>
-			<li><a href="order.html"> <i class="icon icon-post-list"></i>
+			<li><a href="${contextPath}/my/myBoardList"> <i class="icon icon-post-list"></i>
 					<span>내 글목록 관리</span>
 			</a></li>
-			<li><a href="wishlist.html"> <i
-					class="icon icon-reservation"></i> <span>예약 내역 관리</span>
+			<li><a href="wishlist.html"> <i class="icon icon-reservation"></i> <span>예약 내역 관리</span>
 			</a></li>
 			<li><a href="${contextPath}/question/questionMain"> <i class="icon icon-question"></i>
 					<span>문의 내역 관리</span>
 			</a></li>
-			<li><a href="coupon.html"> <i class="icon icon-wishlist"></i>
+			<li><a href="${contextPath}/my/wishList"> <i class="icon icon-wishlist"></i>
 					<span>위시리스트 관리</span>
 			</a></li>
 			<li><a href="${contextPath}/my/message/main"> <i class="icon icon-message"></i>
@@ -85,12 +88,7 @@ $(function(){
 			<li><a href="${contextPath}/my/accompany/accList"> <i class="icon icon-matching"></i>
 					<span>매칭 신청 목록 관리</span>
 			</a></li>
-			<!--<li >
-	     <a href="reviews.html">
-	        <i class="fa fa-comments-o"></i>
-	        <span>Reviews</span>
-	     </a>
-	  	</li>-->
+		
 		</ul>
 </body>
 </html>

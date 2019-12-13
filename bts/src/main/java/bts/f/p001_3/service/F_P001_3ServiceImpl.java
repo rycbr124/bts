@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import bts.d.p001_4.vo.D_P001_4VO;
 import bts.f.p001_3.dao.F_P001_3DAO;
 import bts.f.p001_3.vo.F_P001_3VO;
 import bts.f.p001_3.vo.F_P001_3VO_2;
@@ -51,8 +52,8 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 	}	
 	
 	@Override
-	public String selectReviewTotal(String article_cd) throws DataAccessException{
-		String totalCount = f_p001_3DAO.selectReviewTotal(article_cd);
+	public String selectReviewTotal() throws DataAccessException{
+		String totalCount = f_p001_3DAO.selectReviewTotal();
 		return totalCount;
 	}
 
@@ -67,6 +68,7 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 		List<F_P001_3VO> list = f_p001_3DAO.selectReviewList(searchMap);			
 		for(int i=0; i<list.size();i++) {
 			F_P001_3VO vo = list.get(i);
+			vo.setArticle_cd(searchMap.get("article_cd"));
 			List<String> tagList = new ArrayList<>();
 			tagList = f_p001_3DAO.selectTagList(vo);
 			vo.setTag_list(tagList);
@@ -77,6 +79,7 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 	@Override
 	public F_P001_3VO selectReviewContents(Map<String,String> searchMap) throws DataAccessException{
 		F_P001_3VO f_p001_3VO = f_p001_3DAO.selectReviewContents(searchMap);
+		f_p001_3VO.setArticle_cd(searchMap.get("article_cd"));
 		List<String> tagList = new ArrayList<>();
 		tagList = f_p001_3DAO.selectTagList(f_p001_3VO);
 		f_p001_3VO.setTag_list(tagList);
@@ -93,6 +96,30 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 	public String selectArticleCd(String menu) {
 		String article_cd = f_p001_3DAO.selectArticleCd(menu);
 		return article_cd;
+	}
+
+	@Override
+	public int selectRecommendTotal(Map<String, String> searchMap) {
+		int totalCount = f_p001_3DAO.selectRecommendTotal(searchMap);
+		return totalCount;
+	}
+
+	@Override
+	public int selectPlanTotal(Map<String, String> searchMap) {
+		int totalCount = f_p001_3DAO.selectPlanTotal(searchMap);
+		return totalCount;
+	}
+
+	@Override
+	public List<Map<String, String>> selectRecommend(Map<String, String> searchMap) {
+		List<Map<String, String>> list = f_p001_3DAO.selectRecommend(searchMap);
+		return list;
+	}
+
+	@Override
+	public List<D_P001_4VO> selectPlan(Map<String, String> searchMap) {
+		List<D_P001_4VO> list = f_p001_3DAO.selectPlan(searchMap);
+		return list;
 	}
 
 }

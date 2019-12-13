@@ -32,7 +32,9 @@ public class Z_P000ControllerImpl implements Z_p000Controller{
 		ModelAndView mav = new ModelAndView("/z/p000/d001");
 		Map<String,List<String>> mainAccompany = z_p000Service.mainAccompany();
 		JSONObject bestAccompany = new JSONObject(mainAccompany);
+
 		mav.addObject("bestAccompany",bestAccompany);
+		
 		return mav;
 	}		
 }

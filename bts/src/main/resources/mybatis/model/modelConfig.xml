@@ -34,7 +34,8 @@
 	  <typeAlias type="bts.common.report.vo.ReportVO" alias="reportVO"/>   
 	  <typeAlias type="bts.common.report.vo.PnishVO" alias="pnishVO"/>
 	  <typeAlias type="bts.e.p002.VO.E_P002VO" alias="e_p002VO"/>
-	  <typeAlias type="bts.c.p007.VO.C_P007VO" alias="c_p007VO"/>      
+	  <typeAlias type="bts.c.p007.VO.C_P007VO" alias="c_p007VO"/>
+	  <typeAlias type="bts.h.p001.vo.H_P001VO" alias="h_p001VO"/>      
    </typeAliases>
    
 </configuration>

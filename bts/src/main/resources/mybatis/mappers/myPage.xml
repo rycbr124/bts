@@ -10,6 +10,8 @@
 		<result property="group_name" column="group_name" />
 		<result property="group_desc" column="group_desc" />
 		<result property="member_id" column="member_id" />
+		<result property="icon_col" column="icon_col" />
+		<result property="icon_bla" column="icon_bla" />
 	</resultMap>
 
 	<resultMap id="memberResult" type="d001VO">
@@ -36,8 +38,72 @@
 		<result property="register_date" column="register_date" />
 	</resultMap>
 
+	<resultMap id="myArticleResult" type="f_p001_3VO">
+		<result property="article_no" column="article_no" />
+		<result property="title" column="title" />
+		<result property="member_id" column="member_id" />
+		<result property="register_date" column="register_date" />
+	</resultMap>
+
+	<resultMap id="myPlannerResult" type="i_p002VO_1">
+		<result property="plan_no" column="plan_no" />
+		<result property="title" column="title" />
+		<result property="register_date" column="register_date" />
+		<result property="member_id" column="member_id" />
+	</resultMap>
+	
+	<!-- 내후기 -->
+	<select id="myReview" resultMap="myArticleResult" parameterType="f_p001_3VO">
+	<![CDATA[
+	select * from (select rownum rn, a.* from 
+	(select * from article order by article_no desc) a) where member_id = #{member_id , jdbcType=VARCHAR}
+	and rn between #{start} and #{end}
+	]]>
+	</select>
+	
+	<select id="reviewListCount" resultType="java.lang.Integer">
+	<![CDATA[
+	select count(*) from article  
+	where member_id = #{member_id ,jdbcType=VARCHAR}
+	]]>
+	</select>
+		 
+	<!-- 내 동행 -->
+	<select id="myAcc" resultMap="accListResult" parameterType="c_p007VO">
+	<![CDATA[
+	select * from (select rownum rn, a.* from 
+	(select * from accompany order by article_no desc) a)
+	 where member_id = #{member_id, jdbcType=VARCHAR} and rn between #{start2} and #{end2}
+	]]>
+	</select>
+	
+	<select id="myaccListCount" resultType="java.lang.Integer">
+	<![CDATA[
+	select count(*) from accompany where member_id = #{member_id ,jdbcType=VARCHAR}
+	]]>
+	</select>
+	
+	
+	<!-- 내 플랜 -->
+	<select id="myPlan" resultMap="myPlannerResult" parameterType="i_p002VO_1">
+	<![CDATA[
+	select * from (select rownum rn, a.* from
+	(select * from planner order by plan_no desc) a)
+	 where member_id = #{member_id ,jdbcType=VARCHAR} and rn between #{start3} and #{end3}
+	]]>
+	</select>
+	
+	<select id="planListCount" resultType="java.lang.Integer">
+	<![CDATA[
+	select count(*) from planner  
+	where member_id = #{member_id ,jdbcType=VARCHAR}
+	]]>
+	</select>
+	
+
 	<!-- 동행신청리스트 -->
-	<select id="myaccReq" resultMap="accListResult" parameterType="c_p007VO">
+	<select id="myaccReq" resultMap="accListResult"
+		parameterType="c_p007VO">
 	<![CDATA[
 	select article_no, acc_title, member_id, register_date
 	from
@@ -46,7 +112,7 @@
 	where al.member_id = #{member_id, jdbcType=VARCHAR}
 	and a.article_no = al.article_no order by a.article_no desc) b )
 	where rn between #{start} and #{end}
-	]]>	
+	]]>
 	</select>
 
 	<!-- 동행신청 리스트 카운트-->
@@ -55,8 +121,8 @@
 	select count(*) from accompany_list al, accompany a 
 	where al.member_id = #{member_id} and a.article_no = al.article_no
 	]]>
-	
 	</select>
+	
 	<select id="selectMember" parameterType="String" resultMap="memberResult">
 	  <![CDATA[
 			SELECT *
