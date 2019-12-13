@@ -68,5 +68,17 @@ public class A_P002ServiceImpl implements A_P002Service{
 	public String selectMenuName(String report_se) {
 		String result = a_p002DAO.selectMenuName(report_se);
 		return result;
+	}
+
+	@Override
+	public String selectAccWriter(String article_no) {
+		String result = a_p002DAO.selectAccWriter(article_no);
+		return result;
+	}
+
+	@Override
+	public String selectAnswerInfo(String report_se) {
+		String result = a_p002DAO.selectAnswerInfo(report_se);
+		return result;
 	}	
 }

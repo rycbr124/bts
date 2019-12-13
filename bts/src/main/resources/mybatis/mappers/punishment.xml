@@ -98,4 +98,28 @@
 		</where>
 	</select>
 
+	<select id="selectAccWriter" parameterType="string" resultType="string">
+	    <![CDATA[
+		    SELECT member_id
+			FROM accompany
+	    ]]>
+   		<where>
+   			<![CDATA[
+				article_no=#{article_no}
+	    	]]>
+		</where>
+	</select>
+
+	<select id="selectAnswerInfo" parameterType="string" resultType="string">
+	    <![CDATA[
+		    SELECT name
+			FROM menu
+	    ]]>
+   		<where>
+   			<![CDATA[
+				menu_cd=#{menu_cd}
+	    	]]>
+		</where>
+	</select>
+
 </mapper>

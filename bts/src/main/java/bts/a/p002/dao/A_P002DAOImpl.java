@@ -53,5 +53,17 @@ public class A_P002DAOImpl implements A_P002DAO{
 		String result = sqlSession.selectOne("mapper.a_p002.selectMenuName",report_se);
 		return result;
 	}
+
+	@Override
+	public String selectAccWriter(String article_no) {
+		String result = sqlSession.selectOne("mapper.a_p002.selectAccWriter",article_no);
+		return result;
+	}
+
+	@Override
+	public String selectAnswerInfo(String report_se) {
+		String result = sqlSession.selectOne("mapper.a_p002.selectAnswerInfo",report_se);
+		return result;
+	}
 	
 }

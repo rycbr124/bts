@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -98,20 +99,60 @@ public class A_P002ControllerImpl implements A_P002Controller{
 	@RequestMapping(value="/list/contents/target")
 	@ResponseBody
 	public String showReportTarget(@RequestParam(value="report_se") String report_se,@RequestParam(value="contents_cd") String contents_cd
-			,HttpServletRequest request, HttpServletResponse response) throws Exception {
+			,RedirectAttributes redirect, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String url="redirect:";
 		String menu_name = a_p002Service.selectMenuName(report_se);
+//		if(menu_name.equals(reviewName)) {
+//			return request.getContextPath()+"/community/plan_contents";
+//		}else if(menu_name.equals(accompanyName)){
+//			return request.getContextPath()+"/accompany/accView";
+//		}else if(menu_name.equals(planName)){
+//			return request.getContextPath()+"/community/review/contents";			
+//		}else if(menu_name.equals(commentName)){	
+//			String contents_name = a_p002Service.selectAnswerInfo(contents_cd);		
+//		}
 		if(menu_name.equals(reviewName)) {
-			return request.getContextPath()+"/community/plan_contents";
+			url+=makeReviewForm(redirect,contents_cd);
 		}else if(menu_name.equals(accompanyName)){
-			return request.getContextPath()+"/accompany/accView";
+			url+=makeAccForm(redirect,contents_cd);
 		}else if(menu_name.equals(planName)){
-			return request.getContextPath()+"/community/review/contents";			
+			url+="/community/plan_contents";	
+			redirect.addAttribute("plan_no",contents_cd);
 		}else if(menu_name.equals(commentName)){	
-			//String contents_name = a_p002Service.selectAnswerInfo(contents_cd);		
+			String contents_name = a_p002Service.selectAnswerInfo(report_se);
+			if(contents_name.equals(reviewName)) {
+				
+			}else if(contents_name.equals(accompanyName)) {
+				
+			}else if(contents_name.equals(planName)) {
+				
+			}
+		}else {
+			url+="/error/404";			
 		}
-		return "/error/404";
+		return url;
 	}	
 	
+	private String makeReviewForm(RedirectAttributes redirect,String article) {
+		String url="/community/review/contents";
+		redirect.addAttribute("article",article);
+		return url;
+	}
+
+	private String makeAccForm(RedirectAttributes redirect,String article_no) {
+		String url="/accompany/accView";
+		String writer_id = a_p002Service.selectAccWriter(article_no);
+		redirect.addAttribute("article_no",article_no);
+		redirect.addAttribute("member_id",writer_id);
+		return url;
+	}
+	
+//	private String makePlanForm(RedirectAttributes redirect,String article_no) {
+//		String url="/community/plan_contents";
+//		redirect.addAttribute("article",article);
+//		return url;
+//	}	
+//	
 	@RequestMapping(value="/list/search")
 	@ResponseBody
 	public Map<String, Object> selectReportList(@RequestParam(value="p_title",required=false) String p_title,HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -18,4 +18,8 @@ public interface A_P002Service {
 
 	String selectMenuName(String report_se);
 
+	String selectAccWriter(String article_no);
+
+	String selectAnswerInfo(String report_se);
+
 }
