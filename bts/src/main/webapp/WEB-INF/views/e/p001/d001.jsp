@@ -17,6 +17,16 @@
 	}
 </script>
 <style>
+	@font-face {
+		src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+    	font-family: "NanumSquareRoundEB";
+	}
+
+	@font-face {
+    	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    	font-family: "NanumSquareRoundR";
+	}
+	
    .hit {
       animation-name: blink;
       animation-duration: 1.5s;
@@ -36,6 +46,17 @@
       30% {color: yellow;}
       100% {color:red; font-weight: bold;} */
     }
+    
+    *{
+    	font-family: "NanumSquareRoundR";
+    }
+    
+	#subjectText{
+		font-family: "NanumSquareRoundEB";
+	}
+	p {
+		font-family: "NanumSquareRoundR";	
+	}
 </style>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap/bootstrap.css" />
@@ -49,9 +70,10 @@
 </head>
 <body>
 	<div class="container" id="container">
+			<h2 id="subjectText">동행 찾기</h2>
+			<p>BTS와 함께 여행</p>
 		<img src="${contextPath }/resources/image/accompanyMain.jpg" id="accMainImage"> <br> <br>
 		<div id="headsubject">
-			<h1 id="subjectText">동행 찾기</h1>
 		</div>
 		<form id="boardForm" name="boardForm" method="post">
 			<table class="table table-striped table-hover">

@@ -17,10 +17,12 @@
 </head>
 <body>
 
-	<div id="container">
+	<div class="container" id="container">
 		<div id="headsubject">
+		<div class="headTitle">
+			<img src="${contextPath}/resources/image/mypage/document.png" class="document">
 			<h1 id="subjectText">내가 쓴 글 목록</h1>
-
+		</div>
 			<ul class="tabs">
 				<li class="tab-link current" data-tab="acctab">동행</li>
 				<li class="tab-link" data-tab="reviewtab">후기</li>

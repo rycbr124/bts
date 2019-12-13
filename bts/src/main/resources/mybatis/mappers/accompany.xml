@@ -28,6 +28,7 @@
 		<result property="group_name" column="group_name" />
 		<result property="group_desc" column="group_desc" />
 		<result property="member_id" column="member_id" />
+		<result property="icon_col" column="icon_col" />
 	</resultMap>
 	
 	<resultMap id="accTagResult" type="e_p003VO_2">
@@ -111,7 +112,8 @@
 	<select id="accIncln" resultMap="accInclnResult"
 		parameterType="c_p001vo">
 	<![CDATA[
-	select il.name from incln_list il , incln_member im 
+	select il.icon_col, il.group_desc, il.name 
+	from incln_list il , incln_member im 
 	where il.incln_cd = im.incln_cd
 	and member_id = #{member_id}
 	]]>
