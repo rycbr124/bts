@@ -22,7 +22,7 @@
 	
 	$(document).ready(function() {
 		tagInit();
-		console.log($('#side > ul > li'));
+		
 		if("${sessionScope.memberInfo.member_type=='kakao' || sessionScope.memberInfo.member_type=='naver'}"=="true"){
 			$("#input_img").on("click", function(){
 				alert('프로필 이미지 등록은 일반 회원만 가능합니다.');
@@ -47,7 +47,7 @@
           })   
 		
 		
-        	$('[data-toggle="popover"]').popover();
+        $('[data-toggle="popover"]').popover();
         	
         $('#myModal').on('shown.bs.modal', function () {
         	  $('#myInput').focus()
@@ -119,8 +119,7 @@
     					alert("서버 에러.");
     				}
     			});
-    		});
-		
+    		});		
 	});
 	
 	function tagInit(){
@@ -243,6 +242,12 @@ form{
 	margin-left:100px;
 }
 
+
+div.col-md-6{
+	float : right;
+	margin-right : 50px;
+	margin-bottom : 20px;
+}
 </style>
 
 <body>
@@ -274,7 +279,7 @@ form{
 
 								<c:otherwise>
 									<img
-										src="https://d2mgzmtdeipcjp.cloudfront.net/files/member/profile.png"
+										src="${contextPath}/resources/image/mypage/profile_img.png"
 										class="user-picture" id="profImg">
 								</c:otherwise>
 							</c:choose>
@@ -285,32 +290,36 @@ form{
 				
 						</div>
 						<div class="row">
+						<label class="title">이름</label>
 							<div class="col-md-6">
-								<label class="title">이름</label> <input type="text"
+								 <input type="text"
 									value="${sessionScope.memberInfo.name}" id="name" name="name"
 									placeholder="name" class="form-control"
 									onkeypress="specialCharNotPress();" required>
 							</div>
 						</div>
 						<div class="row">
+						<label class="title">닉네임</label>
 							<div class="col-md-6">
-								<label class="title">닉네임</label> <input type="text"
+								 <input type="text"
 									value="${sessionScope.memberInfo.nick_name}" id="nick_name"
 									name="nick_name" placeholder="닉네임" class="form-control"
 									required>
 							</div>
 						</div>
 						<div class="row">
+						<label class="title">비밀번호</label>
 							<div class="col-md-6">
-								<label class="title">비밀번호</label> <input type="password"
+								 <input type="password"
 									value="${sessionScope.memberInfo.password}" id="password"
 									name="password" placeholder="password" class="form-control"
 									onkeypress="specialCharNotPress();" required>
 							</div>
 						</div>
 						<div class="row">
+						<label class="title">성별</label>
 							<div class="col-md-6">
-								<label class="title">성별</label>
+								
 								<select class="form-control" id="gender" name="gender">
 									<c:if test="${sessionScope.memberInfo.gender =='M'}">
 										<option value="M" selected>남</option>
@@ -324,23 +333,26 @@ form{
 							</div>
 						</div>
 						<div class="row">
+							<label class="title">생년월일</label>
 							<div class="col-md-6">
-								<label class="title">생년월일</label> <input type="text"
+								 <input type="text"
 									value="${sessionScope.memberInfo.birth}" id="birth"
 									name="birth" placeholder="YYYY-MM-DD" class="form-control"
 									required>
 							</div>
 						</div>
 						<div class="row">
+						<label class="title">이메일</label> 
 							<div class="col-md-6">
-								<label class="title">이메일</label> <input type="email"
+								<input type="email"
 									value="${sessionScope.memberInfo.email}" id="email"
 									name="email" placeholder="email" class="form-control" required>
 							</div>
 						</div>
 						<div class="row">
+						<label class="title">휴대전화번호</label>
 							<div class="col-md-6">
-								<label class="title">휴대전화번호</label> <input type="tel"
+								 <input type="tel"
 									value="${sessionScope.memberInfo.tel_no}" id="tel_no"
 									name="tel_no" placeholder="tel" class="form-control" required
 									onkeypress="onlyNumOnKeyPress();">
@@ -358,7 +370,7 @@ form{
 											<input type="radio" id="${data2.incln_cd}" name="${data2.group_name}" value="${data2.incln_cd}" data-col="${data2.icon_col}" data-bla="${data2.icon_bla}">
 											<label class="custom-control-label" for="${data2.incln_cd}">
 												<div id="circle">
-													<img src="${data2.icon_bla}" class="iclnImgB" title="제에목" data-container="body" data-toggle="popover" data-trigger="hover"  data-placement="bottom" data-content="내용">
+													<img src="${data2.icon_bla}" class="iclnImgB" title="${data2.group_desc}" data-container="body" data-toggle="popover" data-placement="bottom" data-content="${data2.name}"  data-trigger="hover">
 												</div>		
 											</label>
 										</c:forEach>

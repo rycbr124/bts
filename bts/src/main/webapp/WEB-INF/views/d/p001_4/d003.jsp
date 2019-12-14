@@ -39,6 +39,7 @@
 		var title = null;
 		var p_no = null;
 		var plan_date = null;
+		var plan_desc = new Array();
 		
 		$.ajax({
 			type : "post",
@@ -56,6 +57,7 @@
 				for(var i in data){
 					console.log(data[i].content_id);
 					console.log(data[i].plan_no);
+					console.log(data[i].plan_desc);
 					var dayNo = data[i].day_no;
 					var contentid = data[i].content_id;
 					plan_day[i] = data[i].day_no;
@@ -64,12 +66,14 @@
 					p_no = data[i].plan_no;
 					day_arr.push(p_no);
 					plan_date = data[i].range_date;
+					plan_desc[i] = data[i].plan_desc;
 					
 					$('#title').prop('value', title);
 					$('#p_no').prop('value', p_no);
 					////////////////////////////////////////////////////					
 				}
 				console.log(plan_day);
+				console.log(plan_desc);
 				//day 중복제거
 				var day_arr = new Array();
 				
@@ -144,6 +148,8 @@
 					         $(text).prop('rows', '8');
 					         $(text).prop('name', 'content' + i);
 					         $(text).prop('id', 'content' + i);
+					         $(text).prop('value', plan_desc[i]);
+					         
 					         
 					         var hidden = document.createElement('input');
 					         $(hidden).prop('type', 'hidden');

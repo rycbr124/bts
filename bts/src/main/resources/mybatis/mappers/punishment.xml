@@ -9,6 +9,28 @@
 		<result property="name" column="name" />
 		<result property="day_cnt" column="day_cnt" />
 	</resultMap>
+
+	<resultMap id="reportResult" type="reportVO">
+		<result property="report_no" column="report_no" />
+		<result property="report_date" column="report_date" />
+		<result property="title" column="title" />
+		<result property="report_se" column="report_se" />
+		<result property="contents" column="contents" />
+		<result property="pnish_cd" column="pnish_cd" />
+		<result property="reporter_id" column="reporter_id" />
+		<result property="target_id" column="target_id" />
+		<result property="report_at" column="report_at" />	
+		<result property="contents_cd" column="contents_cd" />	
+		<result property="target_contents" column="target_contents" />
+		<result property="showContents" column="showContents" />			
+		<result property="pnish_name" column="pnish_name" />	
+		<result property="day_cnt" column="day_cnt" />	
+	</resultMap>
+
+	<resultMap id="ansResult" type="f_p001_3VO_3">
+		<result property="article_no" column="article_no" />
+		<result property="menu_name" column="menu_name" />
+	</resultMap>
 	
 	<select id="selectPnishList" parameterType="string" resultMap="pnishResult">
 	    <![CDATA[
@@ -27,6 +49,13 @@
 	    ]]>
 	</insert>	
 
+	<insert id="insertPnishHistory" parameterType="a_p002VO_1">
+	    <![CDATA[
+			INSERT INTO punishment_history (begin_date, end_date, member_id, report_no, pnish_desc) 
+			VALUES (#{begin_date}, #{end_date}, #{member_id}, #{report_no,jdbcType=VARCHAR}, #{pnish_desc,jdbcType=VARCHAR})
+	    ]]>
+	</insert>
+
 	<update id="updatePnish" parameterType="java.util.Map">
 		<![CDATA[
 			UPDATE punishment
@@ -35,6 +64,22 @@
 			WHERE pnish_cd = #{pnish_cd}
 	    ]]>
 	</update>	
+
+	<update id="updateReportEnd" parameterType="f_p001_3VO">
+	    <![CDATA[  
+	    	UPDATE report_list
+	    ]]>		
+		<set>
+			<![CDATA[
+				report_at='Y',						
+		    ]]>	
+		</set>
+		<where>
+			<![CDATA[
+				 report_no=#{report_no}
+		    ]]>	
+		</where>
+	</update>
 	
 	<delete id="deletePnish" parameterType="java.util.Map">
 		<![CDATA[
@@ -42,5 +87,68 @@
 			WHERE pnish_cd = #{pnish_cd}
 	    ]]>
 	</delete>	
+
+	<select id="selectReportContent" parameterType="_int" resultMap="reportResult">
+	    <![CDATA[
+			SELECT report_no,report_date,title,report_se,contents,reporter_id,report_at
+			,contents_cd,target_id,target_contents, r.pnish_cd, p.name pnish_name,p.day_cnt
+			FROM report_list r, punishment p
+	    ]]>
+   		<where>
+			r.pnish_cd=p.pnish_cd(+)
+			AND report_no=#{report_no}
+		</where>
+	</select>
+
+	<select id="selectReportList" parameterType="map" resultMap="reportResult">
+	    <![CDATA[
+		    SELECT report_no,report_date,title,reporter_id,target_id,report_at
+		    ,DECODE(report_at,'N','상세보기','처리완료') showContents, p.name pnish_name
+		    FROM report_list r,punishment p
+	    ]]>
+   		<where>
+   			<![CDATA[
+				r.pnish_cd=p.pnish_cd(+)
+				AND title LIKE '%'||#{p_title}||'%'
+	    	]]>
+		</where>
+	</select>	
+
+	<select id="selectMenuName" parameterType="string" resultType="string">
+	    <![CDATA[
+		    SELECT m.name
+			FROM menu m
+	    ]]>
+   		<where>
+   			<![CDATA[
+				menu_cd=#{menu_cd}
+	    	]]>
+		</where>
+	</select>
+
+	<select id="selectAccWriter" parameterType="string" resultType="string">
+	    <![CDATA[
+		    SELECT member_id
+			FROM accompany
+	    ]]>
+   		<where>
+   			<![CDATA[
+				article_no=#{article_no}
+	    	]]>
+		</where>
+	</select>
+
+	<select id="selectAnswerInfo" parameterType="string" resultMap="ansResult">
+	    <![CDATA[
+			SELECT a.article_no, m.name menu_name
+			FROM menu m, answer_article a
+	    ]]>
+   		<where>
+   			<![CDATA[
+				a.article_cd=m.menu_cd(+)
+				AND answer_no=#{answer_no}
+	    	]]>
+		</where>
+	</select>
 
 </mapper>

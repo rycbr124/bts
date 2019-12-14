@@ -40,7 +40,11 @@
 		mySheet.RemoveAll();
 		//아이비시트 초기화
 		var initSheet = {};
-		initSheet.Cfg = {SearchMode:smLazyLoad,ToolTip:1};
+		initSheet.Cfg = {
+                "SearchMode": smLazyLoad,
+                "AutoFitColWidth": "search|resize|init|colhidden|rowtransaction",
+                "DeferredVScroll": 1
+		};
 		initSheet.HeaderMode = {Sort:1,ColMove:1,ColResize:1,HeaderCheck:1};
 		initSheet.Cols = [
 			//SaveName은 보통 VO 속성명과 일치시켜줌.
@@ -48,23 +52,50 @@
 			//align은 데이터를 정렬하는 방법.
 			//MultiLineText설정하면 shift+enter 누를 때 하나의 셀 안에 여러 값을 넣을 수 있음.
 			//Wrap은 컬럼 사이즈가 정해져 있지만 데이터 길이가 더 길 때, 뒷 부분은 알아서 줄 바꿈 해줌.
-			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"}, //모든 그리드에 들어감
-			{Header:"제재코드",Type:"Text", SaveName:"pnish_cd",Edit:0,MinWidth:80,Align:"Center"},
-			{Header:"제재명",Type:"Text",SaveName:"name",MinWidth:80,KeyField:1 ,MultiLineText:1}, //필수값을 체크하고자 할 때 keyField사용			
-			{Header:"제재일수",Type:"Int", Format:"#일", SaveName:"day_cnt",MinWidth:150,KeyField:1,MultiLineText:1, Wrap:1}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
-			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50}, //모든 그리드에 들어감
+			{Header:"신고번호",Type:"Int", SaveName:"report_no",MultiLineText:1, Wrap:1, Edit:0}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
+			{Header:"제목",Type:"Text", SaveName:"title",MinWidth:150, Edit:0},
+			{Header:"신고자ID",Type:"Text", SaveName:"reporter_id", Edit:0},
+			{Header:"신고대상ID",Type:"Text", SaveName:"target_id", Edit:0},
+			{Header:"신고일자",Type:"Date", SaveName:"report_date", Edit:0},
+			{Header:"확인여부",Type:"CheckBox", TrueValue:"Y", FalseValue:"N", SaveName:"report_at", MinWidth:80, Edit:0}, //필수값을 체크하고자 할 때 keyField사용			
+			{Header:"신고사유",Type:"Text", SaveName:"pnish_name", Edit:0},
+			{Header:"내용확인",Type:"Button", Align:"Center", SaveName:"showContents", Edit:1}
 		];   
 		IBS_InitSheet( mySheet , initSheet);
 
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
 		mySheet.SetFocusAfterProcess(0);
+		 
+	}
+	
+	function mySheet_OnButtonClick(Row, Col){
+		console.log("[" + Row + "," + Col + "] 셀의 버튼 클릭");
+		console.log(mySheet.GetRowData(Row));
+		var url="${contextPath}/admin/report/list/contents?report_no="+mySheet.GetRowData(Row).report_no;
+		window.open(url,"_blank");
+		/*
+		var title="detailForm";
+		var form = document.createElement('form');
+		var detailInfo = document.createElement('input');
+		$(detailInfo).attr('type','hidden');
+		$(detailInfo).attr('name','detailInfo');
+		form.append(detailInfo);
+		form.detailInfo.value=JSON.stringify(mySheet.GetRowData(Row));			
+		form.target=title;
+		form.action="${contextPath}/admin/report/list/contents";
+		form.method="post";
+		$('body').append(form);
+		form.submit();
+		
+		window.open("",title);
+		*/
 	}
 	
 	function doAction(sAction) {
 		switch(sAction) {
 		case "search": //조회
 		    var param = FormQueryStringEnc(document.frm);
-			mySheet.DoSearch("${contextPath}/admin/report/pnish/search", param);
+			mySheet.DoSearch("${contextPath}/admin/report/list/search", param);
 			break;
 		case "reload": //초기화
 			mySheet.RemoveAll();
@@ -90,18 +121,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-<!-- 
- -->
 	<div class="page_title">
 		<span><a class="closeDepth" href="#">closeDepth</a></span> 
-		<span class="title">불량회원관리 > <b>제재 기준 조회/변경</b></span>
+		<span class="title">불량회원관리 > <b>신고 목록 조회/변경</b></span>
 	</div>
 	
 	<div class="main_content">
 		<div class="exp_product">신고 기준 조회 및 변경이 가능합니다.</div>
 		<div class="exp_product">
 			<form name='frm'>
-				제재명 : <input type='text' id="p_name" name="p_name" />
+				제목 : <input type='text' id="p_title" name="p_title" />
 				<input type="text" style="display: none;" />
 			</form>
 		</div>

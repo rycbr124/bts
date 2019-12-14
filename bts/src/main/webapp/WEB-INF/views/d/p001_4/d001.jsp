@@ -168,7 +168,7 @@ figure.snip1321 {
   height : 210px;
   width: 350px;
   max-height : 300px;
-  margin: 10px;
+  margin: 10px; 
   color: #000000;
   text-align: center;
   -webkit-perspective: 50em;
@@ -250,6 +250,7 @@ figure.snip1321.hover:after {
   opacity: 0.9;
 }
 
+
 </style>
 
 
@@ -266,6 +267,14 @@ figure.snip1321.hover:after {
 			<li class="nav-item"><a class="nav-link"
 				href="${contextPath}/community/review/list">후기</a></li>
 		</ul>
+		<div class="input-group">
+      		<input type="text" id="searchForm" name="searchResult" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+      		<div class="input-group-append">
+        		<button class="btn btn-primary" type="button" onclick="searchPlan()">
+          			<i class="fas fa-search fa-sm"></i>
+        		</button>
+      		</div>
+    	</div>
 
 		<div class="content">
 		

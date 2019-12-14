@@ -1,11 +1,24 @@
 @charset "UTF-8";
-@font-face{
-	src:url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
-	font-family:"binggrae";	
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+    font-family: "NanumSquareRoundEB";
+}
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundB.ttf");
+    font-family: "NanumSquareRoundB";
+}
+@font-face {
+    src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    font-family: "NanumSquareRoundR";
 }
 
-#container{
-	font-family:"binggrae";
+#subjectText{
+	font-family: "NanumSquareRoundEB";
+	display : inline-block;
+}
+
+.container{
+	font-family: "NanumSquareRoundR";
 }
 body{
 	margin-top: 100px;
@@ -29,16 +42,22 @@ ul.tabs li{
 }
 
 ul.tabs li.current{
-	background: #ededed;
+	background: #F8F8FA;
 	color: #222;
 }
 
 .tab-content{
 	display: none;
-	background: #ededed;
+	background: #F8F8FA;
 	padding: 15px;
 }
 
 .tab-content.current{
 	display: inherit;
+}
+
+img.document{
+	width : 50px;
+	width : 50px;
+	
 }

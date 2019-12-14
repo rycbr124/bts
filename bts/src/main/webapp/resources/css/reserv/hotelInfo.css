@@ -1,0 +1,22 @@
+@charset "UTF-8";
+@font-face{
+	src:url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
+	font-family:"binggrae";	
+}
+#container{
+	font-family:"binggrae";
+	padding-left:150px;
+}
+#hotelResult{
+	max-width:900px;
+}
+#hotelImg{
+	max-width:1000px;
+	max-height:500px;
+	width:800px;
+	height:700px;
+}
+#reservBtn0,#reservBtn1,#reservBtn0{
+	background:#666666;
+}
+

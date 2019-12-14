@@ -66,7 +66,8 @@ $(function(){
 			<li><a href="${contextPath}/my/myBoardList"> <i class="icon icon-post-list"></i>
 					<span>내 글목록 관리</span>
 			</a></li>
-			<li><a href="wishlist.html"> <i class="icon icon-reservation"></i> <span>예약 내역 관리</span>
+			<li><a href="${contextPath}/my/reserv/reservList"> <i
+					class="icon icon-reservation"></i> <span>예약 내역 관리</span>
 			</a></li>
 			<li><a href="${contextPath}/question/questionMain"> <i class="icon icon-question"></i>
 					<span>문의 내역 관리</span>
