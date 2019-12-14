@@ -9,28 +9,19 @@ public class H_P001VO {
 	private String lodging_id;
 	private String description;
 	private String address;
-	private int resve_cnt;
+	private String resve_cnt;
 	private String lodging_se;
 	private String room_no;
 	private String room_type;
 	private String lodging_image;
-	public String getLodging_image() {
-		return lodging_image;
-	}
-	public void setLodging_image(String lodging_image) {
-		this.lodging_image = lodging_image;
-	}
-	private int whlrs_no;
-	private int price;
 	private String name;
+	private String res_type;
+	private int price;
+	private int whlrs_no;
+	private String rn;
 	
 	
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+	
 	public String getLodging_id() {
 		return lodging_id;
 	}
@@ -49,10 +40,10 @@ public class H_P001VO {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public int getResve_cnt() {
+	public String getResve_cnt() {
 		return resve_cnt;
 	}
-	public void setResve_cnt(int resve_cnt) {
+	public void setResve_cnt(String resve_cnt) {
 		this.resve_cnt = resve_cnt;
 	}
 	public String getLodging_se() {
@@ -73,6 +64,12 @@ public class H_P001VO {
 	public void setRoom_type(String room_type) {
 		this.room_type = room_type;
 	}
+	public String getLodging_image() {
+		return lodging_image;
+	}
+	public void setLodging_image(String lodging_image) {
+		this.lodging_image = lodging_image;
+	}
 	public int getWhlrs_no() {
 		return whlrs_no;
 	}
@@ -85,6 +82,25 @@ public class H_P001VO {
 	public void setPrice(int price) {
 		this.price = price;
 	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getRn() {
+		return rn;
+	}
+	public void setRn(String rn) {
+		this.rn = rn;
+	}
+	public String getRes_type() {
+		return res_type;
+	}
+	public void setRes_type(String res_type) {
+		this.res_type = res_type;
+	}
+
 	
 	
 	

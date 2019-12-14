@@ -50,6 +50,18 @@
 		<result property="member_id" column="member_id" />
 	</resultMap>
 	
+	<resultMap id="myResearvation" type="c_p003vo">
+		<result property="resve_no" column="resve_no" />
+		<result property="lodging_image" column="lodging_image" />
+		<result property="name" column="name" />
+		<result property="resve_date" column="resve_date" />
+		<result property="amount" column="amount" />
+		<result property="in_date" column="in_date" />
+		<result property="out_date" column="out_date" />
+		<result property="room_type" column="room_type" />
+		<result property="cancle_at" column="cancle_at" />
+	</resultMap>
+	
 	<!-- 내후기 -->
 	<select id="myReview" resultMap="myArticleResult" parameterType="f_p001_3VO">
 	<![CDATA[
@@ -173,5 +185,31 @@
 		WHERE member_id=#{member_id}
 		]]>
 	</select>
+	
+	<!-- 예약 -->
+	<select id="selectMyReservation" parameterType="c_p003vo"
+		resultMap="myResearvation">
+	  <![CDATA[
+		select * from (select rownum rn, a.* from( select rl.cancle_at,rl.resve_no,lb.lodging_image, lb.name, rl.resve_date, rl.amount, rl.in_date, rl.out_date,lr.room_type
+		from lodging_business lb, lodging_room lr, reservation_list rl where lr.room_no = rl.room_no and lr.lodging_id = lb.lodging_id
+		and lr.lodging_id = lb.lodging_id and lr.room_no = rl.room_no and rl.member_id = #{member_id} order by rl.resve_no desc) a) where rn between #{start} and #{end}
+	  ]]>
+	</select>
+	
+	<select id="resListCount" resultType="java.lang.Integer">
+	<![CDATA[
+	select count(*) from lodging_business lb, lodging_room lr, reservation_list rl 
+	where 
+	lb.lodging_id = lr.lodging_id and lr.lodging_id = rl.lodging_id and lr.room_no = rl.room_no and rl.lodging_id = lb.lodging_id
+	and rl.member_id = #{member_id}
+	]]>
+	</select>
+	
+	<delete id="cancle">
+	<![CDATA[
+	delete from reservation_list where resve_no = #{resve_no}
+	]]>
+	
+	</delete>
 
 </mapper>

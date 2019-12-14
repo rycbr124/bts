@@ -17,14 +17,53 @@ public class H_P001DAOImpl implements H_P001DAO{
 	SqlSession sqlSession;
 	
 	@Override
-	public List<H_P001VO> hotelList(PagingVO pagingVO) throws DataAccessException {
+	public List<H_P001VO> hotelList() throws DataAccessException {
 		
-		return sqlSession.selectList("mapper.reservation.hotelList",pagingVO);
+		return sqlSession.selectList("mapper.reservation.hotelList");
 	}
 
 	@Override
 	public Integer hotelListCount() {
 		return sqlSession.selectOne("mapper.reservation.hotelListCount");
 	}
+
+	@Override
+	public List<H_P001VO> guestList() {
+		
+		return sqlSession.selectList("mapper.reservation.guestList");
+	}
+
+	@Override
+	public Integer guestListCount() {
+		
+		return sqlSession.selectOne("mapper.reservation.guestListCount");
+	}
+	
+	@Override
+	public List<H_P001VO> motelList() {
+		
+		return sqlSession.selectList("mapper.reservation.motelList");
+	}
+
+	@Override
+	public Integer motelListCount() {
+		
+		return sqlSession.selectOne("mapper.reservation.motelListCount");
+	}
+
+	@Override
+	public H_P001VO hotelResult(String lodging_id) throws DataAccessException {
+		
+		return sqlSession.selectOne("mapper.reservation.hotelResult",lodging_id);
+	}
+
+
+	@Override
+	public List<H_P001VO> roomInfoResult(String lodging_id) throws DataAccessException {
+		
+		return sqlSession.selectList("mapper.reservation.roomInfoResult",lodging_id);
+	}
+
+	
 
 }

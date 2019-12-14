@@ -60,7 +60,7 @@
 			arr_content[${status.index}] = "${planner.content_id}";
 			arr_day[${status.index}] = "${planner.day_no}";
 			arr_desc[${status.index}] = "${planner.plan_desc}";
-			arr_no[${status.index}] = "${planner.plan_no}"
+			arr_no[${status.index}] = "${planner.plan_no}";
 		</c:forEach>
 		console.log(arr_content);
 		console.log(arr_day);

@@ -3,12 +3,49 @@
 	src:url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
 	font-family:"binggrae";	
 }
+#reservMainImg {
+	padding-left: 500px;
+	border:1px solid #FFF;
+}
+#headsubjectText{
+	padding-left: 350px;
+}
+#reservcontainer{
+	font-family:"binggrae";
+}
+ul.tabs{
+	margin: 0px;
+	padding-left: 350px;
+	list-style: none;
+}
+ul.tabs li{
+	background: none;
+	color: #222;
+	display: inline-block;
+	padding: 10px 15px;
+	cursor: pointer;
+}
+ul.tabs li.current{
+	background: #ededed;
+	color: #222;
+}
+.tab-content{
+	display: none;
+	background: #ededed;
+	padding: 15px;
+}
+
+.tab-content.current{
+	display: inherit;
+}
 .card{
 	position:relative;
 	width:100%;
 	height:auto;
 	max-height:500px;
 	margin:150px;
+	float:right;
+	left:-250px;
 }
 .card-body{
 	position:absolute;
