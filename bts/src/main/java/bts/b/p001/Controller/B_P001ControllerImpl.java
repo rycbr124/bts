@@ -5,31 +5,27 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.github.scribejava.core.model.OAuth2AccessToken;
 import com.google.gson.JsonElement;
@@ -39,7 +35,6 @@ import com.google.gson.JsonParser;
 import bts.b.p001.Naver.NaverLoginBO;
 import bts.b.p001.Service.B_P001Service;
 import bts.b.p001.VO.B_P001VO;
-import bts.b.p001.VO.KakaoVO;
 import bts.b.p001.VO.NaverVO;
 
 @Controller("b_p001")
@@ -224,10 +219,9 @@ public class B_P001ControllerImpl implements B_P001Controller {
 
 	@Override
 	@RequestMapping(value = "/login", method = { RequestMethod.POST, RequestMethod.GET })
-	public ModelAndView login(@RequestParam Map<String, String> loginMap, HttpServletRequest request,
+	public String login(@RequestParam Map<String, String> loginMap, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
-		ModelAndView mav = new ModelAndView();
 		d001vo = d001Service.login(loginMap);
 		if (d001vo != null && d001vo.getMember_id() != null) {
 			HttpSession session = request.getSession();
@@ -236,18 +230,16 @@ public class B_P001ControllerImpl implements B_P001Controller {
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("member_id",d001vo.getMember_id());
 			session.setAttribute("memberInfo", d001vo);
-			String member_id = request.getParameter("member_id");
-			System.out.println("성공");
-			mav.addObject("member_id",member_id);
-			mav.setViewName("/z/p000/d001");
-
+			FlashMap flash = RequestContextUtils.getOutputFlashMap(request);
+			flash.put("member_info", d001vo);
 		} else {
 			String message = "아이디나  비밀번호가 틀립니다. 다시 로그인해주세요";
-			mav.addObject("message",message);
 			System.out.println("실패:" + message);
-			mav.setViewName("/z/p000/d001");
+			FlashMap fm = RequestContextUtils.getOutputFlashMap(request);
+			fm.put("message", message);
 		}
-		return mav;
+		return "redirect:/main/main";
+
 	}
 
 	@RequestMapping(value = "/kakaoLogin")

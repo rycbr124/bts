@@ -23,7 +23,7 @@ $(document).ready(function(){
 	}
 	
 	function init(){
-		var url="ws://"+"${pageContext.request.serverName}"+":"+${pageContext.request.serverPort}+"${pageContext.request.contextPath}"+"/msg";		
+		var url="ws://"+"${pageContext.request.serverName}"+":"+${pageContext.request.serverPort}+"${pageContext.request.contextPath}"+"/msg?at=${accompany_at}";		
 		var con = new socketConn(url);
 		var ws=con.getWs();
 		
@@ -41,6 +41,12 @@ $(document).ready(function(){
 				var resultForm = prependMember(divForm);
 				memberClick(resultForm,ws);
 			}
+			
+			if("${accompany_at=='Y'}"=="true"){
+				var textMessage='${sessionScope.memberInfo.member_id}'+'님이 매칭을 신청하였습니다.'
+				sendText(ws,"send_message",sendForm(textMessage,"${target_id.member_id}"));
+			}
+			
 		}
 		ws.onclose=function(message){
 			alert("end");
@@ -358,7 +364,9 @@ $(document).ready(function(){
       <div id="chat">
          <div id="chat-header">
 			<div id="user-info"></div>
-			<i class="fas fa-user-plus fa-2x"></i>
+			<c:if test="${accompany_at!='Y'}">
+				<i class="fas fa-user-plus fa-2x"></i>
+			</c:if>
          </div>
          <div id="chat-message">
 			<div id="chat-main">

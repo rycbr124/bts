@@ -13,4 +13,12 @@ public interface ReportDAO {
 
 	List<PnishVO> selectPnishList();
 
+	String selectReviewContents(ReportVO vo);
+
+	String selectAccContents(ReportVO vo);
+
+	List<String> selectPlanContents(ReportVO vo);
+
+	String selectCommentContents(ReportVO vo);
+
 }

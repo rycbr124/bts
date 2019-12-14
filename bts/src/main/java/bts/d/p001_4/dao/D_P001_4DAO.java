@@ -27,4 +27,5 @@ public interface D_P001_4DAO {
 	public String selectCommentTotal(Map<String, String> searchMap) throws DataAccessException;
 	public void insertAnswer(D_P001_4VO_5 d_p001_4VO_5) throws DataAccessException;
 	public int deleteAnswer(String answer_no) throws DataAccessException;
+	public List<String> findContentId() throws DataAccessException;
 }

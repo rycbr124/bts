@@ -31,11 +31,10 @@
 </script>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/e/p001/d002.css" />
-<link rel="stylesheet" href="${contextPath}/resources/css/bootstrap/bootstrap.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <script src="${contextPath}/resources/js/report/report.js"></script> <!-- 커스텀 js -->
 <script src="${contextPath}/resources/js/c/p006/d001.js"></script><!-- 소켓 js -->
 <title>동행 게시글 조회</title>
@@ -70,10 +69,7 @@
 			<button class="btn btn-outline-secondary" id="inclnBtn">회원 성향 보기</button>
 			<div class="dropdown" id="dropdown" style="display: none;">
 				<c:forEach var="inclnView" items="${inclnView}">
-					<h5>${inclnView.group_desc}</h5>
-					<label class="btn btn-info btn-lg" id="incln" style="background-color: #666666; border-color: #666666">${inclnView.name}</label>
-					<br>
-					<br>
+					<img src="${inclnView.icon_col}" class="iclnImgB" title="${inclnView.group_desc}" data-content="${inclnView.name}" data-container="body" data-toggle="popover" data-placement="bottom" data-trigger="hover">
 				</c:forEach>
 			</div>
 			<script>
@@ -97,6 +93,8 @@
 	</div>
 	<script>
 	$(document).ready(function(){
+		
+		
 		$('#contents-report').on('click',function(){
 			var reqUrl = "${contextPath}/report/article/accompany";
 			var contents_cd = ${accView.article_no};
@@ -114,29 +112,19 @@
 				async : false,
 				data : alldata,
 				success : function(){
-					var url="ws://"+"${pageContext.request.serverName}"+":"+${pageContext.request.serverPort}+"${pageContext.request.contextPath}"+"/msg";		
-					var con = new socketConn(url);
-					var ws=con.getWs();
-					var textMessage='${sessionScope.memberInfo.member_id}'+'님이 매칭을 신청하였습니다.'
-					ws.onopen=function(){
-						sendText(ws,"send_message",sendForm(textMessage,target_id));
-						ws.close();
-					}
-					ws.onclose=function(){
-						alert("신청이 완료되었습니다.");
-						
-						var form = document.createElement('form');
-						var hidden = document.createElement('input');
-						$(hidden).attr('type','hidden');
-						$(hidden).attr('name','target_id');			
-						form.append(hidden);
-						
-						form.target_id.value=target_id;
-						form.action="${contextPath}/my/message/main";
-						form.method="post";
-						$('body').append(form);
-						form.submit();				
-					}
+					alert("신청이 완료되었습니다.");
+					
+					var form = document.createElement('form');
+					var hidden = document.createElement('input');
+					$(hidden).attr('type','hidden');
+					$(hidden).attr('name','target_id');			
+					form.append(hidden);
+					
+					form.target_id.value=target_id;
+					form.action="${contextPath}/my/message/accompany";
+					form.method="post";
+					$('body').append(form);
+					form.submit();				
 				},
 				error: function(){
 					alert("다시 시도해주세요.");
@@ -144,7 +132,10 @@
 				
 			})
 		})
-	})
+		$(function () {      
+	          $('[data-toggle="popover"]').popover();
+	    });  
+	});
 	
 	</script>
 	<div class="modal fade" id="popUpAccReq">

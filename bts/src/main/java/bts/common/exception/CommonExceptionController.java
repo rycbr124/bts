@@ -10,9 +10,4 @@ public class CommonExceptionController {
 	public String notFound() {
 		return "/common/exception/error404";
 	}
-
-	@RequestMapping(value="/error")
-	public String commonError() {
-		return "/common/exception/errorCommon";
-	}
 }

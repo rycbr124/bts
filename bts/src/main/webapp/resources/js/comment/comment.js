@@ -88,7 +88,7 @@ function comPaging(paging){
    if(paging==$('a.page-link:first').text()){
       paging=startPage-1;
    }else if(paging==$('a.page-link:last').text()){
-      paging=endPage+1;
+      paging=Number(endPage)+1;
    }
    
    var searchData={

@@ -17,6 +17,8 @@ public class F_P001_3VO_3 {
 	private String member_type;
 	private Timestamp register_date;
 	
+	private String menu_name;
+	
 	public String getMember_type() {
 		return member_type;
 	}
@@ -64,6 +66,12 @@ public class F_P001_3VO_3 {
 	}
 	public void setProfile_image(String profile_image) {
 		this.profile_image = profile_image;
+	}
+	public String getMenu_name() {
+		return menu_name;
+	}
+	public void setMenu_name(String menu_name) {
+		this.menu_name = menu_name;
 	}
 	
 	

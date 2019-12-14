@@ -43,7 +43,11 @@
 		mySheet.RemoveAll();
 		//아이비시트 초기화
 		var initSheet = {};
-		initSheet.Cfg = {SearchMode:smLazyLoad,ToolTip:1};
+		initSheet.Cfg = {
+                "SearchMode": smLazyLoad,
+                "AutoFitColWidth": "search|resize|init|colhidden|rowtransaction",
+                "DeferredVScroll": 1
+		};
 		initSheet.HeaderMode = {Sort:1,ColMove:1,ColResize:1,HeaderCheck:1};
 		initSheet.Cols = [
 			//SaveName은 보통 VO 속성명과 일치시켜줌.

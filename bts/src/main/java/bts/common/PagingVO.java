@@ -78,7 +78,13 @@ public class PagingVO {
 		calStartEndPage(rPage);
 		calStartEndRow();
 	}
-	
+
+	public void setPagingDesc(int curPage,int totalCount,int rPage,int rRow) {
+		calTotalPage(totalCount, rRow);
+		calCurPage(curPage);
+		calStartEndPage(rPage);
+		calStartEndRowDesc();
+	}
 	
 	private void calTotalPage(int totalCount,int rangeRow) {
 		int totalPage = totalCount/rangeRow;
@@ -101,10 +107,26 @@ public class PagingVO {
 		this.endPage = endPage;
 		this.rangePage=rangePage;
 	}
+
+	private void calStartEndRowDesc() {
+		int endRow = this.totalCount-((this.curPage-1)*this.rangeRow);
+		int startRow = (endRow-this.rangeRow)+1;
+		if(startRow<0) {
+			startRow=0;
+		}	
+		if(endRow<0) {
+			endRow=0;
+		}
+		this.startRow=startRow;
+		this.endRow=endRow;
+	}	
 	
 	private void calStartEndRow() {
 		int endRow = this.curPage*this.rangeRow;
 		int startRow = (endRow-this.rangeRow)+1;
+		if(startRow<0) {
+			startRow=0;
+		}
 		this.startRow=startRow;
 		this.endRow=endRow;
 	}

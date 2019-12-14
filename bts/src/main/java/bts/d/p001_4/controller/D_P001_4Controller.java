@@ -1,12 +1,11 @@
 package bts.d.p001_4.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,6 +27,7 @@ public interface D_P001_4Controller {
 	 public String commentPaging(String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	 public String commentWrite(String article_cd,RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	 public String commentDelete(HttpServletRequest request, HttpServletResponse response) throws Exception;
+	 public @ResponseBody String searchPlan(@RequestParam("searchResult") String searchResult, HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 
 }

@@ -17,8 +17,8 @@ public class C_P006DAOImpl implements C_P006DAO{
 	SqlSession sqlSession;
 	
 	@Override
-	public List<B_P001VO> selectMemberList(String id) throws DataAccessException {
-		List<B_P001VO> list=sqlSession.selectList("mapper.message.selectMemberList", id);
+	public List<B_P001VO> selectMemberList(Map<String,String> searchMap) throws DataAccessException {
+		List<B_P001VO> list=sqlSession.selectList("mapper.message.selectMemberList", searchMap);
 		return list;
 	}
 	

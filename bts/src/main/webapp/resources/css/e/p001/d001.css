@@ -1,14 +1,19 @@
 @charset "UTF-8";
 
-@font-face{
-	src:url("/resources/fonts/Binggrae/Binggrae-Bold.ttf");
-	font-family:"binggrae";	
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+   	font-family: "NanumSquareRoundEB";
+}
+
+@font-face {
+   	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+   	font-family: "NanumSquareRoundR";
 }
 
 .carousel-caption{
 	font-size:25px;
 	color:#666699;
-	font-family:"binggrae";
+	font-family: "NanumSquareRoundR";
 }
 
 .carousel-inner{
@@ -16,7 +21,7 @@
 }
 
 #mainsubject{
-	font-family:"binggrae";
+	font-family: "NanumSquareRoundEB";
 }
 
 #crsImg1{
@@ -185,7 +190,7 @@ body > .container{
 #centercardText{
 	inherit:none;
 	position:relative;
-	font-family:"binggrae";
+	font-family: "NanumSquareRoundR";
 }
 .row{
 	padding:0px;

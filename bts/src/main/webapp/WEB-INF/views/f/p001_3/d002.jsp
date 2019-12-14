@@ -109,6 +109,19 @@
 	*/
 }
 
+#refer{
+	padding-bottom:10px;
+	margin-bottom:5px;
+}
+
+#refer:after{
+	margin-top:5px;
+	content:"";
+	display:block;
+	width:45px;
+	border-bottom:3px solid #5c5c5c;
+}
+
 #contents img{
 	max-width:80%;
 	max-height : 500px;
@@ -258,8 +271,10 @@
 				</c:if>
 			</div>
 		</div>
-
 		<div id="review-detail">
+			<c:if test="${result.refer_link!=null}">
+				<div id="refer"><span>이 게시글은 </span><a href="${contextPath}${result.refer_link}" target="_blank">${result.refer_title}</a><span>에 대한 후기입니다.</span></div>
+			</c:if>
 			<div id="contents">${result.contents}</div>
 			<div id="tags">
 				<c:forEach var="tag_name" items="${result.tag_list}">

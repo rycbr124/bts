@@ -85,7 +85,7 @@
 		
 		for(var i in arr_content){
 			console.log("1111 : " + arr_content[i]);
-			var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+			var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
 			var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + arr_content[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 			
 			$.ajax({
@@ -109,7 +109,7 @@
 			         title.appendChild(title_text);
 			         
 			         var a = document.createElement('a');
-			         $(a).prop('href', '${contextPath}/recommend/place_detail?contentid=' + arr_content[i]);
+			         $(a).prop('href', '${contextPath}/recommend/place_detail?contentid=' + arr_content[i] + '&contenttypeid=' + resultArray.contenttypeid);
 			         a.appendChild(title);
 			         		         
 			         var img= document.createElement('img');
@@ -170,8 +170,8 @@
 			$(d_button).prop('value', '삭제');
 			$(d_button).prop('class', 'btn btn-default btn-sm');
 			$(d_button).attr('onclick', 'location.href="${contextPath}/community/plan_delete?plan_no=' + arr_no[0] + '"');
-			$('.planner_detail').append(m_button);
-			$('.planner_detail').append(d_button);	
+			$('div.justify-content-md-end').append(m_button);
+			$('div.justify-content-md-end').append(d_button);	
 			
 		}
 		var list_button = document.createElement('input');
@@ -179,7 +179,7 @@
 		$(list_button).prop('value', '목록');
 		$(list_button).prop('class', 'btn btn-default btn-sm');
 		$(list_button).attr('onclick', 'location.href="${contextPath}/community/plan_list"');
-		$('.planner_detail').append(list_button);	
+		$('div.justify-content-md-end').append(list_button);	
 		
 	});
 
@@ -254,6 +254,10 @@ div.planner_detail{
 	padding : 80px;	
 	background-color : #F8F8FA;
 }
+div.justify-content-md-end{
+	background-color : #F8F8FA;
+	padding-bottom : 10px;
+}
 div.mx-auto{
 	background-color : #F8F8FA;
 }
@@ -291,6 +295,10 @@ img.titleImage{
 h2.titleDesc{
 	display : inline-block;
 }
+
+#contents-info{
+	margin-bottom : 0px;
+}
 </style>
 </head>
 <body>
@@ -311,6 +319,10 @@ h2.titleDesc{
 		<div class="planner_detail">
 		
 		</div>
+		<div class="row justify-content-md-end">
+		
+		</div>
+		
 		
 		<div id='contents-info'>
 			<span id="comment-count">
