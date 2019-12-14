@@ -10,4 +10,5 @@ public interface A_P004DAO {
 	public List<C_P004VO> searchContact(Map<String,String> searchMap)throws Exception;
 	public List<C_P004VO> questionAnswer(String contact_no)throws Exception;
 	public void addAnswer(A_P004VO a_p004VO)throws Exception;
+	public List<A_P004VO> selectAnswer(String contact_no)throws Exception;
 }

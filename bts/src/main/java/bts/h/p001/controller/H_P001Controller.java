@@ -15,5 +15,5 @@ import bts.h.p001.vo.H_P001VO;
 public interface H_P001Controller {
 
 	public ModelAndView pageInit( PagingVO pagingVO, String nowPage, String cntPerPage,HttpServletRequest request, HttpServletResponse response) throws Exception;
-	
+	public ModelAndView hotelView(String lodging_id, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }

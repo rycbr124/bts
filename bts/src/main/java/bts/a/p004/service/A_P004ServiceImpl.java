@@ -26,4 +26,8 @@ public class A_P004ServiceImpl implements A_P004Service{
 	public void addAnswer(A_P004VO a_p004VO)throws Exception{
 		 a_p004DAO.addAnswer(a_p004VO);
 	}
+	@Override
+	public List<A_P004VO> selectAnswer(String contact_no)throws Exception{
+		return a_p004DAO.selectAnswer(contact_no);
+	}
 }
