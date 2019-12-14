@@ -19,10 +19,10 @@
 
 
 <script>
-	$('[data-toggle="popover"]').popover('show');
+	
 	$(document).ready(function() {
 		tagInit();
-		
+		console.log($('#side > ul > li'));
 		if("${sessionScope.memberInfo.member_type=='kakao' || sessionScope.memberInfo.member_type=='naver'}"=="true"){
 			$("#input_img").on("click", function(){
 				alert('프로필 이미지 등록은 일반 회원만 가능합니다.');
@@ -36,14 +36,7 @@
 			profile.submit();
 		});
 		
-		/*
-		$('div.check input:radio').on('click',function(){
-            var id=$(this).attr('id');
-            console.log(id);
-            var col=$(this).data('col');
-            $('label[for='+id+']').find('img').attr('src',col);                   
-         });
-		*/
+	
 		
         $('div.check input:radio').on('click',function(){
             var id=$(this).attr('id');
@@ -54,8 +47,79 @@
           })   
 		
 		
-		
-		
+        	$('[data-toggle="popover"]').popover();
+        	
+        $('#myModal').on('shown.bs.modal', function () {
+        	  $('#myInput').focus()
+        	})
+        	
+        	
+        	$('#secession').click(function(){
+    			//패스워드 입력 확인
+    			if($('#pw').val() == ''){
+    				var pwNull = document.createElement('p');
+    				var message = '비밀번호를 입력해주세요.'
+    				$(pwNull).text(message);
+    				$(pwNull).prop('id','pwMessage');
+    				var messageCheck = $('.withdrawal_check').children('#pwMessage');
+    				if(messageCheck.length >= 0){
+    					$('#pwMessage').remove()
+    					$('#pw_area').after(pwNull);
+    				}else{
+    				$('#pw_area').after(pwNull);
+    				}
+    				$('#pw').focus();
+    				return;
+    			}else if($('#passwdCheck').val() == ''){
+    				var pwCheckNull = document.createElement('p');
+    				var message = '비밀번호 확인을 입력해주세요.'
+    				$(pwCheckNull).text(message);
+    				$(pwCheckNull).prop('id','pwCheckMessage');
+    				var messageCheck = $('.withdrawal_check').children('#pwCheckMessage');
+ 	   				if(messageCheck.length >= 0){
+    					$('#pwCheckMessage').remove();			
+    					$('#pwCheck_area').after(pwCheckNull);
+    				}else{
+    					$('#pwCheck_area').after(pwCheckNull);
+    				}
+    				$('#passwdCheck').focus();
+    				return;
+    			}
+				
+    			
+    			//입력한 패스워드가 같인지 체크
+    			if($('#passwdCheck').val() != $('#password').val()){
+    				alert("패스워드가 일치하지 않습니다.");
+    				$('#passwdCheck').focus();
+    				return;
+    			}
+    			
+    			//패스워드 맞는지 확인
+    			$.ajax({
+    				url: "${contextPath}/my/passCheck",
+    				type: "POST",
+    				data: $('#delFrm').serializeArray(),
+    				success: function(data){
+    					if(data=='false'){
+    						alert("패스워드가 틀렸습니다.");
+    						window.location.href = '${contextPath}/my/exitMain';
+    					}else{
+    						//탈퇴
+    						var result = confirm('정말 탈퇴 하시겠습니까?');
+    						if(result==true){
+    							$('#delFrm').submit();
+    							alert("회원탈퇴가 완료되었습니다.");
+    						}else{
+    							alert("회원탈퇴가 취소되었습니다.");
+    							window.location.href = '${contextPath}/my/exitMain';
+    						}
+    					}	
+    				},
+    				error: function(){
+    					alert("서버 에러.");
+    				}
+    			});
+    		});
 		
 	});
 	
@@ -77,8 +141,17 @@
 			}
 		}
 	}
-	
-
+	function message_remove(){
+		var pwMessage = $('.withdrawal_check').children('#pwMessage');
+		var pwCheckMessage = $('.withdrawal_check').children('#pwCheckMessage');
+		console.log(pwCheckMessage.length);
+		if(pwMessage != 'undefined'){
+			$('#pwMessage').remove();
+		}
+		if(pwCheckMessage != 'undefined'){
+			$('#pwCheckMessage').remove();
+		}
+	}
 	
 
 </script>
@@ -164,6 +237,12 @@ form{
 	vertical-align:middle;
 	line-height:90px;
 }
+#pwMessage , #pwCheckMessage{
+	font-size:12px;
+	color:gray;
+	margin-left:100px;
+}
+
 </style>
 
 <body>
@@ -199,10 +278,11 @@ form{
 										class="user-picture" id="profImg">
 								</c:otherwise>
 							</c:choose>
-
+				 
 							<input type="file" data-toggle="modal" name="profile_image"
 								data-target="#modal-set-profile-img"
-								class="btn btn-sm btn-default" value="사진 올리기" id="input_img" />
+								class="btn btn-sm btn-default" value="사진 올리기" id="input_img" style="display:none;"/>
+				
 						</div>
 						<div class="row">
 							<div class="col-md-6">
@@ -270,7 +350,6 @@ form{
 						<div class="check">
 							
 							<h3 class="space-5">여행자 성향 등록</h3>
-								<hr>
 								<c:forEach var="data" items="${incln}">
 									<div class="custom-control custom-radio"> 
 										<font size="3.5em" color="green">${data.key}</font><br>
@@ -279,34 +358,50 @@ form{
 											<input type="radio" id="${data2.incln_cd}" name="${data2.group_name}" value="${data2.incln_cd}" data-col="${data2.icon_col}" data-bla="${data2.icon_bla}">
 											<label class="custom-control-label" for="${data2.incln_cd}">
 												<div id="circle">
-													<img src="${data2.icon_bla}" class="iclnImgB" title="제에목" data-container="body" data-toggle="popover" data-placement="bottom" data-content="내용">
+													<img src="${data2.icon_bla}" class="iclnImgB" title="제에목" data-container="body" data-toggle="popover" data-trigger="hover"  data-placement="bottom" data-content="내용">
 												</div>		
-																		
 											</label>
 										</c:forEach>
 									</div>
-									<hr>
 								</c:forEach>
 							</div>
 						
 						
-						<div class="col-md-2">
-							<button type="button" id="btn-form-submit"
-								class="btn btn-form-submit form-control"
-								style="margin-bottom: 40px; background: #ec008c; /* fallback for old browsers */ background: -webkit-linear-gradient(to right, #fc6767, #ec008c); /* Chrome 10-25, Safari 5.1-6 */ background: linear-gradient(to right, #fc6767, #ec008c);">저장</button>
+						<div class="col-md-2" style="position:relative; width:100%; height:34px; margin-top:50px;">
+							<button type="button" id="btn-form-submit"class="btn btn-form-submit form-control">저장</button>
 						</div>
 						
 					</form>
-					<div class="row">
-						<div class="col-md-6" style="display: flex;">
-							<div style="margin: auto;">
-								<div data-toggle="modal" data-target="#modal-out-agreement"
-									class="btn-out"
-									style="cursor: pointer; color: lightgrey; text-decoration: underline;">
-									<a href="${contextPath }/my/exitMain">회원탈퇴</a>
-								</div>
-							</div>
-						</div>
+					<button type="button" class="btn btn-primary btn-lg" id="" data-toggle="modal" data-target="#myModal" style="position:absolute;font-size:14px; right:150px; bottom:0; border-radius:4px; line-height:15px;">회원 탈퇴</button>
+					<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  						<div class="modal-dialog">
+    						<div class="modal-content">
+      							<div class="modal-header">
+        							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        							<h4 class="modal-title" id="myModalLabel">회원 탈퇴</h4>
+      							</div>
+      							<div class="modal-body">
+      								<form name="delFrm" id="delFrm" method="post" action="${contextPath}/my/exitMem">
+										<input type="hidden" name="userId" value="${sessionScope.userId}">
+										<p>*탈퇴를 원하시면 패스워드를 확인해 주세요.</p>
+										<div class="withdrawal_check">
+											<div id="pw_area">
+												<p>비밀번호</p>
+												<input type="password" name="password" id="pw" onKeydown ="message_remove()"/> 
+											</div>
+											<div id="pwCheck_area">
+												<p>비밀번호 확인</p>
+												<input type="password" name="passwdCheck" id="passwdCheck" onKeydown ="message_remove()"/>
+											</div>
+										</div>	
+									</form>
+      							</div>
+      							<div class="modal-footer">
+        							<button type="button" id="secession" class="btn btn-primary">탈퇴하기</button>
+        							<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+      							</div>
+    						</div>
+  						</div>
 					</div>
 				</div>
 			</div>

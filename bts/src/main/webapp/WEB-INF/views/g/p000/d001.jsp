@@ -43,17 +43,15 @@
 	
 }
 
-a{
+#body a{
 	display : inline-block;
 	text-align : center;
 	text-decoration : none;
 }
-
-h1{
+#body h1{
 	font-family: "NanumSquareRoundEB";
 }
-
-p{
+#body p{
 	font-family: "NanumSquareRoundR";	
 }
 
@@ -70,7 +68,6 @@ p{
 	margin : 100px 100px 100px 100px;
 	text-align : center;
 }
-
 
 </style>
 </head>

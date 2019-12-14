@@ -26,10 +26,16 @@
 	
 	/*Sheet 기본 설정 */
 	function LoadPage() {
+		doAction('search');
 		mySheet.RemoveAll();
 		//아이비시트 초기화
 		var initSheet = {};
-		initSheet.Cfg = {SearchMode:smLazyLoad,ToolTip:1};
+		
+		  initSheet.Cfg = {
+	                "SearchMode": smLazyLoad,
+	                "AutoFitColWidth": "search|resize|init|colhidden|rowtransaction",
+	                "DeferredVScroll": 1
+	      };
 		initSheet.HeaderMode = {Sort:1,ColMove:1,ColResize:1,HeaderCheck:1};
 		initSheet.Cols = [
 			//SaveName은 보통 VO 속성명과 일치시켜줌.
@@ -43,7 +49,7 @@
 			{Header:"카테고리",Type:"Html",SaveName:"contact_type",MinWidth:150,KeyField:1 ,MultiLineText:1,Align:"Center",Edit:0}, //필수값을 체크하고자 할 때 keyField사용			
 			{Header:"ID",Type:"Html",SaveName:"member_id",MinWidth:100, KeyField:1,Edit:0,Align:"Center"},
 			{Header:"문의날짜",Type:"Html",SaveName:"contact_date",MinWidth:100, KeyField:1,Edit:0,Align:"Center"},
-			{Header:"처리상태",Type:"Html",SaveName:"answer_at",MinWidth:50,Edit:0,Align:"Center"},
+			{Header:"처리상태",Type:"Html",SaveName:"answer_at",MinWidth:100,Edit:0,Align:"Center"},
 		];   
 		IBS_InitSheet( mySheet , initSheet);
 		
@@ -51,9 +57,8 @@
 		mySheet.SetRangeValue("답변하기",1,button,4,button);
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
-		//doAction('search');
+		
 	}
-	
 	/*Sheet 각종 처리*/
 	function doAction(sAction) {
 		switch(sAction) {
@@ -79,7 +84,7 @@
 	
 	function mySheet_OnClick(row,col){
 		var OrgValue = mySheet.CellSearchValue(row, 'answer_at');
-		if(mySheet.ColSaveName(col) == "title" && row >= 1 && OrgValue != "처리완료"){
+		if(mySheet.ColSaveName(col) == "title" && row >= 1){
 			var contact_no = mySheet.GetCellValue(row,'contact_no');
 			$.ajax({
 				async: false,
@@ -88,8 +93,9 @@
 				data : {"contact_no":contact_no},
 				dataType : 'json',
 				success : function(data){
-					for(var i in data){
-					 var data_obj = data[i];
+					var info = data.questionInfo;
+					for(var i in info){
+					 var data_obj = info[i];
 					 var title = data_obj['title'];
 					 var answer_at =data_obj['answer_at'];
 					 var member_id = data_obj['member_id'];
@@ -167,6 +173,15 @@
 					$(hidden).prop('name','contact_no');
 					$(hidden).prop('value',contact_no);
 					$(hidden).prop('class','contact_no');
+					if(OrgValue == '처리완료'){
+						var answer_info = data.answerInfo;
+						for(var j in answer_info){
+							var answer_obj = answer_info[j];
+							var answer_contents = answer_obj['contents'];
+							$(answerArea).prop('disabled','true');
+							$(answerArea).val(answer_contents);
+						}
+					}
 				},
 				error : function(data, textStatus){
 					alert("잘못된 접근입니다.");
@@ -219,7 +234,7 @@
 
 	<div class="clear hidden"></div>
 	<div class="ib_product">
-	<script>createIBSheet("mySheet", "110%", "700px");</script>
+	<script>createIBSheet("mySheet", "100%", "500px");</script>
 	</div>
   </div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

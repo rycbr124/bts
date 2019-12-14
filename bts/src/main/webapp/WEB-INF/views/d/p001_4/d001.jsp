@@ -110,7 +110,7 @@ table{
 	width:100%;
 }
 
-th{
+#body>th{
 	font-family: "NanumSquareRoundEB";
 	
 }
@@ -120,14 +120,14 @@ td{
 		
 }
 
-h2{
+#body>h2{
 	font-family: "NanumSquareRoundEB";
 }
-p {
+#body>p {
 	font-family: "NanumSquareRoundR";	
 }
 
-img{
+.container>img{
 	width : 1110px;
 	height : 400px;
 	margin-bottom : 50px;
