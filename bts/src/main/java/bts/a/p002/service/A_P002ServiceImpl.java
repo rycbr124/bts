@@ -92,5 +92,17 @@ public class A_P002ServiceImpl implements A_P002Service{
 	@Override
 	public void updateReportEnd(int report_no) {
 		a_p002DAO.updateReportEnd(report_no);
+	}
+
+	@Override
+	public A_P002VO_1 selectReportResult(int report_no) {
+		A_P002VO_1 vo = a_p002DAO.selectCommentContents(report_no);
+		return vo;
+	}
+
+	@Override
+	public List<A_P002VO_1> selectHistoryList(Map<String, String> searchMap) {
+		List<A_P002VO_1> list = a_p002DAO.selectHistoryList(searchMap);
+		return list;
 	}	
 }

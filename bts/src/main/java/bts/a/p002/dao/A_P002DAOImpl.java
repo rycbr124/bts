@@ -77,5 +77,17 @@ public class A_P002DAOImpl implements A_P002DAO{
 	public void updateReportEnd(int report_no) {
 		sqlSession.update("mapper.a_p002.updateReportEnd", report_no);
 	}
+
+	@Override
+	public A_P002VO_1 selectCommentContents(int report_no) {
+		A_P002VO_1 result = sqlSession.selectOne("mapper.a_p002.selectReportResult", report_no);
+		return result;
+	}
+
+	@Override
+	public List<A_P002VO_1> selectHistoryList(Map<String, String> searchMap) {
+		List<A_P002VO_1> list = sqlSession.selectList("mapper.a_p002.selectHistoryList",searchMap);
+		return list;
+	}
 	
 }

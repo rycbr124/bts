@@ -28,4 +28,8 @@ public interface A_P002Service {
 
 	void updateReportEnd(int report_no);
 
+	A_P002VO_1 selectReportResult(int report_no);
+
+	List<A_P002VO_1> selectHistoryList(Map<String, String> searchMap);
+
 }

@@ -32,4 +32,8 @@ public interface A_P002DAO {
 
 	void updateReportEnd(int report_no);
 
+	A_P002VO_1 selectCommentContents(int report_no);
+
+	List<A_P002VO_1> selectHistoryList(Map<String, String> searchMap);
+
 }

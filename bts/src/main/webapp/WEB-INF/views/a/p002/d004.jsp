@@ -2,9 +2,12 @@
    pageEncoding="UTF-8"
     isELIgnored="false"
     %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}" />
+<c:if test="${pnishResult!=null}">
+	<c:set var="end_year"><fmt:formatDate value="${pnishResult.end_date}" pattern="yyyy"/></c:set>
+</c:if>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,6 +53,10 @@ option.selected{
 	background-color: rgba(143, 164, 225,0.3);
 }
 
+th.resultFix{
+	width:10%;
+}
+
 </style>
 <script>
 	$(document).ready(function(){
@@ -59,6 +66,19 @@ option.selected{
 			url+="&contents_cd=${detailInfo.contents_cd}";
 			window.open(url,"_blank");
 		});
+
+		$('input:radio[name=pnish_at]').change(function(){
+			if($('#pnish_at_y').is(':checked')){
+				$('#frmReport input').attr('disabled',false);
+				$('#frmReport select').attr('disabled',false);
+			}else{
+				$('#frmReport input').attr('disabled',true);
+				$('#frmReport select').attr('disabled',true);
+				$('input:radio[name=pnish_at]').attr('disabled',false);
+				$('#report_no').attr('disabled',false);
+				$('#write-result').attr('disabled',false);
+			}
+		});		
 		
 		$('input:radio[name=pnish_type]').change(function(){
 			radioSelected($(this).val())
@@ -72,21 +92,23 @@ option.selected{
 		
 		$('#write-result').click(function(){
 			var con_test = confirm("처리하시겠습니까?");
-			console
 			if(con_test){
+				if($('#pnish_at_y').is(':checked')){
+					var reqUrl="${contextPath}/admin/report/list/contents/save";
+				}else{
+					var reqUrl="${contextPath}/admin/report/list/contents/reject";
+				}
 				var param = $('#frmReport').serialize();
+				
 				$.ajax({
 					type : "post", 
 					async : false,
-					url : "${contextPath}/admin/report/list/contents/save",
+					url : reqUrl,
 					data: param,
 					dataType:'json',
 					success : function (data,textStatus){
 						alert("처리가 완료되었습니다.");
 						location.reload();
-						/*
-						*/
-						
 					},
 					error : function (data,textStatus){
 						alert("저장중 문제가 발생했습니다.");
@@ -164,6 +186,21 @@ option.selected{
 					<table class="table">
 						<tbody>
 							<tr>
+								<th>처리구분</th>
+								<td>
+									<div class="col-auto my-1">
+										<div class="custom-control custom-radio custom-control-inline">
+											<input type="radio" id="pnish_at_y" name="pnish_at" value="Y" class="custom-control-input">
+											<label class="custom-control-label" for="pnish_at_y">제재하기</label>
+										</div>
+										<div class="custom-control custom-radio custom-control-inline">
+											<input type="radio" id="pnish_at_x" name="pnish_at" value="N" class="custom-control-input">
+											<label class="custom-control-label" for="pnish_at_x">제재없음</label>
+										</div>										
+									</div>									
+								</td>
+							</tr>
+							<tr>
 								<th>정지사유</th>
 								<td>
 									<select id="pnish_desc" class="form-control" name="pnish_desc">
@@ -209,7 +246,7 @@ option.selected{
 							</tr>
 						</tbody>
 					</table>
-					<input type="hidden" name="report_no" value="${detailInfo.report_no}">
+					<input type="hidden" id="report_no" name="report_no" value="${detailInfo.report_no}">
 					<input type="hidden" name="member_id" value="${detailInfo.target_id}">
 					<div class="row justify-content-md-end">
 						<input type="button" id="write-result" class="btn btn-outline-secondary" value="처리하기">				
@@ -220,10 +257,36 @@ option.selected{
 				<div class="exp_product">처리결과</div>
 				<table class="table">
 					<tbody>
-						<tr>
-							<th></th>
-							<td></td>
-						</tr>
+						<c:choose>
+						<c:when test="${pnishResult!=null}">
+							<tr>
+								<th class="resultFix">제재여부</th>
+								<td>Y</td>
+							</tr>
+							<tr>
+								<th>정지기간</th>
+								<td>
+									<fmt:formatDate value="${pnishResult.begin_date}" pattern="yyyy-MM-dd HH:mm:ss"/> ~
+									<c:if test="${end_year==9999}">
+										영구정지
+									</c:if>
+									<c:if test="${end_year!=9999}">
+										<fmt:formatDate value="${pnishResult.end_date}" pattern="yyyy-MM-dd HH:mm:ss"/>
+									</c:if>
+								</td>
+							</tr>
+							<tr>
+								<th>정지사유</th>
+								<td>${pnishResult.pnish_desc}</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<th class="resultFix">제재여부</th>
+								<td>N</td>
+							</tr>							
+						</c:otherwise>
+						</c:choose>
 					</tbody>
 				</table>
 			</c:otherwise>
