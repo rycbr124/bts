@@ -316,8 +316,11 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 	@Override
 	@ResponseBody
 	@RequestMapping(value="/search" ,method={RequestMethod.POST,RequestMethod.GET})
-	public String searchPlan(@RequestParam("searchResult") String searchResult, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String searchPlan(@RequestParam("searchResult") String searchResult, @RequestParam("category") String category, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("search 값 : " + searchResult);
+		System.out.println("category 값 : " + category);
+		
+		
 		return null;
 	}	
 

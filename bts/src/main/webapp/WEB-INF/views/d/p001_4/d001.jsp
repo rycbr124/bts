@@ -250,13 +250,72 @@ figure.snip1321.hover:after {
   opacity: 0.9;
 }
 
+.search-form .form-group {
+  float: right !important;
+  transition: all 0.35s, border-radius 0s;
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+}
+.search-form .form-group input.form-control {
+  padding-right: 20px;
+  border: 0 none;
+  background: transparent;
+  box-shadow: none;
+  display:block;
+}
+.search-form .form-group input.form-control::-webkit-input-placeholder {
+  display: none;
+}
+.search-form .form-group input.form-control:-moz-placeholder {
+  /* Firefox 18- */
+  display: none;
+}
+.search-form .form-group input.form-control::-moz-placeholder {
+  /* Firefox 19+ */
+  display: none;
+}
+.search-form .form-group input.form-control:-ms-input-placeholder {
+  display: none;
+}
+.search-form .form-group:hover,
+.search-form .form-group.hover {
+  width: 100%;
+  border-radius: 4px 25px 25px 4px;
+}
+.search-form .form-group span.form-control-feedback {
+  position: absolute;
+  top: -1px;
+  right: -2px;
+  z-index: 2;
+  display: block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  color: #3596e0;
+  left: initial;
+  font-size: 14px;
+}
 
+#search{
+	width : 20%;
+	display : inline-block;
+}
+
+select.form-control{
+	width : 100px;
+	display : inline-block;
+}
 </style>
 
 
 </head>
 <body>
-
+<form name="form" id="form" method="post">
 	<div class="container">
 		<h2>커뮤니티</h2>
 		<p>BTS와 함께 나만의 여행계획을 공유하세요!</p>
@@ -267,18 +326,22 @@ figure.snip1321.hover:after {
 			<li class="nav-item"><a class="nav-link"
 				href="${contextPath}/community/review/list">후기</a></li>
 		</ul>
-		<div class="input-group">
-      		<input type="text" id="searchForm" name="searchResult" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-      		<div class="input-group-append">
-        		<button class="btn btn-primary" type="button" onclick="searchPlan()">
-          			<i class="fas fa-search fa-sm"></i>
-        		</button>
-      		</div>
-    	</div>
-
 		<div class="content">
 		
 		</div>
+		<div class="form-group has-feedback">
+			<select id=selectBox class="form-control">
+				<option value="제목">제목</option>
+				<option value="글 내용">글 내용</option>
+				<option value="작성자">작성자</option>
+			</select> 
+			<input type="hidden" name="category" value="">
+			<label for="search" class="sr-only">Search</label>
+	   		<input type="text" class="form-control" name="searchResult" id="search" placeholder="search">
+	   		<button class="btn btn-sm btn-success" onclick="searchPlan()">Search</button>
+     		<span class="glyphicon glyphicon-search form-control-feedback"></span>
+        </div>
+		
 		
 		<div id="paging">
 			<ul class="pagination justify-content-center" id="pagination">
@@ -336,5 +399,6 @@ figure.snip1321.hover:after {
   		</div>
   			
 	</div>
+</form>
 </body>
 </html>

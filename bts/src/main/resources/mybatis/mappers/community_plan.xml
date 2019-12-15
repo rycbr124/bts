@@ -228,8 +228,5 @@
 			WHERE p.plan_no = pd.plan_no
 			AND open_val = 'Y'
 		]]>
-	</select>
-	
-	
-	
+	</select>	
 </mapper>
