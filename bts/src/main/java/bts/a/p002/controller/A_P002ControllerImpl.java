@@ -86,6 +86,9 @@ public class A_P002ControllerImpl implements A_P002Controller{
 	@RequestMapping(value="/history")
 	public ModelAndView showHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p002/d002");
+		List<String> pnish_combo = a_p002Service.selectPnishName();
+		mav.addObject("pnish_combo",String.join("|", pnish_combo));
+		System.out.println("===============>"+String.join("|", pnish_combo));
 		return mav;
 	}	
 	
@@ -99,6 +102,29 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		resultMap.put("Data", data);
 		return resultMap;
 	}
+
+	@RequestMapping(value="/history/save")
+	@ResponseBody
+	public Map<String, Object> saveHistoryList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, String[]> dataMap = new HashMap<String, String[]>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, String> result = new HashMap<String, String>();
+		
+		dataMap = request.getParameterMap();
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			System.out.println("=================>"+mapper.writeValueAsString(dataMap));
+			a_p002Service.saveHistoryList(dataMap);	
+			result.put("Code","0");
+			result.put("Message","저장되었습니다");
+		}catch(Exception e) {
+			result.put("Code","-1");
+			result.put("Message","저장에 실패하였습니다");
+			e.printStackTrace();
+		}
+		resultMap.put("Result", result);  
+		return resultMap;
+	}		
 	
 	@RequestMapping(value="/list")
 	public ModelAndView showReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -170,15 +196,15 @@ public class A_P002ControllerImpl implements A_P002Controller{
 	@ResponseBody
 	public String insertPnishHistory (@ModelAttribute A_P002VO_1 a_p002VO_1,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		if(a_p002VO_1.getPnish_type()==3) {
-			Calendar cal = Calendar.getInstance();
+			Calendar cal = getMidnight();
 			a_p002VO_1.setBegin_date(new Timestamp(cal.getTimeInMillis()));
 			cal.set(9999, 11, 31);
 			a_p002VO_1.setEnd_date(new Timestamp(cal.getTimeInMillis()));
 		}else {
 			int day_cnt = Integer.parseInt(a_p002VO_1.getDay_cnt());
-			Calendar cal = Calendar.getInstance();
+			Calendar cal = getMidnight();
 			a_p002VO_1.setBegin_date(new Timestamp(cal.getTimeInMillis()));
-			cal.add(Calendar.DATE, day_cnt);
+			cal.add(Calendar.DATE, day_cnt+1);
 			a_p002VO_1.setEnd_date(new Timestamp(cal.getTimeInMillis()));
 		}
 		a_p002Service.insertPnishHistory(a_p002VO_1);
@@ -186,17 +212,14 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		return "true";
 	}
 	
-//	private void setPnishDate(A_P002VO_1 a_p002VO_1) {
-//		int day_cnt = Integer.parseInt(a_p002VO_1.getDay_cnt());
-//		Calendar cal = Calendar.getInstance();
-//		cal.set(Calendar.MILLISECOND, 0);
-//		cal.set(Calendar.SECOND, 0);
-//		cal.set(Calendar.MINUTE, 0);
-//		cal.set(Calendar.HOUR_OF_DAY, 0);
-//		a_p002VO_1.setBegin_date(new Timestamp(cal.getTimeInMillis()));
-//		cal.add(Calendar.DATE, day_cnt);
-//		a_p002VO_1.setEnd_date(new Timestamp(cal.getTimeInMillis()));
-//	}
+	private Calendar getMidnight() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.MILLISECOND, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.HOUR_OF_DAY, 0);
+		return cal;
+	}
 	
 	private String makeReviewForm(RedirectAttributes redirect,String article) {
 		String url="/community/review/contents";

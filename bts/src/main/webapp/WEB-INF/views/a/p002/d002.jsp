@@ -20,13 +20,15 @@
 		$('#reload').on('click',function(){
 			doAction('reload');
 		})
+		$('#insert').on('click',function(){
+			doAction('insert');
+		})		
 		$('#search').on('click',function(){
 			doAction('search');
 		})
 		$('#save').on('click',function(){
 			doAction('save');
-		})
-		
+		})		
 		$("#p_id").on("keydown",function(event){
 			if(event.keyCode==13){
 				doAction('search');
@@ -47,18 +49,17 @@
 		};
 		initSheet.HeaderMode = {Sort:1,ColMove:1,ColResize:1,HeaderCheck:1};
 		initSheet.Cols = [
-			//SaveName은 보통 VO 속성명과 일치시켜줌.
-			//MinWidth를 선언하면 줄여도 그 설정한 값 밑으로 줄어들지 않음.
-			//align은 데이터를 정렬하는 방법.
-			//MultiLineText설정하면 shift+enter 누를 때 하나의 셀 안에 여러 값을 넣을 수 있음.
-			//Wrap은 컬럼 사이즈가 정해져 있지만 데이터 길이가 더 길 때, 뒷 부분은 알아서 줄 바꿈 해줌.
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"}, //모든 그리드에 들어감
-			{Header:"대상ID",Type:"Text", SaveName:"member_id", Edit:0},
-			{Header:"시작일자",Type:"Date", SaveName:"begin_date", Edit:1},
-			{Header:"종료일자",Type:"Date", SaveName:"end_date", Edit:1},			
+			{Header:"대상ID",Type:"Text", SaveName:"member_id", Edit:1, KeyField:1},
+			{Header:"시작일자",Type:"Date", SaveName:"begin_date", Edit:1, KeyField:1},
+			{Header:"종료일자",Type:"Date", SaveName:"end_date", Edit:1, KeyField:1},			
 			{Header:"신고번호",Type:"Int", SaveName:"report_no", Edit:0}, //KeyField는 반드시 입력하고자 하는 값을 설정하고플 때.
-			{Header:"신고사유",Type:"Text", SaveName:"pnish_desc", Edit:1},
-			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50} //모든 그리드에 들어감
+			{Header:"신고사유",Type:"ComboEdit", ComboText:"${pnish_combo}", SaveName:"pnish_desc", Edit:1},
+			{Header:"신고확인",Type:"Button", Align:"Center", SaveName:"btn_report", Edit:1},	
+			{Header:"삭제",Type:"DelCheck",SaveName:"DEL_CHK",MinWidth:50}, //모든 그리드에 들어감
+			{Header:"최초대상ID",Type:"Text", SaveName:"first_id", Edit:1, Hidden:1},
+			{Header:"최초시작일자",Type:"Date", SaveName:"first_begin", Edit:1, Hidden:1},
+			{Header:"최초종료일자",Type:"Date", SaveName:"first_end", Edit:1, Hidden:1}
 		];   
 		IBS_InitSheet( mySheet , initSheet);
 
@@ -84,6 +85,22 @@
 			break;	
 		}
 	}
+
+	function mySheet_OnChange(Row,Col, Value, OldValue, RaiseFlag) {
+		var input = {
+			first_id : mySheet.CellSearchValue(Row,'member_id'),
+			first_begin : mySheet.CellSearchValue(Row,'begin_date'),
+			first_end : mySheet.CellSearchValue(Row,'end_date')
+		};
+		mySheet.SetRowData(Row,input);
+	} 
+ 
+	function mySheet_OnButtonClick(Row, Col){
+		console.log("[" + Row + "," + Col + "] 셀의 버튼 클릭");
+		console.log(mySheet.GetRowData(Row));
+		var url="${contextPath}/admin/report/list/contents?report_no="+mySheet.GetRowData(Row).report_no;
+		window.open(url,"_blank");
+	}	
 	
 	function mySheet_OnSaveEnd(code, msg) {
 		if (msg != "") {
