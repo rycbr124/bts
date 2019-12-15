@@ -197,9 +197,7 @@ $(document).ready(function(){
    var accompany = ${bestAccompany};
    //var icon = ${searchIcon};
    
-   console.log(${bestAccompany});
     var main = accompany.bestAccompany;
-   console.log(main);
    
     for(var i in main){
        var best = main[i];

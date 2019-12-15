@@ -149,7 +149,7 @@
 		]]>
 		<where>
 			<if test=" member_id != ''  and  member_id != null">
-				member_id = $(member_id)
+				member_id = #{member_id}
 			</if>
 		</where>
 	</select>
@@ -158,6 +158,13 @@
 			SELECT *
 			FROM contact
 			WHERE contact_no = #{contact_no,jdbcType=VARCHAR}
+		]]>
+	</select>
+	<select id="answerInfo" parameterType="a_p004VO" resultMap="answerResult">
+		<![CDATA[
+			SELECT contents
+			FROM answer_contact
+			WHERE contact_no = #{contact_no,jdbcType=VARCHAR}		
 		]]>
 	</select>
 	<insert id="addAnswer" parameterType="a_p004VO">

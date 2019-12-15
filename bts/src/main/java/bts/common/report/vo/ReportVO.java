@@ -20,6 +20,28 @@ public class ReportVO {
 	private String contents_cd;
 	private String target_contents;
 	
+	private String showContents;
+	private String pnish_name;
+	private int day_cnt;
+	
+	public String getPnish_name() {
+		return pnish_name;
+	}
+	public void setPnish_name(String pnish_name) {
+		this.pnish_name = pnish_name;
+	}
+	public int getDay_cnt() {
+		return day_cnt;
+	}
+	public void setDay_cnt(int day_cnt) {
+		this.day_cnt = day_cnt;
+	}
+	public String getShowContents() {
+		return showContents;
+	}
+	public void setShowContents(String showContents) {
+		this.showContents = showContents;
+	}
 	public String getTarget_contents() {
 		return target_contents;
 	}

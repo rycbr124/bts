@@ -21,7 +21,7 @@ public class F_P001_3VO {
 	private String refer_link;
 	private String refer_title;
 	private List<String> tag_list;
-	
+
 	public String getRefer_link() {
 		return refer_link;
 	}

@@ -1,31 +1,62 @@
 package bts.a.p002.vo;
 
+import java.sql.Timestamp;
+
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Component("a_p002VO_1")
 @Scope("prototype")
 public class A_P002VO_1 {
-	private String pnish_cd;
-	private String name;
-	private int day_cnt;
+	private Timestamp begin_date;
+	private Timestamp end_date;
+	private String member_id;
+	private int report_no;
+	private String pnish_desc;
 	
-	public String getPnish_cd() {
-		return pnish_cd;
+	private int pnish_type;
+	private String day_cnt;
+	
+	public Timestamp getBegin_date() {
+		return begin_date;
 	}
-	public void setPnish_cd(String pnish_cd) {
-		this.pnish_cd = pnish_cd;
+	public void setBegin_date(Timestamp begin_date) {
+		this.begin_date = begin_date;
 	}
-	public String getName() {
-		return name;
+	public Timestamp getEnd_date() {
+		return end_date;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setEnd_date(Timestamp end_date) {
+		this.end_date = end_date;
 	}
-	public int getDay_cnt() {
+	public String getMember_id() {
+		return member_id;
+	}
+	public void setMember_id(String member_id) {
+		this.member_id = member_id;
+	}
+	public int getReport_no() {
+		return report_no;
+	}
+	public void setReport_no(int report_no) {
+		this.report_no = report_no;
+	}
+	public String getPnish_desc() {
+		return pnish_desc;
+	}
+	public void setPnish_desc(String pnish_desc) {
+		this.pnish_desc = pnish_desc;
+	}
+	public int getPnish_type() {
+		return pnish_type;
+	}
+	public void setPnish_type(int pnish_type) {
+		this.pnish_type = pnish_type;
+	}
+	public String getDay_cnt() {
 		return day_cnt;
 	}
-	public void setDay_cnt(int day_cnt) {
+	public void setDay_cnt(String day_cnt) {
 		this.day_cnt = day_cnt;
 	}
 	

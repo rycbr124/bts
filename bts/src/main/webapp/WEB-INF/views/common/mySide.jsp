@@ -29,14 +29,6 @@ $(function(){
 		}
 		$('#side').animate({'top':position},{duration:speed , easing, queue:false});
 	});
-	$('#side ul li a').on('click',function(){
-		var className = $(this).parent().attr('class')
-		if(className != 'active'){
-			$(this).parent().addClass('active');
-		}else{
-			$(this).parenr().removeClass();
-		}
-	});
 });
 </script>
 <style>
@@ -74,7 +66,8 @@ $(function(){
 			<li><a href="${contextPath}/my/myBoardList"> <i class="icon icon-post-list"></i>
 					<span>내 글목록 관리</span>
 			</a></li>
-			<li><a href="wishlist.html"> <i class="icon icon-reservation"></i> <span>예약 내역 관리</span>
+			<li><a href="${contextPath}/my/reserv/reservList"> <i
+					class="icon icon-reservation"></i> <span>예약 내역 관리</span>
 			</a></li>
 			<li><a href="${contextPath}/question/questionMain"> <i class="icon icon-question"></i>
 					<span>문의 내역 관리</span>
