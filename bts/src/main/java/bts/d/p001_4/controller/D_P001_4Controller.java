@@ -27,7 +27,7 @@ public interface D_P001_4Controller {
 	 public String commentPaging(String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	 public String commentWrite(String article_cd,RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	 public String commentDelete(HttpServletRequest request, HttpServletResponse response) throws Exception;
-	 public @ResponseBody String searchPlan(@RequestParam("searchResult") String searchResult, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	 public @ResponseBody String searchPlan(@RequestParam("searchResult") String searchResult, @RequestParam("category") String category, HttpServletRequest request, HttpServletResponse response) throws Exception;
 
 
 }
