@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"
        isELIgnored="false"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <!DOCTYPE html>
 <html>
@@ -30,7 +32,7 @@ $(document).ready(function(){
 
 </head>
 <body>
- <form  name="plan" onsubmit="return false">
+<form name="plan" modelAttribute="planWrite" onsubmit="return false">
 <div class="map_controller" id="map_controller">
  <div class="select_date" id="select_date">
    <div class="plan_tab" id="plan_tab">
@@ -38,6 +40,7 @@ $(document).ready(function(){
       <div class="select_date" id="select_date">
           <div class="title_write">
          	<input type="text" class="title" id="title_val" name="title"  placeholder="제목을 입력해주세요"/>
+         	
          	<div class="tag_write">
          	<input type="text" name="tag" class="tag" placeholder="태그를 입력해주세요." onkeydown="enter_check();"/>
          	<div class="tag_value" ></div>
@@ -50,7 +53,7 @@ $(document).ready(function(){
          		<option value='커플/신혼'>커플/신혼 여행</option>
          		<option value='가족 여행'>가족 여행</option>
          	</select>
-         	<input type="hidden" name="personnel" value=""/>
+         	<input type="hidden"name="personnel" value=""/>
          </div>
          <div class="calendar" id="calendar" style="margin-top:0;">
             <img src="${contextPath}/resources/image/icon/calendar.png">
@@ -86,7 +89,7 @@ $(document).ready(function(){
    		<button onclick="save_plan()" class="save_plan" style="position:absolute;right:0;width:60px;height:45px;">저장</button> 
    		<input type="hidden" name="plan_no" value=""/>
    		</div>
-   		<div class="tourist_tab" style="border:1px solid #fff; width:100%; height:150px;">
+   		<div class="tourist_tab">
    			<div class="select_icon">
    				<a href="javascript:searchContentType(12)" id="touristDestination"><img src="${contextPath}/resources/image/icon/map.png"/></a>
    				<a href="javascript:searchContentType(39)" id="restaurant"><img src="${contextPath}/resources/image/icon/fork.png"/></a>
@@ -126,10 +129,9 @@ $(document).ready(function(){
    		
    		</div>
    		<div class="detail_list_container"></div>
-   		
+ 
    </div>
-<div id="map" style="width:100%;height:100vh;">
-</div>
+		<div id="map" style="width:100%;height:100vh; float:right;"></div>
 </div>
 </form>
 </body>

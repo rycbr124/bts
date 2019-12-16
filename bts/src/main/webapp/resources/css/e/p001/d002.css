@@ -1,18 +1,22 @@
 @charset "UTF-8";
 
-@font-face{
-	src:url("/resources/fonts/Binggrae/Binggrae-Bold.ttf");
-	font-family:"binggrae";	
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+   	font-family: "NanumSquareRoundEB";
+}
+
+@font-face {
+   	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+   	font-family: "NanumSquareRoundR";
 }
 
 .container{
-	font-family:"binggrae";
+	font-family: "NanumSquareRoundR";
 }
 #accImage{
 	padding:auto;
-	width:1000px;
+	width:1170px;
 	height:300px;
-	border-radius:1em;
 	vertical-align:middle;
 }
 #imgContainer{
@@ -30,7 +34,7 @@
 	text-align:left;
 }
 #popUpdel{
-	font-family:"binggrae";
+	font-family: "NanumSquareRoundR";
 	padding-top:200px;
 }
 #delInput{
@@ -38,7 +42,18 @@
 }
 #delbutton,#modbutton{
 	background:#666666;
-	border-radius:1em;
 	border:1px solid #666666;
 	color:white;
+}
+#h4text{
+	font-family: "NanumSquareRoundEB";
+	
+}
+#subjectText{
+	font-family: "NanumSquareRoundEB";	
+}
+.iclnImgB{
+	width : 50px;
+	height : 50px;
+	margin : 10px;
 }

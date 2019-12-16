@@ -1,0 +1,46 @@
+@charset "UTF-8";
+@font-face {
+   src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+    font-family: "NanumSquareRoundEB";
+}
+@font-face {
+   src: url("/bts/resources/fonts/Nanum/NanumSquareRoundB.ttf");
+    font-family: "NanumSquareRoundB";
+}
+@font-face {
+    src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    font-family: "NanumSquareRoundR";
+}
+#btndiv{
+	padding-top:58px;
+	padding-left:5px;
+}
+
+#cancleBtn{
+	width:70px;
+	height:30px;
+	background:#666666;
+	border:1px solid #666666;
+}
+
+#reservImg{
+	width:150px;
+	height:150px;
+}
+#contents{
+	padding-top:70px;
+}
+#headsubject{
+	font-family:"NanumSquareRoundEB";
+}
+#reservForm{
+	font-family:"NanumSquareRoundB";
+}
+#resName{
+	color:#666666;
+}
+#prev,#pageNo,#next{
+	color:#666666;
+}
+
+

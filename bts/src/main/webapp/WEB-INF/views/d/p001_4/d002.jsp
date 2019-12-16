@@ -60,7 +60,7 @@
 			arr_content[${status.index}] = "${planner.content_id}";
 			arr_day[${status.index}] = "${planner.day_no}";
 			arr_desc[${status.index}] = "${planner.plan_desc}";
-			arr_no[${status.index}] = "${planner.plan_no}"
+			arr_no[${status.index}] = "${planner.plan_no}";
 		</c:forEach>
 		console.log(arr_content);
 		console.log(arr_day);
@@ -85,7 +85,7 @@
 		
 		for(var i in arr_content){
 			console.log("1111 : " + arr_content[i]);
-			var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+			var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
 			var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + arr_content[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 			
 			$.ajax({
@@ -109,7 +109,7 @@
 			         title.appendChild(title_text);
 			         
 			         var a = document.createElement('a');
-			         $(a).prop('href', '${contextPath}/recommend/place_detail?contentid=' + arr_content[i]);
+			         $(a).prop('href', '${contextPath}/recommend/place_detail?contentid=' + arr_content[i] + '&contenttypeid=' + resultArray.contenttypeid);
 			         a.appendChild(title);
 			         		         
 			         var img= document.createElement('img');
@@ -119,7 +119,15 @@
 			         var text = document.createElement('div');
 			         $(text).prop('class', 'content_text');
 			         var desc_text = document.createTextNode(arr_desc[i]);
+			         var left = document.createTextNode('❝ ');
+			         var right = document.createTextNode(' ❞');
+			         
+			         
+			         
+			         text.appendChild(left);
 			         text.appendChild(desc_text);
+			         text.appendChild(right);
+			         
 			         
 			         
 			         $('.thumb_nail').prop('src', resultArray.firstimage);
@@ -162,8 +170,8 @@
 			$(d_button).prop('value', '삭제');
 			$(d_button).prop('class', 'btn btn-default btn-sm');
 			$(d_button).attr('onclick', 'location.href="${contextPath}/community/plan_delete?plan_no=' + arr_no[0] + '"');
-			$('.planner_detail').append(m_button);
-			$('.planner_detail').append(d_button);	
+			$('div.justify-content-md-end').append(m_button);
+			$('div.justify-content-md-end').append(d_button);	
 			
 		}
 		var list_button = document.createElement('input');
@@ -171,7 +179,7 @@
 		$(list_button).prop('value', '목록');
 		$(list_button).prop('class', 'btn btn-default btn-sm');
 		$(list_button).attr('onclick', 'location.href="${contextPath}/community/plan_list"');
-		$('.planner_detail').append(list_button);	
+		$('div.justify-content-md-end').append(list_button);	
 		
 	});
 
@@ -246,6 +254,20 @@ div.planner_detail{
 	padding : 80px;	
 	background-color : #F8F8FA;
 }
+div.justify-content-md-end{
+	background-color : #F8F8FA;
+	padding-bottom : 10px;
+}
+div.mx-auto{
+	background-color : #F8F8FA;
+}
+#contents-info{
+	background-color : #F8F8FA;
+}
+div.comment{
+	background-color : #F8F8FA;
+	margin : 0px;
+}
 div.content_div{
 	border : solid 0.8px #D5D5D5;
 	padding : 20px;
@@ -273,6 +295,10 @@ img.titleImage{
 h2.titleDesc{
 	display : inline-block;
 }
+
+#contents-info{
+	margin-bottom : 0px;
+}
 </style>
 </head>
 <body>
@@ -293,6 +319,10 @@ h2.titleDesc{
 		<div class="planner_detail">
 		
 		</div>
+		<div class="row justify-content-md-end">
+		
+		</div>
+		
 		
 		<div id='contents-info'>
 			<span id="comment-count">
@@ -302,6 +332,7 @@ h2.titleDesc{
 			<span id="view-count"></span>
 			<span id="contents-report">게시글 신고</span>
 		</div>
+		<div class="comment">
 		<div id="comment-form" class="mx-auto">
 			<form name="frmCom" class="row justify-content-md-end"  action="${contextPath}/community/comment/write" method="post">
 				<textarea name="input-comment"></textarea>
@@ -309,7 +340,9 @@ h2.titleDesc{
 				<input type="hidden" name="article_no" value="${plan_no}">
 			</form>
 		</div>
+		
 		<div id="comments">
+		</div>
 		</div>
 		<div id="comment-paging">
 			<ul id="paging-list" class="pagination justify-content-center pagination-sm">

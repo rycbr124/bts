@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.reservation">
+
+	<resultMap id="lodgingResult" type="h_p001VO">
+		<result property="lodging_id" column="lodging_id" />
+		<result property="description" column="description" />
+		<result property="address" column="address" />
+		<result property="resve_cnt" column="resve_cnt" />
+		<result property="lodging_se" column="lodging_se" />
+		<result property="name" column="name" />
+		<result property="room_no" column="room_no" />
+		<result property="room_type" column="room_type" />
+		<result property="whlrs_no" column="whlrs_no" />
+		<result property="price" column="price" />
+		<result property="rn" column="rn" />
+		<result property="res_type" column="res_type" />
+	</resultMap>
+
+	<resultMap id="reserv_listResult" type="h_p002VO">
+		<result property="resve_no" column="resve_no" />
+		<result property="resve_date" column="resve_date" />
+		<result property="amount" column="amount" />
+		<result property="cancle_at" column="cancle_at" />
+		<result property="member_id" column="member_id" />
+		<result property="room_no" column="room_no" />
+		<result property="lodging_id" column="lodging_id" />
+		<result property="in_date" column="in_date" />
+		<result property="out_date" column="out_date" />
+		<result property="cancle_at" column="cancle_at"/>
+	</resultMap>
+	<!-- 숙박예약 -->
+	<insert id="resveInsert" parameterType="h_p002VO">
+	<![CDATA[
+	insert into reservation_list(resve_no, resve_date, amount, cancle_at, member_id, room_no,
+	lodging_id, in_date, out_date) 
+	values(reserv_seq.nextval, sysdate, #{amount,jdbcType=VARCHAR}, 'N', #{member_id}, #{room_no,jdbcType=VARCHAR}, #{lodging_id,jdbcType=VARCHAR}, #{in_date,jdbcType=VARCHAR}, #{out_date,jdbcType=VARCHAR})	
+	]]>
+	</insert>
+	
+	<update id="updateRoomType" parameterType="h_p001VO">
+	<![CDATA[
+	update lodging_room set res_type = 'Y'
+	]]>
+	</update>
+	
+	<!-- 숙박 상세정보 호텔-->
+	<select id="hotelResult" resultMap="lodgingResult">
+	<![CDATA[
+	select * from lodging_business where lodging_id = #{lodging_id} 	
+	]]>
+	</select>
+
+	<select id="roomInfoResult" resultMap="lodgingResult">
+	<![CDATA[
+	select * from lodging_room where lodging_id = #{lodging_id}
+	]]>
+	</select>
+	<!-- 숙박 리스트 -->
+	<select id="hotelList" resultMap="lodgingResult">
+	<![CDATA[
+	select * from (select rownum rn, a.* from (select * from lodging_business order by lodging_no desc) a) where lodging_se = 'HT'
+	]]>
+	</select>
+
+	<select id="hotelListCount" resultType="java.lang.Integer">
+	<![CDATA[
+	select count(*) as cnt from lodging_business where lodging_se = 'HT'
+	]]>
+	</select>
+
+	<select id="guestList" resultMap="lodgingResult">
+	<![CDATA[
+	select * from (select rownum rn, a.* from (select * from lodging_business order by lodging_no desc) a) where lodging_se = 'GH'
+	]]>
+	</select>
+
+	<select id="guestListCount" resultType="java.lang.Integer">
+	<![CDATA[
+	select count(*) as cnt from lodging_business where lodging_se = 'GH'
+	]]>
+	</select>
+
+	<select id="motelList" resultMap="lodgingResult">
+	<![CDATA[
+	select * from (select rownum rn, a.* from (select * from lodging_business order by lodging_no desc) a) where lodging_se = 'MT'
+	]]>
+	</select>
+
+	<select id="motelListCount" resultType="java.lang.Integer">
+	<![CDATA[
+	select count(*) as cnt from lodging_business where lodging_se = 'MT'
+	]]>
+	</select>
+
+
+</mapper>

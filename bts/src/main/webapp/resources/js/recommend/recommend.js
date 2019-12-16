@@ -100,6 +100,7 @@ function image_init(pageNo) {
 					var form = document.createElement('form');
 					var hidden = document.createElement('input');
 					var submit = document.createElement('input');
+					var hidden2 = document.createElement('input');
 				
 					
 					var c_title = document
@@ -117,6 +118,7 @@ function image_init(pageNo) {
 						$(col).prop('class', 'col-sm-4');
 						$(card).prop('class', 'card');
 						$(card).prop('style', 'width:300px');
+						$(card).attr('data-value',resultArray[i].contenttypeid);
 						$(image).prop('class', 'card-img-top');
 						$(image).prop('src', '/bts/resources/image/no_img.jpg');
 						$(image).prop('alt', 'Card image');
@@ -129,6 +131,9 @@ function image_init(pageNo) {
 						$(hidden).prop('type', 'hidden');
 						$(hidden).prop('name', 'contentid');
 						$(hidden).prop('value', resultArray[i].contentid);
+						$(hidden2).prop('type','hidden');
+						$(hidden2).prop('name','contenttypeid');
+						$(hidden2).prop('value',resultArray[i].contenttypeid);
 						$(submit).prop('type', 'submit');
 						$(submit).prop('class', 'btn btn-info btn-sm')
 						$(submit).prop('value', '상세보기');
@@ -137,6 +142,7 @@ function image_init(pageNo) {
 					} else {
 						$(col).prop('class', 'col-sm-4');
 						$(card).prop('class', 'card');
+						$(card).attr('data-value',resultArray[i].contenttypeid);
 						$(card).prop('style', 'width:300px');
 						$(image).prop('class', 'card-img-top');
 						$(image).prop('src', resultArray[i].firstimage);
@@ -150,6 +156,9 @@ function image_init(pageNo) {
 						$(hidden).prop('type', 'hidden');
 						$(hidden).prop('name', 'contentid');
 						$(hidden).prop('value', resultArray[i].contentid);
+						$(hidden2).prop('type','hidden');
+						$(hidden2).prop('name','contenttypeid');
+						$(hidden2).prop('value',resultArray[i].contenttypeid);
 						$(submit).prop('type', 'submit');
 						$(submit).prop('class', 'btn btn-info btn-sm')
 						$(submit).prop('value', '상세보기');
@@ -168,6 +177,7 @@ function image_init(pageNo) {
 					$(body).append(addr);
 					$(body).append(form);
 					$(form).append(hidden);
+					$(form).append(hidden2);
 					$(form).append(submit);
 
 					
@@ -182,6 +192,7 @@ function image_init(pageNo) {
 				var addr = document.createElement('p');
 				var form = document.createElement('form');
 				var hidden = document.createElement('input');
+				var hidden2 = document.createElement('input');
 				var submit = document.createElement('input');				
 				
 				var c_title = document
@@ -197,6 +208,7 @@ function image_init(pageNo) {
 					$(col).prop('class', 'col-sm-4');
 					$(card).prop('class', 'card');
 					$(card).prop('style', 'width:300px');
+					$(card).attr('data-value',resultArray.contenttypeid);
 					$(image).prop('class', 'card-img-top');
 					$(image).prop('src', '/bts/resources/image/no_img.jpg');
 					$(image).prop('alt', 'Card image');
@@ -208,7 +220,10 @@ function image_init(pageNo) {
 					$(form).prop('method', 'post');
 					$(hidden).prop('type', 'hidden');
 					$(hidden).prop('name', 'contentid');
-					$(hidden).prop('value', resultArray[i].contentid);
+					$(hidden).prop('value', resultArray.contentid);
+					$(hidden2).prop('type','hidden');
+					$(hidden2).prop('name','contenttypeid');
+					$(hidden2).prop('value',resultArray.contenttypeid);
 					$(submit).prop('type', 'submit');
 					$(submit).prop('class', 'btn btn-info btn-sm')
 					$(submit).prop('value', '상세보기');	
@@ -217,6 +232,7 @@ function image_init(pageNo) {
 					$(col).prop('class', 'col-sm-4');
 					$(card).prop('class', 'card');
 					$(card).prop('style', 'width:300px');
+					$(card).attr('data-value',resultArray.contenttypeid);
 					$(image).prop('class', 'card-img-top');
 					$(image).prop('src', resultArray.firstimage);
 					$(image).prop('alt', 'Card image');
@@ -228,7 +244,10 @@ function image_init(pageNo) {
 					$(form).prop('method', 'post');
 					$(hidden).prop('type', 'hidden');
 					$(hidden).prop('name', 'contentid');
-					$(hidden).prop('value', resultArray[i].contentid);
+					$(hidden).prop('value', resultArray.contentid);
+					$(hidden2).prop('type','hidden');
+					$(hidden2).prop('name','contenttypeid');
+					$(hidden2).prop('value',resultArray.contenttypeid);
 					$(submit).prop('type', 'submit');
 					$(submit).prop('class', 'btn btn-info btn-sm')
 					$(submit).prop('value', '상세보기');	
@@ -244,6 +263,7 @@ function image_init(pageNo) {
 				$(body).append(addr);
 				$(body).append(form);
 				$(form).append(hidden);
+				$(form).append(hidden2);
 				$(form).append(submit);
 
 			}

@@ -11,10 +11,15 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,13 +59,15 @@ public class I_P002ControllerImpl implements I_P002Controller {
 		String member_id = b_p001VO.getMember_id();
 		i_p002VO_1.setMember_id(member_id);
 		ModelAndView mav = new ModelAndView("/i/p002/d001");
+		mav.addObject("uri",request.getRequestURI());
 		return mav;
 	}
 
 	
 	@Override
+	@InitBinder
 	@RequestMapping(value = "/insert_plan", method = { RequestMethod.POST, RequestMethod.GET })
-	public @ResponseBody void planInsert(@RequestParam Map<String, String> result, HttpServletRequest request,HttpServletResponse response) throws Exception {
+	public @ResponseBody void planInsert(@RequestParam Map<String, String> result,HttpServletRequest request,HttpServletResponse response) throws Exception {
 		HttpSession session = request.getSession();
 		b_p001VO = (B_P001VO) session.getAttribute("memberInfo");
 		String member_id = b_p001VO.getMember_id();
@@ -93,6 +100,7 @@ public class I_P002ControllerImpl implements I_P002Controller {
 				contentVO.add(i_p002VO_2);
 			}
 		}
+		
 		i_p002VO_1.setTitle(titleId);
 		i_p002VO_1.setPerson_se(personnel);
 		i_p002VO_1.setRange_date(daterange);

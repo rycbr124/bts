@@ -152,3 +152,59 @@ footer {
 .btn-lg input[type=raius]{
 	font-size:13px;
 }
+.input[type='redio'],input[type='radio']:checked {
+	appearance: none;
+	width: 0.9rem;
+	height: 0.9rem;
+	border-radius: 100%;
+	margin-right: 0.1rem;
+	
+}
+
+input[type='radio'] {
+	background-color: $white-color;
+	border: 2px solid $font-color-3;
+	background-color:lightgray;
+}
+
+input[type='radio']:checked {
+	backgound-color: $font-color-2;
+}
+.custom-control{
+	width:50%;
+	float:left;
+	line-height:76.5px;
+}
+
+#btn-form-submit{
+	background-color: #203341;
+	width:100px;
+	color:#fff;
+	float:right;
+}
+#delFrm{
+	position:relative;
+	width: 300px;
+	height:auto;
+	margin-left:150px;
+}
+.withdrawal_check div{
+	margin-bottom:10px;
+}
+.withdrawal_check div p{
+	position:absolute;
+	width:100px;
+	display:inline-block;
+	line-height:30px;
+	margin:0;
+}
+.withdrawal_check div input[type=password]{
+	position:relative;
+	width:150px;
+	height:30px;
+	left:100px;
+}
+.btn-lg{
+	width:100px;
+	height:34px;
+}

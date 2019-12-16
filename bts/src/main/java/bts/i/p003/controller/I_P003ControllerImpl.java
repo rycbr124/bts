@@ -59,6 +59,7 @@ public class I_P003ControllerImpl implements I_P003Controller{
 		JSONObject plannerObj = new JSONObject(planner);
 		mav.addObject("root", rootObject.toJSONString());
 		mav.addObject("planner", plannerObj.toJSONString());
+		mav.addObject("uri",request.getRequestURI());
 		return mav;
 		
 		

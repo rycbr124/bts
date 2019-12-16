@@ -84,7 +84,7 @@ body {
 						<div class="form-group row">
 							<label class="col-md-2 col-form-label">신고대상</label>
 							<div class="col-md-10">
-								<input type="text" name="target_id" readonly class="form-control-plaintext" value="${initValue.target_id}">
+								<input type="text" name="target_id" readonly class="form-control-plaintext" value="${reportForm.target_id}">
 							</div>
 						</div>
 						<div class="form-group row">
@@ -104,8 +104,6 @@ body {
 								<textarea name="contents" class="form-control"></textarea>
 							</div>
 						</div>
-						<input type="hidden" name="report_se" value="${initValue.report_se}">
-						<input type="hidden" name="contents_cd" value="${initValue.contents_cd}">
 						<input type="button" id="endWrite" class="btn btn-outline-success" value="등록하기">
 						<input type="reset" class="btn btn-outline-secondary" value="다시입력">
 						<input type="button" id="cancelWrite" class="btn btn-outline-danger" value="취소">				  

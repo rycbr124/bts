@@ -51,7 +51,7 @@ public class C_P001ControllerImpl implements C_P001Controller {
 	private String metaPath;
 	
 	private static final Logger logger = LoggerFactory.getLogger(C_P001ControllerImpl.class);
-
+	
 	@Override
 	@RequestMapping(value = "/profile")
 	public ModelAndView pageInit(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -193,21 +193,20 @@ public class C_P001ControllerImpl implements C_P001Controller {
 			HttpServletRequest request, B_P001VO vo) throws Exception {
 			logger.info("originalName: " + file.getOriginalFilename());
 			
-			ResponseEntity<String> img_path = new ResponseEntity<>(
-					UploadUtil.uploadFile(uploadPath, metaPath, file.getOriginalFilename(), file.getBytes()),
-					HttpStatus.CREATED);
-			String user_imgPath = (String) img_path.getBody();
-//			String localhost = "resources/image/mypage/profileImage";
-			
-			String localhost = "/resources/image/mypage/profileImage";
-			logger.info(user_imgPath);
-			vo.setProfile_image(uploadPath + user_imgPath);
-			B_P001VO id = (B_P001VO)session.getAttribute("memberInfo");
-			vo.setMember_id(id.getMember_id());
-			logger.info("file name : " + user_imgPath);
-			c_p001Service.updateimage(vo);
-			id.setProfile_image(localhost+user_imgPath);
-			return user_imgPath;
+	         ResponseEntity<String> img_path = new ResponseEntity<>(
+	                 UploadUtil.uploadFile(uploadPath, metaPath, file.getOriginalFilename(), file.getBytes()),
+	                 HttpStatus.CREATED);
+	           String user_imgPath = (String) img_path.getBody();
+	           
+	           String localhost = "/resources/image/mypage/profileImage";
+	           logger.info(user_imgPath);
+	           vo.setProfile_image(localhost+user_imgPath);
+	           B_P001VO id = (B_P001VO)session.getAttribute("memberInfo");
+	           vo.setMember_id(id.getMember_id());
+	           logger.info("file name : " + user_imgPath);
+	           c_p001Service.updateimage(vo);
+	           id.setProfile_image(localhost+user_imgPath);
+	           return user_imgPath;
 	}
 	
 }

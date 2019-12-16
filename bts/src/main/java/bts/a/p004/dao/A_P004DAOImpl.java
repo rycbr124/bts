@@ -29,4 +29,8 @@ public class A_P004DAOImpl implements A_P004DAO{
 		sqlSession.insert("a.p000.addAnswer",a_p004VO);
 		sqlSession.update("a.p000.update_answer_at",a_p004VO);
 	}
+	@Override
+	public List<A_P004VO> selectAnswer(String contact_no)throws DataAccessException{
+		return sqlSession.selectList("a.p000.answerInfo",contact_no);
+	}
 }

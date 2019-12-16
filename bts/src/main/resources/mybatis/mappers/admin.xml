@@ -98,9 +98,49 @@
 			SELECT COUNT(*)
 			FROM report_list
 		]]>
-		
 	</select>
 	
+	<!-- 답변완료 갯수 -->
+	<select id="countContactY" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM contact
+			WHERE answer_at = 'Y'
+		]]>
+	</select>
+	
+	<select id="countReportY" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM report_list
+			WHERE report_at = 'Y'
+		]]>
+	</select>
+	
+	<!-- 커뮤니티 계획 게시글 갯수 -->
+	<select id="countPlan" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM planner
+			WHERE open_val = 'Y'
+		]]>
+	</select>
+	
+	<!-- 커뮤니티 후기 게시글 갯수 -->
+	<select id="countReview" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM article
+		]]>
+	</select>
+	
+	<!-- 동행 게시글 갯수 -->
+	<select id="countAccompany" resultType="java.lang.Integer">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM accompany
+		]]>
+	</select>
 	
 	<select id="searchContact" resultMap="questionResult" parameterType="java.util.Map">
 		<![CDATA[
@@ -109,7 +149,7 @@
 		]]>
 		<where>
 			<if test=" member_id != ''  and  member_id != null">
-				member_id = $(member_id)
+				member_id = #{member_id}
 			</if>
 		</where>
 	</select>
@@ -118,6 +158,13 @@
 			SELECT *
 			FROM contact
 			WHERE contact_no = #{contact_no,jdbcType=VARCHAR}
+		]]>
+	</select>
+	<select id="answerInfo" parameterType="a_p004VO" resultMap="answerResult">
+		<![CDATA[
+			SELECT contents
+			FROM answer_contact
+			WHERE contact_no = #{contact_no,jdbcType=VARCHAR}		
 		]]>
 	</select>
 	<insert id="addAnswer" parameterType="a_p004VO">

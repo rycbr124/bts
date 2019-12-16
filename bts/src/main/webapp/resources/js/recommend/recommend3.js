@@ -1,19 +1,8 @@
 /**
  * 추천(지역별) - 한국관광공사 API 
  */
-$(document).ready(function (){
-
-
-//   $("#toggle-heart").change(function(){
-//      wish_list();
-//      console.log("111111");
-//      if($("#toggle-heart").is(":checked")){
-//         wish_list();
-//      }else{
-//         console.log("해제");
-//      }
-//   });
-   
+$(document).ready(function (){   
+	
       
 });
 
@@ -23,11 +12,65 @@ function result_init(){
     //paging 뿌리는 메소드
     $('.page-item').on('click',paging_click); //뿌린 버튼에 클릭이벤트 달아주는 메소드
 }
-
+function operation(contenttypeid, idNumber){
+	var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D';
+	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro?ServiceKey='+ serviceKey +'&contentTypeId='+ contenttypeid +'&contentId=' + idNumber + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&introYN=Y';
+	$.ajax({
+		async : false,
+	    url : reqUrl,
+	    dataType : 'json',
+	    success:function(data,textStatus){
+	    	var	resultArray = data.response.body.items.item;
+	    	var info_array = new Array();
+	    	console.log(resultArray);
+	    	if(resultArray['playtime'] == null || resultArray['playtime'] == ""){
+	    		
+	    	}else{
+	    		var start = resultArray.eventstartdate;
+		    	var end = resultArray.eventenddate;
+		    	var startDate = (start.toString().substring(0,4)+ '.'+start.toString().substring(4,6)+'.'+start.toString().substring(6,8));
+		    	var endDate = (end.toString().substring(0,4) + '.' + end.toString().substring(4,6)+'.'+end.toString().substring(6,8));
+		    	var eventDate = startDate + '~' +endDate;
+		    	resultArray['playtime'] = eventDate;
+	    	}
+	    	var detail_key = Object.keys(resultArray)
+	    	var detail_val = Object.values(resultArray);
+	    	var length = detail_key.length;
+	    	for(var i=0; i<length; i++){
+	    		if(detail_val[i] == "" || detail_val[i] == null){
+	    			
+	    		}else{
+	    			if(detail_key[i] == 'contentid' || detail_key[i] == 'contenttypeid' ||detail_val[i] == '가능' || detail_val[i] == '불가' || detail_key[i] == 'eventstartdate' || detail_key[i] == 'eventenddate' || detail_val[i] == '없음' || detail_val[i] == '있음'){
+	    				console.log('안들어가지롱')
+	  
+	    			}else{
+	    				info_array.push(detail_val[i]);
+	    				
+	    			}
+	    		}
+	    	}
+	    	
+	    	console.log(resultArray);
+	    	var result_length = info_array.length;
+	    	var info_container = document.createElement('div');
+	    	$('.col-lg-5').append(info_container);
+	    	$(info_container).prop('class','info_container');
+	    	for(var j=0; j<result_length; j++){
+	    		var info = document.createElement('p');
+	    		$(info_container).append(info);
+	    		$(info).prop('class','info'+j);
+	    		$(info).html(info_array[j]);
+	    	}
+	    },
+	    error : function(data,textStatus){
+	    	  
+	    }
+	});
+}
 function image_init(idNumber) {
    $("#image_grid").empty();
    
-   var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+   var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D';
    var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + idNumber + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
    
    $.ajax({
@@ -54,10 +97,12 @@ function image_init(idNumber) {
          $(addr1).prop('class', 'addr');
          var addr1_text = document.createTextNode("주소 : " + resultArray.addr1);
          addr1.appendChild(addr1_text);
-                  
-         var h_page = document.createElement('p');
-         $(h_page).prop('class', 'h_page');
-         $(h_page).html("홈페이지 : " + resultArray.homepage);
+         
+         if(resultArray.homepage != undefined){
+	         var h_page = document.createElement('p');
+	         $(h_page).prop('class', 'h_page');
+	         $(h_page).html("홈페이지 : " + resultArray.homepage);
+         }
          
          var form = document.createElement('form');
          $(form).prop('name', 'wish');
@@ -73,7 +118,9 @@ function image_init(idNumber) {
          var label_heart = document.createElement('label');
          $(label_heart).prop('for', 'toggle-heart');
          $(label_heart).prop('id', 'heart');
+         var heart_text = document.createTextNode('위시리스트 추가 : ');
          var heart = document.createTextNode('♥');
+         form.appendChild(heart_text);
          label_heart.appendChild(heart);
          
          var hidden = document.createElement('input');
@@ -81,11 +128,15 @@ function image_init(idNumber) {
          $(hidden).prop('name', 'contentid');
          $(hidden).prop('value', 'id');
          
+         var hidden2 = document.createElement('input');
+         $(hidden2).prop('type', 'hidden');
+         $(hidden2).prop('name', 'contenttypeid');
+         $(hidden2).prop('value', resultArray.contenttypeid);
+         
          
          
                
-         var overview = document.createElement('p');
-         $(overview).html(resultArray.overview);
+//         var overview= $(overview).html(resultArray.overview);
          
          $('.col-lg-7').append(img_1);
 
@@ -96,7 +147,8 @@ function image_init(idNumber) {
          $(form).append(input_heart);
          $(form).append(label_heart);
          $(form).append(hidden);
-         $('.content').append(overview);
+         $(form).append(hidden2);
+         $('.content').html(resultArray.overview);
          
          map_print(resultArray.title, resultArray.mapx, resultArray.mapy);
          
@@ -113,7 +165,9 @@ function image_init(idNumber) {
          url : reqUrl,
          dataType : 'json',
          success : function(data, textStatus) {
-            var result_length = data.response.body.items.item.length
+            var result_length = data.response.body.items.item.length;
+            console.log("길이 : " + result_length);
+            
             var div = document.createElement('div');
             $('.col-lg-7').append(div);
             $(div).prop('class','detail_image_container');
@@ -143,41 +197,6 @@ function image_init(idNumber) {
       });
 }
 
-//function image_list(idNumber){
-//   var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
-//   var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailImage?ServiceKey=' + serviceKey + '&contentId=' + idNumber + '&imageYN=Y&MobileOS=ETC&MobileApp=AppTest';
-//   
-//   $.ajax({
-//      async : false,
-//      url : reqUrl,
-//      dataType : 'json',
-//      success : function(data, textStatus) {
-//         var result_length = data.response.body.items.item.length
-//         var div = document.createElement('div');
-//         $('.col-lg-7').append(div);
-//         $(div).prop('class','detail_image_container');
-//         $(div).prop('id','detail_image_container');
-//         for(var i = 0; i < result_length; i++){
-//            var resultArray = data.response.body.items.item[i];
-//            
-//            var div = document.createElement('div');
-//            var image = document.createElement('img');
-//            $(image).prop('class', 'detail_image_' + i);
-//            $(image).prop('id', 'detail_image');
-//            $(image).prop('src', resultArray.originimgurl);
-//                        
-//            $('.detail_image_container').append(image);
-//            $('.detail_image_'+i).on('click', function(){
-//               $('.mb-lg-0').attr('src', resultArray);
-//            });
-//         }
-//         
-//      },
-//      error : function(data, textStatus) {
-//         alert("잘못된 접근입니다.")
-//      }
-//   });
-//}
 
 function map_print(title, mapx, mapy){
    var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스

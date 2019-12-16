@@ -27,7 +27,41 @@
 	</select>	
 	
 	<insert id="insertReport" parameterType="reportVO">
-		INSERT INTO report_list (report_no, report_date, title, report_se, contents_cd, contents, pnish_cd, reporter_id, target_id, report_at)
-		VALUES (report_list_seq.nextval, sysdate, #{title}, #{report_se}, #{contents_cd}, #{contents}, #{pnish_cd}, #{reporter_id}, #{target_id}, 'N' )
+		INSERT INTO report_list (report_no, report_date, title, report_se, contents_cd, contents, pnish_cd, reporter_id, target_id, report_at, target_contents)
+		VALUES (report_list_seq.nextval, sysdate, #{title}, #{report_se}, #{contents_cd}, #{contents}, #{pnish_cd}, #{reporter_id}, #{target_id}, 'N', #{target_contents} )
 	</insert>
+	
+	<select id="selectReviewContents" parameterType="reportVO" resultType="string">
+	    <![CDATA[
+			SELECT contents
+			FROM article
+			WHERE article_no=#{contents_cd}
+	    ]]>	
+	</select>
+	
+	<select id="selectAccContents" parameterType="reportVO" resultType="string">
+	    <![CDATA[
+			SELECT content
+			FROM accompany
+			WHERE article_no=#{contents_cd}
+	    ]]>	
+	</select>
+
+	<select id="selectPlanContents" parameterType="reportVO" resultType="string">
+	    <![CDATA[
+			SELECT DECODE(GROUPING(detail_no),1,'<h3>'||day_no,'<p>'||ROW_NUMBER() OVER(ORDER BY detail_no)||' : ') || DECODE(GROUPING(detail_no),1,'</h3>',plan_desc||'</p>')
+			FROM planner_detail
+			WHERE plan_no=#{contents_cd}
+			GROUP BY ROLLUP(day_no,(detail_no,plan_desc))
+			ORDER BY day_no,GROUPING(detail_no) DESC,detail_no
+	    ]]>	
+	</select>
+	
+	<select id="selectCommentContents" parameterType="reportVO" resultType="string">
+	    <![CDATA[
+			SELECT answer_desc
+			FROM answer_article
+			WHERE answer_no=#{contents_cd}
+	    ]]>	
+	</select>
 </mapper>

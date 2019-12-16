@@ -17,6 +17,16 @@
 	}
 </script>
 <style>
+	@font-face {
+		src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+    	font-family: "NanumSquareRoundEB";
+	}
+
+	@font-face {
+    	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    	font-family: "NanumSquareRoundR";
+	}
+	
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 .hit {
@@ -56,56 +66,18 @@ to {
 /* 0% {color:white;}
       30% {color: yellow;}
       100% {color:red; font-weight: bold;} */
-}
-body {
-	background: #f2f2f2;
-	font-family: 'Open Sans', sans-serif;
-}
-
-.search {
-	width: 100%;
-	height:50px;
-	position: relative;
-	display: flex;
-}
-
-.searchTerm {
-	width: 100%;
-	border: 2px solid #666666;
-	border-right: none;
-	padding: 5px;
-	height: 33px;
-	border-radius: 5px 0 0 5px;
-	outline: none;
-	color: #9DBFAF;
-}
-
-.searchTerm:focus {
-	color: #00B4CC;
-}
-
-.searchButton {
-	width: 40px;
-	height: 33px;
-	border: 1px solid #666666;
-	background: #666666;
-	text-align: center;
-	color: #fff;
-	border-radius: 0 5px 5px 0;
-	cursor: pointer;
-	font-size: 20px;
-}
-
-/*Resize the wrap to see the search bar change!*/
-.wrap {
-	width: 30%;
-	position: relative;
-	top: 50%;
-	left: 50%;
-	height:30px;
-	transform: translate(-50%, -50%);
-}
-}
+    }
+    
+    *{
+    	font-family: "NanumSquareRoundR";
+    }
+    
+	#subjectText{
+		font-family: "NanumSquareRoundEB";
+	}
+	p {
+		font-family: "NanumSquareRoundR";	
+	}
 </style>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap/bootstrap.css" />
@@ -119,9 +91,10 @@ body {
 </head>
 <body>
 	<div class="container" id="container">
+			<h2 id="subjectText">동행 찾기</h2>
+			<p>BTS와 함께 여행</p>
 		<img src="${contextPath }/resources/image/accompanyMain.jpg" id="accMainImage"> <br> <br>
 		<div id="headsubject">
-			<h1 id="subjectText">동행 찾기</h1>
 		</div>
 		<form id="boardForm" name="boardForm" method="post">
 			<table class="table table-striped table-hover">

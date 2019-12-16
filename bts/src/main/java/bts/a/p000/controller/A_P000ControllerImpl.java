@@ -1,5 +1,7 @@
 package bts.a.p000.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,9 +26,14 @@ public class A_P000ControllerImpl implements A_P000Controller{
 		int countMember = a_p000Service.countMember();
 		int countContact = a_p000Service.countContact();
 		int countReport = a_p000Service.countReport();
+		long countTotal = a_p000Service.countAnswer();
+		Map<String, String> countWrite = a_p000Service.countWrite();
+		
 		mav.addObject("countMember", countMember);
 		mav.addObject("countContact", countContact);
 		mav.addObject("countReport", countReport);
+		mav.addObject("countTotal", countTotal);
+		mav.addObject("countWrite", countWrite);
 		return mav;
 	}
 
