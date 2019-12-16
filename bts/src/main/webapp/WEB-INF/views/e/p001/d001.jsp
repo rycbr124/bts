@@ -27,22 +27,43 @@
     	font-family: "NanumSquareRoundR";
 	}
 	
-   .hit {
-      animation-name: blink;
-      animation-duration: 1.5s;
-      animation-timing-function: ease;
-      animation-iteration-count: infinite;
-      /* 위 속성들을 한 줄로 표기하기 */
-      /* -webkit-animation: blink 1.5s ease infinite; */
-    }
-     
-    /* 애니메이션 지점 설정하기 */
-    /* 익스플로러 10 이상, 최신 모던 브라우저에서 지원 */
-    @keyframes blink {
-      from {color: white;}
-      30% {color: yellow;}
-      to {color: red; font-weight: bold;}
-      /* 0% {color:white;}
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+.hit {
+	animation-name: blink;
+	animation-duration: 1.5s;
+	animation-timing-function: ease;
+	animation-iteration-count: infinite;
+	/* 위 속성들을 한 줄로 표기하기 */
+	/* -webkit-animation: blink 1.5s ease infinite; */
+}
+
+/* 애니메이션 지점 설정하기 */
+/* 익스플로러 10 이상, 최신 모던 브라우저에서 지원 */
+@
+keyframes blink {
+	from {color: white;
+}
+
+30%
+{
+color
+
+
+:
+
+ 
+
+yellow
+
+
+;
+}
+to {
+	color: red;
+	font-weight: bold;
+}
+/* 0% {color:white;}
       30% {color: yellow;}
       100% {color:red; font-weight: bold;} */
     }
@@ -90,8 +111,7 @@
 					<c:forEach var="result" items="${accList}" varStatus="status">
 						<tr>
 							<td><c:out value="${result.article_no}" /></td>
-							<td><a href="${contextPath}/accompany/accView?article_no=${result.article_no}&member_id=${result.member_id}" id="acc_title"><c:out value="${result.acc_title}" /></a> 
-							<c:if test="${result.viewcnt >= 30}">
+							<td><a href="${contextPath}/accompany/accView?article_no=${result.article_no}&member_id=${result.member_id}" id="acc_title"><c:out value="${result.acc_title}" /></a> <c:if test="${result.viewcnt >= 30}">
 									<span class="hit">&nbsp;&nbsp;Hit!</span>
 								</c:if></td>
 							<td><c:out value="${result.nick_name }" /></td>
@@ -128,6 +148,14 @@
 					<li class="page-item"><a href="${contextPath}/accompany/accMain?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
 				</c:if>
 			</ul>
+		</div>
+			<div class="wrap">
+			<div class="search">
+				<input type="text" class="searchTerm" placeholder="검색하기">
+				<button type="submit" class="searchButton">
+					<i class="fa fa-search"></i>
+				</button>
+			</div>
 		</div>
 	</div>
 </body>
