@@ -84,7 +84,7 @@
 			<a class="btn btn-success" href="${contextPath}/accompany/accMain" style="background-color: #666666; border-color: #666666">목록으로 돌아가기</a>&nbsp;&nbsp;&nbsp; 
 			<a class="btn btn-success" id="contents-report" href="#" style="background-color: #666666; border-color: #666666" data-toggle="modal">게시글 신고하기</a>&nbsp;&nbsp;&nbsp;
 			<c:choose>
-			<c:when test="${sessionScope.memberInfo.member_id eq member_id}">		 		
+			<c:when test="${sessionScope.memberInfo.member_id eq accView.member_id}">		 		
 			<a class="btn btn-success" href="${contextPath }/accompany3/accUpdateForm?article_no=${accView.article_no}" style="background-color: #666666; border-color: #666666" >게시글 수정하기</a>&nbsp;&nbsp;&nbsp;
 			<a class="btn btn-success" onclick="accDel();" id="accDelBtn" href="#" style="background-color: #666666; border-color: #666666" >게시글 삭제하기</a>
 			</c:when>

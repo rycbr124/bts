@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -53,11 +54,19 @@ public class A_P004ControllerImpl implements A_P004Controller{
 	}
 	@Override
 	@RequestMapping(value="/question_answer")
-	@ResponseBody public List<C_P004VO> questionAnswer(HttpServletRequest request, HttpServletResponse response)throws Exception{
+	@ResponseBody public Map<String,Object> questionAnswer(HttpServletRequest request, HttpServletResponse response)throws Exception{
 		String contact_no = request.getParameter("contact_no");
 		c_p004VO.setContact_no(contact_no);
+		Map<String,Object> result = new HashMap<>();
 		List<C_P004VO> questionAnswer = a_p004Service.questionAnswer(contact_no);
-		return questionAnswer;
+		List<A_P004VO> selectAnswer = a_p004Service.selectAnswer(contact_no);
+		System.out.println(questionAnswer);
+		System.out.println(selectAnswer);
+		result.put("questionInfo", questionAnswer);
+		result.put("answerInfo", selectAnswer);
+		
+		System.out.println(result);
+		return result;
 	}
 	@Override
 	@RequestMapping(value="/addAnswer")

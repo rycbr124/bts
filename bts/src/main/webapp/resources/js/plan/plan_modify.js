@@ -175,7 +175,10 @@ function plan_modify(planner_info,detail_info, tagList){
 			markers.push(marker);
 		}
 	});
-		
+		var day_list = $('#day_list')[0];
+		console.log(day_list);
+		$(day_list).attr('class','active_day');
+		 $('.active_day').prop('style','background-color:rgb(160,160,160); color:#000;'); 
 	 $('div.content_container>div').on('click',function(){
 		 
 		   var day_text = $(this).text();
@@ -187,7 +190,7 @@ function plan_modify(planner_info,detail_info, tagList){
            $(this).prop('class','active');
            $(this).siblings().removeClass();
            $(this).prop('class','active_day');
-           $('.active_day').prop('style','background-color:rgb(160,160,160); color:#000;'); 	
+           $('.active_day').prop('style','background-color:rgb(160,160,160); color:#000;'); 
            $(this).siblings().attr('style','none');
            $('.date_value').text($(date).text());
            $('.day_value').text($(day).text());
@@ -339,7 +342,7 @@ function content_value(detail){
 				$(change_class[i]).prop('class',result);
 				
 			}
-			document.getElementsByClassName('active_day').click();
+			$('.active_day').click();
 			var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
 			var content_id = $(this).parent().data('value');
 			var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?serviceKey='
@@ -362,7 +365,7 @@ function content_value(detail){
 					result_obj['title'] = title;
 					
 					result_arr.push(result_obj);
-					
+				
 				},
 				error : function(data, textStatus){
 					alert('잘못된 접근 입니다.')

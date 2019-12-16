@@ -1,5 +1,6 @@
 package bts.d.p001_4.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,8 +21,15 @@ public class D_P001_4DAOImpl implements D_P001_4DAO{
 	private SqlSession sqlSession;
 
 	@Override
-	public List<D_P001_4VO> searchArticle(PagingVO pagingVO) throws DataAccessException {
-		return sqlSession.selectList("d.p001_4.searchArticle", pagingVO);
+	public List<D_P001_4VO> searchArticle(PagingVO pagingVO, String category, String searchResult) throws DataAccessException {
+		Map<String, Object> search = new HashMap<>();
+		int start = pagingVO.getStart();
+		int end = pagingVO.getEnd();
+		search.put("start", start);
+		search.put("end", end);
+		search.put("category", category);
+		search.put("searchResult", searchResult);
+		return sqlSession.selectList("d.p001_4.searchArticle", search);
 	}
 	
 	@Override
@@ -70,8 +78,11 @@ public class D_P001_4DAOImpl implements D_P001_4DAO{
 	}
 
 	@Override
-	public Integer pageCount() throws DataAccessException {
-		return sqlSession.selectOne("d.p001_4.pageCount");
+	public Integer pageCount(String category, String searchResult) throws DataAccessException {
+		Map<String, String> result = new HashMap<>();
+		result.put("category", category);
+		result.put("searchResult", searchResult);
+		return sqlSession.selectOne("d.p001_4.pageCount", result);
 	}
 
 	@Override
@@ -102,5 +113,12 @@ public class D_P001_4DAOImpl implements D_P001_4DAO{
 	@Override
 	public List<String> findContentId() throws DataAccessException {
 		return sqlSession.selectList("d.p001_4.findContentId");
+	}
+
+	@Override
+	public List<D_P001_4VO> searchTitle(String searchResult) throws DataAccessException {
+		System.out.println("dao : " + searchResult);
+		return sqlSession.selectList("d.p001_4.searchTitle", searchResult);
+		
 	}
 }

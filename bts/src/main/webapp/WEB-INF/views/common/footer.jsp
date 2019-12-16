@@ -28,10 +28,10 @@ list-style: none;
 .footer_menu > li.footer_menu_event > a { background: #333333;  border-radius:10px 10px 10px 0;}
 .footer_menu > li.footer_menu_terms > a { background:#333333; border-radius:10px 10px 0 10px;}
 .footer_menu > li.footer_menu_privacy > a {background:#333333;border-radius:10px 10px 0 10px;width: 128px;}
-html:not(.mobile) .footer_menu > li.footer_menu_notice > a:hover, html:not(.mobile) .footer_menu > li.footer_menu_faq > a:hover { background:#d91114}
-html:not(.mobile) .footer_menu > li.footer_menu_event > a:hover { background:#d91114}
-html:not(.mobile) .footer_menu > li.footer_menu_terms > a:hover { background:#d91114}
-html:not(.mobile) .footer_menu > li.footer_menu_privacy > a:hover { background:#d91114}
+.footer_menu > li.footer_menu_notice > a:hover, html:not(.mobile) .footer_menu > li.footer_menu_faq > a:hover { background:#d91114}
+.footer_menu > li.footer_menu_event > a:hover { background:#d91114}
+.footer_menu > li.footer_menu_terms > a:hover { background:#d91114}
+.footer_menu > li.footer_menu_privacy > a:hover { background:#d91114}
 
 /* info */
 .footer_info {clear:both; margin-bottom: 20px;}

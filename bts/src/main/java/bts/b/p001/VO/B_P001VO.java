@@ -3,7 +3,7 @@ package bts.b.p001.VO;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-@Component("b_p001VO")
+@Component("d_001VO")
 @Scope("prototype")
 public class B_P001VO {
 	private String member_id;

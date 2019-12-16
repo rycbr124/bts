@@ -1,6 +1,7 @@
 /**
  * 
  */
+
 function log_check(member,ev){
 	if(member == ""){
 		alert('로그인 후 이용가능합니다.');
@@ -17,11 +18,12 @@ function go_write(){
 }
 
 function searchPlan(){
-	/*
-	var frmSave = document.form;
-	frmSave.action="${contextPath}/community/plan_modify";
-	frmSave.length.value=length;		
-	frmSave.submit();
-	*/
+	var select = $('#selectBox option:selected').val();
+	console.log("1111111111 : " + select);
+	
+	var frmSearch = document.form;
+	frmSearch.action = "/bts/community/plan_list";
+	frmSearch.category.value = select;
+	//frmSearch.submit();
 	
 }

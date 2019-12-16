@@ -29,14 +29,6 @@ $(function(){
 		}
 		$('#side').animate({'top':position},{duration:speed , easing, queue:false});
 	});
-	$('#side ul li a').on('click',function(){
-		var className = $(this).parent().attr('class')
-		if(className != 'active'){
-			$(this).parent().addClass('active');
-		}else{
-			$(this).parenr().removeClass();
-		}
-	});
 });
 </script>
 <style>

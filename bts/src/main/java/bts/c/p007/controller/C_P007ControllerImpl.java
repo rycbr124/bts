@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import bts.c.p007.VO.C_P007VO;
 import bts.c.p007.service.C_P007Service;
 import bts.e.p001.VO.PagingVO;
+import bts.e.p001.VO.PagingVO2;
 
 @Controller("c_p007Controller")
 @RequestMapping("/my/accompany")
@@ -27,9 +28,11 @@ public class C_P007ControllerImpl implements C_P007Controller{
 
 	@Override
 	@RequestMapping(value="/accList", method= {RequestMethod.GET, RequestMethod.POST})
-	public ModelAndView myAccList(PagingVO pagingVO
+	public ModelAndView myAccList(PagingVO pagingVO, PagingVO2 pagingVO2
 			,@RequestParam(value="nowPage", required=false) String nowPage
 			,@RequestParam(value="cntPerPage", required=false) String cntPerPage
+			,@RequestParam(value="nowPage2", required=false) String nowPage2
+			,@RequestParam(value="cntPerPage2", required=false) String cntPerPage2
 			,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/c/p007/d001");
 		HttpSession session = request.getSession();
@@ -37,6 +40,7 @@ public class C_P007ControllerImpl implements C_P007Controller{
 		System.out.println("member_idddddddddddddddd:" + member_id);
 		
 		int total = c_p007Service.listCount(member_id);
+		int total2 = c_p007Service.imAccCount(member_id);
 		
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
@@ -46,12 +50,27 @@ public class C_P007ControllerImpl implements C_P007Controller{
 		}else if(cntPerPage == null) {
 			cntPerPage = "5";
 		}
+		
+		if(nowPage2 == null && cntPerPage2 == null) {
+			nowPage2 = "1";
+			cntPerPage2 = "5";
+		}else if(nowPage2 == null) {
+			nowPage2 = "1";
+		}else if(cntPerPage2 == null) {
+			cntPerPage2 = "5";
+		}
+		
 		pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
+		pagingVO2 = new PagingVO2(total2, Integer.parseInt(nowPage2),Integer.parseInt(cntPerPage2));
 		c_p007VO.setMember_id(member_id);
 		pagingVO.setMember_id(member_id);
+		pagingVO2.setMember_id(member_id);
+		List<C_P007VO> myList = c_p007Service.imAccList(pagingVO2);
 		List<C_P007VO> list = c_p007Service.myAccList(pagingVO);
 		System.out.println("mypagelistttttttttttt:" + list);
 		mav.addObject("paging",pagingVO);
+		mav.addObject("paging2",pagingVO2);
+		mav.addObject("myList",myList);
 		mav.addObject("accList", list);
 		return mav;
 	}

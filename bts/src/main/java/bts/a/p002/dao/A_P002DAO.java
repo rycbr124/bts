@@ -32,4 +32,16 @@ public interface A_P002DAO {
 
 	void updateReportEnd(int report_no);
 
+	A_P002VO_1 selectCommentContents(int report_no);
+
+	List<A_P002VO_1> selectHistoryList(Map<String, String> searchMap);
+
+	List<String> selectPnishName();
+
+	void insertHistory(Map<String, String> row);
+
+	void updateHistory(Map<String, String> row);
+
+	void deleteHistory(Map<String, String> row);
+
 }

@@ -23,9 +23,6 @@
 		$('#search').on('click',function(){
 			doAction('search');
 		})
-		$('#save').on('click',function(){
-			doAction('save');
-		})
 		
 		$("#p_name").on("keydown",function(event){
 			if(event.keyCode==13){
@@ -73,22 +70,6 @@
 		console.log(mySheet.GetRowData(Row));
 		var url="${contextPath}/admin/report/list/contents?report_no="+mySheet.GetRowData(Row).report_no;
 		window.open(url,"_blank");
-		/*
-		var title="detailForm";
-		var form = document.createElement('form');
-		var detailInfo = document.createElement('input');
-		$(detailInfo).attr('type','hidden');
-		$(detailInfo).attr('name','detailInfo');
-		form.append(detailInfo);
-		form.detailInfo.value=JSON.stringify(mySheet.GetRowData(Row));			
-		form.target=title;
-		form.action="${contextPath}/admin/report/list/contents";
-		form.method="post";
-		$('body').append(form);
-		form.submit();
-		
-		window.open("",title);
-		*/
 	}
 	
 	function doAction(sAction) {
@@ -108,14 +89,7 @@
 			break;	
 		}
 	}
-	
-	function mySheet_OnSaveEnd(code, msg) {
-		if (msg != "") {
-			alert(msg);
-			doAction('search');	
-		}
-	}
-	
+
 </script>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -127,7 +101,7 @@
 	</div>
 	
 	<div class="main_content">
-		<div class="exp_product">신고 기준 조회 및 변경이 가능합니다.</div>
+		<div class="exp_product">신고 목록 조회 및 변경이 가능합니다.</div>
 		<div class="exp_product">
 			<form name='frm'>
 				제목 : <input type='text' id="p_title" name="p_title" />
@@ -137,7 +111,6 @@
 		<div class="ib_function float_right">
 			<a id="reload" class="f1_btn_gray lightgray">초기화</a>
 			<a id="search" class="f1_btn_white gray">조회</a>
-			<a id="save" class="f1_btn_white gray">저장</a>
 		</div>
 
 		<div class="clear hidden"></div>

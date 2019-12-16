@@ -31,16 +31,15 @@
 		<result property="article_no" column="article_no" />
 		<result property="menu_name" column="menu_name" />
 	</resultMap>
-	
-	<select id="selectPnishList" parameterType="string" resultMap="pnishResult">
-	    <![CDATA[
-			SELECT pnish_cd,name,day_cnt
-			FROM punishment
-	    ]]>
-   		<where>
-			name LIKE '%'||#{p_name}||'%'
-		</where>
-	</select>	
+
+	<resultMap id="pnishHistory" type="a_p002VO_1">
+		<result property="begin_date" column="begin_date" />
+		<result property="end_date" column="end_date" />
+		<result property="member_id" column="member_id" />
+		<result property="report_no" column="report_no" />	
+		<result property="pnish_desc" column="pnish_desc" />
+		<result property="btn_report" column="btn_report" />
+	</resultMap>
 	
 	<insert id="insertPnish" parameterType="java.util.Map">
 		<![CDATA[
@@ -53,6 +52,13 @@
 	    <![CDATA[
 			INSERT INTO punishment_history (begin_date, end_date, member_id, report_no, pnish_desc) 
 			VALUES (#{begin_date}, #{end_date}, #{member_id}, #{report_no,jdbcType=VARCHAR}, #{pnish_desc,jdbcType=VARCHAR})
+	    ]]>
+	</insert>
+
+	<insert id="insertHistory" parameterType="java.util.Map">
+	    <![CDATA[
+			INSERT INTO punishment_history (begin_date, end_date, member_id, report_no, pnish_desc) 
+			VALUES (TO_DATE(#{begin_date},'YYYYMMDD'), TO_DATE(#{end_date},'YYYYMMDD'), #{member_id}, #{report_no,jdbcType=VARCHAR}, #{pnish_desc,jdbcType=VARCHAR})
 	    ]]>
 	</insert>
 
@@ -80,24 +86,74 @@
 		    ]]>	
 		</where>
 	</update>
+
+	<update id="updateHistory" parameterType="java.util.Map">
+		<![CDATA[
+			UPDATE punishment_history
+	    ]]>
+		<set>
+			<![CDATA[
+				member_id=#{member_id},						
+				begin_date=TO_DATE(#{begin_date},'YYYYMMDD'),
+				end_date=TO_DATE(#{end_date},'YYYYMMDD'),
+				pnish_desc=#{pnish_desc}
+		    ]]>	
+		</set>
+		<where>
+			<![CDATA[
+				 member_id=#{first_id}
+				 AND TO_CHAR(begin_date,'YYYYMMDD')=#{first_begin}
+				 AND TO_CHAR(end_date,'YYYYMMDD')=#{first_end}
+		    ]]>	
+		</where>
+	</update>
 	
 	<delete id="deletePnish" parameterType="java.util.Map">
 		<![CDATA[
-			DELETE punishment
+			DELETE FROM punishment
 			WHERE pnish_cd = #{pnish_cd}
 	    ]]>
 	</delete>	
 
-	<select id="selectReportContent" parameterType="_int" resultMap="reportResult">
+	<delete id="deleteHistory" parameterType="java.util.Map">
+		<![CDATA[
+			DELETE FROM punishment_history
+	    ]]>
+		<where>
+			<![CDATA[
+				 member_id=#{first_id}
+				 AND TO_CHAR(begin_date,'YYYYMMDD')=#{first_begin}
+				 AND TO_CHAR(end_date,'YYYYMMDD')=#{first_end}
+		    ]]>	
+		</where>
+	</delete>	
+	
+	<select id="selectPnishList" parameterType="string" resultMap="pnishResult">
 	    <![CDATA[
-			SELECT report_no,report_date,title,report_se,contents,reporter_id,report_at
-			,contents_cd,target_id,target_contents, r.pnish_cd, p.name pnish_name,p.day_cnt
-			FROM report_list r, punishment p
+			SELECT pnish_cd,name,day_cnt
+			FROM punishment
 	    ]]>
    		<where>
-			r.pnish_cd=p.pnish_cd(+)
-			AND report_no=#{report_no}
+			name LIKE '%'||#{p_name}||'%'
 		</where>
+	</select>
+
+	<select id="selectHistoryList" parameterType="map" resultMap="pnishHistory">
+	    <![CDATA[
+			SELECT begin_date,end_date,member_id,report_no,pnish_desc,NVL2(report_no,'신고보기','') btn_report
+			FROM punishment_history
+	    ]]>
+   		<where>
+			member_id LIKE '%'||#{p_id}||'%'
+		</where>
+	</select>
+
+	
+	<select id="selectPnishName" resultType="string">
+	    <![CDATA[
+			SELECT name
+			FROM punishment
+	    ]]>
 	</select>
 
 	<select id="selectReportList" parameterType="map" resultMap="reportResult">
@@ -113,7 +169,29 @@
 	    	]]>
 		</where>
 	</select>	
+		
+	<select id="selectReportContent" parameterType="_int" resultMap="reportResult">
+	    <![CDATA[
+			SELECT report_no,report_date,title,report_se,contents,reporter_id,report_at
+			,contents_cd,target_id,target_contents, r.pnish_cd, p.name pnish_name,p.day_cnt
+			FROM report_list r, punishment p
+	    ]]>
+   		<where>
+			r.pnish_cd=p.pnish_cd(+)
+			AND report_no=#{report_no}
+		</where>
+	</select>
 
+	<select id="selectReportResult" parameterType="string" resultType="a_p002VO_1">
+	    <![CDATA[
+			SELECT begin_date, end_date, pnish_desc
+			FROM punishment_history
+	    ]]>
+   		<where>
+			report_no=#{report_no}
+		</where>
+	</select>
+	
 	<select id="selectMenuName" parameterType="string" resultType="string">
 	    <![CDATA[
 		    SELECT m.name

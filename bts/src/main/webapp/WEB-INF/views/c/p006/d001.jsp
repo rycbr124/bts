@@ -16,11 +16,13 @@
 $(document).ready(function(){
 	init();
 	
+	/*
 	$("#chat-header>i").on("click",addMember);
 	
 	function addMember(){
 		$('#user-add').fadeIn();
 	}
+	*/
 	
 	function init(){
 		var url="ws://"+"${pageContext.request.serverName}"+":"+${pageContext.request.serverPort}+"${pageContext.request.contextPath}"+"/msg?at=${accompany_at}";		
@@ -28,6 +30,7 @@ $(document).ready(function(){
 		var ws=con.getWs();
 		
 		ws.onopen=function(message){
+			$('#set-acc').css('display','none');
 			if("${target_id.member_id==null}"!="true"){
 				var imgSrc="${target_id.profile_image}";
 				if(imgSrc==null){
@@ -42,11 +45,10 @@ $(document).ready(function(){
 				memberClick(resultForm,ws);
 			}
 			
-			if("${accompany_at=='Y'}"=="true"){
+			if("${accompany_at=='Y'}"=="true" && "${target_id.member_id==null}"!="true"){
 				var textMessage='${sessionScope.memberInfo.member_id}'+'님이 매칭을 신청하였습니다.'
 				sendText(ws,"send_message",sendForm(textMessage,"${target_id.member_id}"));
-			}
-			
+			}			
 		}
 		ws.onclose=function(message){
 			alert("end");
@@ -65,7 +67,8 @@ $(document).ready(function(){
 			}else if(recData.header=="send_message"){
 				updateChat(recData);
 				var nowId=$('#chat-header .member-id').text();
-				if(nowId==recMessage.sender || nowId==recMessage.receiver){					
+				if(nowId==recMessage.sender || nowId==recMessage.receiver){
+					//$('.clicked').find('span').removeClass('check-msg');
 					messageAdd(recMessage.contents,new Date(recMessage.writing_date),recMessage.me_at);					
 				}
 			}else if(recData.header=='search_member'){
@@ -95,9 +98,23 @@ $(document).ready(function(){
 		    	sendText(ws,"send_message",contents);
 	    	}
 	    });
+
+	    $("#chat-footer>textarea").keyup(function(e) {
+	    	e.preventDefault(); 
+			var code = e.keyCode ? e.keyCode : e.which;
+			if(code==13 && e.shiftKey!=true){
+				$("#chat-footer>input[type=button]").trigger("click");
+				return false;
+			}
+	    });
+		
+		//매칭 승인,거절 이벤트
+		$("#set-acc").on("click",function(){
+			
+		});
 		
 		//팝업 이벤트
-	    $("#chat-header>i").on("click",showPopup);
+	    $("#add-user").on("click",showPopup);
 		$("#pop-close").on("click",closePopup);	 	
 		
 		//팝업 검색
@@ -133,6 +150,10 @@ $(document).ready(function(){
 	
 	function memberClick(clickNode,ws){
 		if(!$(clickNode).hasClass("clicked")){
+			if("${accompany_at=='Y'}"=="true"){
+				$('#set-acc').css('display','block');
+			}
+			
 			//채팅 header에 유저 정보 표시
 			$('#user-info').empty();
 			var information = $(clickNode).children();
@@ -200,12 +221,15 @@ $(document).ready(function(){
 		
 		for(var i in userList){
 			if($(userList[i]).find('.member-id').text()==data.id){
+				$(userList[i]).find('img').removeClass('receive');
 				$('#people-list').prepend(userList[i]);
 				return userList[i];
 			}
 		}
 		
 		var newDiscussion=makeMemberDiv(data);
+		var check = document.createElement('span');
+		$(newDiscussion).prepend(check);
 		$('#people-list').prepend(newDiscussion);
 		return newDiscussion;
 	}
@@ -228,7 +252,14 @@ $(document).ready(function(){
 			divData = new memberDivForm('discussion',imgSrc,recData.body.sender_info.nick_name,res.sender);
 		}
 		
-		prependMember(divData);
+		var updateMember = prependMember(divData);
+		
+		if(res.me_at!='true'){
+			var cImg = $(updateMember).find('img').toArray()[0];
+			var cloneImg = cImg.cloneNode(true);
+			cImg.parentNode.replaceChild(cloneImg,cImg);
+			$(cloneImg).addClass('receive');
+		}
 	}
 	
 	function popSearch(/*웹소켓 객체*/ws){
@@ -331,6 +362,26 @@ $(document).ready(function(){
 <title>Insert title here</title>
 </head>   
 <body>
+	<ul class="nav nav-tabs">
+		<c:choose>
+			<c:when test="${accompany_at=='Y'}">
+				<li class="nav-item">
+					<a class="nav-link" href="${contextPath}/my/message/main">일반채팅</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link active" href="${contextPath}/my/message/accompany">매칭채팅</a>
+				</li>			
+			</c:when>
+			<c:otherwise>
+				<li class="nav-item">
+					<a class="nav-link active" href="${contextPath}/my/message/main">일반채팅</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="${contextPath}/my/message/accompany">매칭채팅</a>
+				</li>			
+			</c:otherwise>
+		</c:choose>
+	</ul>
    <div class="msg-container">
       <div id="people">
          <div id="people-search">
@@ -365,7 +416,10 @@ $(document).ready(function(){
          <div id="chat-header">
 			<div id="user-info"></div>
 			<c:if test="${accompany_at!='Y'}">
-				<i class="fas fa-user-plus fa-2x"></i>
+				<i class="fas fa-user-plus fa-2x" id="add-user"></i>
+			</c:if>
+			<c:if test="${accompany_at=='Y'}">
+				<i class="fas fa-info-circle fa-2x" id="set-acc" data-toggle="modal" data-target="#acc-info"></i>
 			</c:if>
          </div>
          <div id="chat-message">
@@ -395,5 +449,6 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
+
 </body>
 </html>

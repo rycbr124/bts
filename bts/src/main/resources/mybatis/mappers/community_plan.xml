@@ -60,7 +60,15 @@
 			        SELECT member_id, title, plan_no, register_date, range_date, open_val, view_cnt
 			        FROM planner
 			        WHERE open_val='Y'
-			        ORDER BY register_date DESC
+		]]>
+					<if test="category == '제목'">
+					AND title LIKE '%' ||  #{searchResult} || '%'
+					</if>
+					<if test="category == '작성자'">
+					AND member_id LIKE '%' ||  #{searchResult} || '%'
+					</if>
+		<![CDATA[	
+			        ORDER BY register_date DESC		
 			    ) a
 			    WHERE rownum<=#{end}
 			) b
@@ -161,6 +169,12 @@
 			FROM planner
 			WHERE open_val = 'Y'
 		]]>
+			<if test="category == '제목'">
+			AND title LIKE '%' ||  #{searchResult} || '%'
+			</if>
+			<if test="category == '작성자'">
+			AND member_id LIKE '%' ||  #{searchResult} || '%'
+			</if>
 	</select>
 	
 	<!-- 댓글 리스트 검색 -->
@@ -230,6 +244,23 @@
 		]]>
 	</select>
 	
-	
-	
+	<!-- 게시글 제목 검색 -->
+	<select id="searchTitle" parameterType="String" resultMap="articleResult">
+		<![CDATA[
+			SELECT b.* 
+			FROM
+			(
+			    SELECT rownum as rnum, a.*
+			    FROM 
+			    (
+			        SELECT member_id, title, plan_no, register_date, range_date, open_val, view_cnt
+			        FROM planner
+			        WHERE open_val='Y'
+			        AND title LIKE '%' ||  #{searchResult} || '%'
+			        ORDER BY register_date DESC
+			    ) a
+			) b
+		]]>	
+	</select>
+		
 </mapper>
