@@ -19,8 +19,65 @@
 	<br>
 	<br>
 	<div class="container" id="container">
+
 		<div id="headsubject">
-			<h1 id="subjectText">내글 동행 신청자 리스트</h1>
+			<h1 id="subjectText">내 동행 리스트</h1>
+					<ul class="tabs">
+			<li class="tab-link current" data-tab="acctab">나에게 신청한글</li>
+			<li class="tab-link" data-tab="accToYou">내가 신청한글</li>
+		</ul>
+			<div id="accToMe" class="tab-content current">
+				<form id="boardForm" name="boardForm" method="post">
+					<table class="table table-striped table-hover">
+						<thead>
+							<tr>
+								<th>번호</th>
+								<th>제목</th>
+								<th>신청자아이디</th>
+								<th>날짜</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="result" items="${accList }" varStatus="status">
+								<tr>
+									<td><c:out value="${result.article_no }" /></td>
+									<td><a id="acc_title" href="${contextPath}/accompany/accView?article_no=${result.article_no}&member_id=${result.member_id}"><c:out value="${result.acc_title }" /></a></td>
+									<td><c:out value="${result.member_id }" /></td>
+									<td><c:out value="${result.register_date }" /></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</form>
+
+				<br> <br>
+				<div id="paging" style="display: block; text-align: center;">
+					<ul class="pagination" id="pagination">
+						<!-- 이전버튼 -->
+						<c:if test="${paging.startPage != 1}">
+							<li class="page-item"><a href="${contextPath}/my/accompany/accList?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous" id="prev">이전</a></li>
+						</c:if>
+						<!-- 페이지 번호 -->
+						<c:forEach var="idx" begin="${paging.startPage}" end="${paging.endPage}">
+							<c:choose>
+								<c:when test="${idx == paging.nowPage }">
+									<li class="page-item"><a class="page-link" href="#" id="pageNo">${idx}</a></li>
+								</c:when>
+								<c:when test="${idx != paging.nowPage }">
+									<li class="page-item"><a class="page-link" href="${contextPath}/my/accompany/accList?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" id="pageNo">${idx}</a></li>
+								</c:when>
+							</c:choose>
+						</c:forEach>
+						<!-- 이후 -->
+						<c:if test="${paging.endPage != paging.lastPage}">
+							<li class="page-item"><a href="${contextPath}/my/accompany/accList?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
+						</c:if>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div id="accToYou" class="tab-content">
 			<form id="boardForm" name="boardForm" method="post">
 				<table class="table table-striped table-hover">
 					<thead>
@@ -32,42 +89,63 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="result" items="${accList }" varStatus="status">
+						<c:forEach var="result2" items="${myList }" varStatus="status">
 							<tr>
-								<td><c:out value="${result.article_no }" /></td>
-								<td><a id="acc_title" href="${contextPath}/accompany/accView?article_no=${result.article_no}&member_id=${result.member_id}"><c:out value="${result.acc_title }" /></a></td>
-								<td><c:out value="${result.member_id }" /></td>
-								<td><c:out value="${result.register_date }" /></td>
+								<td><c:out value="${result2.article_no }" /></td>
+								<td><a id="acc_title" href="${contextPath}/accompany/accView?article_no=${result2.article_no}&member_id=${result2.member_id}"><c:out value="${result2.acc_title }" /></a></td>
+								<td><c:out value="${result2.member_id }" /></td>
+								<td><c:out value="${result2.register_date }" /></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 			</form>
+
 			<br> <br>
 			<div id="paging" style="display: block; text-align: center;">
 				<ul class="pagination" id="pagination">
 					<!-- 이전버튼 -->
-					<c:if test="${paging.startPage != 1}">
-						<li class="page-item"><a href="${contextPath}/my/accompany/accList?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous" id="prev">이전</a></li>
+					<c:if test="${paging2.startPage2 != 1}">
+						<li class="page-item"><a href="${contextPath}/my/accompany/accList?nowPage2=${paging2.startPage2 -1}&cntPerPage2=${paging2.cntPerPage2}" class="paginate_button previous" id="prev">이전</a></li>
 					</c:if>
 					<!-- 페이지 번호 -->
-					<c:forEach var="idx" begin="${paging.startPage}" end="${paging.endPage}">
+					<c:forEach var="idx" begin="${paging2.startPage2}" end="${paging2.endPage2}">
 						<c:choose>
-							<c:when test="${idx == paging.nowPage }">
+							<c:when test="${idx == paging2.nowPage2 }">
 								<li class="page-item"><a class="page-link" href="#" id="pageNo">${idx}</a></li>
 							</c:when>
-							<c:when test="${idx != paging.nowPage }">
-								<li class="page-item"><a class="page-link" href="${contextPath}/my/accompany/accList?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" id="pageNo">${idx}</a></li>
+							<c:when test="${idx != paging2.nowPage2 }">
+								<li class="page-item"><a class="page-link" href="${contextPath}/my/accompany/accList?nowPage2=${idx}&cntPerPage2=${paging2.cntPerPage2}" id="pageNo">${idx}</a></li>
 							</c:when>
 						</c:choose>
 					</c:forEach>
 					<!-- 이후 -->
-					<c:if test="${paging.endPage != paging.lastPage}">
-						<li class="page-item"><a href="${contextPath}/my/accompany/accList?nowPage=${paging.endPage+1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
+					<c:if test="${paging2.endPage2 != paging2.lastPage2}">
+						<li class="page-item"><a href="${contextPath}/my/accompany/accList?nowPage2=${paging2.endPage2+1}&cntPerPage2=${paging2.cntPerPage2}" class="paginate_button next" id="next">다음 </a></li>
 					</c:if>
 				</ul>
 			</div>
 		</div>
 	</div>
+				<script>
+				$(document).ready(function() {
+					$('ul.tabs li').click(function() {
+						var tab_id = $(this).attr('data-tab');
+						$('ul.tabs li').removeClass('current');
+						$('.tab-content').removeClass('current');
+
+						$(this).addClass('current');
+						$("#" + tab_id).addClass('current');
+					})
+										
+					$('#review_title').click(function(){
+						var articleNo = this.dataset.article;
+						document.reviewresult.value=articleNo;
+						document.action="${contextPath}/community/review/contents";
+						document.method="post";
+						document.submit();
+					})
+				})
+			</script>
 </body>
 </html>

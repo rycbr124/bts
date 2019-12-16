@@ -215,9 +215,9 @@ html .member_menu a:hover {
 			<c:choose>
 				<c:when test="${isLogOn== true and not empty memberInfo }">
 						<img src="${contextPath}/resources/image/icon/user.png" style="width:30px; height:30px;">
-						<p style="display:inline-block; color:#000;">어서오세요  ${member_id} 님</p>
+						<p style="display:inline-block; color:#000;">어서오세요  ${memberInfo.member_id} 님</p>
 						<div class="memberArea" style="position:relative; left:25px;">
-						<c:set var="member" value="${member_id}"/>
+						<c:set var="member" value="${memberInfo.member_id}"/>
 						<c:choose>
 						<c:when test="${member_id != 'admin'}">
 						<a href="${contextPath }/my/profile" class="mypage" style=" position:absolute; display:block;font-size:10px; padding-right:7px;border-right:1px solid #000; line-height:10px;"><span>마이페이지</span></a>
