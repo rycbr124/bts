@@ -36,7 +36,7 @@ console.log(plan_no);
 var content_id = thumNail.get(plan_no);
 console.log(content_id);
 
-var serviceKey = '8MlvFH5fs4groXQuW9uCj0jvncbl0Pk9sppAzxq0jolCi5lsMOdlpLHgX3wC0rTwyrMHAPkLBm7lmsY44FwxGg%3D%3D'
+var serviceKey = 'cYcvlZ9yaPE20UToWcxr8bpZJbItY6rEa3kIxGzSd3N4e3R1kmaERDblD3vpL6zg3bM76YmVcfip6YU83Nc4CA%3D%3D'
 var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + content_id + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 
 $.ajax({
@@ -70,6 +70,8 @@ $.ajax({
     	var title_text = document.createTextNode('${article.title}');
     	title.appendChild(title_text);
     	
+    	
+    	
     	var href = document.createElement('a');
     	$(href).prop('href', '${contextPath}/community/plan_contents?plan_no=${article.plan_no}');
     		    	
@@ -79,7 +81,22 @@ $.ajax({
         $('.fig' + ${status.index}).append(id);
         $('.fig' + ${status.index}).append(title);
         $('#snip' + ${status.index}).append(href);		
-    
+    	
+        var info_box = document.createElement('div');
+        var info_box_title = document.createElement('p');
+        var info_box_viewCnt = document.createElement('p');
+        var info_box_member = document.createElement('p');
+    	$(info_box).prop('class','info_box');
+		$(info_box).append(info_box_title);
+		$(info_box_title).prop('class','info_box_person');
+		$(info_box_title).text('${article.person_se}')
+		$(info_box).append(info_box_viewCnt);
+		$(info_box_viewCnt).prop('class','info_box_viewCnt');
+		$(info_box_viewCnt).text('${article.view_cnt}')
+		$(info_box).append(info_box_member);
+		$(info_box_member).prop('class','info_box_member');
+		$(info_box_member).text('${article.member_id}')
+		$(figure).append(info_box);
     },
     error : function(data, textStatus) {
         alert("잘못된 접근입니다.");
@@ -149,6 +166,7 @@ div#paging{
 
 .content{
 	margin : 0 auto;
+	
 }
 
 h4.id{
@@ -165,9 +183,8 @@ figure.snip1321 {
   font-family: 'Raleway', Arial, sans-serif;
   position: relative;
   overflow: hidden;
-  height : 210px;
+  height : auto;
   width: 350px;
-  max-height : 300px;
   margin: 10px; 
   color: #000000;
   text-align: center;
@@ -184,11 +201,12 @@ figure.snip1321 * {
 figure.snip1321 img {
 	width:100%;
 	height:auto;
+	min-height:210px;
 	max-height:210px;
-  vertical-align: top;
+  	vertical-align: top;
 }
 figure.snip1321 figcaption {
-  top: 50%;
+  top: 30%;
   left: 20px;
   right: 20px;
   position: absolute;
@@ -210,14 +228,14 @@ figure.snip1321 i {
   font-size: 32px;
 }
 figure.snip1321:after {
-  background-color: #ffffff;
+  background-color: rgba(255,255,255,0.5);
   position: absolute;
   content: "";
   display: block;
   top: 20px;
   left: 20px;
   right: 20px;
-  bottom: 20px;
+  bottom: 40px;
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
   -webkit-transform: rotateX(-90deg);
@@ -226,6 +244,7 @@ figure.snip1321:after {
   -ms-transform-origin: 50% 50%;
   transform-origin: 50% 50%;
   opacity: 0;
+  height:170px;
 }
 figure.snip1321 a {
   left: 0;
@@ -236,21 +255,67 @@ figure.snip1321 a {
   z-index: 1;
 }
 figure.snip1321:hover figcaption,
-figure.snip1321.hover figcaption {
-  -webkit-transform: translateY(-50%);
-  transform: translateY(-50%);
-  opacity: 1;
-  -webkit-transition-delay: 0.2s;
-  transition-delay: 0.2s;
+figure.snip1321:hover figcaption {
+  	-webkit-transform: translateY(-50%);
+  	transform: translateY(-50%);
+  	opacity: 1;
+  	-webkit-transition-delay: 0.2s;
+  	transition-delay: 0.2s;
 }
 figure.snip1321:hover:after,
-figure.snip1321.hover:after {
-  -webkit-transform: rotateX(0);
-  transform: rotateX(0);
-  opacity: 0.9;
+figure.snip1321:hover:after {
+	height:170px;
+  	-webkit-transform: rotateX(0);
+  	transform: rotateX(0);
+  	opacity: 0.9;
 }
-
-
+.info_box{
+	border:1px solid rgb(200,200,200);
+	border-top:0;
+	height:100px;
+	padding:15px;
+	color:rgb(111,111,111);
+	font-size:15px;
+}
+.info_box .info_box_person{
+	position:absolute;
+	width:100px;
+	height:auto;
+	text-align:left;
+} 
+.info_box .info_box_viewCnt{
+	width:100px;
+	height:14px;
+	float:right;
+	top:0;
+	display:inline-block;
+	text-align:right;
+}
+.info_box .info_box_member{
+	position:absolute;
+	width:100px;
+	height:20px;
+	bottom:0;
+	text-align:left;
+}
+.info_box .info_box_viewCnt:before{
+	background:url('/bts/resources/image/icon/view.png') no-repeat 0px 0px;
+	content:"";
+	display:inline-block;
+	width:14px;
+	height:14px;
+	background-size:14px;
+	margin-right:5px;
+}
+.info_box .info_box_member:before{
+	background:url('/bts/resources/image/icon/person.png') no-repeat 0px 0px;
+	content:"";
+	display:inline-block;
+	width:15px;
+	height:15px;
+	background-size:15px;
+	margin-right:5px;
+}
 </style>
 
 

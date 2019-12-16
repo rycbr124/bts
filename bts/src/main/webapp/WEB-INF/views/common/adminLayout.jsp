@@ -50,6 +50,7 @@ body{
 
 #contents{
     overflow-x: hidden;
+    overflow-y:	hidden;
     width:100%;
 }
 

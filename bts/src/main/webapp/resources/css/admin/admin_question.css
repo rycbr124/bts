@@ -69,9 +69,8 @@
 
 }
 .content_title{
-	position:realtive;
 	width:120px;
-	height:30px;
+	height:auto;
 	font-size:15px;
 	text-align:center;
 	line-height:30px;
@@ -93,7 +92,6 @@
 	height:auto;
 	margin-top:10px;
 	margin-bottom:20px;
-	border-top:1px solid black;
 }
 .answer_container .answer_title{
 	position:absolute;

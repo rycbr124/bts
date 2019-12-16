@@ -18,6 +18,8 @@
 
 <script>
 $(document).ready(function (){
+	$('.wishList_info').prop('style','background-color:#e8f0fe; border-radius:0 9px 9px 0;');
+	$('.wishList_info span').prop('style','color:rgb(25,103,210);');
 	$(".hover").mouseleave(
 			  function () {
 			    $(this).removeClass("hover");

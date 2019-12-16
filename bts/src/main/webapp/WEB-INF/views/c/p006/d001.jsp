@@ -14,6 +14,8 @@
 <script src="${contextPath}/resources/js/c/p006/d001.js"></script>
 <script>
 $(document).ready(function(){
+	$('.chat_info').prop('style','background-color:#e8f0fe; border-radius:0 9px 9px 0;');
+	$('.chat_info span').prop('style','color:rgb(25,103,210);');
 	init();
 	
 	$("#chat-header>i").on("click",addMember);
