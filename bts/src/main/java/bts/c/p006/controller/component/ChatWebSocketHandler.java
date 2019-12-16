@@ -50,7 +50,13 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception{
-		sessionList.remove(session);
+		Map<String, Object> map = session.getAttributes();
+		String accompany_at = (String) map.get("accompany_at");
+		if(accompany_at.equals("Y")) {
+			AccsessionList.remove(session);
+		}else {
+			sessionList.remove(session);			
+		}
 	}
 	
 	@Override
@@ -113,12 +119,12 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 		c_p006VO.setContents(message);
 		c_p006VO.setAccompany_at(accompany_at);
 		c_p006Service.insertMessage(c_p006VO);
-		
 		for(Entry<WebSocketSession, B_P001VO> entry : memberList.entrySet()) {
 			WebSocketSession recSession = entry.getKey();
-			B_P001VO recVO = entry.getValue();
+			B_P001VO recVO = entry.getValue();	
 
 			if(recVO.getMember_id().equals(receiver)) {
+				try {	
 				c_p006VO.setMe_at("false");				
 				body.clear();
 				
@@ -126,14 +132,16 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 				senderVO.setProfile_image(b_p001VO.getProfile_image());
 				senderVO.setMember_type(b_p001VO.getMember_type());
 				senderVO.setNick_name(b_p001VO.getNick_name());
-				
+
 				body.put("result", c_p006VO);
 				body.put("sender_info", senderVO);
 				String result=mapper.writeValueAsString(c_p006FormVO);
 				recSession.sendMessage(new TextMessage(result));
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
-		
 		c_p006VO.setMe_at("true");
 		body.clear();
 		body.put("result", c_p006VO);

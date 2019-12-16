@@ -71,6 +71,7 @@
    .discussion{
       height:80px;
       padding:20px;
+      position:relative;
    }
 
 	#people-list .clicked,#search-list .clicked{
@@ -106,8 +107,35 @@
 		height:45px;
 		background:#E6E7ED;
 		border-radius:50px;
+		border : 2px solid white;
 	}
 
+	@keyframes blink {
+		from {
+			border : 2px solid red;
+		}
+		to{		
+			border : 2px solid white;		
+		}
+	}
+	
+	#people-list img.receive{
+		animation-name: blink;
+  		animation-duration: 1s;
+  		animation-iteration-count:1;
+	}
+/*
+	span.check-msg{
+		position: absolute;
+		left:20px;
+	    width: 10px;
+	    height: 10px;
+	    border-radius: 50%;
+	    border: 2px solid white;
+	    background: red;
+	    z-index:101;
+	}
+*/	
    .info{
       margin-left:10px;
    }

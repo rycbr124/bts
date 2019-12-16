@@ -89,5 +89,26 @@ public class A_P002DAOImpl implements A_P002DAO{
 		List<A_P002VO_1> list = sqlSession.selectList("mapper.a_p002.selectHistoryList",searchMap);
 		return list;
 	}
+
+	@Override
+	public List<String> selectPnishName() {
+		List<String> list = sqlSession.selectList("mapper.a_p002.selectPnishName");
+		return list;
+	}
+
+	@Override
+	public void insertHistory(Map<String, String> row) {
+		sqlSession.insert("mapper.a_p002.insertHistory",row);
+	}
+
+	@Override
+	public void updateHistory(Map<String, String> row) {
+		sqlSession.update("mapper.a_p002.updateHistory",row);
+	}
+
+	@Override
+	public void deleteHistory(Map<String, String> row) {
+		sqlSession.delete("mapper.a_p002.deleteHistory",row);
+	}
 	
 }

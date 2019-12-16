@@ -66,6 +66,15 @@
 	
 	</insert>
 	
+	<!-- 검색 -->
+	<select id="searchAcc" resultMap="accompanyResult">
+	<![CDATA[
+	select * from(select rownum rn, a.* from(select * from accompany_list
+	where member_id = like
+	]]>
+	
+	</select>
+	
 	
 	<!-- 페이징 처리 쿼리 -->
 	<select id="selectAccompany" resultMap="accompanyResult">
