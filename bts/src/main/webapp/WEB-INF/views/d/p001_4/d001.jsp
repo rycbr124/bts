@@ -138,10 +138,6 @@ img.thumImage{
 	height : 100%;
 }
 
-li.nav-item{
-	width : 250px;
-}
-
 div#paging{
 	display: block; 
 	text-align: center;
@@ -310,12 +306,7 @@ figure.snip1321.hover:after {
 	width : 100px;
 	display : inline-block;
 }
-/*
-div.form-group{
-	width : 600px;
-	margin : 0;
-}
-*/
+
 </style>
 
 
