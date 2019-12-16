@@ -170,3 +170,6 @@ input[type='radio'] {
 input[type='radio']:checked {
 	backgound-color: $font-color-2;
 }
+#btn-form-submit {
+	color: white;
+}

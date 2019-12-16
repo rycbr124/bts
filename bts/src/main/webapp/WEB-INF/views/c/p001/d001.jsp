@@ -310,7 +310,7 @@ div.col-md-6{
 						<div class="col-md-2">
 							<button type="button" id="btn-form-submit"
 								class="btn btn-form-submit form-control"
-								style="margin-bottom: 40px; background: #ec008c; /* fallback for old browsers */ background: -webkit-linear-gradient(to right, #fc6767, #ec008c); /* Chrome 10-25, Safari 5.1-6 */ background: linear-gradient(to right, #fc6767, #ec008c);">저장</button>
+								style="margin-bottom: 40px; background: #203341">저장</button>
 						</div>
 						
 					</form>
