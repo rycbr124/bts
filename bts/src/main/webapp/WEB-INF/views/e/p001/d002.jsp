@@ -80,11 +80,15 @@
 			<br> <br>
 			<h3>게시글 내용 :</h3>
 			${accView.content} <br> <br> 
-			<a class="btn btn-success" id="contentReq" href="#" style="background-color: #666666; border-color: #666666">매칭신청하기</a> &nbsp;&nbsp;&nbsp; 
-			<a class="btn btn-success" href="${contextPath}/accompany/accMain" style="background-color: #666666; border-color: #666666">목록으로 돌아가기</a>&nbsp;&nbsp;&nbsp; 
-			<a class="btn btn-success" id="contents-report" href="#" style="background-color: #666666; border-color: #666666" data-toggle="modal">게시글 신고하기</a>&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-success" href="${contextPath}/accompany/accMain" style="background-color: #666666; border-color: #666666">목록으로 돌아가기</a>&nbsp;&nbsp;&nbsp;
 			<c:choose>
-			<c:when test="${sessionScope.memberInfo.member_id eq member_id}">		 		
+			<c:when test="${sessionScope.memberInfo.member_id ne accView.member_id}">
+			<a class="btn btn-success" id="contentReq" href="#" style="background-color: #666666; border-color: #666666">매칭신청하기</a> &nbsp;&nbsp;&nbsp; 
+			<a class="btn btn-success" id="contents-report" href="#" style="background-color: #666666; border-color: #666666" data-toggle="modal">게시글 신고하기</a>&nbsp;&nbsp;&nbsp;
+			</c:when>
+			</c:choose>	
+			<c:choose>
+			<c:when test="${sessionScope.memberInfo.member_id eq accView.member_id}">		 		
 			<a class="btn btn-success" href="${contextPath }/accompany3/accUpdateForm?article_no=${accView.article_no}" style="background-color: #666666; border-color: #666666" >게시글 수정하기</a>&nbsp;&nbsp;&nbsp;
 			<a class="btn btn-success" onclick="accDel();" id="accDelBtn" href="#" style="background-color: #666666; border-color: #666666" >게시글 삭제하기</a>
 			</c:when>
@@ -93,8 +97,7 @@
 	</div>
 	<script>
 	$(document).ready(function(){
-		
-		
+				
 		$('#contents-report').on('click',function(){
 			var reqUrl = "${contextPath}/report/article/accompany";
 			var contents_cd = ${accView.article_no};

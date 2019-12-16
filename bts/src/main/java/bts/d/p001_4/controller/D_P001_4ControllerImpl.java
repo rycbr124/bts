@@ -67,10 +67,16 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 	@Override
 	@RequestMapping(value="/plan_list" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView searchArticle(PagingVO pagingVO
-			,@RequestParam(value="nowPage", required=false)String nowPage
-			,@RequestParam(value="cntPerPage",required=false) String cntPerPage, HttpServletRequest request, HttpServletResponse response)throws Exception {
+			, @RequestParam Map<String, String> result, HttpServletRequest request, HttpServletResponse response)throws Exception {
 		
-		int total = d_p001_4Service.listCount();
+		String nowPage = result.get("nowPage");
+		String cntPerPage = result.get("cntPerPage");
+		String category = result.get("category");
+		String searchResult = result.get("searchResult");
+		
+		
+		int total = d_p001_4Service.listCount(category, searchResult);
+		
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "6";
@@ -85,12 +91,12 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 			ModelAndView mav = new ModelAndView("/d/p001_4/d001");
 			pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 			mav.addObject("paging", pagingVO);
-			List<D_P001_4VO> listArticle = d_p001_4Service.searchArticle(pagingVO);
+			List<D_P001_4VO> listArticle = d_p001_4Service.searchArticle(pagingVO, category, searchResult);
 			List<String> listThumnail = d_p001_4Service.findContentId();
 			
 			mav.addObject("listArticle", listArticle);
 			mav.addObject("listThumnail", listThumnail);
-			
+
 			if(b_p001VO == null) {
 				System.out.println("hi"); 
 			}else {
@@ -316,8 +322,14 @@ public class D_P001_4ControllerImpl implements D_P001_4Controller{
 	@Override
 	@ResponseBody
 	@RequestMapping(value="/search" ,method={RequestMethod.POST,RequestMethod.GET})
-	public String searchPlan(@RequestParam("searchResult") String searchResult, HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public String searchPlan(@RequestParam("searchResult") String searchResult, @RequestParam("category") String category, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("search 값 : " + searchResult);
+		System.out.println("category 값 : " + category);
+		if(category.equals("제목")) {
+			d_p001_4Service.searchTitle(searchResult);
+			System.out.println("search 결과 값 : " + d_p001_4Service.searchTitle(searchResult));
+		}
+		
 		return null;
 	}	
 

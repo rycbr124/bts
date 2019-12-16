@@ -28,15 +28,15 @@
 			SELECT  member_id, name, nick_name, gender, birth, member_type, profile_image
 			FROM b_member b1,
 			(
-			    SELECT other_id,MAX(item_no) max_no
+			    SELECT other_id,MAX(writing_date) max_no
 			    FROM
 			    (
-			        SELECT sender other_id, item_no
+			        SELECT sender other_id, writing_date
 			        FROM chat_list
 			        WHERE receiver=#{member_id}
 					AND accompany_at=#{accompany_at}
 			        UNION ALL
-			        SELECT receiver other_id, item_no
+			        SELECT receiver other_id, writing_date
 			        FROM chat_list
 			        WHERE sender=#{member_id}
 			        AND accompany_at=#{accompany_at}
@@ -65,7 +65,7 @@
 			    AND receiver=#{sender}
 			    AND accompany_at=#{accompany_at}
 			) t
-			ORDER BY item_no
+			ORDER BY writing_date
 	    ]]>
 	</select>
 	

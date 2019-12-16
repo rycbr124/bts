@@ -237,6 +237,7 @@ $(document).ready(function(){
 						<option value="택시">택시</option>
 						<option value="자차">자차</option>
 						<option value="도보">도보</option>
+						<option value="지하철">지하철</option>
 					</select>
 				</div>
 			</div>

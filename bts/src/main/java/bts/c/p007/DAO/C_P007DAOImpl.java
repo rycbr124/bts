@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import bts.c.p007.VO.C_P007VO;
 import bts.e.p001.VO.PagingVO;
+import bts.e.p001.VO.PagingVO2;
 
 @Repository("c_p007DAO")
 public class C_P007DAOImpl implements C_P007DAO{
@@ -25,6 +26,18 @@ public class C_P007DAOImpl implements C_P007DAO{
 	@Override
 	public Integer listCount(String member_id) {
 		return sqlSession.selectOne("mapper.myPage.accListCount",member_id);
+	}
+
+	@Override
+	public List<C_P007VO> imAccList(PagingVO2 pagingVO2) throws DataAccessException {
+	
+		return sqlSession.selectList("mapper.myPage.imaccReq",pagingVO2);
+	}
+
+	@Override
+	public Integer imAccCount(String member_id) {
+
+		return sqlSession.selectOne("mapper.myPage.imaccCount",member_id);
 	}
 
 }

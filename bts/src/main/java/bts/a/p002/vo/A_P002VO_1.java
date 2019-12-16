@@ -14,6 +14,7 @@ public class A_P002VO_1 {
 	private int report_no;
 	private String pnish_desc;
 	
+	private String btn_report;
 	private int pnish_type;
 	private String day_cnt;
 	
@@ -46,6 +47,12 @@ public class A_P002VO_1 {
 	}
 	public void setPnish_desc(String pnish_desc) {
 		this.pnish_desc = pnish_desc;
+	}
+	public String getBtn_report() {
+		return btn_report;
+	}
+	public void setBtn_report(String btn_report) {
+		this.btn_report = btn_report;
 	}
 	public int getPnish_type() {
 		return pnish_type;

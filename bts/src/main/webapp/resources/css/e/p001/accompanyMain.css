@@ -15,3 +15,24 @@
 #prev,#next,#pageNo{
 	color:#666666;
 }
+#trafficImg{
+	width:30px;
+	height:30px;
+}
+#selectBox{
+	width:120px;
+	display:inline-block;
+}
+#search{
+	display:inline-block;
+	width:400px;
+}
+#searchBtn{
+	background:#666666;
+	display:inline-block;
+	border:1px solid #666666;
+}
+#searchFrm{
+	display:inline-block;
+	padding-left:250px;
+}

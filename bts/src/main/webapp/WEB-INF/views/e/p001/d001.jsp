@@ -9,55 +9,77 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script>
-	function selChange() {
-		var sel = document.getElementById('cntPerPage').value;
-		location.href = "${contextPath}/accompany/accMain?nowPage=${paging.nowPage}&cntPerPage="
-				+ sel;
-	}
-</script>
-<style>
-	@font-face {
-		src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
-    	font-family: "NanumSquareRoundEB";
-	}
 
-	@font-face {
-    	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
-    	font-family: "NanumSquareRoundR";
-	}
-	
-   .hit {
-      animation-name: blink;
-      animation-duration: 1.5s;
-      animation-timing-function: ease;
-      animation-iteration-count: infinite;
-      /* 위 속성들을 한 줄로 표기하기 */
-      /* -webkit-animation: blink 1.5s ease infinite; */
-    }
-     
-    /* 애니메이션 지점 설정하기 */
-    /* 익스플로러 10 이상, 최신 모던 브라우저에서 지원 */
-    @keyframes blink {
-      from {color: white;}
-      30% {color: yellow;}
-      to {color: red; font-weight: bold;}
-      /* 0% {color:white;}
+<style>
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+	font-family: "NanumSquareRoundEB";
+}
+
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+	font-family: "NanumSquareRoundR";
+}
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+.hit {
+	animation-name: blink;
+	animation-duration: 1.5s;
+	animation-timing-function: ease;
+	animation-iteration-count: infinite;
+	/* 위 속성들을 한 줄로 표기하기 */
+	/* -webkit-animation: blink 1.5s ease infinite; */
+}
+
+/* 애니메이션 지점 설정하기 */
+/* 익스플로러 10 이상, 최신 모던 브라우저에서 지원 */
+@
+keyframes blink {
+	from {color: white;
+}
+
+30%
+{
+color
+
+
+
+
+:
+
+
+ 
+
+
+yellow
+
+
+
+
+;
+}
+to {
+	color: red;
+	font-weight: bold;
+}
+/* 0% {color:white;}
       30% {color: yellow;}
       100% {color:red; font-weight: bold;} */
-    }
-    
-    *{
-    	font-family: "NanumSquareRoundR";
-    }
-    
-	#subjectText{
-		font-family: "NanumSquareRoundEB";
-	}
-	p {
-		font-family: "NanumSquareRoundR";	
-	}
+}
+* {
+	font-family: "NanumSquareRoundR";
+}
+
+#subjectText {
+	font-family: "NanumSquareRoundEB";
+}
+
+p {
+	font-family: "NanumSquareRoundR";
+}
 </style>
+
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap/bootstrap.css" />
 <link rel="stylesheet" href="${contextPath}/resources/css/e/p001/accompanyMain.css" />
@@ -70,17 +92,17 @@
 </head>
 <body>
 	<div class="container" id="container">
-			<h2 id="subjectText">동행 찾기</h2>
-			<p>BTS와 함께 여행</p>
+		<h2 id="subjectText">동행 찾기</h2>
+		<p>BTS와 함께 여행</p>
 		<img src="${contextPath }/resources/image/accompanyMain.jpg" id="accMainImage"> <br> <br>
-		<div id="headsubject">
-		</div>
+		<div id="headsubject"></div>
 		<form id="boardForm" name="boardForm" method="post">
 			<table class="table table-striped table-hover">
 				<thead>
 					<tr>
 						<th>번호</th>
 						<th>제목</th>
+						<th>이동수단</th>
 						<th>작성자</th>
 						<th>날짜</th>
 						<th>조회수</th>
@@ -90,9 +112,19 @@
 					<c:forEach var="result" items="${accList}" varStatus="status">
 						<tr>
 							<td><c:out value="${result.article_no}" /></td>
-							<td><a href="${contextPath}/accompany/accView?article_no=${result.article_no}&member_id=${result.member_id}" id="acc_title"><c:out value="${result.acc_title}" /></a> 
-							<c:if test="${result.viewcnt >= 30}">
+							<td><a href="${contextPath}/accompany/accView?article_no=${result.article_no}&member_id=${result.member_id}" id="acc_title"><c:out value="${result.acc_title}" /></a> <c:if test="${result.viewcnt >= 30}">
 									<span class="hit">&nbsp;&nbsp;Hit!</span>
+								</c:if></td>
+							<td><c:if test="${result.traffic eq '버스' }">
+									<img id="trafficImg" src="${contextPath}/resources/image/accompany/bus.png" alt="버스">
+								</c:if> <c:if test="${result.traffic eq '택시' }">
+									<img id="trafficImg" src="${contextPath}/resources/image/accompany/taxi.png" alt="택시">
+								</c:if> <c:if test="${result.traffic eq '자차' }">
+									<img id="trafficImg" src="${contextPath}/resources/image/accompany/car.png" alt="자차">
+								</c:if> <c:if test="${result.traffic eq '지하철'}">
+									<img id="trafficImg" src="${contextPath}/resources/image/accompany/subway.png" alt="지하철">
+								</c:if> <c:if test="${result.traffic eq '도보'}">
+									<img id="trafficImg" src="${contextPath}/resources/image/accompany/walk.png" alt="도보">
 								</c:if></td>
 							<td><c:out value="${result.nick_name }" /></td>
 							<td><c:out value="${result.register_date }" /></td>
@@ -104,8 +136,7 @@
 			<div>
 				<a href="${contextPath}/accompany/accWrite" class="btn btn-success" id="writeBtn">글작성</a>
 			</div>
-		</form>
-		<br> <br>
+					<br> <br>
 		<div id="paging" style="display: block; text-align: center;">
 			<ul class="pagination" id="pagination">
 				<!-- 이전버튼 -->
@@ -129,6 +160,28 @@
 				</c:if>
 			</ul>
 		</div>
+		<div class="wrap">
+			<div class="form-group has-feedback" id="searchFrm">
+				<select id=selectBox class="form-control">
+					<option >제목</option>
+					<option >작성자</option>
+				</select> <input type="hidden" name="category" value=""> <label for="search" class="sr-only">Search</label> 
+				<input type="text" class="form-control" name="searchResult" id="search" placeholder="검색">
+				<button id="searchBtn" class="btn btn-sm btn-success" >검색</button>		
+			</div>
+		</div>
+		</form>
+		<script>
+$(document).ready (function(){
+$('#searchBtn').on('click',function (){
+	var selectCategory = $('#selectBox option:selected').val();
+	console.log(selectCategory);
+	var searchFrm = document.boardForm;
+	searchFrm.category.value = selectCategory;
+	searchFrm.action = "${contextPath}/accompany/accMain";		
+});
+});
+</script>
 	</div>
 </body>
 </html>

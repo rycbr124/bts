@@ -41,7 +41,7 @@
 <body>
 	<div id="reservcontainer">
 		<img src="${contextPath}/resources/image/reserv/hotelReserv.jpg"
-			id="reservMainImg"><br> <br>
+			id="reservMainImg"><br>
 		<div id="headsubject">
 			<h1 id="headsubjectText">숙박예약하기</h1>
 		</div>

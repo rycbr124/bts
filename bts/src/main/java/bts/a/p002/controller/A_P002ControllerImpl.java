@@ -86,22 +86,75 @@ public class A_P002ControllerImpl implements A_P002Controller{
 	@RequestMapping(value="/history")
 	public ModelAndView showHistory(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p002/d002");
+		List<String> pnish_combo = a_p002Service.selectPnishName();
+		mav.addObject("pnish_combo",String.join("|", pnish_combo));
+		System.out.println("===============>"+String.join("|", pnish_combo));
 		return mav;
 	}	
+	
+	@RequestMapping(value="/history/search")
+	@ResponseBody
+	public Map<String, Object> selectHistoryList(@RequestParam(value="p_id",required=false) String p_id,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, String> searchMap = new HashMap<String, String>();
+		searchMap.put("p_id", p_id);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<A_P002VO_1> data = a_p002Service.selectHistoryList(searchMap);		
+		resultMap.put("Data", data);
+		return resultMap;
+	}
+
+	@RequestMapping(value="/history/save")
+	@ResponseBody
+	public Map<String, Object> saveHistoryList(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, String[]> dataMap = new HashMap<String, String[]>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		Map<String, String> result = new HashMap<String, String>();
+		
+		dataMap = request.getParameterMap();
+		try {
+			ObjectMapper mapper = new ObjectMapper();
+			System.out.println("=================>"+mapper.writeValueAsString(dataMap));
+			a_p002Service.saveHistoryList(dataMap);	
+			result.put("Code","0");
+			result.put("Message","저장되었습니다");
+		}catch(Exception e) {
+			result.put("Code","-1");
+			result.put("Message","저장에 실패하였습니다");
+			e.printStackTrace();
+		}
+		resultMap.put("Result", result);  
+		return resultMap;
+	}		
 	
 	@RequestMapping(value="/list")
 	public ModelAndView showReport(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p002/d003");
 		return mav;
 	}	
+	
+	@RequestMapping(value="/list/search")
+	@ResponseBody
+	public Map<String, Object> selectReportList(@RequestParam(value="p_title",required=false) String p_title,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		Map<String, String> searchMap = new HashMap<String, String>();
+		searchMap.put("p_title", p_title);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		List<ReportVO> data = a_p002Service.selectReportList(searchMap);		
+		resultMap.put("Data", data);
+		return resultMap;
+	}
 
 	@RequestMapping(value="/list/contents")
 	public ModelAndView showReportContents(@RequestParam(value="report_no",required=false) int report_no,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/a/p002/d004");
 		ReportVO result = a_p002Service.selectReportContent(report_no);
-		List<PnishVO> pnish = repService.selectPnishList();
 		mav.addObject("detailInfo",result);
-		mav.addObject("pnish",pnish);
+		if(result.getReport_at().equals("N")) {		
+			List<PnishVO> pnish = repService.selectPnishList();
+			mav.addObject("pnish",pnish);
+		}else {
+			A_P002VO_1 a_p002VO_1 = a_p002Service.selectReportResult(report_no);
+			mav.addObject("pnishResult",a_p002VO_1);
+		}
 		return mav;
 	}	
 
@@ -131,35 +184,41 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		}
 		return url;
 	}	
+
+	@RequestMapping(value="/list/contents/reject")
+	@ResponseBody
+	public String insertReportReject (@ModelAttribute A_P002VO_1 a_p002VO_1,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		a_p002Service.updateReportEnd(a_p002VO_1.getReport_no());
+		return "true";
+	}	
 	
 	@RequestMapping(value="/list/contents/save")
 	@ResponseBody
 	public String insertPnishHistory (@ModelAttribute A_P002VO_1 a_p002VO_1,HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ObjectMapper mapper = new ObjectMapper();
 		if(a_p002VO_1.getPnish_type()==3) {
-			Calendar cal = Calendar.getInstance();
+			Calendar cal = getMidnight();
 			a_p002VO_1.setBegin_date(new Timestamp(cal.getTimeInMillis()));
 			cal.set(9999, 11, 31);
 			a_p002VO_1.setEnd_date(new Timestamp(cal.getTimeInMillis()));
 		}else {
-			setPnishDate(a_p002VO_1);
+			int day_cnt = Integer.parseInt(a_p002VO_1.getDay_cnt());
+			Calendar cal = getMidnight();
+			a_p002VO_1.setBegin_date(new Timestamp(cal.getTimeInMillis()));
+			cal.add(Calendar.DATE, day_cnt+1);
+			a_p002VO_1.setEnd_date(new Timestamp(cal.getTimeInMillis()));
 		}
 		a_p002Service.insertPnishHistory(a_p002VO_1);
-		System.out.println("============>"+mapper.writeValueAsString(a_p002VO_1));
 		a_p002Service.updateReportEnd(a_p002VO_1.getReport_no());
 		return "true";
 	}
 	
-	private void setPnishDate(A_P002VO_1 a_p002VO_1) {
-		int day_cnt = Integer.parseInt(a_p002VO_1.getDay_cnt());
+	private Calendar getMidnight() {
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.MILLISECOND, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
-		a_p002VO_1.setBegin_date(new Timestamp(cal.getTimeInMillis()));
-		cal.add(Calendar.DATE, day_cnt);
-		a_p002VO_1.setEnd_date(new Timestamp(cal.getTimeInMillis()));
+		return cal;
 	}
 	
 	private String makeReviewForm(RedirectAttributes redirect,String article) {
@@ -181,15 +240,4 @@ public class A_P002ControllerImpl implements A_P002Controller{
 		redirect.addAttribute("plan_no",plan_no);
 		return url;
 	}	
-	
-	@RequestMapping(value="/list/search")
-	@ResponseBody
-	public Map<String, Object> selectReportList(@RequestParam(value="p_title",required=false) String p_title,HttpServletRequest request, HttpServletResponse response) throws Exception {
-		Map<String, String> searchMap = new HashMap<String, String>();
-		searchMap.put("p_title", p_title);
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		List<ReportVO> data = a_p002Service.selectReportList(searchMap);		
-		resultMap.put("Data", data);
-		return resultMap;
-	}
 }
