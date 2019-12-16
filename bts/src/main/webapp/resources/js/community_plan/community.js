@@ -22,7 +22,7 @@ function searchPlan(){
 	console.log("1111111111 : " + select);
 	
 	var frmSearch = document.form;
-	frmSearch.action = "/bts/community/search";
+	frmSearch.action = "/bts/community/plan_list";
 	frmSearch.category.value = select;
 	//frmSearch.submit();
 	

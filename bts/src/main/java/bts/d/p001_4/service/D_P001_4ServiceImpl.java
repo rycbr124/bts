@@ -19,8 +19,8 @@ public class D_P001_4ServiceImpl implements D_P001_4Service{
 	D_P001_4DAO d_p001_4DAO;
 
 	@Override
-	public List<D_P001_4VO> searchArticle(PagingVO pagingVO) throws Exception {	
-		return d_p001_4DAO.searchArticle(pagingVO);
+	public List<D_P001_4VO> searchArticle(PagingVO pagingVO, String category, String searchResult) throws Exception {	
+		return d_p001_4DAO.searchArticle(pagingVO, category, searchResult);
 	}
 	
 	@Override
@@ -65,8 +65,8 @@ public class D_P001_4ServiceImpl implements D_P001_4Service{
 	}
 
 	@Override
-	public Integer listCount() throws Exception {
-		return d_p001_4DAO.pageCount();
+	public Integer listCount(String category, String searchResult) throws Exception {
+		return d_p001_4DAO.pageCount(category, searchResult);
 	}
 
 	@Override
@@ -97,6 +97,11 @@ public class D_P001_4ServiceImpl implements D_P001_4Service{
 	@Override
 	public List<String> findContentId() throws Exception {
 		return d_p001_4DAO.findContentId();
+	}
+
+	@Override
+	public List<D_P001_4VO> searchTitle(String searchResult) throws Exception {
+		return d_p001_4DAO.searchTitle(searchResult);
 	}
 
 }

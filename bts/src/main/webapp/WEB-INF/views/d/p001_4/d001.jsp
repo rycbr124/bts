@@ -36,7 +36,7 @@ console.log(plan_no);
 var content_id = thumNail.get(plan_no);
 console.log(content_id);
 
-var serviceKey = '8MlvFH5fs4groXQuW9uCj0jvncbl0Pk9sppAzxq0jolCi5lsMOdlpLHgX3wC0rTwyrMHAPkLBm7lmsY44FwxGg%3D%3D'
+var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
 var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + content_id + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 
 $.ajax({
@@ -306,10 +306,16 @@ figure.snip1321.hover:after {
 	display : inline-block;
 }
 
-select.form-control{
+#selectBox{
 	width : 100px;
 	display : inline-block;
 }
+/*
+div.form-group{
+	width : 600px;
+	margin : 0;
+}
+*/
 </style>
 
 
@@ -329,10 +335,9 @@ select.form-control{
 		<div class="content">
 		
 		</div>
-		<div class="form-group has-feedback">
+		<div class="row justify-content-md-end">
 			<select id=selectBox class="form-control">
 				<option value="제목">제목</option>
-				<option value="글 내용">글 내용</option>
 				<option value="작성자">작성자</option>
 			</select> 
 			<input type="hidden" name="category" value="">
@@ -341,8 +346,7 @@ select.form-control{
 	   		<button class="btn btn-sm btn-success" onclick="searchPlan()">Search</button>
      		<span class="glyphicon glyphicon-search form-control-feedback"></span>
         </div>
-		
-		
+
 		<div id="paging">
 			<ul class="pagination justify-content-center" id="pagination">
 				<!-- 이전버튼 -->

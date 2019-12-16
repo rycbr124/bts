@@ -1,6 +1,5 @@
 package bts.d.p001_4.controller;
 
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,8 +14,7 @@ import bts.e.p001.VO.PagingVO;
 
 
 public interface D_P001_4Controller {
-	 public ModelAndView searchArticle(PagingVO pagingVO, @RequestParam(value="nowPage", required=false)String nowPage
-				, @RequestParam(value="cntPerPage", required=false)String cntPerPage, HttpServletRequest request, HttpServletResponse response) throws Exception;
+	 public ModelAndView searchArticle(PagingVO pagingVO, @RequestParam Map<String, String> result, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	 public ModelAndView contentsArticle(String article_cd, @RequestParam String article_no, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	 public ModelAndView writeArticle(@RequestParam("plan_no") String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception;
 	 public @ResponseBody String loadPlanner(@RequestParam("plan_no") String plan_no, HttpServletRequest request, HttpServletResponse response) throws Exception;
@@ -28,7 +26,5 @@ public interface D_P001_4Controller {
 	 public String commentWrite(String article_cd,RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	 public String commentDelete(HttpServletRequest request, HttpServletResponse response) throws Exception;
 	 public @ResponseBody String searchPlan(@RequestParam("searchResult") String searchResult, @RequestParam("category") String category, HttpServletRequest request, HttpServletResponse response) throws Exception;
-
-
 }
 

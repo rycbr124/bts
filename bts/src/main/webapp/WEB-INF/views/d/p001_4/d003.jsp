@@ -164,13 +164,17 @@
 					      }
 					   });
 				}
+				
+				var buttonDiv = document.createElement('div');
+				$(buttonDiv).prop('class', 'row justify-content-md-end');
+				$(form).append(buttonDiv);
 			
 				var button = document.createElement('button');
 				$(button).prop('type', 'button');
 				$(button).prop('class', 'btn btn-outline-secondary');
 				$(button).prop('id', 'btnSave');
 				$(button).text('저장');
-				$(form).append(button);
+				$(buttonDiv).append(button);
 			},
 			error : function(data, textStatus) {
 		         alert("잘못된 접근입니다.")
