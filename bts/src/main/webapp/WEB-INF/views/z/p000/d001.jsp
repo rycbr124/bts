@@ -177,6 +177,9 @@ figure.snip1206.hover figcaption p {
   opacity: 0.7;
 }
 
+div.container{
+
+}
 </style>
 <meta charset="UTF-8">
 <title>Best Travel Seoul</title>
@@ -194,6 +197,10 @@ figure.snip1206.hover figcaption p {
 </c:if>
 <script>
 $(document).ready(function(){
+	
+	$('.member_menu img').attr('src', '${contextPath}' + '${sessionScope.memberInfo.profile_image}');
+	$('.member_menu img').prop('style','width:30px; height:30px; border-radius:50%;')
+	
    var accompany = ${bestAccompany};
    //var icon = ${searchIcon};
    
@@ -321,7 +328,7 @@ $(".hover").mouseleave(
             <div class="modal-footer">
 
                <p id="findId_Pw">
-                  <a class="forgotpw" href="${contextPath}/find/findPwMain" style="color: white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp; <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>
+                  <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>&nbsp;&nbsp;&nbsp;<a class="forgotpw" href="${contextPath}/find/findPwMain" style="color: white">비밀번호 찾기</a>
                </p>
             </div>
 
@@ -437,14 +444,17 @@ $(".hover").mouseleave(
 
    <!-- Scroll down_2 Accompany -->
    <div class="main_section_accompany" id="main_section main_section_accompany" style="position:relative;">
+     <div class="container">
       <div class="caption">
          <h1 style="font-weight: bold; margin-top: 150px;">ACCOMPANY</h1>
       </div>
-      <p>BTS는 완벽한 여행이 되도록 최선을 다합니다.</p>
-      <p style="color: gray; text-decoration: underline;">새로운 곳에서 새로운 사람과 새로운 경험</p>
-      <h3 class="title">BTS와 함께 성공적인 여행을 경험하세요!</h3>      
-      <h4 style="font-weight: bold; font-family: NanumSquareRoundR;">가장 최근에 등록된 글</h4>
-      <div>
+      
+	      <p>BTS는 완벽한 여행이 되도록 최선을 다합니다.</p>
+	      <p style="color: gray; text-decoration: underline;">새로운 곳에서 새로운 사람과 새로운 경험</p>
+	      <h3 class="title">BTS와 함께 성공적인 여행을 경험하세요!</h3>      
+	      <h4 style="font-weight: bold; font-family: NanumSquareRoundR;">가장 최근에 등록된 글</h4>
+      </div>
+      <div class="container">
          <div class="lately-accompany">
             <div class="row">
             

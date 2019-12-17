@@ -17,7 +17,9 @@
 	$(document).ready(function(){
 		var id = ${contentid};
 		var contenttypeid = ${contenttypeid};
-		image_init(id);
+		var command = '${command}';
+		console.log("command : " + command);
+		image_init(id, command);
 		operation(contenttypeid, id);
 
 	});
@@ -26,7 +28,6 @@
 		
 		var contentid = ${contentid};
 		
-		console.log(contentid);
 		
 		console.log("성공 !");
 		var frmWish = document.wish;
@@ -160,6 +161,24 @@ margin-top:20px;
 }
 #footer{
 	margin-top:50px;
+}
+div.divHeart{
+	width : 140px;
+	margin-bottom : 10px;
+	height : 20px;
+}
+img.heart{
+	width : 25px;
+	height : 25px;
+	display : inline-block;
+	float : right;
+	position : absolute;
+}
+.divHeart > p {
+	width : 105px;
+	position : relative;
+	margin : 0;
+	float : left;
 }
 </style>
 

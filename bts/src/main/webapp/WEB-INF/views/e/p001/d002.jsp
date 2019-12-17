@@ -10,6 +10,9 @@
 <html>
 <head>
 <script>
+$(document).ready(function(){
+	$('[data-toggle="popover"]').popover();
+});
 	var imgArray = new Array();
 	imgArray[0] = "${contextPath}/resources/image/accompany/duksu.jpg";
 	imgArray[1] = "${contextPath}/resources/image/accompany/olympic.jpg";
@@ -26,7 +29,9 @@
 		alert('정말 삭제하시겠습니까?');
 		location.href = "${contextPath}/accompany3/accDel?article_no=${accView.article_no}";
 	}
-	
+	function backspace(){
+		history.go(-1);
+	}	
 	
 </script>
 <meta charset="UTF-8">
@@ -58,29 +63,21 @@
 					</c:forEach>
 				</h4>
 			</div>
+			<div class="iclnImg">
+				<c:forEach var="inclnView" items="${inclnView}">
+					<a href="#" title="${inclnView.group_desc}" data-toggle="popover" data-container="body" data-trigger="hover" data-placement="bottom" data-content="${inclnView.name}"><img src="${inclnView.icon_col}" class="iclnImgB"></a>
+				</c:forEach>
+			</div>
 		</div>
 		<div id="headsubject">
 			<h1 id="subjectText">동행 게시글</h1>
 			<input type="hidden" value="${accView.article_no}" name="article_no">			
 		</div>
 		<div id="contents">
-			<br>
-			<h5>작성자의 성향을 보려면 아래 버튼을 클릭하세요.</h5>
-			<button class="btn btn-outline-secondary" id="inclnBtn">회원 성향 보기</button>
-			<div class="dropdown" id="dropdown" style="display: none;">
-				<c:forEach var="inclnView" items="${inclnView}">
-					<img src="${inclnView.icon_col}" class="iclnImgB" title="${inclnView.group_desc}" data-content="${inclnView.name}" data-container="body" data-toggle="popover" data-placement="bottom" data-trigger="hover">
-				</c:forEach>
-			</div>
-			<script>
-				$('#inclnBtn').click(function() {
-					$('#dropdown').toggle('slow');
-				});
-			</script>
-			<br> <br>
-			<h3>게시글 내용 :</h3>
+		
+			
 			${accView.content} <br> <br> 
-			<a class="btn btn-success" href="${contextPath}/accompany/accMain" style="background-color: #666666; border-color: #666666">목록으로 돌아가기</a>&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-success" href="#" onclick="backspace()" style="background-color: #666666; border-color: #666666">목록으로 돌아가기</a>&nbsp;&nbsp;&nbsp;
 			<c:choose>
 			<c:when test="${sessionScope.memberInfo.member_id ne accView.member_id}">
 			<a class="btn btn-success" id="contentReq" href="#" style="background-color: #666666; border-color: #666666">매칭신청하기</a> &nbsp;&nbsp;&nbsp; 
