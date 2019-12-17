@@ -1,6 +1,7 @@
 package bts.h.p001.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -36,9 +37,7 @@ public class H_P001ControllerImpl implements H_P001Controller {
 			@RequestParam(value="cntPerPage" , required=false)String cntPerPage,  HttpServletRequest request, HttpServletResponse response) throws Exception{
 		
 		ModelAndView mav = new ModelAndView("/h/p001/d001");
-		System.out.println("1111111번째 확인");
 		int total = h_p001Service.hotelListCount();
-		System.out.println("1111111번째 확인");
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
 			cntPerPage = "6";
@@ -75,11 +74,28 @@ public class H_P001ControllerImpl implements H_P001Controller {
 	public ModelAndView hotelView(@RequestParam("lodging_id")String lodging_id, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		ModelAndView mav = new ModelAndView("/h/p001/d002");
-		System.out.println("lodging_idddddddddddddddddddddddddddddd: "+ lodging_id );
 		H_P001VO hotelResult = h_p001Service.hotelResult(lodging_id);
 		List<H_P001VO> roomResult = h_p001Service.roomInfoResult(lodging_id);
-		System.out.println("room_noooooooooooooooooo:" + h_p001VO.getRoom_no());
+		String lodging_se = hotelResult.getLodging_se();
 		
+		List<String> descriptionList = new ArrayList<>();
+		if(lodging_se.equals( "HT") || lodging_se.equals("GH")) {
+			String[] discriptions = hotelResult.getDescription().split("\\.");
+			for(int i=0; i< discriptions.length; i++) {
+				descriptionList.add(discriptions[i]);
+			}
+			System.out.println("descriptionListttt: "+descriptionList);
+		}
+		else if(lodging_se.equals("MT")){
+			String[] discription = hotelResult.getDescription().split("\\*");		
+			for(int i=0; i< discription.length; i++) {
+				System.out.println(discription[i]);
+				descriptionList.add(discription[i]);
+			}
+			System.out.println("descriptionListttt: "+descriptionList);
+		}
+		
+		mav.addObject("descriptionList",descriptionList);
 		mav.addObject("roomResult",roomResult);
 		mav.addObject("hotelResult",hotelResult);
 		return mav;
