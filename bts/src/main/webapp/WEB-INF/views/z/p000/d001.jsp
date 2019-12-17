@@ -177,6 +177,9 @@ figure.snip1206.hover figcaption p {
   opacity: 0.7;
 }
 
+div.container{
+
+}
 </style>
 <meta charset="UTF-8">
 <title>Best Travel Seoul</title>
@@ -437,14 +440,17 @@ $(".hover").mouseleave(
 
    <!-- Scroll down_2 Accompany -->
    <div class="main_section_accompany" id="main_section main_section_accompany" style="position:relative;">
+     <div class="container">
       <div class="caption">
          <h1 style="font-weight: bold; margin-top: 150px;">ACCOMPANY</h1>
       </div>
-      <p>BTS는 완벽한 여행이 되도록 최선을 다합니다.</p>
-      <p style="color: gray; text-decoration: underline;">새로운 곳에서 새로운 사람과 새로운 경험</p>
-      <h3 class="title">BTS와 함께 성공적인 여행을 경험하세요!</h3>      
-      <h4 style="font-weight: bold; font-family: NanumSquareRoundR;">가장 최근에 등록된 글</h4>
-      <div>
+      
+	      <p>BTS는 완벽한 여행이 되도록 최선을 다합니다.</p>
+	      <p style="color: gray; text-decoration: underline;">새로운 곳에서 새로운 사람과 새로운 경험</p>
+	      <h3 class="title">BTS와 함께 성공적인 여행을 경험하세요!</h3>      
+	      <h4 style="font-weight: bold; font-family: NanumSquareRoundR;">가장 최근에 등록된 글</h4>
+      </div>
+      <div class="container">
          <div class="lately-accompany">
             <div class="row">
             
