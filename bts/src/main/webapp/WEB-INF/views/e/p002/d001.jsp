@@ -8,78 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<style>
-@font-face {
-	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
-	font-family: "nanum";
-}
 
-@font-face {
-	src: url("../fonts/BMJUA_ttf.ttf");
-	font-family: "bm";
-}
-
-#cke_editor {
-	margin: 0 auto;
-}
-
-#title {
-	text-align: center;
-	margin: 20px 0 10px 20px;
-	font-size: 50px;
-}
-
-#title>input {
-	padding: 0 10px;
-	width: 80%;
-	border: none;
-	border-bottom: 2px solid #9c9c9c;
-	font-size: 45px;
-}
-
-#title>input::placeholder, #tag-list>input[type=text]::placeholder {
-	font-style: oblique;
-	color: #a8a8a8;
-	font-family: initial;
-}
-
-#tag-list {
-	width: 80%;
-	margin: 0 auto;
-	margin-bottom: 10px;
-}
-
-#tag-list>input[type=text] {
-	margin-left: 20px;
-	padding: 0 10px;
-	border: none;
-	border-bottom: 1px solid #9c9c9c;
-}
-
-.tag-result {
-	border: 1px solid;
-	border-radius: 10px;
-	padding: 5px;
-	text-align: center;
-	margin-left: 5px;
-}
-
-.tag-result span {
-	margin-left: 0 3px;
-}
-
-#tag-list a {
-	margin-left: 3px;
-	color: red;
-	cursor: pointer;
-}
-
-#end {
-	margin-top: 30px;
-	margin-right: 11%;
-	width: 150px;
-}
-</style>
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/e/p003/d001.css" />
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
@@ -90,7 +19,7 @@
 <script>
 $(document).ready(function(){
 	CKEDITOR.replace('editor',{
-		width:'80%',
+		width:'100%',
 		height:500,
 		filebrowserUploadUrl : "${contextPath}/accompany2/image"
 	});
@@ -211,28 +140,20 @@ $(document).ready(function(){
 	<div id="container" class="container">
 		<h1 id="subject">동행 게시글 작성</h1>
 		<form name="frmWrite" method="post">
-			<div id="form-group">
-				<label for="inputSubject" class="col-lg-2 control-label">제목</label>
+			<div id="form-group" class="title">
 				<div class="form-control">
 					<input type="text" name="acc_title" placeholder="제목">
 				</div>
 			</div>
-			<div id="form-group">
-				<label for="inputId" class="col-lg-2 control-label">아이디</label>
-				<div class="form-control">
-					<input type="text" name="member_id" value="${sessionScope.memberInfo.member_id}" placeholder="${sessionScope.memberInfo.member_id}" disabled>
-				</div>
-			</div>
-			<div id="form-group">
-				<label for="inputAge" class="col-lg-2 control-label">희망나이</label>
+			<div id="form-group" class="hopeAge">
 				<div class="form-control">
 					<input type="text" name="age" placeholder="희망나이">
 				</div>
 			</div>
-			<div id="form-group">
-				<label for="inputTraffic" class="col-lg-2 control-label">교통수단</label>
+			<div id="form-group" class="Transportation">
 				<div class="form-control">
 					<select name="traffic">
+						<option value="">교통수단</option>
 						<option value="버스">버스</option>
 						<option value="택시">택시</option>
 						<option value="자차">자차</option>
@@ -241,8 +162,7 @@ $(document).ready(function(){
 					</select>
 				</div>
 			</div>
-			<div id="form-group">
-				<label for="inputGender" class="col-lg-2 control-label">성별</label>
+			<div id="form-group" class="hopeGender">
 				<div class="form-control">
 					<select name="gender" id="gender">
 						<option value="남">남</option>
@@ -251,7 +171,6 @@ $(document).ready(function(){
 				</div>
 			</div>
 			<div id="form-group">
-				<label for="inputWhlrs_no" class="col-lg-2 control-label">인원수</label>
 				<div class="form-control">
 					<input type="text" name="whlrs_no" placeholder="인원수">
 				</div>
@@ -271,7 +190,7 @@ $(document).ready(function(){
 					</span>
 				</div>
 			</div>
-			<div id="form-group">
+			<div class="writeForm">
 				<textarea id="editor" name="editor"></textarea>
 				<input type="hidden" name="imageList"> 
 				<input type="hidden" name="tagList">

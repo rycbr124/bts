@@ -237,7 +237,7 @@
 	<!-- 관리자 메인 오늘 등록글 -->
 	<select id="today_plan" resultMap="plannerResult">
 		<![CDATA[
-		SELECT title, member_id, person_se, view_cnt, register_date
+		SELECT title, member_id, person_se, view_cnt, register_date, plan_no
 			FROM (
 				SELECT rownum rn,a.*
 				FROM (
