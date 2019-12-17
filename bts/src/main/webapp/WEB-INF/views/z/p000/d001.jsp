@@ -321,7 +321,7 @@ $(".hover").mouseleave(
             <div class="modal-footer">
 
                <p id="findId_Pw">
-                  <a class="forgotpw" href="${contextPath}/find/findPwMain" style="color: white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp; <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>
+                  <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>&nbsp;&nbsp;&nbsp;<a class="forgotpw" href="${contextPath}/find/findPwMain" style="color: white">비밀번호 찾기</a>
                </p>
             </div>
 
