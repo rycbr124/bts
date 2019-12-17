@@ -21,11 +21,17 @@
 	.msg-container ::-webkit-scrollbar-thumb,#pop-list::-webkit-scrollbar-thumb {
 		background: #8da5ee; 
 	}
-	
+	#body{
+		position:relative;
+		width:1000px;
+		height:auto;
+		left:50%;
+		transform:translate(-70%,0);
+		margin-bottom:100px;
+	}
 	
    /*공통*/
    .msg-container{
-	margin: 50px 0 0 50px;
 	width: 80%;
 	min-width: 1000px;/**/
 	height: 800px;/**/		
@@ -198,11 +204,13 @@
    .message-left >*{
       float:left;
       width:initial;
+      font-size:12px;
    }
    
    .message-right >*{
       float:right;
       width:initial;
+      font-size:12px;
    }   
    
    .message-left pre,.message-right pre{
@@ -377,3 +385,6 @@
 		border-radius:5px;
 		background-color:#B9C9F8;
 	}	
+	.nav-tabs{
+		font-size:13px;
+	}

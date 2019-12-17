@@ -66,8 +66,11 @@
 			<mapping path="/community/**" />
 			<mapping path="/planner/**" />
 			<mapping path="/admin/**" />
+			<mapping path="/recommend/**" />
 			<exclude-mapping path="/community/review/list"/>
-			<exclude-mapping path="/community/plan_list"/>			
+			<exclude-mapping path="/community/plan_list"/>
+			<exclude-mapping path="/recommend/recommend_place"/>
+			<exclude-mapping path="/recommend/recommend_course"/>			
 			<beans:bean class="bts.common.interceptor.controller.CheckLoginInterceptor"/>
 		</interceptor>
 		<interceptor>
