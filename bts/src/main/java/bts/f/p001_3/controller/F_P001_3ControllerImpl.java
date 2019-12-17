@@ -118,38 +118,6 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		return mav;
 	}	
 	
-//	@Override
-//	@RequestMapping(value="/list" ,method={RequestMethod.POST,RequestMethod.GET})
-//	public ModelAndView searchReview(@ModelAttribute("article_cd") String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception {
-//		ModelAndView mav = new ModelAndView("/f/p001_3/d001");
-//		String inputPage = request.getParameter("curPage");
-//		
-//		int curPage = 1;
-//		try {
-//			if(inputPage!=null) {
-//				curPage = Integer.parseInt(inputPage);
-//			}
-//		}catch(NumberFormatException e) {
-//			e.printStackTrace();
-//			curPage=1;
-//		}
-//		int totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal());
-//		PagingVO pvo = pagingProvider.get();
-//		pvo.setPaging(curPage, totalCount, rangePage, rangeRow);
-//
-//		Map<String,String> searchMap = new HashMap<>();
-//		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
-//		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
-//		searchMap.put("article_cd", article_cd);
-//		
-//		List<F_P001_3VO> reviewList = new ArrayList<>();
-//		reviewList = f_p001_3Service.selectReviewList(searchMap);
-//		
-//		mav.addObject("paging",pvo);
-//		mav.addObject("articleList", reviewList);
-//		return mav;
-//	}
-	
 	@RequestMapping(value="/contents" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView searchArticle(@ModelAttribute("article_cd") String article_cd,@RequestParam(value="article", required=false) String articleNo,HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/f/p001_3/d002");
@@ -165,6 +133,15 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		return mav;
 	}
 
+	@RequestMapping(value="/contents/delete" ,method={RequestMethod.POST,RequestMethod.GET})
+	public String deleteArticle(@ModelAttribute("article_cd") String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception {
+		F_P001_3VO vo = f_p001_3Provider.get();
+		vo.setArticle_cd(article_cd);
+		vo.setArticle_no(Integer.parseInt(request.getParameter("article_no")));
+		f_p001_3Service.deleteReviewContents(vo);
+		return "redirect:/community/review/list";
+	}	
+	
 	@ResponseBody
 	@RequestMapping(value="/comment" ,method={RequestMethod.POST,RequestMethod.GET})
 	public String commentPaging(@ModelAttribute("article_cd") String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -396,6 +373,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 			tagVO.setArticle_no(vo.getArticle_no());
 			tagVO.setArticle_cd(article_cd);
 			tagVO.setTag_name((String) tagList.get(i));
+			tagVO.setTag_order(i+1);
 			updateTagList.add(tagVO);
 		}
 		if(!updateTagList.isEmpty()) {
@@ -472,6 +450,7 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 			tagVO.setArticle_no(vo.getArticle_no());
 			tagVO.setArticle_cd(article_cd);
 			tagVO.setTag_name((String) tagList.get(i));
+			tagVO.setTag_order(i+1);
 			insertTagList.add(tagVO);
 		}
 		if(!insertTagList.isEmpty()) {

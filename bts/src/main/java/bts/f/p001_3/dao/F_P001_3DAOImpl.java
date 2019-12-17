@@ -34,7 +34,17 @@ public class F_P001_3DAOImpl implements F_P001_3DAO{
 	}	
 
 	@Override
-	public void deleteTagList(F_P001_3VO f_p001_3VO) {
+	public void deleteReviewContents(F_P001_3VO f_p001_3VO) throws DataAccessException {
+		sqlSession.delete("mapper.f_p001_3.deleteReviewContents",f_p001_3VO);
+	}
+
+	@Override
+	public void deleteReviewAnswer(F_P001_3VO f_p001_3VO) throws DataAccessException {
+		sqlSession.delete("mapper.f_p001_3.deleteReviewAnswer",f_p001_3VO);
+	}
+	
+	@Override
+	public void deleteTagList(F_P001_3VO f_p001_3VO) throws DataAccessException{
 		sqlSession.delete("mapper.f_p001_3.deleteTagList",f_p001_3VO);
 	}
 	
@@ -45,7 +55,7 @@ public class F_P001_3DAOImpl implements F_P001_3DAO{
 	}		
 
 	@Override
-	public void updateArticle(F_P001_3VO f_p001_3VO) {
+	public void updateArticle(F_P001_3VO f_p001_3VO) throws DataAccessException{
 		sqlSession.update("mapper.f_p001_3.updateArticle",f_p001_3VO);
 	}		
 	
@@ -56,7 +66,7 @@ public class F_P001_3DAOImpl implements F_P001_3DAO{
 	}
 
 	@Override
-	public String selectReviewTotal(Map<String, String> searchMap) {
+	public String selectReviewTotal(Map<String, String> searchMap) throws DataAccessException{
 		String totalCount = sqlSession.selectOne("mapper.f_p001_3.selectSearchTotal",searchMap);
 		return totalCount;
 	}
@@ -92,31 +102,31 @@ public class F_P001_3DAOImpl implements F_P001_3DAO{
 	}
 
 	@Override
-	public String selectArticleCd(String menu) {
+	public String selectArticleCd(String menu) throws DataAccessException{
 		String article_cd = sqlSession.selectOne("mapper.f_p001_3.selectArticleCd",menu);
 		return article_cd;
 	}
 
 	@Override
-	public int selectRecommendTotal(Map<String, String> searchMap) {
+	public int selectRecommendTotal(Map<String, String> searchMap) throws DataAccessException{
 		int totalCount=sqlSession.selectOne("mapper.f_p001_3.selectRecommendTotal",searchMap);
 		return totalCount;
 	}
 
 	@Override
-	public int selectPlanTotal(Map<String, String> searchMap) {
+	public int selectPlanTotal(Map<String, String> searchMap) throws DataAccessException{
 		int totalCount=sqlSession.selectOne("mapper.f_p001_3.selectPlanTotal",searchMap);
 		return totalCount;
 	}
 
 	@Override
-	public List<Map<String, String>> selectRecommend(Map<String, String> searchMap) {
+	public List<Map<String, String>> selectRecommend(Map<String, String> searchMap) throws DataAccessException{
 		List<Map<String, String>> list = sqlSession.selectList("mapper.f_p001_3.selectRecommend",searchMap);
 		return list;
 	}
 
 	@Override
-	public List<D_P001_4VO> selectPlan(Map<String, String> searchMap) {
+	public List<D_P001_4VO> selectPlan(Map<String, String> searchMap) throws DataAccessException{
 		List<D_P001_4VO> list = sqlSession.selectList("mapper.f_p001_3.selectPlan",searchMap);
 		return list;
 	}

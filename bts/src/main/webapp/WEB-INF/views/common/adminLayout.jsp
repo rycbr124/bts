@@ -7,7 +7,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
+<title>관리자페이지</title>
 
 <!-- 부트스트랩 -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

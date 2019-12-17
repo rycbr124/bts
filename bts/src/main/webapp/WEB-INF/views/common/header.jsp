@@ -65,7 +65,6 @@ html #menu>li:hover>a, #menu>li.active>a {
 }
 </style>
 <meta charset="UTF-8">
-<title>상단</title>
 </head>
 <body>
    <div id="header">
