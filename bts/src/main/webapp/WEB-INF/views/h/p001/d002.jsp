@@ -45,7 +45,7 @@ $(document).ready(function(){
 		$(div).prop('id','roomInfo'+i);
 		
 		var in_date = document.createElement('input');
-		var test = document.createTextNode('날짜 선택');
+		var test = document.createTextNode('날짜 선택 : ');
 		$(in_date).prop('type','date');
 		$(in_date).prop('id','in_date'+i);
 		$(in_date).prop('name','in_date'+i);
@@ -83,7 +83,7 @@ $(document).ready(function(){
 		priceH5.appendChild(priceH5Text);
 		
 		var totalprice = document.createElement('input');
-		var price = document.createTextNode('결제 금액');
+		var price = document.createTextNode('결제 금액 : ');
 		$(totalprice).prop('type','text');
 		$(totalprice).prop('id','totalprice'+i);
 		$(totalprice).prop('name','amount'+i);
@@ -93,6 +93,8 @@ $(document).ready(function(){
 		$(a).prop('href','#');
 		$(a).prop('class','btn btn-success');
 		$(a).prop('id','reservBtn'+i);
+		
+		var br = document.createElement('br');
 		
 		var aText = document.createTextNode('예약하기');
 		a.appendChild(aText);
@@ -105,6 +107,7 @@ $(document).ready(function(){
 		$('#roomReserv').append(totalprice);
 		$('#roomReserv').append(a);
 		$('#roomReserv').append(room_no);
+		$('#roomReserv').append(br);
 		
 		
 		
@@ -263,6 +266,10 @@ IMP.request_pay({
 });
 }
 
+function backspace(){
+	history.go(-1);
+}
+
 function requestpay2(){
 	var amountprice = document.getElementById('totalprice0').value.toString();
 	var amountprice1 = document.getElementById('totalprice1').value.toString();
@@ -299,11 +306,12 @@ IMP.request_pay({
 });
 }
 </script>
-	<div id="container">
-		<h1 id="headsubjectText">숙박 예약하기</h1>
-		<br> <br>
+	<div class="container">
+		
 		<div id="contents">
 			<div id="hotelResult">
+				<h1 id="headsubjectText">숙박 예약하기</h1>
+				<br>
 				<h2>${hotelResult.name}</h2>
 				<hr>
 				<img id="hotelImg" src="${contextPath}${hotelResult.lodging_image }"><br>
@@ -311,7 +319,9 @@ IMP.request_pay({
 				<br>
 				<h4>※상세정보</h4>
 				<hr>
-				<p id="textlist">${hotelResult.description }</p>
+				<c:forEach var="description" items="${descriptionList}">
+				<p>${description}</p><br>
+				</c:forEach>
 				<hr>
 				<input type="hidden" value="${hotelResult.lodging_id}"
 					name="lodging_id"> <input type="hidden"
@@ -324,9 +334,11 @@ IMP.request_pay({
 				<hr>
 				<div id="roomReserv"></div>
 				<hr>
-				<script>
 
-			</script>
+
+				<div id="roomReserv"></div>			
+				<br><br>
+				<button class="btn btn-success" id="backspace" onclick="backspace()">목록으로 돌아가기</button>
 
 			</div>
 		</div>

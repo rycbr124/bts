@@ -5,22 +5,27 @@
 }
 
 @font-face {
-   src: url("/bts/resources/fonts/Nanum/NanumSquareRoundB.ttf");
-    font-family: "NanumSquareRoundB";
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+   	font-family: "NanumSquareRoundEB";
 }
 
 @font-face {
-    src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
-    font-family: "NanumSquareRoundR";
+   	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+   	font-family: "NanumSquareRoundR";
+}
+#headsubjectText{
+	font-family: "NanumSquareRoundEB";
+	
 }
 
-#container{
-	font-family:"NanumSquareRoundEB";
-	padding-left:150px;
-}
-#hotelResult{
+
+
+#hotelResult,#roomResult{
 	max-width:900px;
+	font-family: "NanumSquareRoundEB";
+	margin:0 auto;
 }
+
 #hotelImg{
 	max-width:1000px;
 	max-height:500px;
@@ -28,12 +33,21 @@
 	height:700px;
 }
 #reservBtn0,#reservBtn1,#reservBtn2{
+
 	background:#666666;
-	border:none;
-}
-#roomReserv{
+	border:none;	
+	margin-left:15px;
+	background:#9E9E9E;
+	border-style:none;
 	
 }
+#backspace{
+	background:#9E9E9E;
+	border-style:none;
+	
+
+}
+
 #textlist {
 	text-align:inherit;
 }
