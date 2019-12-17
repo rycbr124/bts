@@ -305,11 +305,14 @@ IMP.request_pay({
 		<div id="contents">
 			<div id="hotelResult">
 				<h2>${hotelResult.name}</h2>
+				<hr>
 				<img id="hotelImg" src="${contextPath}${hotelResult.lodging_image }"><br>
-				<p>위치: ${hotelResult.address}</p>
+				<p>●위치: ${hotelResult.address}</p>
 				<br>
 				<h4>※상세정보</h4>
-				<p>${hotelResult.description }</p>
+				<hr>
+				<p id="textlist">${hotelResult.description }</p>
+				<hr>
 				<input type="hidden" value="${hotelResult.lodging_id}"
 					name="lodging_id"> <input type="hidden"
 					value="${sessionScope.memberInfo.member_id}" name="member_id">
@@ -318,7 +321,9 @@ IMP.request_pay({
 			<br>
 			<div id="roomResult">
 				<h3>객실 정보</h3>
+				<hr>
 				<div id="roomReserv"></div>
+				<hr>
 				<script>
 
 			</script>
@@ -326,6 +331,6 @@ IMP.request_pay({
 			</div>
 		</div>
 	</div>
-
+<br><br><br><br><br>
 </body>
 </html>

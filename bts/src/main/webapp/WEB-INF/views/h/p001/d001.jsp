@@ -40,13 +40,13 @@
 </head>
 <body>
 	<div id="reservcontainer">
+	  <div id="headsubject">
+		 <h1 id="headsubjectText">숙박 예약하기</h1>
+	  </div>
 		<img src="${contextPath}/resources/image/reserv/hotelReserv.jpg"
-			id="reservMainImg"><br>
-		<div id="headsubject">
-			<h1 id="headsubjectText">숙박예약하기</h1>
-		</div>
-
-		<ul class="tabs">
+			id="reservMainImg">
+		
+		<ul class="tabs" id="tabslist">
 			<li class="tab-link current" data-tab="hotel">호텔</li>
 			<li class="tab-link" data-tab="guest">게스트하우스</li>
 			<li class="tab-link" data-tab="motel">모텔</li>
@@ -61,18 +61,17 @@
 						<c:forEach var="hotelResult" items="${hotelList }"
 							varStatus="status">
 							<c:if test="${status.count%4 eq 0 }"><br/></c:if>
-							
-							<div class="card" style="width: 18rem;">
+							<div class="card" id="cardlist" style="width: 18rem;">
 								<img src="${contextPath}${hotelResult.lodging_image}"
-									class="card-img-top" alt="...">
+									class="card-img-top" alt="..."/>
 								<div class="card-body">
 									<h5 class="card-title">${hotelResult.name}</h5>
 									<p class="card-text">${hotelResult.address}</p>
 									<a href="${contextPath}/resve/hotelView?lodging_id=${hotelResult.lodging_id}" class="btn btn-primary">예약하기</a>
 								</div>
-							</div>
-							
+							</div>						
 						</c:forEach>
+						
 					</tbody>
 				</table>
 			</form>
@@ -85,7 +84,7 @@
 						<c:forEach var="guestResult" items="${guestList }"
 							varStatus="status">
 							<c:if test="${status.count%4 eq 0 }"><br/></c:if>
-							<div class="card" style="width: 18rem;">
+							<div class="card" id="cardlist" style="width: 18rem;">
 								<img src="${contextPath}${guestResult.lodging_image}"
 									class="card-img-top" alt="...">
 								<div class="card-body">
@@ -108,7 +107,7 @@
 						<c:forEach var="motelResult" items="${motelList }"
 							varStatus="status">
 							<c:if test="${status.count%4 eq 0 }"><br/></c:if>
-							<div class="card" style="width: 18rem;">
+							<div class="card" id="cardlist" style="width: 18rem;">
 								<img src="${contextPath}${motelResult.lodging_image}"
 									class="card-img-top" alt="...">
 								<div class="card-body">
@@ -123,7 +122,7 @@
 				</table>
 			</form>
 		</div>
-
 	</div>
+	<br><br>
 </body>
 </html>
