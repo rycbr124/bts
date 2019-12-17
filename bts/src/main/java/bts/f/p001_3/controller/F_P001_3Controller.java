@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 public interface F_P001_3Controller {
-	public ModelAndView searchReview(String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception;
+//	public ModelAndView searchReview(String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public ModelAndView searchArticle(String article_cd,@RequestParam(value="article", required=false) String articleNo,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public String commentPaging(String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception;
 	public String commentWrite(String article_cd,RedirectAttributes redirect,HttpServletRequest request, HttpServletResponse response) throws Exception;

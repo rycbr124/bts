@@ -56,6 +56,12 @@ public class F_P001_3DAOImpl implements F_P001_3DAO{
 	}
 
 	@Override
+	public String selectReviewTotal(Map<String, String> searchMap) {
+		String totalCount = sqlSession.selectOne("mapper.f_p001_3.selectSearchTotal",searchMap);
+		return totalCount;
+	}
+	
+	@Override
 	public String selectCommentTotal(Map<String,String> searchMap) throws DataAccessException{
 		String totalCount = sqlSession.selectOne("mapper.f_p001_3.selectCommentTotal",searchMap);
 		return totalCount;
