@@ -35,7 +35,24 @@
 		<result property="group_name" column="group_name" />
 		<result property="group_desc" column="group_desc" />		
 	</resultMap>
-	
+	<resultMap id="plannerResult" type="i_p002VO_1">
+		<result property="title" column="title"/>
+		<result property="member_id" column="member_id"/>
+		<result property="register_date" column="register_date"/>
+		<result property="open_val" column="open_val"/>
+		<result property="plan_no" column="plan_no"/>
+	</resultMap>
+	<resultMap id="articleResult" type="f_p001_3VO">
+		<result property = "register_date" column="register_date"/>
+		<result property="title" column="title"/>
+		<result property="member_id" column="member_id"/>
+	</resultMap>
+	<resultMap id="accompanyResult" type="e_p001VO">
+		<result property="acc_title" column="acc_title"/>
+		<result property="member_id" column="member_id"/>
+		<result property="article_no" column="article_no"/>
+		<result property="register_date" column="register_date"/> 
+	</resultMap>
 	
 	<!-- 총 회원 수 조회 -->
 	<select id="countMember" resultType="java.lang.Integer">
@@ -217,8 +234,47 @@
 			WHERE incln_cd = #{incln_cd}
 		]]>
 	</delete>
+	<!-- 관리자 메인 오늘 등록글 -->
+	<select id="today_plan" resultMap="plannerResult">
+		<![CDATA[
+		SELECT title, member_id, person_se, view_cnt, register_date
+			FROM (
+				SELECT rownum rn,a.*
+				FROM (
+					SELECT *
+					FROM planner
+					ORDER BY register_date desc)a)
+			WHERE TO_CHAR(REGISTER_DATE) > TO_CHAR(SYSDATE-1,'YYYY-MM-DD')
+			AND open_val = 'Y'
+            AND rn between '1' and '5'
+		]]>
+	</select>
 	
-	
-	
+	<select id="today_review" resultMap="articleResult">
+		<![CDATA[
+			SELECT *
+			FROM (
+				SELECT rownum rn,a.*
+				FROM (
+					SELECT *
+					FROM ARTICLE
+					ORDER BY register_date desc)a)
+			WHERE TO_DATE(REGISTER_DATE) > TO_CHAR(SYSDATE-1,'YYYY-MM-DD')
+			AND rn between '1' and '5'
+		]]>
+	</select>
+	<select id="today_accompany" resultMap="accompanyResult">
+		<![CDATA[
+			SELECT  acc_title,member_id,register_date,article_no
+			FROM (
+				SELECT rownum rn,a.*
+				FROM (
+					SELECT *
+					FROM ACCOMPANY
+					ORDER BY register_date desc)a)
+			WHERE TO_DATE(REGISTER_DATE) > TO_CHAR(SYSDATE-1,'YYYY-MM-DD')
+			AND rn between '1' and '5'
+		]]>
+	</select>
 	
 </mapper>

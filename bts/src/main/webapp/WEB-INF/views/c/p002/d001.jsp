@@ -14,6 +14,10 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap/bootstrap.css" />
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>내가 쓴 글목록 조회</title>
+<script>
+	$('.post_list').prop('style','background-color:#e8f0fe; border-radius:0 9px 9px 0;');
+	$('.post_list span').prop('style','color:rgb(25,103,210);');
+</script>
 </head>
 <body>
 

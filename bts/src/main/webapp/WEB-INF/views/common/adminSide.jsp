@@ -129,7 +129,6 @@ float:left;
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Contact:</h6>
             <a class="collapse-item" href="${contextPath}/admin/question">문의 목록 조회</a>
-            <a class="collapse-item" href="#">문의 내역 답변 작성</a>
           </div>
         </div>
       </li>

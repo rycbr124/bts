@@ -41,44 +41,45 @@ $(function(){
 }
 .submenu li a{
 	width:100%;
+	text-decoration:none;
+	color:rgb(95,99,104);
 }
 .sideTitle{
 	position:relative;
 	color:#fff;
+	width:250px;
+	height:40px;
 	background-color:#203341;
 	letter-spacing:2px;
 	text-align:center;
 	padding:10px 85px;
 	border-radius:0 9px 9px 0;
+	font-size:14px;
 }
-.active{
-	background-color:rgb(210,210,210);
-	color:#fff;
-	width:100%;
-}
+
 </style>
 </head>
 <body>
 		<span class="sideTitle">마이페이지</span>
 		<ul class="submenu">
-			<li><a href="${contextPath}/my/profile"> <i class="icon icon-update-profile"></i> <span>여행자 정보 조회/수정</span>
+			<li class="member_info"><a href="${contextPath}/my/profile"> <i class="icon icon-update-profile"></i> <span>여행자 정보 조회/수정</span>
 			</a></li>
-			<li><a href="${contextPath}/my/myBoardList"> <i class="icon icon-post-list"></i>
+			<li class="post_list"><a href="${contextPath}/my/myBoardList"> <i class="icon icon-post-list"></i>
 					<span>내 글목록 관리</span>
 			</a></li>
-			<li><a href="${contextPath}/my/reserv/reservList"> <i
+			<li class="reserved_info"><a href="${contextPath}/my/reserv/reservList"> <i
 					class="icon icon-reservation"></i> <span>예약 내역 관리</span>
 			</a></li>
-			<li><a href="${contextPath}/question/questionMain"> <i class="icon icon-question"></i>
+			<li class="question_info"><a href="${contextPath}/question/questionMain"> <i class="icon icon-question"></i>
 					<span>문의 내역 관리</span>
 			</a></li>
-			<li><a href="${contextPath}/my/wishList"> <i class="icon icon-wishlist"></i>
+			<li class="wishList_info"><a href="${contextPath}/my/wishList"> <i class="icon icon-wishlist"></i>
 					<span>위시리스트 관리</span>
 			</a></li>
-			<li><a href="${contextPath}/my/message/main"> <i class="icon icon-message"></i>
+			<li class="chat_info"><a href="${contextPath}/my/message/main"> <i class="icon icon-message"></i>
 					<span>쪽지 관리</span>
 			</a></li>
-			<li><a href="${contextPath}/my/accompany/accList"> <i class="icon icon-matching"></i>
+			<li class="accompany_list"><a href="${contextPath}/my/accompany/accList"> <i class="icon icon-matching"></i>
 					<span>매칭 신청 목록 관리</span>
 			</a></li>
 		

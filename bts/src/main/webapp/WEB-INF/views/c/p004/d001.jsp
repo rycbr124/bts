@@ -32,7 +32,7 @@ table {
 	width: 100%;
 }
 
-th,td,h2,p {
+#body th,td,h2,p {
 	font-family: "NanumSquareRoundEB";
 }
 #body{
@@ -65,9 +65,12 @@ padding:10px;
 #footer{
 	margin-top:50px;
 }
+
 </style>
 <script>
 $(function(){
+	$('.question_info').prop('style','background-color:#e8f0fe; border-radius:0 9px 9px 0;');
+	$('.question_info span').prop('style','color:rgb(25,103,210);');
 	$('#title a').on('click', function(){
 		var contact_tag = $(this).parent().prev();
 		var contact_no = $(contact_tag).text();
@@ -79,8 +82,8 @@ $(function(){
 <body>
 	<div class="question">
 		<ul class="nav nav-tabs">
-			<li class="nav-item"><a class="nav-link" href="/bts/question/questionMain">문의 내역</a></li>
-			<li class="nav-item"><a class="nav-link active" href="/bts/question/question_write">문의하기</a></li>
+			<li class="nav-item"><a class="nav-link active" href="/bts/question/questionMain">문의 내역</a></li>
+			<li class="nav-item"><a class="nav-link" href="/bts/question/question_write">문의하기</a></li>
 		</ul>
 		
 	<table class="question_table">

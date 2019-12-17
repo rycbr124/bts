@@ -159,9 +159,15 @@ p {
 	margin-top :20px;
 }
 
+#search-message{
+	background-color:#eeeff0;
+}
+
 </style>
 <script>
 	$(document).ready(function(){
+		init();
+		
 		$('#review-list .hovereffect').on('click',function(){
 			var articleNo = this.dataset.article;
 			//window.location.href="${contextPath}/community/review/contents?article="+articleNo;
@@ -170,6 +176,30 @@ p {
 			document.frmContents.method="post";
 			document.frmContents.submit();
 		})
+		
+		$('#search').click(function(){
+			var p_info = $('#p_info').val();
+			var p_search = $('#p_search').val();
+			if(p_search.trim()==''){
+				alert('검색어를 입력해주세요');
+				return false;
+			}
+			if(document.frmContents.search_name==null && document.frmContents.search_value==null){			
+				var search_name=document.createElement('input');
+				var search_value=document.createElement('input');
+				$(search_name).attr('type','hidden');
+				$(search_value).attr('type','hidden');			
+				$(search_name).attr('name','search_name');
+				$(search_value).attr('name','search_value');
+				document.frmContents.append(search_name);
+				document.frmContents.append(search_value);			
+			}
+			document.frmContents.search_name.value=p_info;
+			document.frmContents.search_value.value=p_search;
+			document.frmContents.action="${contextPath}/community/review/list";
+			document.frmContents.method="post";
+			document.frmContents.submit();			
+		});	
 		
 		$('a.page-link').on('click',function(){
 			var nowPage=${paging.curPage};
@@ -192,6 +222,13 @@ p {
 		$('#write_review').on('click',function(){
 			window.location.href="${contextPath}/community/review/write";
 		});
+		
+		function init(){
+			if(document.frmContents.search_name!=null && document.frmContents.search_value!=null){
+				$('#p_info').val(document.frmContents.search_name.value);
+				$('#p_search').val(document.frmContents.search_value.value);
+			}
+		}
 	});
 </script>
 </head>
@@ -210,6 +247,11 @@ p {
     </li>
   </ul>
   <div id="review-list">
+		<c:if test="${search_name!=null && search_value!=null}">
+	  		<div class="row justify-content-center">
+	  			<div id="search-message" class="col-md-12 p-3 mb-2 text-dark rounded-lg text-center">${search_value}의 검색결과입니다.</div>
+	  		</div>
+		</c:if>
   		<div class="row">
 			<c:forEach var="article" items="${articleList}" varStatus="status">
 				<c:if test="${status.count==4}">
@@ -252,6 +294,20 @@ p {
 		    <li class="page-item"><a class="page-link">Next</a></li>
 		</ul>
 		
+		<div class="form-row justify-content-center">
+			<div class="col-md-2">
+				<select id="p_info" name="p_info" class="form-control">
+					<option value="title">제목</option>
+					<option value="member_id">작성자</option>
+					<option value="tag_name">태그</option>
+				</select> 
+			</div>
+			<div class="col-md-3">
+				<input type="text" class="form-control" name="p_search" id="p_search" placeholder="search">
+			</div>
+			<input type="button" id="search" class="btn btn-sm btn-outline-success" value="검색">
+		</div>
+		
 		<c:if test="${sessionScope.isLogOn==true}">
 			<div class="row justify-content-md-end">
 				<input type="button" id="write_review" class="btn btn-outline-secondary" value="글쓰기">
@@ -261,6 +317,10 @@ p {
 	<form name="frmContents">
 		<input type="hidden" name="curPage">
 		<input type="hidden" name="article">
+		<c:if test="${search_name!=null && search_value!=null}">
+			<input type="hidden" name="search_name" value="${search_name}">
+			<input type="hidden" name="search_value" value="${search_value}">			
+		</c:if>
 	</form>
 </div>
 </body>

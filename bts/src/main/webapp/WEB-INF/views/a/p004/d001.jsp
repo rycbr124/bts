@@ -102,12 +102,13 @@
 					 var contact_date = data_obj['contact_date'];
 					 var contents = data_obj['contents'];
 					}
+					//문의 제목
 					var title_container = document.createElement('div');
 					var question_title = document.createElement('div');
-					
+					//문의 회원
 					var member_date_container = document.createElement('div');
 					var member_container = document.createElement('div');
-					
+					//문의 날짜
 					var questionDt_container = document.createElement('div');
 					var question_member = document.createElement('div');
 					var question_date = document.createElement('div');
@@ -168,18 +169,22 @@
 					$(answerArea).prop('class','answerArea');
 					$(answerArea).prop('name','answer_content');
 					$(answerArea).prop('rows','10');
+					$(answerArea).prop('style','resize:none');
 					$(form).append(hidden);
 					$(hidden).prop('type','hidden');
 					$(hidden).prop('name','contact_no');
 					$(hidden).prop('value',contact_no);
 					$(hidden).prop('class','contact_no');
+					//처리완료인 문의클릭시 실행
 					if(OrgValue == '처리완료'){
 						var answer_info = data.answerInfo;
 						for(var j in answer_info){
 							var answer_obj = answer_info[j];
 							var answer_contents = answer_obj['contents'];
 							$(answerArea).prop('disabled','true');
+							$(answerArea).prop('style','resize:none');
 							$(answerArea).val(answer_contents);
+							$('.btn-primary').remove();
 						}
 					}
 				},
@@ -234,7 +239,7 @@
 
 	<div class="clear hidden"></div>
 	<div class="ib_product">
-	<script>createIBSheet("mySheet", "100%", "500px");</script>
+	<script>createIBSheet("mySheet", "100%", "auto");</script>
 	</div>
   </div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

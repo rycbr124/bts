@@ -57,7 +57,7 @@
 			    SELECT rownum as rnum, a.*
 			    FROM 
 			    (
-			        SELECT member_id, title, plan_no, register_date, range_date, open_val, view_cnt
+			        SELECT member_id, title, plan_no, register_date, range_date, open_val, view_cnt, person_se
 			        FROM planner
 			        WHERE open_val='Y'
 		]]>

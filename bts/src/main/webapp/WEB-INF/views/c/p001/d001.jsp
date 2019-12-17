@@ -19,6 +19,30 @@
 
 
 <script>
+/*
+ * 
+
+	$(document).ready(function() {
+		$('.member_info').prop('style','background-color:#e8f0fe; border-radius:0 9px 9px 0;');
+		$('.member_info span').prop('style','color:rgb(25,103,210);');
+		tagInit();
+		
+		if("${sessionScope.memberInfo.member_type=='kakao' || sessionScope.memberInfo.member_type=='naver'}"=="true"){
+			$("#input_img").on("click", function(){
+				alert('프로필 이미지 등록은 일반 회원만 가능합니다.');
+				return false;
+			});
+		}
+		
+		$('#btn-form-submit').click(function() {
+			var profile = $('#frm-profile')[0];
+			profile.action = "/bts/my/update";
+			profile.submit();
+		});
+		
+	
+ */
+		
    
    $(document).ready(function() {
       tagInit();
@@ -226,15 +250,15 @@ form{
 }
 
 #circle{
-   background-color:white;
-   border:1px dashed #8C8C8C;
-   width:90px; height:90px;
-   border-radius:75px;
-   text-align:center;
-   margin: 10px;
-   font-size:12px; color:#fff;
-   vertical-align:middle;
-   line-height:90px;
+	background-color:white;
+	border:1px dashed #8C8C8C;
+	width:90px; height:90px;
+	border-radius:50%;
+	text-align:center;
+	margin: 10px;
+	font-size:12px; color:#fff;
+	vertical-align:middle;
+	line-height:90px;
 }
 #pwMessage , #pwCheckMessage{
    font-size:12px;
@@ -247,6 +271,10 @@ div.col-md-6{
    float : right;
    margin-right : 50px;
    margin-bottom : 20px;
+}
+#side .sideTitle{
+	width:250px;
+	height:40px;
 }
 </style>
 
