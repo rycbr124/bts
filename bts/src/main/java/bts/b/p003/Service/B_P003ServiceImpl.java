@@ -90,25 +90,26 @@ public class B_P003ServiceImpl implements B_P003Service {
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";
 		String hostSMTPid = "florida223@naver.com";
-		String hostSMTPpwd = "ijhwngml1231";
+		String hostSMTPpwd = "ijhwngml1231!";
 
 		// 보내는 사람 EMail, 제목, 내용
 		String fromEmail = "florida223@naver.com";
-		String fromName = "BTS";
+		String fromName = "BestTravelSeoul";
 		String subject = "";
 		String msg = "";
 
 		if (div.equals("find_pw")) {
 			subject = "BTS 임시 비밀번호 입니다.";
-			msg += "<body style='background-color:#D5D5D5;'>";
-			msg += "<div style='background-color:#D5D5D5; width:500px; margin:auto; height:500px;font-family: '돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;'>";
-			msg += "<img src='http://localhost:8088/bts/resources/image/BTS_logo_black.png' width='200' height='100px'><br>";
+			msg += "<body style='border:1px solid #EAEAEA;'>";
+			msg += "<div style='background-color:#EAEAEA;padding-top:50px; width:500px; margin-left:500px; height:500px;font-family: '돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;'>";
+			msg += "<img src='http://localhost:8088/bts/resources/image/BTS_logo_black.png' width='200' height='100px' style='margin-left:190px;'><br>";
 			msg += "<h1 style='text-align:center;'>Best Travel Seoul</h1><br><br>";
 			msg += "<div style='padding-left:10px;padding-bottom:10px;'>";
-			msg += "<h2>BTS에서 보낸 메일입니다.</h2><br><br>";
-			msg += "<p> 회원님의 임시 비밀번호를 발송했습니다.</p>";
-			msg += "<p>"+p001vo.getMember_id() +"님의 임시 비밀번호는 :" + p001vo.getPassword()+" 입니다.</p>";
-			msg += "<p> 마이페이지에서 비밀번호를 변경해주세요.</p>";
+			msg += "<h2 style='text-align:center;'>BTS에서 보낸 메일입니다.</h2><br><br>";
+			msg += "<p style='text-align:center;'> 회원님의 임시 비밀번호를 발송했습니다.</p>";
+			msg += "<p style='text-align:center;'>"+p001vo.getMember_id() +"님의 임시 비밀번호는 : </p><div style='text-align:center;'><span style='color:#F15F5F;'>" 
+			+ p001vo.getPassword()+"</span><span> 입니다.</span></div>";
+			msg += "<p style='text-align:center;'> 마이페이지에서 비밀번호를 변경해주세요.</p>";
 			msg += "</div></div></body>";
 		}
 		// 받는 사람 E-Mail 주소

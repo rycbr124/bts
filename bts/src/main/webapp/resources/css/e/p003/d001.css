@@ -4,15 +4,14 @@
 	font-family: "nanum";
 }
 
-@font-face {
-	src: url("../fonts/BMJUA_ttf.ttf");
-	font-family: "bm";
-}
 #container{
 	position:relative;
 	width:90%;
 	height:auto;
 	margin:0 auto;
+   	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+   	font-family: "NanumSquareRoundR";
+
 }
 #container #form-group{
 	position: relative;
@@ -50,4 +49,5 @@
 	cursor:pointer;
 	margin:5px;
 	color: red;
-}
+
+

@@ -98,8 +98,6 @@ html #menu>li:hover>a, #menu>li.active>a {
 #header p{
 	font-color : black;
 }
-
-
 </style>
 <meta charset="UTF-8">
 <title>상단</title>
@@ -141,7 +139,7 @@ html #menu>li:hover>a, #menu>li.active>a {
                   </div>
                </c:when>
             <c:otherwise>
-               <a href="#popUpWindow" class="signup" data-toggle="modal"><span>LOGIN</span></a>
+               <a href="#popUpWindow" class="login" data-toggle="modal"><span>LOGIN</span></a>
                <a href="${contextPath }/signup/signup" class="signup"><span>SIGNUP</span></a>
             </c:otherwise>
          </c:choose>

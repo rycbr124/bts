@@ -29,7 +29,9 @@ $(document).ready(function(){
 		alert('정말 삭제하시겠습니까?');
 		location.href = "${contextPath}/accompany3/accDel?article_no=${accView.article_no}";
 	}
-	
+	function backspace(){
+		history.go(-1);
+	}	
 	
 </script>
 <meta charset="UTF-8">
@@ -75,7 +77,7 @@ $(document).ready(function(){
 		
 			
 			${accView.content} <br> <br> 
-			<a class="btn btn-success" href="${contextPath}/accompany/accMain" style="background-color: #666666; border-color: #666666">목록으로 돌아가기</a>&nbsp;&nbsp;&nbsp;
+			<a class="btn btn-success" href="#" onclick="backspace()" style="background-color: #666666; border-color: #666666">목록으로 돌아가기</a>&nbsp;&nbsp;&nbsp;
 			<c:choose>
 			<c:when test="${sessionScope.memberInfo.member_id ne accView.member_id}">
 			<a class="btn btn-success" id="contentReq" href="#" style="background-color: #666666; border-color: #666666">매칭신청하기</a> &nbsp;&nbsp;&nbsp; 

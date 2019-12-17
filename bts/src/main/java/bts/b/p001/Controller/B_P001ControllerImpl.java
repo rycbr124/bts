@@ -246,13 +246,14 @@ public class B_P001ControllerImpl implements B_P001Controller {
 	public String login(@RequestParam("code") String code, HttpSession session,HttpServletRequest request) throws Exception{
 		String access_Token = getAccessToken(code,request);
 		B_P001VO userInfo = getUserInfo(access_Token);
+		System.out.println("user_idddddddddddddddd: " + userInfo.getMember_id());
 		System.out.println("emailllll: " + userInfo.getEmail());
 		System.out.println("login Controller : " + userInfo);
 		// 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
 		if (userInfo.getEmail() != null) {
 			session.setAttribute("isLogOn", true);
 			session.setAttribute("memberInfo", userInfo);
-			session.setAttribute("userId", userInfo.getMember_id());
+			session.setAttribute("member_id", userInfo.getNick_name());
 			session.setAttribute("profile_image", userInfo.getProfile_image());
 			session.setAttribute("access_Token", access_Token);	
 			System.out.println("ccccc: " + userInfo);
@@ -288,8 +289,11 @@ public class B_P001ControllerImpl implements B_P001Controller {
 	
 	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {
+		String access_Token = (String) session.getAttribute("access_Token");
+		if(access_Token != null) {
 		kakaoLogout((String) session.getAttribute("access_Token"));
 		session.removeAttribute("access_Token");
+		}
 		session.removeAttribute("userId");
 		session.removeAttribute("isLogOn");
 		session.removeAttribute("memberInfo");
@@ -321,7 +325,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		JsonElement element = parser.parse(apiResult);
 		JsonObject naver_account = element.getAsJsonObject().get("response").getAsJsonObject();
 		
-		String id = naver_account.getAsJsonObject().get("id").getAsString();
+		String member_id = naver_account.getAsJsonObject().get("id").getAsString();
 		String nickname = naver_account.getAsJsonObject().get("nickname").getAsString();
 		String gender = naver_account.getAsJsonObject().get("gender").getAsString();
 		String email = naver_account.getAsJsonObject().get("email").getAsString();
@@ -329,7 +333,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		String birthday = naver_account.getAsJsonObject().get("birthday").getAsString();
 		String member_type = "naver";
 		
-		naverInfo.setMember_id(id);
+		naverInfo.setMember_id(member_id);
 		naverInfo.setNick_name(nickname);
 		naverInfo.setGender(gender);
 		naverInfo.setEmail(email);
@@ -337,7 +341,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		naverInfo.setBirth(birthday);
 		naverInfo.setMember_type(member_type);
 		
-		if(d001Service.overlapped(id).equals("false")) {
+		if(d001Service.overlapped(member_id).equals("false")) {
 			try {
 				d001Service.naverInsert(naverInfo);
 			} catch (Exception e) {
@@ -347,7 +351,7 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		mav.addObject("isLogOn", true);
 		mav.addObject("memberInfo");
 		B_P001VO userInfo = new B_P001VO();
-		userInfo.setMember_id(id);
+		userInfo.setMember_id(member_id);
 		userInfo.setNick_name(nickname);
 		userInfo.setGender(gender);
 		userInfo.setEmail(email);
@@ -357,9 +361,10 @@ public class B_P001ControllerImpl implements B_P001Controller {
 		
 		session.setMaxInactiveInterval(30*60);
 		session.setAttribute("isLogON", true);
+		session.setAttribute("member_id", userInfo.getMember_id());
 		session.setAttribute("memberInfo", userInfo);
 		System.out.println("naverInfo : " + naverInfo);
-		System.out.println("naverInfo id:" + naverInfo.getMember_id());
+		System.out.println("member_id:" + naverInfo.getNick_name());
 		return mav;
 	}
 }

@@ -197,6 +197,10 @@ div.container{
 </c:if>
 <script>
 $(document).ready(function(){
+	
+	$('.member_menu img').attr('src', '${contextPath}' + '${sessionScope.memberInfo.profile_image}');
+	$('.member_menu img').prop('style','width:30px; height:30px; border-radius:50%;')
+	
    var accompany = ${bestAccompany};
    //var icon = ${searchIcon};
    
@@ -324,7 +328,7 @@ $(".hover").mouseleave(
             <div class="modal-footer">
 
                <p id="findId_Pw">
-                  <a class="forgotpw" href="${contextPath}/find/findPwMain" style="color: white">비밀번호 찾기</a>&nbsp;&nbsp;&nbsp; <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>
+                  <a class="forgotid" href="${contextPath }/find/findIdMain" style="color: white">아이디 찾기</a>&nbsp;&nbsp;&nbsp;<a class="forgotpw" href="${contextPath}/find/findPwMain" style="color: white">비밀번호 찾기</a>
                </p>
             </div>
 
