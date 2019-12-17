@@ -116,8 +116,8 @@ function submit(){
 <body>
 <div class="question">
 		<ul class="nav nav-tabs">
-			<li class="nav-item"><a class="nav-link active" href="/bts/question/questionMain">문의 내역</a></li>
-			<li class="nav-item"><a class="nav-link" href="/bts/question/question_write">문의하기</a></li>
+			<li class="nav-item"><a class="nav-link" href="/bts/question/questionMain">문의 내역</a></li>
+			<li class="nav-item"><a class="nav-link active" href="/bts/question/question_write">문의하기</a></li>
 		</ul>
 		<strong class="question_title">문의하기</strong>
 		<form name="question" method="get">

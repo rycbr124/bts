@@ -45,12 +45,11 @@ $(document).ready(function(){
 		$(div).prop('id','roomInfo'+i);
 		
 		var in_date = document.createElement('input');
-		var in_dateText = document.createTextNode('입실날짜');
+		var test = document.createTextNode('날짜 선택 : ');
 		$(in_date).prop('type','date');
 		$(in_date).prop('id','in_date'+i);
 		$(in_date).prop('name','in_date'+i);
 		$(in_date).attr('onchange','amount()');
-		in_date.appendChild(in_dateText);
 		
 		
 		var room_no = document.createElement('input');
@@ -60,7 +59,7 @@ $(document).ready(function(){
 		$(room_no).prop('value',arr_room_no[i]);
 		
 		var out_date = document.createElement('input');
-		var out_dateText = document.createTextNode('퇴실날짜');
+		var out_dateText = document.createTextNode('\t~\t');
 		$(out_date).prop('type','date');
 		$(out_date).prop('id','out_date'+i);
 		$(out_date).prop('name','out_date'+i);
@@ -84,14 +83,18 @@ $(document).ready(function(){
 		priceH5.appendChild(priceH5Text);
 		
 		var totalprice = document.createElement('input');
+		var price = document.createTextNode('결제 금액 : ');
 		$(totalprice).prop('type','text');
 		$(totalprice).prop('id','totalprice'+i);
 		$(totalprice).prop('name','amount'+i);
+		$(totalprice).prop('disabled','true');
 	
 		var a = document.createElement('a');
 		$(a).prop('href','#');
 		$(a).prop('class','btn btn-success');
 		$(a).prop('id','reservBtn'+i);
+		
+		var br = document.createElement('br');
 		
 		var aText = document.createTextNode('예약하기');
 		a.appendChild(aText);
@@ -104,17 +107,18 @@ $(document).ready(function(){
 		$('#roomReserv').append(totalprice);
 		$('#roomReserv').append(a);
 		$('#roomReserv').append(room_no);
+		$('#roomReserv').append(br);
 		
 		
 		
 		var in_date0 = document.getElementById("in_date0").value;
 		
-		console.log(arr_price);
-		console.log(in_date0);
-		console.log(out_date0);
-		console.log(price0);
+		
 		
 	
+	$(in_date).before(test);
+	$(out_date).before(out_dateText);
+	$(totalprice).before(price);
 	}
 	reservA1 = document.getElementById('reservBtn0');
 	reservA2 = document.getElementById('reservBtn1');
@@ -261,6 +265,9 @@ IMP.request_pay({
    alert(msg);
 });
 }
+function backspace(){
+	history.go(-1);
+}
 
 function requestpay2(){
 	var amountprice = document.getElementById('totalprice0').value.toString();
@@ -317,11 +324,9 @@ IMP.request_pay({
 			<br>
 			<div id="roomResult">
 				<h3>객실 정보</h3>
-				<div id="roomReserv"></div>
-				<script>
-
-			</script>
-
+				<div id="roomReserv"></div>			
+				<br><br>
+				<button class="btn btn-success" id="backspace" onclick="backspace()">목록으로 돌아가기</button>
 			</div>
 		</div>
 	</div>

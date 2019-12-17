@@ -70,7 +70,7 @@
 	<select id="searchAcc" resultMap="accompanyResult">
 	<![CDATA[
 	select * from(select rownum rn, a.* from(select * from accompany_list
-	where member_id = like
+	where member_id like 
 	]]>
 	
 	</select>
@@ -149,7 +149,18 @@
 		resultType="e_p001VO">
 	<![CDATA[
 	select * 
-	from (select rownum rn, a.* from (select * from accompany order by article_no desc) a)
+	from (select rownum rn, a.* from (select * from accompany 
+	]]>
+	<where>
+	<if test="category == '제목'">
+	acc_title LIKE '%' ||#{searchResult}|| '%'	
+	</if>
+	<if test="category == '작성자'">
+	and nick_name LIKE '%' ||#{searchResult}|| '%'
+	</if>
+	</where>	
+	<![CDATA[
+	order by article_no desc) a)
 	 where rn between #{start} and #{end}
 	]]>
 	</select>

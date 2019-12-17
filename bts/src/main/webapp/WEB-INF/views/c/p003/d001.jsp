@@ -21,7 +21,10 @@
 <title>내 예약 목록</title>
 
 <script>
-
+$(document).ready(function(){
+	$('.reserved_info').prop('style','background-color:#e8f0fe; border-radius:0 9px 9px 0;');
+	$('.reserved_info span').prop('style','color:rgb(25,103,210);');
+})
 function cancle(resve_no){
 	$.ajax({
 	     type : "POST",

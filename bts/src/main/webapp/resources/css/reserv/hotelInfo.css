@@ -3,20 +3,44 @@
 	src:url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
 	font-family:"binggrae";	
 }
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+   	font-family: "NanumSquareRoundEB";
+}
+
+@font-face {
+   	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+   	font-family: "NanumSquareRoundR";
+}
+#headsubjectText{
+	font-family: "NanumSquareRoundEB";
+}
+
 #container{
-	font-family:"binggrae";
 	padding-left:150px;
+	margin-left:95px;
+	padding-bottom:40px;
 }
-#hotelResult{
+#hotelResult,#roomResult{
 	max-width:900px;
+	font-family: "NanumSquareRoundEB";
 }
+
 #hotelImg{
 	max-width:1000px;
 	max-height:500px;
 	width:800px;
 	height:700px;
 }
-#reservBtn0,#reservBtn1,#reservBtn0{
-	background:#666666;
+#reservBtn0,#reservBtn1,#reservBtn2{
+	margin-left:15px;
+	background:#9E9E9E;
+	border-style:none;
+	
+}
+#backspace{
+	background:#9E9E9E;
+	border-style:none;
+	
 }
 

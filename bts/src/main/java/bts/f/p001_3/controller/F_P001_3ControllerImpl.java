@@ -75,12 +75,12 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		String article_cd = f_p001_3Service.selectArticleCd(menuName);
 		return article_cd;
 	}
-	
-	@Override
+
+	//@Override
 	@RequestMapping(value="/list" ,method={RequestMethod.POST,RequestMethod.GET})
-	public ModelAndView searchReview(@ModelAttribute("article_cd") String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView searchReview(@ModelAttribute("article_cd") String article_cd, @RequestParam Map<String,String> params, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/f/p001_3/d001");
-		String inputPage = request.getParameter("curPage");
+		String inputPage = params.get("curPage");
 		
 		int curPage = 1;
 		try {
@@ -91,11 +91,18 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 			e.printStackTrace();
 			curPage=1;
 		}
-		int totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal());
+		Map<String,String> searchMap = new HashMap<>();
+		int totalCount=0;
+		if(params.get("search_name")!=null && params.get("search_value")!=null) {
+			searchMap.put("search_name", params.get("search_name"));
+			searchMap.put("search_value", params.get("search_value").trim());			
+			totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal(searchMap));
+		}else {
+			totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal());			
+		}
 		PagingVO pvo = pagingProvider.get();
 		pvo.setPaging(curPage, totalCount, rangePage, rangeRow);
 
-		Map<String,String> searchMap = new HashMap<>();
 		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
 		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
 		searchMap.put("article_cd", article_cd);
@@ -105,8 +112,43 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		
 		mav.addObject("paging",pvo);
 		mav.addObject("articleList", reviewList);
+		for(String key : params.keySet()) {
+			mav.addObject(key,params.get(key));
+		}
 		return mav;
-	}
+	}	
+	
+//	@Override
+//	@RequestMapping(value="/list" ,method={RequestMethod.POST,RequestMethod.GET})
+//	public ModelAndView searchReview(@ModelAttribute("article_cd") String article_cd,HttpServletRequest request, HttpServletResponse response) throws Exception {
+//		ModelAndView mav = new ModelAndView("/f/p001_3/d001");
+//		String inputPage = request.getParameter("curPage");
+//		
+//		int curPage = 1;
+//		try {
+//			if(inputPage!=null) {
+//				curPage = Integer.parseInt(inputPage);
+//			}
+//		}catch(NumberFormatException e) {
+//			e.printStackTrace();
+//			curPage=1;
+//		}
+//		int totalCount = Integer.parseInt(f_p001_3Service.selectReviewTotal());
+//		PagingVO pvo = pagingProvider.get();
+//		pvo.setPaging(curPage, totalCount, rangePage, rangeRow);
+//
+//		Map<String,String> searchMap = new HashMap<>();
+//		searchMap.put("startRow", Integer.toString(pvo.getStartRow()));
+//		searchMap.put("endRow", Integer.toString(pvo.getEndRow()));
+//		searchMap.put("article_cd", article_cd);
+//		
+//		List<F_P001_3VO> reviewList = new ArrayList<>();
+//		reviewList = f_p001_3Service.selectReviewList(searchMap);
+//		
+//		mav.addObject("paging",pvo);
+//		mav.addObject("articleList", reviewList);
+//		return mav;
+//	}
 	
 	@RequestMapping(value="/contents" ,method={RequestMethod.POST,RequestMethod.GET})
 	public ModelAndView searchArticle(@ModelAttribute("article_cd") String article_cd,@RequestParam(value="article", required=false) String articleNo,HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -154,7 +196,6 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String result = mapper.writeValueAsString(resultMap);
-		System.out.println("=====================>"+result);
 		return result;
 	}
 	

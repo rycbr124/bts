@@ -1,13 +1,53 @@
 @charset "UTF-8";
-@font-face{
-	src:url("/resources/fonts/Binggrae/Binggrae-Bold.ttf");
-	font-family:"binggrae";	
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+	font-family: "nanum";
 }
 
 #container{
-	font-family:"binggrae";
-	padding:auto;
+	position:relative;
+	width:90%;
+	height:auto;
+	margin:0 auto;
+   	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+   	font-family: "NanumSquareRoundR";
+
 }
-#subject{
-	font-family:"binggrae";
+#container #form-group{
+	position: relative;
+	width:90%;
+	height:auto;
+	border-bottom:1px solid lightgray;
+	margin:0 auto;
+	margin-top:5px;
 }
+#container #form-group .form-control{
+	display:inline-block;
+	border:0;
+	width:70%;
+	
+}
+#form-group .form-control input[type=text]{
+	width:100%;
+	border:0;
+	outline: none;
+}
+#container #form-group #tag-list{
+	width:100%;	
+}
+#form-group #tag-list input[type=text]{
+	width:200px;
+	border-bottom:1px solid #000;
+}
+.tag-result{
+	border:1px solid #203341;
+	padding:5px;
+	border-radius:9px;
+	margin-right:10px;
+}
+.tag-result a{
+	cursor:pointer;
+	margin:5px;
+	color: red;
+
+

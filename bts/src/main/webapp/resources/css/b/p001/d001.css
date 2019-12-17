@@ -3,10 +3,30 @@
 	src:url("/bts/resources/fonts/Binggrae-Bold.ttf");
 	font-family:"binggrae";	
 }
-body{
-	font-family:"binggrae";
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+   	font-family: "NanumSquareRoundEB";
 }
+
+@font-face {
+   	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+   	font-family: "NanumSquareRoundR";
+}
+
 #signupBtn{
 	border-radius:1em;
-	border:solid 1px gray;
+	border:solid 1px #666666;
+	background:#666666;
+	color:white;
+	width:150px;
+	position:absolute;
+	margin-left:290px;
 }
+#container{
+	padding-left:200px;
+	font-family:"NanumSquareRoundR";
+}
+#headText,#signUpText{
+	font-family:"NanumSquareRoundEB";	
+}
+

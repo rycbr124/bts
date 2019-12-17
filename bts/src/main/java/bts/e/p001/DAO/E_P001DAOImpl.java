@@ -1,7 +1,8 @@
 package bts.e.p001.DAO;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +20,15 @@ public class E_P001DAOImpl implements E_P001DAO{
 	private SqlSession sqlSession;
 	
 	@Override
-	public List<E_P001VO> selectAccompanyList(PagingVO pagingVO) throws DataAccessException {
-		return sqlSession.selectList("mapper.accompany.accList",pagingVO);
+	public List<E_P001VO> selectAccompanyList(PagingVO pagingVO, String category, String searchResult) throws DataAccessException {
+		Map<String, Object> accSearch = new HashMap<>();
+		int start = pagingVO.getStart();
+		int end = pagingVO.getEnd();
+		accSearch.put("start", start);
+		accSearch.put("end", end);
+		accSearch.put("category",category);
+		accSearch.put("searchResult",searchResult);
+		return sqlSession.selectList("mapper.accompany.accList",accSearch);
 	}
 
 	@Override

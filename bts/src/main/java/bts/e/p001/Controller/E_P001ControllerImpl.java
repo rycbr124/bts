@@ -58,9 +58,16 @@ public class E_P001ControllerImpl implements E_P001Controller {
 	@Override
 	@RequestMapping(value="/accMain")
 	public ModelAndView selectAccompanyList(PagingVO pagingVO
-			,@RequestParam(value="nowPage", required=false)String nowPage
-			,@RequestParam(value="cntPerPage",required=false) String cntPerPage) throws Exception {
+			,@RequestParam Map<String,String> result,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ModelAndView mav = new ModelAndView("/e/p001/d001");
+		
+		String nowPage = result.get("nowPage");
+		String cntPerPage = result.get("cntPerPage");
+		String category = result.get("category");
+		String searchResult = result.get("searchResult");
+		
+		
 		int total = e_p001Service.listCount();
 		if(nowPage == null && cntPerPage == null) {
 			nowPage = "1";
@@ -70,9 +77,10 @@ public class E_P001ControllerImpl implements E_P001Controller {
 		}else if(cntPerPage == null) {
 			cntPerPage = "5";
 		}
+		
 		pagingVO = new PagingVO(total, Integer.parseInt(nowPage), Integer.parseInt(cntPerPage));
 		mav.addObject("paging",pagingVO);
-		List<E_P001VO> list = e_p001Service.selectAccompanyList(pagingVO);
+		List<E_P001VO> list = e_p001Service.selectAccompanyList(pagingVO,category,searchResult);
 		mav.addObject("accList",list);
 		return mav;
 	}

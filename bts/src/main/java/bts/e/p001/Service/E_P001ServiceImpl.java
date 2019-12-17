@@ -23,17 +23,11 @@ public class E_P001ServiceImpl implements E_P001Service {
 	E_P001DAO e_p001DAO;
 	
 
-	@Override
-	public List selectAllEventList(PagingVO vo) throws DataAccessException {
-		List<E_P001VO> eventList = null;
-		eventList = sqlSession.selectList("mapper.accompany.selectAccompany", vo);
-		System.out.println("eventList" + eventList);
-		return eventList;
-	}
+
 
 	@Override
-	public List<E_P001VO> selectAccompanyList(PagingVO pagingVO) throws DataAccessException {
-		return e_p001DAO.selectAccompanyList(pagingVO);
+	public List<E_P001VO> selectAccompanyList(PagingVO pagingVO,String category, String searchResult) throws DataAccessException {
+		return e_p001DAO.selectAccompanyList(pagingVO,category,searchResult);
 	}
 
 	@Override

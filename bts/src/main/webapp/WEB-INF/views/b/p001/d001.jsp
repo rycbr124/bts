@@ -15,42 +15,14 @@
 </head>
 <body>
 	<div>
-		<h1 style="text-align:center;">Best Travel Seoul</h1><br><br>
-		<h2 style="text-align:center">회원가입</h2>
+	<br><br>
+		<h1 id="headText" style="text-align:center;">Best Travel Seoul</h1><br><br>
+		<h2 id="signUpText" style="text-align:center">회원가입</h2>
 	</div>
 	<br><br>
-	<div class="container">
+	<div class="container" id="container">
 		<form class="form-horizontal" role="form" method="post" action="${contextPath }/signup/signup2">
-			<div class="form-group">
-				<label for="provision" class="col-lg-2 control-label">회원가입약관</label>
-				<div class="col-lg-10" id="provision">
-					<textarea class="form-control" rows="8" style="resize: none">약관동의
-                    </textarea>
-					<div class="radio">
-						<label> <input type="radio" id="provisionYn" name="provisionYn" value="Y" autofocus="autofocus" checked> 동의합니다.
-						</label>
-					</div>
-					<div class="radio">
-						<label> <input type="radio" id="provisionYn" name="provisionYn" value="N"> 동의하지 않습니다.
-						</label>
-					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="memberInfo" class="col-lg-2 control-label">개인정보취급방침</label>
-				<div class="col-lg-10" id="memberInfo">
-					<textarea class="form-control" rows="8" style="resize: none">개인정보의 항목 및 수집방법
-                    </textarea>
-					<div class="radio">
-						<label> <input type="radio" id="memberInfoYn" name="memberInfoYn" value="Y" checked> 동의합니다.
-						</label>
-					</div>
-					<div class="radio">
-						<label> <input type="radio" id="memberInfoYn" name="memberInfoYn" value="N"> 동의하지 않습니다.
-						</label>
-					</div>
-				</div>
-			</div>
+
 			<div class="form-group" id="divId">
 				<label for="inputId" class="col-lg-2 control-label">아이디</label>
 				<div class="col-lg-10">
@@ -108,22 +80,6 @@
 				<label for="inputBirthDay" class="col-lg-2 control-label">생년월일</label>
 				<div class="col-lg-10">
 					<input type="text" id="birth"  name="birth" placeholder="YYYY-MM-DD 로 입력하세요">
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputEmailReceiveYn" class="col-lg-2 control-label">이메일 수신여부</label>
-				<div class="col-lg-10">
-					<label class="radio-inline"> <input type="radio" id="emailReceiveYn" name="emailReceiveYn" value="Y" checked> 동의합니다.
-					</label> <label class="radio-inline"> <input type="radio" id="emailReceiveYn" name="emailReceiveYn" value="N"> 동의하지 않습니다.
-					</label>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="inputPhoneNumber" class="col-lg-2 control-label">SMS 수신여부</label>
-				<div class="col-lg-10">
-					<label class="radio-inline"> <input type="radio" id="smsReceiveYn" name="smsReceiveYn" value="Y" checked> 동의합니다.
-					</label> <label class="radio-inline"> <input type="radio" id="smsReceiveYn" name="smsReceiveYn" value="N"> 동의하지 않습니다.
-					</label>
 				</div>
 			</div>
 			<div class="form-group">

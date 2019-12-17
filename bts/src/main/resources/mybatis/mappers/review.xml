@@ -105,7 +105,26 @@
 			    FROM 
 			    (
 			        SELECT article_no,title,thumbnail_img
-			        FROM article
+			        FROM article a
+	    ]]>
+	    	<if test="search_name!=null and search_value!=null">
+			    <choose>
+					<when test="search_name.equals('tag_name')">
+						WHERE EXISTS
+						(
+							SELECT DISTINCT(article_no)
+							FROM tag_article t
+							WHERE  a.article_no=t.article_no
+							AND ${search_name} LIKE '%'||#{search_value}||'%'
+						)
+					</when>
+					<otherwise>
+						WHERE ${search_name} LIKE '%'||#{search_value}||'%'
+					</otherwise>
+			    </choose>	    			        
+	    	</if>
+	    <![CDATA[
+	    			
 			        ORDER BY article_no DESC
 			    ) a
 			    WHERE rownum<=#{endRow}
@@ -120,7 +139,28 @@
 			FROM article
 	    ]]>
 	</select>
-
+	
+	<select id="selectSearchTotal" parameterType="map" resultType="string">
+	    <![CDATA[
+			SELECT COUNT(*) totalCount
+			FROM article a
+	    ]]>
+	    <choose>
+			<when test="search_name.equals('tag_name')">
+				WHERE EXISTS
+				(
+					SELECT DISTINCT(article_no)
+					FROM tag_article t
+					WHERE  a.article_no=t.article_no
+					AND ${search_name} LIKE '%'||#{search_value}||'%'
+				)
+			</when>
+			<otherwise>
+				WHERE ${search_name} LIKE '%'||#{search_value}||'%'
+			</otherwise>
+	    </choose>
+	</select>
+	
 	<select id="selectCommentTotal" parameterType="map" resultType="string">
 	    <![CDATA[
 			SELECT COUNT(*) totalCount

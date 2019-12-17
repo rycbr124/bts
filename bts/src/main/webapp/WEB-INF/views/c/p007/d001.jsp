@@ -14,6 +14,12 @@
 <link rel="stylesheet" href="${contextPath}/resources/css/mypage/myAccList.css" />
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <title>마이페이지 동행목록</title>
+<script>
+$(document).ready(function(){
+	$('.accompany_list').prop('style','background-color:#e8f0fe; border-radius:0 9px 9px 0;');
+	$('.accompany_list span').prop('style','color:rgb(25,103,210);');
+})
+</script>
 </head>
 <body>
 	<br>
