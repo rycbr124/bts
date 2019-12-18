@@ -58,45 +58,45 @@ $(document).ready(function (){
 		         var figcaption = document.createElement('figcaption');
 		         $(figcaption).prop('class', 'fig' + i);
 
-		         var contenttypeid = resultArray.contenttypeid;
-		         if(contenttypeid == '25'){
-		        	 var addr = document.createElement('h4');
-			         var addr_text = document.createTextNode('코스정보');
-			         addr.appendChild(addr_text);
-		         }
-		         if(contenttypeid != '25'){
-		        	 var addr = document.createElement('h4');
-			         var addr_text = document.createTextNode(resultArray.addr1);
-			         addr.appendChild(addr_text);
-		         }
-		         
-		         var title = document.createElement('h2');
-		         var title_text = document.createTextNode(resultArray.title);
-		         title.appendChild(title_text);
-		         
-		         console.log(contenttypeid);
-		         if(contenttypeid == '25'){
-			         var href = document.createElement('a');
-			         $(href).prop('href', '${contextPath}/recommend/course_detail?contentid=' + resultArray.contentid + "&contenttypeid=" + resultArray.contenttypeid);
-		         }
-		         if(contenttypeid != '25'){
-			         var href = document.createElement('a');
-			         $(href).prop('href', '${contextPath}/recommend/place_detail?contentid=' + resultArray.contentid + "&contenttypeid=" + resultArray.contenttypeid);
-		         }
-		         
-		         $('.content').append(figure);
-		         $('#snip' + i).append(img);
-		         $('#snip' + i).append(figcaption);
-		         $('.fig' + i).append(addr);
-		         $('.fig' + i).append(title);
-		         $('#snip' + i).append(href);		         
-		         
-		      },
-		      error : function(data, textStatus) {
-		         alert("잘못된 접근입니다.")
-		      }
-		});
-	}
+               var contenttypeid = resultArray.contenttypeid;
+               if(contenttypeid == '25'){
+                  var addr = document.createElement('h4');
+                  var addr_text = document.createTextNode('코스정보');
+                  addr.appendChild(addr_text);
+               }
+               if(contenttypeid != '25'){
+                  var addr = document.createElement('h4');
+                  var addr_text = document.createTextNode(resultArray.addr1);
+                  addr.appendChild(addr_text);
+               }
+               
+               var title = document.createElement('h2');
+               var title_text = document.createTextNode(resultArray.title);
+               title.appendChild(title_text);
+               
+               console.log(contenttypeid);
+               if(contenttypeid == '25'){
+                  var href = document.createElement('a');
+                  $(href).prop('href', '${contextPath}/recommend/course_detail?contentid=' + resultArray.contentid + "&contenttypeid=" + resultArray.contenttypeid);
+               }
+               if(contenttypeid != '25'){
+                  var href = document.createElement('a');
+                  $(href).prop('href', '${contextPath}/recommend/place_detail?contentid=' + resultArray.contentid + "&contenttypeid=" + resultArray.contenttypeid);
+               }
+               
+               $('.content').append(figure);
+               $('#snip' + i).append(img);
+               $('#snip' + i).append(figcaption);
+               $('.fig' + i).append(addr);
+               $('.fig' + i).append(title);
+               $('#snip' + i).append(href);               
+               
+            },
+            error : function(data, textStatus) {
+               alert("잘못된 접근입니다.")
+            }
+      });
+   }
 });
 </script>
 
@@ -111,7 +111,7 @@ $(document).ready(function (){
     font-family: "NanumSquareRoundR";
 }
 .container{
-	margin-top:80px;
+   margin-top:80px;
 }
 h1{
    font-family : "NanumSquareRoundEB";
@@ -174,6 +174,7 @@ figure.snip1321 * {
 figure.snip1321 img {
    width:100%;
    height:auto;
+   min-height:210px;
    max-height:210px;
   vertical-align: top;
 }
@@ -249,18 +250,18 @@ div.container{
 <body>
 <div class="container">
 
-	<div class="title">
-		<img src="${contextPath}/resources/image/mypage/heart.png" class="heart">
-		<h1 style="color:#000;">나의 위시리스트</h1>
-	</div>	
-	<div class="outContent">
-		<div class="content">
-		<hr>
-		<h2>Wish List</h2>
-		<p>내가 선택한 나만의 명소</p>
-		
-		</div>
-	</div>
+   <div class="title">
+      <img src="${contextPath}/resources/image/mypage/heart.png" class="heart">
+      <h1 style="color:#000;">나의 위시리스트</h1>
+   </div>   
+   <div class="outContent">
+      <div class="content">
+      <hr>
+      <h2>Wish List</h2>
+      <p>내가 선택한 나만의 명소</p>
+      
+      </div>
+   </div>
 
 </div>
 
