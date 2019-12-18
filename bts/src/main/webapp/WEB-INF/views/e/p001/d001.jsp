@@ -79,7 +79,7 @@ p {
 	font-family: "NanumSquareRoundR";
 }
 .main-board{
-	background:url('${contextPath }/resources/image/accompanyMain.jpg');
+	background:url('${contextPath}/resources/image/accompany/accMain2.jpg');
 	background-size : 100% 100%;
 }
 </style>
@@ -96,14 +96,6 @@ p {
 </head>
 <body>
 	<div class="container" id="container">
-		<div class="main-board">
-			<div class='main-info'>
-				<div class='main-back mx-auto'>
-					<h1>동행찾기</h1>
-					<span class="main-detail">BTS와 함께 동행자를 찾아보세요!</span>
-				</div>
-			</div>
-		</div>
 		<div id="headsubject"></div>
 		<form id="boardForm" name="boardForm" method="post">
 			<table class="table table-striped table-hover">
