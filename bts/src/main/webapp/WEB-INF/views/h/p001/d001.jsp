@@ -15,7 +15,7 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
+<link rel="stylesheet" href="${contextPath}/resources/css/boardHeader.css" />
 <title>숙박예약</title>
 <script>
 	$(document).ready(function() {
@@ -37,15 +37,31 @@
 		})
 	})
 </script>
+<style>
+.main-board{
+	background:url('${contextPath}/resources/image/reserv/hotelReserv.jpg');
+	width:70%;
+	object-fit:cover;
+	margin:auto;
+	margin-bottom:20px;
+}
+.main-padding{
+	padding-left:90px;
+}
+</style>
 </head>
 <body>
 	<div id="reservcontainer">
-	  <div id="headsubject">
-		 <h1 id="headsubjectText">숙박 예약하기</h1>
-	  </div>
-		<img src="${contextPath}/resources/image/reserv/hotelReserv.jpg"
-			id="reservMainImg">
-		
+		<div class="main-padding">
+			<div class="main-board mx-auto">
+				<div class='main-info'>
+					<div class='main-back mx-auto'>
+						<h1>숙박 예약하기</h1>
+						<span class="main-detail">숙박 예약이 가능합니다.</span>
+					</div>
+				</div>
+			</div>
+		</div>
 		<ul class="tabs" id="tabslist">
 			<li class="tab-link current" data-tab="hotel">호텔</li>
 			<li class="tab-link" data-tab="guest">게스트하우스</li>
