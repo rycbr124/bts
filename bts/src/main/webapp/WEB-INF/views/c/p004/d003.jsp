@@ -31,7 +31,8 @@
 	position: relative;
 	height: auto;
 	width: 1000px;
-	margin: 0 auto;
+	margin-top:70px;
+	margin-left:150px;
 }
 
 #side li {
@@ -94,6 +95,10 @@ input[type=button]{
 }
 </style>
 <script>	
+$(document).ready(function(){
+	$('.question_info').prop('style','background-color:#e8f0fe; border-radius:0 9px 9px 0;');
+	$('.question_info span').prop('style','color:rgb(25,103,210);');
+});
 function submit(){
 	var frm_question = document.question;
 	var type_val = document.getElementsByName('question_type');

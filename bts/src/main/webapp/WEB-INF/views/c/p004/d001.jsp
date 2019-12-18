@@ -35,15 +35,18 @@ table {
 #body th,td,h2,p {
 	font-family: "NanumSquareRoundEB";
 }
+/*
 #body{
 	width:85%;
 }
+*/
 .question {
 	position: relative;
 	height: auto;
 	width: 1000px;
 	min-height:500px;
-	margin: 0 auto;
+	margin-left: 40px; 
+	margin-top:70px;
 }
 
 .nav-link{
@@ -80,6 +83,7 @@ $(function(){
 </script>
 </head>
 <body>
+<div class="container">
 	<div class="question">
 		<ul class="nav nav-tabs">
 			<li class="nav-item"><a class="nav-link active" href="/bts/question/questionMain">문의 내역</a></li>
@@ -133,6 +137,6 @@ $(function(){
 			</ul>
 		</div>
 
-
+</div>
 </body>
 </html>
