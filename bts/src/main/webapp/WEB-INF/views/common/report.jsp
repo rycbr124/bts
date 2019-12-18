@@ -64,7 +64,7 @@ body {
 		});
 	});
 </script>
-<title>Insert title here</title>
+<title>신고</title>
 </head>
 <body>
 	<div class="container">

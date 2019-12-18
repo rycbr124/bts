@@ -35,6 +35,13 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 	}		
 
 	@Override
+	public void deleteReviewContents(F_P001_3VO f_p001_3VO) throws DataAccessException {
+		f_p001_3DAO.deleteReviewContents(f_p001_3VO);
+		f_p001_3DAO.deleteReviewAnswer(f_p001_3VO);
+		f_p001_3DAO.deleteTagList(f_p001_3VO);
+	}
+	
+	@Override
 	public int deleteAnswer(String answer_no) throws DataAccessException{
 		int result = f_p001_3DAO.deleteAnswer(answer_no);
 		return result;
@@ -58,7 +65,7 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 	}
 	
 	@Override
-	public String selectReviewTotal(Map<String, String> searchMap) {
+	public String selectReviewTotal(Map<String, String> searchMap) throws DataAccessException{
 		String totalCount = f_p001_3DAO.selectReviewTotal(searchMap);
 		return totalCount;
 	}
@@ -99,31 +106,31 @@ public class F_P001_3ServiceImpl implements F_P001_3Service{
 	}
 
 	@Override
-	public String selectArticleCd(String menu) {
+	public String selectArticleCd(String menu) throws DataAccessException{
 		String article_cd = f_p001_3DAO.selectArticleCd(menu);
 		return article_cd;
 	}
 
 	@Override
-	public int selectRecommendTotal(Map<String, String> searchMap) {
+	public int selectRecommendTotal(Map<String, String> searchMap) throws DataAccessException{
 		int totalCount = f_p001_3DAO.selectRecommendTotal(searchMap);
 		return totalCount;
 	}
 
 	@Override
-	public int selectPlanTotal(Map<String, String> searchMap) {
+	public int selectPlanTotal(Map<String, String> searchMap) throws DataAccessException{
 		int totalCount = f_p001_3DAO.selectPlanTotal(searchMap);
 		return totalCount;
 	}
 
 	@Override
-	public List<Map<String, String>> selectRecommend(Map<String, String> searchMap) {
+	public List<Map<String, String>> selectRecommend(Map<String, String> searchMap) throws DataAccessException{
 		List<Map<String, String>> list = f_p001_3DAO.selectRecommend(searchMap);
 		return list;
 	}
 
 	@Override
-	public List<D_P001_4VO> selectPlan(Map<String, String> searchMap) {
+	public List<D_P001_4VO> selectPlan(Map<String, String> searchMap) throws DataAccessException{
 		List<D_P001_4VO> list = f_p001_3DAO.selectPlan(searchMap);
 		return list;
 	}

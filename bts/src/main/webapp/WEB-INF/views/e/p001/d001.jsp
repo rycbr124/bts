@@ -38,25 +38,9 @@
 keyframes blink {
    from {color: white;
 }
-
 30%
 {
-color
-
-
-
-
-:
-
-
- 
-
-
-yellow
-
-
-
-
+color:yellow
 ;
 }
 to {

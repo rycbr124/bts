@@ -3,9 +3,22 @@
 	src:url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
 	font-family:"binggrae";	
 }
-
-.container{
-	font-family:"binggrae";
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundB.ttf");
+    font-family: "NanumSquareRoundB";
+}
+@font-face {
+    src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    font-family: "NanumSquareRoundR";
+}
+#headsubject{
+	font-family: "NanumSquareRoundB";
+}
+#boardForm{
+	font-family: "NanumSquareRoundR";
+}
+table{
+	font-family: "NanumSquareRoundR";
 }
 
 #acc_title{

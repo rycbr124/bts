@@ -53,9 +53,9 @@
 	<insert id="insertNewMember" parameterType="d001VO">
 	<![CDATA[
 	insert into b_member(member_id, password, name, gender, birth,
-	tel_no, nick_name, email)
+	tel_no, nick_name, email, profile_image)
 	values(#{member_id,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{gender,jdbcType=VARCHAR}, #{birth,jdbcType=VARCHAR}
-	, #{tel_no,jdbcType=VARCHAR}, #{nick_name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR})
+	, #{tel_no,jdbcType=VARCHAR}, #{nick_name,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},'/resources/image/mypage/profile_img.png')
 	]]>
 	</insert>
 

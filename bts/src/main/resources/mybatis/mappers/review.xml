@@ -49,8 +49,8 @@
 
 	<insert id="insertTagList" parameterType="java.util.List">
 		<foreach collection="list" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
-			INTO tag_article(tag_name,article_no,article_cd)
-	   		VALUES (#{item.tag_name},#{item.article_no},#{item.article_cd})
+			INTO tag_article(tag_name,article_no,article_cd,tag_order)
+	   		VALUES (#{item.tag_name},#{item.article_no},#{item.article_cd},#{tag_order})
 		</foreach>
 	</insert>
 
@@ -60,6 +60,21 @@
 		VALUES (#{article_no}, #{article_cd}, article_comment_seq.nextval, #{answer_desc}, #{member_id}, sysdate)
 	    ]]>
 	</insert>
+
+	<delete id="deleteReviewContents" parameterType="f_p001_3VO">
+	    <![CDATA[
+			DELETE FROM article
+			WHERE article_no=#{article_no}
+	    ]]>
+	</delete>
+
+	<delete id="deleteReviewAnswer" parameterType="f_p001_3VO">
+	    <![CDATA[
+			DELETE FROM answer_article
+			WHERE article_cd=#{article_cd}
+			AND article_no=#{article_no}
+	    ]]>
+	</delete>
 
 	<delete id="deleteTagList" parameterType="f_p001_3VO">
 	    <![CDATA[
@@ -176,6 +191,7 @@
 			FROM tag_article
 			WHERE article_no=#{article_no}
 			AND article_cd=#{article_cd}
+			ORDER BY tag_order
 	    ]]>
 	</select>
 

@@ -44,12 +44,15 @@ $(document).ready(function(){
 		$(div).prop('class','roomInfo');
 		$(div).prop('id','roomInfo'+i);
 		
+		var room_info_container = document.createElement('div');
+		$(room_info_container).prop('class',"room_info_container"+i);
+		
 		var in_date = document.createElement('input');
 		var test = document.createTextNode('날짜 선택 : ');
 		$(in_date).prop('type','date');
 		$(in_date).prop('id','in_date'+i);
 		$(in_date).prop('name','in_date'+i);
-		$(in_date).attr('onchange','amount()');
+//		$(in_date).attr('onchange','amount()');
 		
 		
 		var room_no = document.createElement('input');
@@ -63,7 +66,7 @@ $(document).ready(function(){
 		$(out_date).prop('type','date');
 		$(out_date).prop('id','out_date'+i);
 		$(out_date).prop('name','out_date'+i);
-		$(out_date).attr('onchange','amount()');
+//		$(out_date).attr('onchange','amount()');
 	
 		
 		var roomH4 = document.createElement('h4');
@@ -99,15 +102,16 @@ $(document).ready(function(){
 		var aText = document.createTextNode('예약하기');
 		a.appendChild(aText);
 		
-		$('#roomReserv').append(roomH4);
-		$('#roomReserv').append(whlrs_noH5);
-		$('#roomReserv').append(priceH5);
-		$('#roomReserv').append(in_date);
-		$('#roomReserv').append(out_date);
-		$('#roomReserv').append(totalprice);
-		$('#roomReserv').append(a);
-		$('#roomReserv').append(room_no);
-		$('#roomReserv').append(br);
+		$('#roomReserv').append(room_info_container);
+		$(room_info_container).append(roomH4);
+		$(room_info_container).append(whlrs_noH5);
+		$(room_info_container).append(priceH5);
+		$(room_info_container).append(in_date);
+		$(room_info_container).append(out_date);
+		$(room_info_container).append(totalprice);
+		$(room_info_container).append(a);
+		$(room_info_container).append(room_no);
+		$(room_info_container).append(br);
 		
 		
 		
@@ -127,59 +131,33 @@ $(document).ready(function(){
 	$(reservA1).attr('onclick','requestpay()');
 	$(reservA2).attr('onclick','requestpay1()');
 	$(reservA3).attr('onclick','requestpay2()');
+	
+	$('input[type=date]').on('change',function(){
+		for(var i=0; i<3; i++){
+			var start = $('#in_date'+i).val();
+			var end = $('#out_date'+i).val();
+			var start_arr = start.split('-');
+			var end_arr = end.split('-');
+			var start_obj = new Date(start_arr[0], Number(start_arr[1])-1, start_arr[2]);
+			var end_obj = new Date(end_arr[0], Number(end_arr[1])-1, end_arr[2]);
+			var diff = (end_obj.getTime() - start_obj.getTime())/1000/60/60/24;
+			if(diff < 0 || diff == 'NaN'){
+				var message = '날짜를 다시 선택해주세요.';
+				alert(message);
+				$(this).val(new Date());
+			}else{
+					var priceContainer = $(this).siblings('#price'+i);
+					var price_String = $(priceContainer).text();
+					var price = price_String.substring(4,price_String.lenght);
+					var result = diff * price;
+					if(!isNaN(result)){
+					 $(this).siblings('#totalprice'+i).val(result);
+					}
+			}
+		}
+	});
 });
 
-	function amount(){
-		var in_date0 = document.getElementById("in_date0").value;
-		var in_date1 = document.getElementById("in_date1").value;
-		var in_date2 = document.getElementById("in_date2").value;
-		console.log(in_date0);
-		console.log(in_date1);
-		console.log(in_date2);
-		
-		var out_date0 = document.getElementById("out_date0").value;
-		var out_date1 = document.getElementById("out_date1").value;
-		var out_date2 = document.getElementById("out_date2").value;
-		
-		
-		var price0 = document.getElementById("price0").innerText;
-		var splitprice0 = price0.split(':');
-		console.log(splitprice0);
-		
-		var price1 = document.getElementById("price1").innerText;
-		var splitprice1 = price1.split(':');
-		console.log(splitprice1);
-		var price2 = document.getElementById("price2").innerText;
-		var splitprice2 = price2.split(':');
-		console.log(splitprice2);
-		
-		var ar1 = in_date0.split('-');
-		var ar2 = out_date0.split('-');
-		var ar3 = in_date1.split('-');
-		var ar4 = out_date1.split('-');
-		var ar5 = in_date2.split('-');
-		var ar6 = out_date2.split('-');
-		
-		var da1 = new Date(ar1[0],ar1[1],ar1[2]);
-		var da2 = new Date(ar2[0],ar2[1],ar2[2]);
-		var da3 = new Date(ar3[0],ar3[1],ar3[2]);
-		var da4 = new Date(ar4[0],ar4[1],ar4[2]);
-		var da5 = new Date(ar5[0],ar5[1],ar5[2]);
-		var da6 = new Date(ar6[0],ar6[1],ar6[2]);
-		var dif = da2 - da1;
-		var dif2 = da4 - da3;
-		var dif3 = da6 - da5;
-		var cDay = 24* 60 * 60 * 1000;
-		if(in_date0 && out_date0){
-			document.getElementById('totalprice0').value = parseInt((dif/cDay)*splitprice0[1]);
-		}
-		if(in_date1 && out_date1){
-			document.getElementById('totalprice1').value = parseInt((dif2/cDay)*splitprice1[1]);
-		}
-		if(in_date2 && out_date2){
-			document.getElementById('totalprice2').value = parseInt((dif3/cDay)*splitprice2[1]);
-		}
-	}
 
 </script>
 
@@ -265,6 +243,7 @@ IMP.request_pay({
    alert(msg);
 });
 }
+
 function backspace(){
 	history.go(-1);
 }
@@ -305,17 +284,23 @@ IMP.request_pay({
 });
 }
 </script>
-	<div id="container">
-		<h1 id="headsubjectText">숙박 예약하기</h1>
-		<br> <br>
+	<div class="container">
+		
 		<div id="contents">
 			<div id="hotelResult">
+				<h1 id="headsubjectText">숙박 예약하기</h1>
+				<br>
 				<h2>${hotelResult.name}</h2>
+				<hr>
 				<img id="hotelImg" src="${contextPath}${hotelResult.lodging_image }"><br>
-				<p>위치: ${hotelResult.address}</p>
+				<p>●위치: ${hotelResult.address}</p>
 				<br>
 				<h4>※상세정보</h4>
-				<p>${hotelResult.description }</p>
+				<hr>
+				<c:forEach var="description" items="${descriptionList}">
+				<p>*${description}.</p><br>
+				</c:forEach>
+				<hr>
 				<input type="hidden" value="${hotelResult.lodging_id}"
 					name="lodging_id"> <input type="hidden"
 					value="${sessionScope.memberInfo.member_id}" name="member_id">
@@ -324,12 +309,15 @@ IMP.request_pay({
 			<br>
 			<div id="roomResult">
 				<h3>객실 정보</h3>
-				<div id="roomReserv"></div>			
+				<hr>
+				<div id="roomReserv"></div>
+				<hr>
 				<br><br>
 				<button class="btn btn-success" id="backspace" onclick="backspace()">목록으로 돌아가기</button>
+
 			</div>
 		</div>
 	</div>
-
+<br><br><br><br><br>
 </body>
 </html>

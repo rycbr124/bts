@@ -92,8 +92,7 @@
 	width: 200px;
 }
 
-#review-modify{
-    display: block;
+#review-modify,#review-delete{
     width: 100px;
     height: 40px;
     font-size: 15px;
@@ -204,6 +203,23 @@
 			$('body').append(form);
 			form.submit();
 		});
+
+		$('#review-delete').on('click',function(){
+		    var del_test = confirm("게시글을 삭제하시겠습니까?");
+		    if(del_test){
+				var form = document.createElement('form');
+				var hidden = document.createElement('input');
+				$(hidden).attr('type','hidden');
+				$(hidden).attr('name','article_no');			
+				form.append(hidden);
+				
+				form.article_no.value=${result.article_no}
+				form.action="${contextPath}/community/review/contents/delete";
+				form.method="post";
+				$('body').append(form);
+				form.submit();		    	
+		    }
+		});		
 		
 		$(document).on('click','span.comment-report',function(){
 			var reqUrl="${contextPath}/report/comment"
@@ -268,6 +284,7 @@
 				<p id="register-date"></p>
 				<c:if test="${sessionScope.memberInfo.member_id==result.member_id}">
 					<input type="button" id="review-modify" class="btn btn-outline-light" value="수정">
+					<input type="button" id="review-delete" class="btn btn-outline-danger" value="삭제">
 				</c:if>
 			</div>
 		</div>

@@ -135,11 +135,6 @@ public class H_P002ControllerImpl implements H_P002Controller{
 		return resEntity;
 	}
 	
-	@RequestMapping("/paytest")
-	public ModelAndView paytest(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		ModelAndView mav = new ModelAndView("/h/p001/payment");
-		
-		return mav;
-	}
+
 
 }

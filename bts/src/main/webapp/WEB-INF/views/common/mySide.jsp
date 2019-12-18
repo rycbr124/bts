@@ -7,7 +7,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>마이페이지 사이드바</title>
 <link rel="stylesheet" href="/bts/resources/library/bootstrap/css/bootstrap.min.css" />
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script>
