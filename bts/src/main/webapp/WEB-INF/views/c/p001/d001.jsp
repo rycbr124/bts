@@ -349,13 +349,13 @@ div.col-md-6{
                      <div class="col-md-6">
                         
                         <select class="form-control" id="gender" name="gender">
-                           <c:if test="${sessionScope.memberInfo.gender =='M'}">
-                              <option value="M" selected>남</option>
-                              <option value="F">여</option>
+                           <c:if test="${sessionScope.memberInfo.gender =='남'}">
+                              <option value="남" selected>남</option>
+                              <option value="여">여</option>
                            </c:if>
-                           <c:if test="${sessionScope.memberInfo.gender =='F'}">
-                              <option value="M">남</option>
-                              <option value="F" selected>여</option>
+                           <c:if test="${sessionScope.memberInfo.gender =='여'}">
+                              <option value="남">남</option>
+                              <option value="여" selected>여</option>
                            </c:if>
                         </select>
                      </div>
