@@ -28,13 +28,13 @@
 			<h1 id="subjectText">내가 쓴 글 목록</h1>
 		</div>
 			<ul class="tabs">
-				<li class="tab-link current" data-tab="acctab">후기</li>
-				<li class="tab-link" data-tab="reviewtab"><a style="color:#666666;" href="${contextPath}/my/myBoardList2">동행</a></li>
-				<li class="tab-link" data-tab="plantab"><a style="color:#666666;" href="${contextPath}/my/myBoardList3">플랜</a></li>
+				<li class="tab-link" data-tab="acctab"><a style="color:#666666;" href="${contextPath}/my/myBoardList">후기</a></li>
+				<li class="tab-link" data-tab="reviewtab" ><a style="color:#666666;" href="${contextPath}/my/myBoardList2">동행</a></li>
+				<li class="tab-link current" data-tab="plantab">플랜</li>
 			</ul>
 
-			<div id="acctab" class="tab-content current">
-				<form id="accboardForm" name="accboardForm">
+			<div id="plantab" class="tab-content current">
+				<form id="planboardForm" name="planboardForm" >
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
@@ -45,12 +45,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="reviewresult" items="${reviewList }" varStatus="status">
+							<c:forEach var="planresult" items="${planList }" varStatus="status">
 								<tr>
-									<td><c:out value="${reviewresult.article_no }" /></td>
-									<td><a id="acc_title" href="${contextPath}/community/review/contents?article=${reviewresult.article_no}"><c:out value="${reviewresult.title }"></c:out></a></td>
-									<td><c:out value="${reviewresult.member_id }" /></td>
-									<td><c:out value="${reviewresult.register_date }" /></td>
+									<td><c:out value="${planresult.plan_no }" /></td>
+									<td><a id="acc_title" href="${contextPath}/community/plan_contents?plan_no=${planresult.plan_no}"><c:out value="${planresult.title }"></c:out></a></td>
+									<td><c:out value="${planresult.member_id }" /></td>
+									<td><c:out value="${planresult.register_date }" /></td>
 								</tr>
 							</c:forEach>
 						</tbody>
@@ -59,28 +59,27 @@
 				<div id="paging" style="display: block; text-align: center;">
 					<ul class="pagination" id="pagination">
 						<!-- 이전버튼 -->
-						<c:if test="${paging.startPage != 1}">
-							<li class="page-item"><a href="${contextPath}/my/myBoardList?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous" id="prev">이전</a></li>
+						<c:if test="${paging3.startPage3 != 1}">
+							<li class="page-item"><a href="${contextPath}/my/myBoardList3?nowPage3=${paging3.startPage3 -1}&cntPerPage3=${paging3.cntPerPage3}" class="paginate_button previous" id="prev">이전</a></li>
 						</c:if>
 						<!-- 페이지 번호 -->
-						<c:forEach var="idx" begin="${paging.startPage}" end="${paging.endPage}">
+						<c:forEach var="idx" begin="${paging3.startPage3}" end="${paging3.endPage3}">
 							<c:choose>
-								<c:when test="${idx == paging.nowPage }">
+								<c:when test="${idx == paging3.nowPage3 }">
 									<li class="page-item"><a class="page-link" href="#" id="pageNo">${idx}</a></li>
 								</c:when>
-								<c:when test="${idx != paging.nowPage }">
-									<li class="page-item"><a class="page-link" href="${contextPath}/my/myBoardList?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" id="pageNo">${idx}</a></li>
+								<c:when test="${idx != paging3.nowPage3 }">
+									<li class="page-item"><a class="page-link" href="${contextPath}/my/myBoardList3?nowPage3=${idx}&cntPerPage3=${paging3.cntPerPage3}" id="pageNo">${idx}</a></li>
 								</c:when>
 							</c:choose>
 						</c:forEach>
 						<!-- 이후 -->
-						<c:if test="${paging.endPage != paging.lastPage}">
-							<li class="page-item"><a href="${contextPath}/my/myBoardList?nowPage=${paging.endPage +1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
+						<c:if test="${paging3.endPage3 != paging3.lastPage3}">
+							<li class="page-item"><a href="${contextPath}/my/myBoardList3?nowPage3=${paging3.endPage3 +1}&cntPerPage3=${paging3.cntPerPage3}" class="paginate_button next" id="next">다음 </a></li>
 						</c:if>
 					</ul>
 				</div>
 			</div>
-		
 			<script>
 				$(document).ready(function() {
 										
