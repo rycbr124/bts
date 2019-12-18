@@ -28,8 +28,8 @@ $(document).ready(function(){
 
 		<div id="headsubject">
 			<h1 id="subjectText">내 동행 리스트</h1>
-					<ul class="tabs">
-			<li class="tab-link current" data-tab="acctab">나에게 신청한글</li>
+		<ul class="tabs">
+			<li class="tab-link current" data-tab="accToMe">나에게 신청한글</li>
 			<li class="tab-link" data-tab="accToYou">내가 신청한글</li>
 		</ul>
 			<div id="accToMe" class="tab-content current">
@@ -143,14 +143,7 @@ $(document).ready(function(){
 						$(this).addClass('current');
 						$("#" + tab_id).addClass('current');
 					})
-										
-					$('#review_title').click(function(){
-						var articleNo = this.dataset.article;
-						document.reviewresult.value=articleNo;
-						document.action="${contextPath}/community/review/contents";
-						document.method="post";
-						document.submit();
-					})
+									
 				})
 			</script>
 </body>
