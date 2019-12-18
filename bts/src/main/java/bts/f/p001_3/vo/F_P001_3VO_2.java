@@ -9,6 +9,7 @@ public class F_P001_3VO_2 {
 	private String article_cd;
 	private int article_no;
 	private String tag_name;
+	private int tag_order;
 	
 	public String getArticle_cd() {
 		return article_cd;
@@ -27,6 +28,12 @@ public class F_P001_3VO_2 {
 	}
 	public void setTag_name(String tag_name) {
 		this.tag_name = tag_name;
+	}
+	public int getTag_order() {
+		return tag_order;
+	}
+	public void setTag_order(int tag_order) {
+		this.tag_order = tag_order;
 	}
 	
 	

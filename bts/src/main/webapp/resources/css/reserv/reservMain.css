@@ -1,16 +1,26 @@
 @charset "UTF-8";
 
 @font-face {
-	src: url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
-	font-family: "binggrae";
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
+	font-family: "NanumSquareRoundEB";
+}
+
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundB.ttf");
+	font-family: "NanumSquareRoundB";
+}
+
+@font-face {
+	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+	font-family: "NanumSquareRoundR";
 }
 
 #reservMainImg {
-	padding-left: 400px;
+	padding-left: 350px;
 	border: 1px solid #FFF;
-	width: 1500px;
+	width: 1650px;
 	height: 400px;
-	margin-bottom: 50px
+	margin-bottom:30px;
 }
 
 #headsubjectText {
@@ -18,11 +28,23 @@
 }
 
 #reservcontainer {
-	font-family: "binggrae";
+	font-family: NanumSquareRoundEB;
+}
+
+#tabslist {
+	font-family: NanumSquareRoundEB;
+}
+
+#cardlist {
+	font-family: NanumSquareRoundEB;	
+	margin:70px;
+	padding-left:30px;
+	height:300px;
+	
 }
 
 ul.tabs {
-	margin: 0px;
+	margin:0px;
 	padding-left: 350px;
 	list-style: none;
 }
@@ -36,23 +58,27 @@ ul.tabs li {
 }
 
 ul.tabs li.current {
-	background: #ededed;
+	background: rgb(245,245,245);
 	color: #222;
 }
 
 .tab-content {
 	display: none;
-	background: #ededed;
+	background: rgb(245,245,245);
 	padding: 15px;
+	margin-right:255px;
+	margin-left:350px;
+	
 }
 
 .tab-content.current {
 	display: inherit;
+	max-width:1650px;
 }
 
 .card {
 	position: relative;
-	width: 100%;
+	
 	height: auto;
 	max-height: 500px;
 	margin: 150px;
@@ -62,14 +88,28 @@ ul.tabs li.current {
 
 .card-body {
 	width: 120%;
+	width: 300px;
 	position: absolute;
 	display: inline-block;
+	border:1px solid #666666;
+	border-top:none;
+	text-align: center;
 }
+
 
 .card-img-top {
 	width: 300px;
 	hetight: auto;
 	max-height: 200px;
+	height:200px;
+	border:1px solid #666666;
+	border-bottom:none;
+	
+}
+.btn.btn-primary{
+	background:#666666;
+	border-style:none;
+	margin-bottom:5px;
 }
 
 .card-text {

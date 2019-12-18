@@ -14,7 +14,6 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
-<title>Insert title here</title>
 <!-- Custom fonts for this template-->
 <link href="${contextPath}/resources/css/admin/all.min.css" rel="stylesheet"
 	type="text/css">

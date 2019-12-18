@@ -14,7 +14,8 @@
 <script>
 	$(document).ready(function(){
 		var id = ${contentid};
-		image_init(id);
+		var command = '${command}';
+		image_init(id, command);
 	});
 	function wish_list(){
 		
@@ -130,6 +131,24 @@ margin-left : 100px;
 
 [for='toggle-heart'] { 
   align-self: center; 
+}
+div.divHeart{
+	width : 140px;
+	margin-bottom : 10px;
+	height : 20px;
+}
+img.heart{
+	width : 25px;
+	height : 25px;
+	display : inline-block;
+	float : right;
+	position : absolute;
+}
+.divHeart > p {
+	width : 105px;
+	position : relative;
+	margin : 0;
+	float : left;
 }
 </style>
 </head>

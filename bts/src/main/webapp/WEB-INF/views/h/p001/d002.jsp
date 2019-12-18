@@ -265,6 +265,7 @@ IMP.request_pay({
    alert(msg);
 });
 }
+
 function backspace(){
 	history.go(-1);
 }
@@ -305,17 +306,23 @@ IMP.request_pay({
 });
 }
 </script>
-	<div id="container">
-		<h1 id="headsubjectText">숙박 예약하기</h1>
-		<br> <br>
+	<div class="container">
+		
 		<div id="contents">
 			<div id="hotelResult">
+				<h1 id="headsubjectText">숙박 예약하기</h1>
+				<br>
 				<h2>${hotelResult.name}</h2>
+				<hr>
 				<img id="hotelImg" src="${contextPath}${hotelResult.lodging_image }"><br>
-				<p>위치: ${hotelResult.address}</p>
+				<p>●위치: ${hotelResult.address}</p>
 				<br>
 				<h4>※상세정보</h4>
-				<p>${hotelResult.description }</p>
+				<hr>
+				<c:forEach var="description" items="${descriptionList}">
+				<p>${description}</p><br>
+				</c:forEach>
+				<hr>
 				<input type="hidden" value="${hotelResult.lodging_id}"
 					name="lodging_id"> <input type="hidden"
 					value="${sessionScope.memberInfo.member_id}" name="member_id">
@@ -324,12 +331,18 @@ IMP.request_pay({
 			<br>
 			<div id="roomResult">
 				<h3>객실 정보</h3>
+				<hr>
+				<div id="roomReserv"></div>
+				<hr>
+
+
 				<div id="roomReserv"></div>			
 				<br><br>
 				<button class="btn btn-success" id="backspace" onclick="backspace()">목록으로 돌아가기</button>
+
 			</div>
 		</div>
 	</div>
-
+<br><br><br><br><br>
 </body>
 </html>

@@ -7,8 +7,22 @@
 <head>
 <link rel="stylesheet" href="${contextPath}/resources/css/layout/layout.css">
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-<style>
 
+<script>
+$(document).ready(function(){
+	var img = document.createElement('img');
+	$(img).prop('src', '${contextPath}' + '${sessionScope.memberInfo.profile_image}');
+	$(img).prop('class', 'profileImg');
+	$('.welcome').before(img);
+	
+});
+</script>
+
+<style>
+@font-face{
+	src: url('/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf');
+	font-family:"nanum";
+}
 #header{
 position:relative;
 
@@ -24,48 +38,68 @@ position:relative;
 #header .member_menu{
    position:absolute;
    top:10px;
-   right:72px;
+   right:90px;
    margin:0;
    height:50px;
+   width:200px;
+}
+#header .member_menu .memberArea{
+	position:absolute;
+	width:100%;
+	height:auto;
+	top:20px;
+	left:15px;
 }
 html #menu>li:hover>a, #menu>li.active>a {
    color: rgb(160,160,160);
 }
-.member_menu::before{
-   content:url("/bts/resources/image/icon/user.png");
-   position:relative;
-   width:30px;
-   height:30px;
-}
-.member_menu .welcome{
-   position:relative;
+
+#header .member_menu .welcome{
+   position:absolute;
    display:inline-block;
    margin:0;
-   margin-bottom:10px;
-   top:-10px;
 }
-.member_menu .memberArea{
-   position:relative;
-   width:150px;
-   height:15px;
-   margin-top:0;
+.member_menu a{
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: 0.025em;
+	color : #000;
+    position:relative;
+    display: inline-block;
+    vertical-align: middle;
+  	text-decoration: none;
+  	font-family:"nanum";
 }
-.member_menu .memberArea span{
-   color:#000;
-   font-family: 'NotoSansKR', sans-serif;
+#header .member_menu .memberArea .mypage{
+	position:absolute;
+	top:3px;
 }
-.member_menu .memberArea span::hover{
+#header .member_menu .memberArea .logout{
+	position:absolute;
+	left:80px;
+	top:3px;
+}
+#header .member_menu .memberArea span::hover{
    color:rgb(160,160,160);
 }
-.member_menu .memberArea .mypage::hover{
+#header .member_menu .memberArea .mypage::hover{
    color:rgb(160,160,160);
 }
-.member_menu .memberArea .logout::hover{
+#header .member_menu .memberArea .logout::hover{
    color:rgb(160,160,160);
+}
+#header img.profileImg{
+	border-radius : 50%;
+	width : 30px;
+	height : 30px;
+	margin-right : 5px;
+}
+#header p{
+	font-color : black;
 }
 </style>
 <meta charset="UTF-8">
-<title>상단</title>
 </head>
 <body>
    <div id="header">
@@ -86,24 +120,25 @@ html #menu>li:hover>a, #menu>li.active>a {
       <div class="member_menu">
          <c:choose>
             <c:when test="${isLogOn== true and not empty memberInfo }">
-                  <p class="welcome"style="display:inline-block; color:#000;font-size:13px; font-family:'Nanum Gothic';">어서오세요  ${member_id} 님</p>
-                  <div class="memberArea" style="position:relative; left:25px;">
-                  <c:set var="member" value="${member_id}"/>
+            		
+                  <p class="welcome"style="display:inline-block; color:#000;font-size:13px; font-family:'Nanum Gothic';">어서오세요  ${sessionScope.memberInfo.member_id} 님</p>
+                  <div class="memberArea">
+                  <c:set var="member" value="${sessionScope.memberInfo.member_id}"/>
                   <c:choose>
                   <c:when test="${member_id != 'admin'}">
-                  <a href="${contextPath }/my/profile" class="mypage" style=" position:absolute; display:block;font-size:10px; padding-right:7px;border-right:1px solid #000; line-height:10px;z-index:10;"><span>마이페이지</span></a>
-                  <a href="${contextPath }/signup/logout" class="logout" style="position:absolute; left:70px; font-size:10px; line-height:10px;z-index:10;"><span>로그아웃</span></a>
+                  <a href="${contextPath }/my/profile" class="mypage"><span>마이페이지</span></a>
+                  <a href="${contextPath }/signup/logout" class="logout"><span>로그아웃</span></a>
                   </c:when>
                   <c:when test="${member_id == 'admin'}">
                   <a href="${contextPath}/admin/main" class="mypage" style=" position:absolute; display:block;font-size:10px;padding-right:5px;border-right:1px solid #000;left:-5px; line-height:10px;"><span>관리자 페이지</span></a>
-                  <a href="${contextPath }/signup/logout" class="logout" style="position:absolute; left:75px; font-size:10px; line-height:10px;"><span>로그아웃</span></a>
+                  <a href="${contextPath}/signup/logout" class="logout" style="position:absolute; left:75px; font-size:10px; line-height:10px;"><span>로그아웃</span></a>
                   </c:when>
                   </c:choose>
                   
                   </div>
                </c:when>
             <c:otherwise>
-               <a href="#popUpWindow" class="signup" data-toggle="modal"><span>LOGIN</span></a>
+               <a href="#popUpWindow" class="login" data-toggle="modal"><span>LOGIN</span></a>
                <a href="${contextPath }/signup/signup" class="signup"><span>SIGNUP</span></a>
             </c:otherwise>
          </c:choose>

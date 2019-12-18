@@ -6,7 +6,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title></title>
 <link rel="stylesheet" href="${contextPath}/resources/css/layout/Popup_tilesVer.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>

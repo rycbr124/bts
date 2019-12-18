@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import bts.b.p001.VO.B_P001VO;
-import bts.e.p001.VO.PagingVO;
 import bts.g.p001_2.service.G_P001_2Service;
 import bts.g.p001_2.vo.G_P001_2VO;
 
@@ -58,9 +57,27 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
    @RequestMapping(value="/place_detail" ,method={RequestMethod.POST,RequestMethod.GET})
    public ModelAndView P001_D003(@RequestParam(value="contentid",required=false) String contentid, @RequestParam(value="contenttypeid",required=false) String contenttypeid, HttpServletRequest request, HttpServletResponse response) throws Exception {
       System.out.println("place param 값 : " + contentid);
+      String message = null;
+      String member_id = null;
+      
+      HttpSession session = request.getSession();
+	  b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
+	  member_id = b_p001VO.getMember_id();
+	   
+	  g_p001_2VO.setMember_id(member_id);
+	  g_p001_2VO.setContent_id(contentid);
+
+	  boolean command = g_p001_2Service.findWishlist(g_p001_2VO);
+      if(command == true) {
+    	  message = "exist";
+      }else {
+    	  message = "not";
+      }
+      
       ModelAndView mav = new ModelAndView("/g/p001_2/d003");
       mav.addObject("contentid", contentid);
       mav.addObject("contenttypeid", contenttypeid);
+      mav.addObject("command", message);
       return mav;
    }
 
@@ -69,9 +86,27 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
    public ModelAndView P001_D004(@RequestParam("contentid") String contentid, @RequestParam("contenttypeid") String contenttypeid, HttpServletRequest request, HttpServletResponse response) throws Exception {
       System.out.println("course param 값 : " + contentid);
       System.out.println("contentType : " + contenttypeid);
+      String message = null;
+      String member_id = null;
+      
+      HttpSession session = request.getSession();
+	  b_p001VO = (B_P001VO)session.getAttribute("memberInfo");
+	  member_id = b_p001VO.getMember_id();
+	   
+	  g_p001_2VO.setMember_id(member_id);
+	  g_p001_2VO.setContent_id(contentid);
+
+	  boolean command = g_p001_2Service.findWishlist(g_p001_2VO);
+      if(command == true) {
+    	  message = "exist";
+      }else {
+    	  message = "not";
+      }
+      
       ModelAndView mav = new ModelAndView("/g/p001_2/d004");
       mav.addObject("contentid", contentid);
       mav.addObject("contenttypeid", contenttypeid);
+      mav.addObject("command", message);
       return mav;
    }
 
@@ -82,6 +117,7 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
 	   String message = null;
 	   String member_id = null;
 	   System.out.println("contentType : " + contenttypeid);
+	   
 
 	   try {
 		   HttpSession session = request.getSession();
@@ -92,23 +128,45 @@ public class G_P001_2ControllerImpl implements G_P001_2Controller{
 		   g_p001_2VO.setContent_id(contentid);
 
 		   boolean command = g_p001_2Service.findWishlist(g_p001_2VO);
-		   
-		   if(command == true) {
-			   message = "<script>";
-			   message += "alert('이미 추가한 명소입니다..');";
-			   message += "history.go(-1)";
-			   message += "</script>";
-			   return message;
-		   }else {
-			   g_p001_2Service.insertWishlist(g_p001_2VO);
-			   message = "<script>";
-			   message += "alert('위시리스트에 추가하였습니다.');";
-			   message += "history.go(-1)";
-			   message += "</script>";
+		   if(contenttypeid.equals("25")) {
+			   if(command == true) {
+				   message = "<script>";
+				   message += "alert('이미 추가한 명소입니다..');";
+				   message += "location.href='/bts/recommend/course_detail?contentid=" + contentid + "&contenttypeid=" + contenttypeid + "'";
+				   message += "</script>";
+				   return message;
+			   }else {
+				   g_p001_2Service.insertWishlist(g_p001_2VO);
+				   message = "<script>";
+				   message += "alert('위시리스트에 추가하였습니다.');";
+				   message += "location.href='/bts/recommend/course_detail?contentid=" + contentid + "&contenttypeid=" + contenttypeid + "'";
+				   message += "</script>";
+				   
+				   return message;
+				   
+			   }
 			   
-			   return message;
+		   }else {
+			   if(command == true) {
+				   message = "<script>";
+				   message += "alert('이미 추가한 명소입니다..');";
+				   message += "location.href='/bts/recommend/place_detail?contentid=" + contentid + "&contenttypeid=" + contenttypeid + "'";
+				   message += "</script>";
+				   return message;
+			   }else {
+				   g_p001_2Service.insertWishlist(g_p001_2VO);
+				   message = "<script>";
+				   message += "alert('위시리스트에 추가하였습니다.');";
+				   message += "location.href='/bts/recommend/place_detail?contentid=" + contentid + "&contenttypeid=" + contenttypeid + "'";
+				   message += "</script>";
+				   
+				   return message;
+				   
+			   }
 			   
 		   }
+		   
+		   
 	   }catch(Exception e){
 		   message = "<script>";
 		   message += "alert('로그인 후 이용가능합니다.');";

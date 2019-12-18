@@ -7,12 +7,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="${contextPath}/resources/css/c/p006/d001.css"> <!-- 커스텀 css -->
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 <script src="${contextPath}/resources/js/c/p006/d001.js"></script>
 <script>
 $(document).ready(function(){
@@ -112,14 +112,12 @@ $(document).ready(function(){
 			}
 	    });
 		
-		//매칭 승인,거절 이벤트
-		$("#set-acc").on("click",function(){
-			
-		});
-		
 		//팝업 이벤트
+		$("#set-acc").on("click",showAccPopup)
 	    $("#add-user").on("click",showPopup);
-		$("#pop-close").on("click",closePopup);	 	
+		$(".pop-close").on("click",function(){
+			closePopup(this);
+		});	 	
 		
 		//팝업 검색
 		$("#pop-search>input[type=text]").on("keydown",function(event){
@@ -147,7 +145,7 @@ $(document).ready(function(){
 			var resultForm = prependMember(divForm);
 			memberClick(resultForm,ws);
 			
-			closePopup();
+			closePopup(this);
 		});
 		
 	}//end init
@@ -275,6 +273,11 @@ $(document).ready(function(){
 		}
 		sendText(ws,"search_member",contents);
 	}
+
+	function showAccPopup(){
+		$('#acc-info').css('display','block');
+		$('#pop-footer>input').prop('disabled',true);		
+	}	
 	
 	function showPopup(){
 		$('#pop-list').empty();
@@ -282,8 +285,8 @@ $(document).ready(function(){
 		$('#pop-footer>input').prop('disabled',true);		
 	}
 	
-	function closePopup(){
-		$('#user-add').css('display','none');
+	function closePopup(clickNode){
+		$(clickNode).closest('.pop-con').css('display','none');
 	}
 
 	function popSearchMember(/*회원 정보 객체 배열*/members){
@@ -366,6 +369,7 @@ $(document).ready(function(){
 <title>Insert title here</title>
 </head>   
 <body>
+<div id="main-contents">
 	<ul class="nav nav-tabs">
 		<c:choose>
 			<c:when test="${accompany_at=='Y'}">
@@ -420,10 +424,10 @@ $(document).ready(function(){
          <div id="chat-header">
 			<div id="user-info"></div>
 			<c:if test="${accompany_at!='Y'}">
-				<i class="fas fa-user-plus fa-2x" id="add-user"></i>
+				<i class="fas fa-user-plus fa-3x" id="add-user"></i>
 			</c:if>
 			<c:if test="${accompany_at=='Y'}">
-				<i class="fas fa-info-circle fa-2x" id="set-acc" data-toggle="modal" data-target="#acc-info"></i>
+				<i class="fas fa-info-circle fa-3x" id="set-acc"></i>
 			</c:if>
          </div>
          <div id="chat-message">
@@ -437,22 +441,37 @@ $(document).ready(function(){
          </div>
       </div>
    </div>
-   	<div id="user-add">
-		<div id="pop-up">
-			<div id="pop-header">
+</div>
+   	<div id="user-add" class="pop-con">
+		<div id="pop-up" class="pop-up">
+			<div id="pop-header" class="pop-header">
 				<div>새	쪽지</div>
-				<a id="pop-close">&times;</a>			
+				<a class="pop-close">&times;</a>			
 			</div>
-			<div id="pop-search">
+			<div id="pop-search" class="pop-search">
 				<input type="text" placeholder="새로운 유저 검색"/>
 				<input type="button" value="검색">
 			</div>
-			<div id="pop-list"></div>
-			<div id="pop-footer">
+			<div id="pop-list" class="pop-list"></div>
+			<div id="pop-footer" class="pop-footer">
 				<input type="button" value="선택">			
 			</div>
 		</div>
 	</div>
+   	<div id="acc-info" class="pop-con">
+		<div class="pop-up">
+			<div class="pop-header">
+				<div>대상 매칭 확인</div>
+				<a class="pop-close">&times;</a>			
+			</div>
+			<div id="acc-search" class="pop-search">
 
+			</div>
+			<div id="acc-list"></div>
+			<div id="acc-footer" class="pop-footer">
+				<input type="button" value="닫기">		
+			</div>
+		</div>
+	</div>
 </body>
 </html>

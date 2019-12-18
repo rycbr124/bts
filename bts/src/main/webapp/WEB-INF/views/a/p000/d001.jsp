@@ -278,7 +278,7 @@ to {
 											<c:forEach var="planner" items="${planner}">
 											<tbody>
 												<tr>
-													<td>${planner.title}</td>
+													<td><a href="${contextPath}/community/plan_contents?plan_no=${planner.plan_no}">${planner.title}</a></td>
 													<td>${planner.member_id}</td>
 												</tr>
 											</tbody>
@@ -296,7 +296,7 @@ to {
 											<c:forEach var="article" items="${article}">
 											<tbody>
 												<tr>
-													<td>${article.title}</td>
+													<td><a href="#">${article.title}</a></td>
 													<td>${article.member_id}</td>
 												</tr>
 											</tbody>
@@ -314,7 +314,7 @@ to {
 											<c:forEach var="accompany" items="${accompany}">
 											<tbody>
 												<tr>
-													<td>${accompany.acc_title}</td>
+													<td><a href="${contextPath}/accompany/accView?article_no=${accompany.article_no}&member_id=${accompany.member_id}">${accompany.acc_title}</a></td>
 													<td>${accompany.member_id}</td>
 												</tr>
 											</tbody>

@@ -67,7 +67,7 @@ function operation(contenttypeid, idNumber){
 	    }
 	});
 }
-function image_init(idNumber) {
+function image_init(idNumber, command) {
    $("#image_grid").empty();
    
    var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D';
@@ -108,21 +108,23 @@ function image_init(idNumber) {
          $(form).prop('name', 'wish');
          $(form).prop('action', '/bts/recommend/insert_wishlist');
          $(form).prop('method', 'post');
+         
+         var divHeart = document.createElement('div');
+         $(divHeart).prop('class', 'divHeart');
+         
    
+         var heartTxt = document.createElement('p');
+         $(heartTxt).html('위시리스트 추가 : ');
+         
+         var heart = document.createElement('img');
+         $(heart).prop('class', 'heart');
+         if(command == 'not'){
+        	 $(heart).prop('src', '/bts/resources/image/recommend/like (1).png');   
+         }else{
+        	 $(heart).prop('src', '/bts/resources/image/recommend/like.png')
+         }
+         $(heart).attr('onclick', 'wish_list()');
                   
-         var input_heart = document.createElement('input');
-         $(input_heart).prop('id', 'toggle-heart');
-         $(input_heart).prop('type', 'checkbox');
-         $(input_heart).attr('onclick','wish_list()');
-         
-         var label_heart = document.createElement('label');
-         $(label_heart).prop('for', 'toggle-heart');
-         $(label_heart).prop('id', 'heart');
-         var heart_text = document.createTextNode('위시리스트 추가 : ');
-         var heart = document.createTextNode('♥');
-         form.appendChild(heart_text);
-         label_heart.appendChild(heart);
-         
          var hidden = document.createElement('input');
          $(hidden).prop('type', 'hidden');
          $(hidden).prop('name', 'contentid');
@@ -133,19 +135,16 @@ function image_init(idNumber) {
          $(hidden2).prop('name', 'contenttypeid');
          $(hidden2).prop('value', resultArray.contenttypeid);
          
-         
-         
-               
-//         var overview= $(overview).html(resultArray.overview);
-         
+        
          $('.col-lg-7').append(img_1);
 
          $('.col-lg-5').append(title);
          $('.col-lg-5').append(addr1);
          $('.col-lg-5').append(h_page);
          $('.col-lg-5').append(form);
-         $(form).append(input_heart);
-         $(form).append(label_heart);
+         $(form).append(divHeart);
+         $(divHeart).append(heartTxt);
+         $(divHeart).append(heart);
          $(form).append(hidden);
          $(form).append(hidden2);
          $('.content').html(resultArray.overview);
