@@ -94,7 +94,7 @@ p {
 	<div class="container" id="container">
 		<h2 id="subjectText">동행 찾기</h2>
 		<p>BTS와 함께 여행</p>
-		<img src="${contextPath }/resources/image/accompanyMain.jpg" id="accMainImage"> <br> <br>
+		<img src="${contextPath }/resources/image/accompany/accMain2.jpg" id="accMainImage"> <br> <br>
 		<div id="headsubject"></div>
 		<form id="boardForm" name="boardForm" method="post">
 			<table class="table table-striped table-hover">
