@@ -31,7 +31,8 @@
 	position: relative;
 	height: auto;
 	width: 1000px;
-	margin: 0 auto;
+	margin-top:80px;
+	margin-left:120px;
 }
 
 #side li {

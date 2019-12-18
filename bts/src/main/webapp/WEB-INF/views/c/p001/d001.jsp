@@ -19,32 +19,12 @@
 
 
 <script>
-/*
- * 
 
-	$(document).ready(function() {
-		$('.member_info').prop('style','background-color:#e8f0fe; border-radius:0 9px 9px 0;');
-		$('.member_info span').prop('style','color:rgb(25,103,210);');
-		tagInit();
-		
-		if("${sessionScope.memberInfo.member_type=='kakao' || sessionScope.memberInfo.member_type=='naver'}"=="true"){
-			$("#input_img").on("click", function(){
-				alert('프로필 이미지 등록은 일반 회원만 가능합니다.');
-				return false;
-			});
-		}
-		
-		$('#btn-form-submit').click(function() {
-			var profile = $('#frm-profile')[0];
-			profile.action = "/bts/my/update";
-			profile.submit();
-		});
-		
-	
- */
-		
    
    $(document).ready(function() {
+	   $('.member_info').prop('style','background-color:#e8f0fe; border-radius:0 9px 9px 0;');
+		$('.member_info span').prop('style','color:rgb(25,103,210);');
+   
       tagInit();
       
       if("${sessionScope.memberInfo.member_type=='kakao' || sessionScope.memberInfo.member_type=='naver'}"=="true"){
@@ -349,13 +329,13 @@ div.col-md-6{
                      <div class="col-md-6">
                         
                         <select class="form-control" id="gender" name="gender">
-                           <c:if test="${sessionScope.memberInfo.gender =='M'}">
-                              <option value="M" selected>남</option>
-                              <option value="F">여</option>
+                           <c:if test="${sessionScope.memberInfo.gender =='남'}">
+                              <option value="남" selected>남</option>
+                              <option value="여">여</option>
                            </c:if>
-                           <c:if test="${sessionScope.memberInfo.gender =='F'}">
-                              <option value="M">남</option>
-                              <option value="F" selected>여</option>
+                           <c:if test="${sessionScope.memberInfo.gender =='여'}">
+                              <option value="남">남</option>
+                              <option value="여" selected>여</option>
                            </c:if>
                         </select>
                      </div>

@@ -108,7 +108,9 @@ $(document).ready(function (){
     src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
     font-family: "NanumSquareRoundR";
 }
-
+.container{
+	margin-top:80px;
+}
 h1{
    font-family : "NanumSquareRoundEB";
    display : inline-block;
