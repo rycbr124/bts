@@ -45,8 +45,8 @@ public class E_P002ControllerImpl implements E_P002Controller{
 	@Autowired
 	E_P003Service e_p003Service;
 	
-	private static final String imageUrl = "C:\\Users\\bit\\git\\bts\\bts\\src\\main\\webapp\\resources\\image\\board";
-	private static final String metaUrl = "C:\\MyProject\\WorkSpace\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\bts\\resources\\image\\board";
+	private static final String imageUrl = "D:\\git\\bts\\bts\\src\\main\\webapp\\resources\\image\\board";
+	private static final String metaUrl = "D:\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\bts\\resources\\image\\board";
 	private static final String mappingUrl = "/resources/image/board";
 	
 

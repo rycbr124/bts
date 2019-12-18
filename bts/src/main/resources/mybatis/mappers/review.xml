@@ -50,7 +50,7 @@
 	<insert id="insertTagList" parameterType="java.util.List">
 		<foreach collection="list" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">
 			INTO tag_article(tag_name,article_no,article_cd,tag_order)
-	   		VALUES (#{item.tag_name},#{item.article_no},#{item.article_cd},#{tag_order})
+	   		VALUES (#{item.tag_name},#{item.article_no},#{item.article_cd},#{item.tag_order})
 		</foreach>
 	</insert>
 

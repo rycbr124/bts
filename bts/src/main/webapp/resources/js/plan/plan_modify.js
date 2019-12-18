@@ -1,6 +1,11 @@
 /**
  * 
  */
+var globalKey;
+
+function setGlobal_mod(key){
+	globalKey = key;
+}
 function plan_modify(planner_info,detail_info, tagList){
 	var test = document.getElementById('touristDestination').click();
 	var planner = planner_info.planner[0];
@@ -119,7 +124,7 @@ function plan_modify(planner_info,detail_info, tagList){
 		for(var i=0; i<length;i++){
 			var content_id = $(check_class[i]).data('value');
 		
-		 var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+		 var serviceKey = globalKey;
       	   var reqUrl =  'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?serviceKey='
 			        + serviceKey
 			        + '&contentId='+ content_id+'&areaCode=1&sigunguCode=&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json'; 
@@ -209,7 +214,7 @@ function plan_modify(planner_info,detail_info, tagList){
            var result_arr = new Array();
            for(var j in data_arr){
         	   var content_id = data_arr[j];
-        	   var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+        	   var serviceKey = globalKey;
         	   var reqUrl =  'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?serviceKey='
  			        + serviceKey
   			        + '&contentId='+ content_id+'&areaCode=1&sigunguCode=&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json'; 
@@ -241,7 +246,7 @@ function content_value(detail){
 	var result_arr = new Array();
 	var day_obj = new Object();
 	var day_arr = new Array();
-	var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+	var serviceKey = globalKey;
 	for(var key in detail){
 		var detail_arr = detail[key];
 		var contentid = detail_arr['CONTENT_ID'];
@@ -343,7 +348,7 @@ function content_value(detail){
 				
 			}
 			$('.active_day').click();
-			var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+			var serviceKey = globalKey;
 			var content_id = $(this).parent().data('value');
 			var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?serviceKey='
 			        + serviceKey

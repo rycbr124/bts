@@ -147,7 +147,7 @@ $(document).ready(function(){
 			</div>
 			<div id="form-group" class="hopeAge">
 				<div class="form-control">
-					<input type="text" name="age" placeholder="희망나이">
+					<input type="number" name="age" placeholder="희망나이">
 				</div>
 			</div>
 			<div id="form-group" class="Transportation">

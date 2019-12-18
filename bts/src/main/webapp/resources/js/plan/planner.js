@@ -1,6 +1,11 @@
 /**
  * 
  */
+var globalKey;
+
+function setGlobal_er(key){
+	globalKey = key;
+}
 function plan_list(planList){
 	var list = planList.plan_no;
 	var length = planList.plan_no.length;
@@ -44,7 +49,7 @@ function plan_list(planList){
 		plan_arr.push(plan_no);
 		
 
-		var serviceKey = 'w%2B4Xokx8kJ3u6YPu2ytz%2FRb%2FsNwEfbMwq9l7vuyKmRN%2BVpDGuDH8tK%2FO%2B5ZosooJ%2B%2FcG5%2BhXLRSlNViGwkjjxA%3D%3D';
+		var serviceKey = globalKey;
 		var contentid = plan['CONTENT_ID'];
 		var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey='
 					+ serviceKey + '&contentId='+ contentid +'&defaultYN=Y&firstImageYN=Y&overviewYN=Y&mapinfoYN=Y&MobileOS=ETC&MobileApp=AppTest';

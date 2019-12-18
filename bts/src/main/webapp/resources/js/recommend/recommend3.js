@@ -6,6 +6,12 @@ $(document).ready(function (){
       
 });
 
+var globalKey;
+
+function setGlobal(key){
+	globalKey = key;
+}
+
 function result_init(){
     var pageNo = 1;
     image_init(pageNo);//이미지 삽입
@@ -13,7 +19,7 @@ function result_init(){
     $('.page-item').on('click',paging_click); //뿌린 버튼에 클릭이벤트 달아주는 메소드
 }
 function operation(contenttypeid, idNumber){
-	var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D';
+	var serviceKey = globalKey;
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro?ServiceKey='+ serviceKey +'&contentTypeId='+ contenttypeid +'&contentId=' + idNumber + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&introYN=Y';
 	$.ajax({
 		async : false,
@@ -70,7 +76,7 @@ function operation(contenttypeid, idNumber){
 function image_init(idNumber, command) {
    $("#image_grid").empty();
    
-   var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D';
+   var serviceKey = globalKey;
    var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + idNumber + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
    
    $.ajax({
@@ -156,7 +162,7 @@ function image_init(idNumber, command) {
          alert("잘못된 접근입니다.")
       }
    });
-   var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
+   var serviceKey = globalKey;
       var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailImage?ServiceKey=' + serviceKey + '&contentId=' + idNumber + '&imageYN=Y&MobileOS=ETC&MobileApp=AppTest';
       
       $.ajax({

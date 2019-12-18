@@ -1,10 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
        isELIgnored="false"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="contextPath"  value="${pageContext.request.contextPath}" />	
+<c:set var="tourKey"><spring:eval expression="@file.getProperty('tour.key')" /></c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,13 +25,23 @@
 <title>Best Travel Seoul[플랜 작성]</title>
 <script>
 $(document).ready(function(){
- var planner_info = ${plannerInfo};
- var detail_info = ${detailInfo};
- var tagList = ${tag_list};
- plan_modify(planner_info,detail_info, tagList);
+	
+setGlobal_p('${tourKey}');
+console.log('??');	
+setGlobal_mod('${tourKey}');
 });
+console.log('test');
 </script>
-
+<c:if test='${plannerInfo!=null}'>
+	<script>
+	$(document).ready(function(){
+	 var planner_info = ${plannerInfo};
+	 var detail_info = ${detailInfo};
+	 var tagList = ${tag_list};
+	 plan_modify(planner_info,detail_info, tagList);
+	});
+	</script>
+</c:if>
 </head>
 <body>
 <form name="plan" modelAttribute="planWrite" onsubmit="return false">

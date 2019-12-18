@@ -2,6 +2,11 @@
  * 
  */
 //href = # 막기
+var globalKey;
+
+function setGlobal_de(key){
+	globalKey = key;
+}
 $(function(){
 	var top = $(window).scrollTop();
 	var speed = 300;
@@ -98,7 +103,7 @@ function planRoot(plan_root,planner,e){
 	var array = new Array();
 	var arr_location = new Array();
 	var info = document.createElement('div');
-	var serviceKey = 'w%2B4Xokx8kJ3u6YPu2ytz%2FRb%2FsNwEfbMwq9l7vuyKmRN%2BVpDGuDH8tK%2FO%2B5ZosooJ%2B%2FcG5%2BhXLRSlNViGwkjjxA%3D%3D'
+	var serviceKey = globalKey;
 	var day_arr = new Array();
 	var day;
 	var desc;
@@ -247,7 +252,7 @@ function planRoot(plan_root,planner,e){
 	var result_arr = new Array();
 	for(var i=0; i<plan_box.length;i++){
 		var contentid = $(plan_box[i]).attr('id');
-		var serviceKey = 'w%2B4Xokx8kJ3u6YPu2ytz%2FRb%2FsNwEfbMwq9l7vuyKmRN%2BVpDGuDH8tK%2FO%2B5ZosooJ%2B%2FcG5%2BhXLRSlNViGwkjjxA%3D%3D'
+		var serviceKey = globalKey;
 		var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey='
 			   + serviceKey + '&contentId='+ contentid +'&defaultYN=Y&firstImageYN=Y&overviewYN=Y&mapinfoYN=Y&MobileOS=ETC&MobileApp=AppTest';
 		$.ajax({
@@ -306,7 +311,7 @@ function markerChange(){
 	var result_arr = new Array();
 	for(var i=0; i<plan_box.length;i++){
 		var contentid = $(plan_box[i]).attr('id');
-		var serviceKey = 'w%2B4Xokx8kJ3u6YPu2ytz%2FRb%2FsNwEfbMwq9l7vuyKmRN%2BVpDGuDH8tK%2FO%2B5ZosooJ%2B%2FcG5%2BhXLRSlNViGwkjjxA%3D%3D'
+		var serviceKey = globalKey;
 		var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey='
 			   + serviceKey + '&contentId='+ contentid +'&defaultYN=Y&firstImageYN=Y&overviewYN=Y&mapinfoYN=Y&MobileOS=ETC&MobileApp=AppTest';
 		$.ajax({

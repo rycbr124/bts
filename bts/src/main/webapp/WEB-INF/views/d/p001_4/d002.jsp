@@ -2,8 +2,10 @@
 	pageEncoding="UTF-8"
     isELIgnored="false"
     %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}" />	
+<c:set var="tourKey"><spring:eval expression="@file.getProperty('tour.key')" /></c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -85,7 +87,7 @@
 		
 		for(var i in arr_content){
 			console.log("1111 : " + arr_content[i]);
-			var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
+			var serviceKey = '${tourKey}'
 			var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?ServiceKey=' + serviceKey + '&contentId=' + arr_content[i] + '&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y';
 			
 			$.ajax({

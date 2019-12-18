@@ -180,7 +180,7 @@ IMP.request_pay({
 	    pay_method : 'card',
 	    merchant_uid : 'merchant_' + new Date().getTime(),
 	    name : lodging_name,
-	    amount :10,
+	    amount :amountprice,
 	    buyer_tel : '010-1234-5678',
 	    m_redirect_url : '${contextPath}/resve/Info'
 },function(rsp){
@@ -221,7 +221,7 @@ IMP.request_pay({
 	    pay_method : 'card',
 	    merchant_uid : 'merchant_' + new Date().getTime(),
 	    name : lodging_name,
-	    amount :10,
+	    amount :amountprice1,
 	    buyer_tel : '010-1234-5678',
 	    m_redirect_url : '${contextPath}/resve/Info'
 },function(rsp){
@@ -261,7 +261,7 @@ IMP.request_pay({
 	    pay_method : 'card',
 	    merchant_uid : 'merchant_' + new Date().getTime(),
 	    name : lodging_name,
-	    amount :10,
+	    amount :amountprice2,
 	    buyer_tel : '010-1234-5678',
 	    m_redirect_url : '${contextPath}/resve/Info'
 },function(rsp){

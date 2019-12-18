@@ -1,11 +1,16 @@
 /**
  * 추천(지역별) - 한국관광공사 API 
  */
+var globalKey;
+
+function setGlobal(key){
+	globalKey = key;
+}
+
 $(document).ready(function (){
 	
 	$('#search').on('click', result_init);
-
-	var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+	var serviceKey = globalKey
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaCode?ServiceKey=' + serviceKey + '&areaCode=1&numOfRows=25&MobileOS=ETC&MobileApp=AppTest'
 		
 		$.ajax({
@@ -66,7 +71,7 @@ function image_init(pageNo) {
 
 	var sigungucode = $("#sigungucode option:selected").val();
 
-	var serviceKey = 'dt2Nu%2Bu9tgj6Kwy1XIKjBFD8Ns8Etgi2jM6AuzJpQ1Hs%2Fy3WN2RSZU8PnK3MG15kw2UPyDjHSnaBkw7GTASqHA%3D%3D'
+	var serviceKey = globalKey
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey='
 			+ serviceKey
 			+ '&contentTypeId=' + contentTypeId + '&areaCode=1&sigunguCode=' + sigungucode + '&cat3=' + cat3 + '&MobileOS=ETC&MobileApp=AppTest&arrange=P&numOfRows=9&pageNo=' + pageNo + '&_type=json';

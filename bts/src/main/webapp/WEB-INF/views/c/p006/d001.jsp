@@ -427,7 +427,9 @@ $(document).ready(function(){
 				<i class="fas fa-user-plus fa-3x" id="add-user"></i>
 			</c:if>
 			<c:if test="${accompany_at=='Y'}">
+			<!-- 
 				<i class="fas fa-info-circle fa-3x" id="set-acc"></i>
+			 -->
 			</c:if>
          </div>
          <div id="chat-message">

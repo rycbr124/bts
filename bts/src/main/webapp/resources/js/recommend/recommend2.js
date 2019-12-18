@@ -5,6 +5,12 @@ $(document).ready(function (){
 	$('#search').on('click', result_init);
 });
 
+var globalKey;
+
+function setGlobal(key){
+	globalKey = key;
+}
+
  function result_init(){
 	 var pageNo = 1;
 	 image_init(pageNo);//이미지 삽입
@@ -28,7 +34,7 @@ function image_init(pageNo) {
 	var cat3 = $("#cat3 option:selected").val();
 	console.log("소분류 : " + cat3);
 	
-	var serviceKey = '%2B50SHKR5TLKYKGJB1vUT27tbTUYeocbkQFjQVTN8m%2FtACpIoNMLXI3Q9xkQt%2BkdRQOdUkotl2i0ioIb2nwaC8w%3D%3D'
+	var serviceKey = globalKey
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey='
 			+ serviceKey
 			+ '&contentTypeId=25&areaCode=1&cat3=' + cat3 + '&MobileOS=ETC&MobileApp=AppTest&arrange=P&numOfRows=9&pageNo=' + pageNo + '&_type=json';

@@ -43,8 +43,8 @@ public class E_P003ControllerImpl implements E_P003Controller{
 	@Autowired
 	Provider<E_P003VO_2> e_p003VO_2;
 	
-	private static final String imageUrl = "C:\\Users\\user\\git\\bts\\bts\\src\\main\\webapp\\resources\\image\\board";
-	private static final String metaUrl = "C:\\\\Users\\\\user\\\\eclipse-workspace\\\\.metadata\\\\.plugins\\\\org.eclipse.wst.server.core\\\\tmp0\\\\wtpwebapps\\\\bts\\\\resources\\\\image\\\\board";
+	private static final String imageUrl = "D:\\git\\bts\\bts\\src\\main\\webapp\\resources\\image\\board";
+	private static final String metaUrl = "D:\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\bts\\resources\\image\\board";
 	private static final String mappingUrl = "/resources/image/board";
 	
 	@Override

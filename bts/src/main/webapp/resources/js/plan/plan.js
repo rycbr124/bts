@@ -1,7 +1,12 @@
 /**
  * 
  */
+var globalKey;
 
+function setGlobal_p(key){
+	console.log(key);
+	globalKey = key;
+}
 var map_produce = function(){
 	$(function produce(){
 	 var mapContainer = document.getElementById('map'), // 지도를 표시할 div
@@ -126,7 +131,7 @@ $(function() {// jquery calendar
                var result_arr = new Array();
                for(var j in data_arr){
             	   var content_id = data_arr[j];
-            	   var serviceKey = 'cYcvlZ9yaPE20UToWcxr8bpZJbItY6rEa3kIxGzSd3N4e3R1kmaERDblD3vpL6zg3bM76YmVcfip6YU83Nc4CA%3D%3D'
+            	   var serviceKey = globalKey;
             	   var reqUrl =  'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?serviceKey='
      			        + serviceKey
       			        + '&contentId='+ content_id+'&areaCode=1&sigunguCode=&MobileOS=ETC&MobileApp=AppTest&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&transGuideYN=Y&_type=json'; 
@@ -170,7 +175,7 @@ function searchContentType(contentTypeId){
 	$('.detail_list_container').empty();
 
 	$('.select_place').attr('onchange','searchContentType('+ contentTypeId +')');
-	var serviceKey = 'cYcvlZ9yaPE20UToWcxr8bpZJbItY6rEa3kIxGzSd3N4e3R1kmaERDblD3vpL6zg3bM76YmVcfip6YU83Nc4CA%3D%3D'
+	var serviceKey = globalKey;
 	var sigungucode = $('.select_place option:selected').val();
 	var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey='
 	        + serviceKey
@@ -317,7 +322,7 @@ function searchContentType(contentTypeId){
   				
   			}
   		
-  			var serviceKey = 'cYcvlZ9yaPE20UToWcxr8bpZJbItY6rEa3kIxGzSd3N4e3R1kmaERDblD3vpL6zg3bM76YmVcfip6YU83Nc4CA%3D%3D'
+  			var serviceKey = globalKey;
   			var content_id = $(this).parent().data('value');
   			var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailCommon?serviceKey='
   			        + serviceKey
@@ -424,7 +429,7 @@ function selectWishList(){
 	});
 }
 function myWishList(wish){
-	var serviceKey = 'cYcvlZ9yaPE20UToWcxr8bpZJbItY6rEa3kIxGzSd3N4e3R1kmaERDblD3vpL6zg3bM76YmVcfip6YU83Nc4CA%3D%3D';
+	var serviceKey = globalKey;
 	
 	var result_arr = new Array();
 	for(var key in wish){

@@ -3,8 +3,10 @@
 	pageEncoding="UTF-8"
     isELIgnored="false"
     %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}" />	
+<c:set var="tourKey"><spring:eval expression="@file.getProperty('tour.key')" /></c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +16,7 @@
 <script type="text/javascript" src="${contextPath}/resources/js/recommend/recommend3.js"></script>  <!-- 커스텀 js --> 
 
 <script>
+setGlobal('${tourKey}');
 	$(document).ready(function(){
 		var id = ${contentid};
 		var contenttypeid = ${contenttypeid};

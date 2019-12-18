@@ -2,8 +2,10 @@
 	pageEncoding="UTF-8"
     isELIgnored="false"
     %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}" />	
+<c:set var="tourKey"><spring:eval expression="@file.getProperty('tour.key')" /></c:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +26,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 <script>
-
+setGlobal('${tourKey}');
 $(document).ready(function (){
 	var catArray = ${course};
 

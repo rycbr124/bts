@@ -1,8 +1,13 @@
 /**
  * 
  */
+var globalKey;
+
+function setGlobal(key){
+	globalKey = key;
+}
 $(document).ready(function(){
-   var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D';
+   var serviceKey = globalKey;
    var reqUrl = 'http://api.visitkorea.or.kr/openapi/service/rest/KorService/areaBasedList?serviceKey='
         + serviceKey
         + '&contentTypeId=32&areaCode=1&sigunguCode=&cat1=B02&cat2=B0201&cat3=B02010100&listYN=Y&overviewYN=Y&MobileOS=ETC&MobileApp=AppTest&arrange=P&numOfRows=6&pageNo=1&_type=json';
@@ -98,7 +103,7 @@ $(document).ready(function(){
          $('.fs-container').on('mouseenter',function(){
             $(this).children('.fs-body').fadeIn();
             var content_id  = $(this).attr('id');
-            var serviceKey = '9lYTVuZFWTTyr2CZFilfzO9woq%2Bh%2B80b5xZ4myuNqQtcxMgSl2Vz1tuOjoarEHqNuXWf2WAiOTnOBzm3zJ4Rcg%3D%3D';
+            var serviceKey = globalKey;
             var reqUrlDetail ='http://api.visitkorea.or.kr/openapi/service/rest/KorService/detailIntro?ServiceKey='+serviceKey+'&contentTypeId=15&contentId='+content_id+'&MobileOS=ETC&MobileApp=TourAPI3.0_Guide&introYN=Y';
             $.ajax({
                async : false,
