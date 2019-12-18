@@ -1,3 +1,12 @@
+@font-face {
+    src: url("/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf");
+    font-family: "NanumSquareRoundR";
+}
+
+*{
+    font-family: "NanumSquareRoundR";
+}
+
 .main-board{
 	height : 300px;
 	width:100%;
@@ -16,13 +25,14 @@
 .main-info h1{
 	margin: 0;
     font-weight: 900;
-    font-size: 3rem;
+    font-size: 3.5rem;
     text-align: center;
     color: #fff;
     text-transform: uppercase;
     letter-spacing: -2px;
     word-spacing: 5px;
     margin-bottom: 20px;
+    font-family: "NanumSquareRoundR";
 }
 
 .main-detail{

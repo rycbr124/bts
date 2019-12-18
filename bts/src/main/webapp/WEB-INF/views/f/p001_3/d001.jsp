@@ -167,6 +167,10 @@ p {
 	background:url('${contextPath}/resources/image/community/community_main2.jpg');
 	background-size : 100% 100%;
 }
+
+.main-info h1{
+	font-size: 2.2em;
+}
 </style>
 <script>
 	$(document).ready(function(){

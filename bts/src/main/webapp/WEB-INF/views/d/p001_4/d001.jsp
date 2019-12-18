@@ -378,6 +378,10 @@ figure.snip1321:hover:after {
 .main-board{
 	background:url('${contextPath}/resources/image/community/community_main.jpg');
 }
+
+.main-info h1{
+	font-size: 2.2em;
+}
 </style>
 </head>
 <body>
