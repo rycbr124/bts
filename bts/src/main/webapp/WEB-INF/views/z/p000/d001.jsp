@@ -22,7 +22,7 @@
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <style>
 @font-face {
-   src: url("/bts/resources/fonts/Binggrae/Binggrae-Bold.woff");
+   src: url("/bts/resources/fonts/Binggrae-Bold.woff");
    font-family: "Binggrae";
 }
 

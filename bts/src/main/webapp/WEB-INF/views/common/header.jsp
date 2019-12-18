@@ -10,18 +10,18 @@
 
 <script>
 $(document).ready(function(){
-	var img = document.createElement('img');
-	$(img).prop('src', '${contextPath}' + '${sessionScope.memberInfo.profile_image}');
-	$(img).prop('class', 'profileImg');
-	$('.welcome').before(img);
-	
+   var img = document.createElement('img');
+   $(img).prop('src', '${contextPath}' + '${sessionScope.memberInfo.profile_image}');
+   $(img).prop('class', 'profileImg');
+   $('.welcome').before(img);
+   
 });
 </script>
 
 <style>
 @font-face{
-	src: url('/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf');
-	font-family:"nanum";
+   src: url('/bts/resources/fonts/Nanum/NanumSquareRoundR.ttf');
+   font-family:"nanum";
 }
 #header{
 position:relative;
@@ -44,11 +44,11 @@ position:relative;
    width:200px;
 }
 #header .member_menu .memberArea{
-	position:absolute;
-	width:100%;
-	height:auto;
-	top:20px;
-	left:15px;
+   position:absolute;
+   width:100%;
+   height:auto;
+   top:20px;
+   left:15px;
 }
 html #menu>li:hover>a, #menu>li.active>a {
    color: rgb(160,160,160);
@@ -64,21 +64,21 @@ html #menu>li:hover>a, #menu>li.active>a {
     font-weight: 600;
     line-height: 20px;
     letter-spacing: 0.025em;
-	color : #000;
+   color : #000;
     position:relative;
     display: inline-block;
     vertical-align: middle;
-  	text-decoration: none;
-  	font-family:"nanum";
+     text-decoration: none;
+     font-family:"nanum";
 }
 #header .member_menu .memberArea .mypage{
-	position:absolute;
-	top:3px;
+   position:absolute;
+   top:3px;
 }
 #header .member_menu .memberArea .logout{
-	position:absolute;
-	left:80px;
-	top:3px;
+   position:absolute;
+   left:80px;
+   top:3px;
 }
 #header .member_menu .memberArea span::hover{
    color:rgb(160,160,160);
@@ -90,13 +90,13 @@ html #menu>li:hover>a, #menu>li.active>a {
    color:rgb(160,160,160);
 }
 #header img.profileImg{
-	border-radius : 50%;
-	width : 30px;
-	height : 30px;
-	margin-right : 5px;
+   border-radius : 50%;
+   width : 30px;
+   height : 30px;
+   margin-right : 5px;
 }
 #header p{
-	font-color : black;
+   font-color : black;
 }
 </style>
 <meta charset="UTF-8">
@@ -120,7 +120,7 @@ html #menu>li:hover>a, #menu>li.active>a {
       <div class="member_menu">
          <c:choose>
             <c:when test="${isLogOn== true and not empty memberInfo }">
-            		
+                  
                   <p class="welcome"style="display:inline-block; color:#000;font-size:13px; font-family:'Nanum Gothic';">어서오세요  ${sessionScope.memberInfo.member_id} 님</p>
                   <div class="memberArea">
                   <c:set var="member" value="${sessionScope.memberInfo.member_id}"/>

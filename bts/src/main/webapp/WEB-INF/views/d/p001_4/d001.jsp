@@ -9,7 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>커뮤니티</title>
-
+<link rel="stylesheet" href="${contextPath}/resources/css/boardHeader.css" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -375,16 +375,26 @@ figure.snip1321:hover:after {
 	display : inline-block;
 }
 
+.main-board{
+	background:url('${contextPath}/resources/image/community/community_main.jpg');
+}
+
+.main-info h1{
+	font-size: 2.2em;
+}
 </style>
-
-
 </head>
 <body>
 <form name="form" id="form" method="post">
 	<div class="container">
-		<h2>커뮤니티</h2>
-		<p>BTS와 함께 나만의 여행계획을 공유하세요!</p>
-		<img src="${contextPath}/resources/image/community/community_main.jpg">
+		<div class="main-board">
+			<div class='main-info'>
+				<div class='main-back mx-auto'>
+					<h1>커뮤니티</h1>
+					<span class="main-detail">BTS와 함께 나만의 여행계획을 공유하세요!</span>
+				</div>
+			</div>
+		</div>
 		<ul class="nav nav-tabs">
 			<li class="nav-item"><a class="nav-link active"
 				href="${contextPath}/community/plan_list">계획</a></li>

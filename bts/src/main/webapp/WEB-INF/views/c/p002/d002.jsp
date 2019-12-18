@@ -28,13 +28,13 @@
 			<h1 id="subjectText">내가 쓴 글 목록</h1>
 		</div>
 			<ul class="tabs">
-				<li class="tab-link current" data-tab="acctab">후기</li>
-				<li class="tab-link" data-tab="reviewtab"><a style="color:#666666;" href="${contextPath}/my/myBoardList2">동행</a></li>
+				<li class="tab-link" data-tab="acctab"><a style="color:#666666;" href="${contextPath}/my/myBoardList">후기</a></li>
+				<li class="tab-link current" data-tab="reviewtab">동행</li>
 				<li class="tab-link" data-tab="plantab"><a style="color:#666666;" href="${contextPath}/my/myBoardList3">플랜</a></li>
 			</ul>
 
-			<div id="acctab" class="tab-content current">
-				<form id="accboardForm" name="accboardForm">
+			<div id="reviewtab" class="tab-content current">
+				<form id="reviewboardForm" name="reviewboardForm" method="post">
 					<table class="table table-striped table-hover">
 						<thead>
 							<tr>
@@ -45,13 +45,15 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="reviewresult" items="${reviewList }" varStatus="status">
+							<c:forEach var="accresult" items="${accList }" varStatus="status">
 								<tr>
-									<td><c:out value="${reviewresult.article_no }" /></td>
-									<td><a id="acc_title" href="${contextPath}/community/review/contents?article=${reviewresult.article_no}"><c:out value="${reviewresult.title }"></c:out></a></td>
-									<td><c:out value="${reviewresult.member_id }" /></td>
-									<td><c:out value="${reviewresult.register_date }" /></td>
+									<td><c:out value="${accresult.article_no}" /></td>
+									<td><a id="acc_title" href="${contextPath}/accompany/accView?article_no=${accresult.article_no}&member_id=${accresult.member_id}"><c:out value="${accresult.acc_title }"></c:out></a></td>
+									<td><c:out value="${accresult.member_id }" /></td>
+									<td><c:out value="${accresult.register_date }" /></td>
 								</tr>
+								
+								<input type="hidden" value="${accresult.article_no}" name="article_no"/>							
 							</c:forEach>
 						</tbody>
 					</table>
@@ -59,28 +61,27 @@
 				<div id="paging" style="display: block; text-align: center;">
 					<ul class="pagination" id="pagination">
 						<!-- 이전버튼 -->
-						<c:if test="${paging.startPage != 1}">
-							<li class="page-item"><a href="${contextPath}/my/myBoardList?nowPage=${paging.startPage -1}&cntPerPage=${paging.cntPerPage}" class="paginate_button previous" id="prev">이전</a></li>
+						<c:if test="${paging2.startPage2 != 1}">
+							<li class="page-item"><a href="${contextPath}/my/myBoardList2?nowPage2=${paging2.startPage2 -1}&cntPerPage2=${paging2.cntPerPage2}" class="paginate_button previous" id="prev">이전</a></li>
 						</c:if>
 						<!-- 페이지 번호 -->
-						<c:forEach var="idx" begin="${paging.startPage}" end="${paging.endPage}">
+						<c:forEach var="idx" begin="${paging2.startPage2}" end="${paging2.endPage2}">
 							<c:choose>
-								<c:when test="${idx == paging.nowPage }">
+								<c:when test="${idx == paging2.nowPage2 }">
 									<li class="page-item"><a class="page-link" href="#" id="pageNo">${idx}</a></li>
 								</c:when>
-								<c:when test="${idx != paging.nowPage }">
-									<li class="page-item"><a class="page-link" href="${contextPath}/my/myBoardList?nowPage=${idx}&cntPerPage=${paging.cntPerPage}" id="pageNo">${idx}</a></li>
+								<c:when test="${idx != paging2.nowPage2 }">
+									<li class="page-item"><a class="page-link" href="${contextPath}/my/myBoardList2?nowPage2=${idx}&cntPerPage2=${paging2.cntPerPage2}" id="pageNo">${idx}</a></li>
 								</c:when>
 							</c:choose>
 						</c:forEach>
 						<!-- 이후 -->
-						<c:if test="${paging.endPage != paging.lastPage}">
-							<li class="page-item"><a href="${contextPath}/my/myBoardList?nowPage=${paging.endPage +1}&cntPerPage=${paging.cntPerPage}" class="paginate_button next" id="next">다음 </a></li>
+						<c:if test="${paging2.endPage2 != paging2.lastPage2}">
+							<li class="page-item"><a href="${contextPath}/my/myBoardList2?nowPage2=${paging2.endPage2+1}&cntPerPage2=${paging2.cntPerPage2}" class="paginate_button next" id="next">다음 </a></li>
 						</c:if>
 					</ul>
 				</div>
 			</div>
-		
 			<script>
 				$(document).ready(function() {
 										

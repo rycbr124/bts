@@ -38,9 +38,25 @@
 keyframes blink {
    from {color: white;
 }
+
 30%
 {
-color:yellow
+color
+
+
+
+
+:
+
+
+ 
+
+
+yellow
+
+
+
+
 ;
 }
 to {
@@ -62,12 +78,19 @@ to {
 p {
    font-family: "NanumSquareRoundR";
 }
+.main-board{
+   background:url('${contextPath}/resources/image/accompany/accMain2.jpg');
+   background-size : 100% 100%;
+}
+.main-info h1{
+   font-size: 2.2em;
+}
 </style>
-
 <meta charset="UTF-8">
 <link rel="stylesheet" href="${contextPath}/resources/css/bootstrap/bootstrap.css" />
 <link rel="stylesheet" href="${contextPath}/resources/css/e/p001/accompanyMain.css" />
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<link rel="stylesheet" href="${contextPath}/resources/css/boardHeader.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="description" content="">
 <meta name="author" content="">
@@ -76,9 +99,14 @@ p {
 </head>
 <body>
    <div class="container" id="container">
-      <h2 id="subjectText">동행 찾기</h2>
-      <p>BTS와 함께 여행</p>
-      <img src="${contextPath }/resources/image/accompanyMain.jpg" id="accMainImage"> <br> <br>
+      <div class="main-board">
+         <div class='main-info'>
+            <div class='main-back mx-auto'>
+               <h1>동행찾기</h1>
+               <span class="main-detail">BTS와 함께 동행자를 찾아보세요!</span>
+            </div>
+         </div>
+      </div>
       <div id="headsubject"></div>
       <form id="boardForm" name="boardForm" method="post">
          <table class="table table-striped table-hover">
