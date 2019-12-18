@@ -14,7 +14,7 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+<link rel="stylesheet" href="${contextPath}/resources/css/boardHeader.css" />
 <style>
 @font-face {
 	src: url("/bts/resources/fonts/Nanum/NanumSquareRoundEB.ttf");
@@ -163,6 +163,14 @@ p {
 	background-color:#eeeff0;
 }
 
+.main-board{
+	background:url('${contextPath}/resources/image/community/community_main2.jpg');
+	background-size : 100% 100%;
+}
+
+.main-info h1{
+	font-size: 2.2em;
+}
 </style>
 <script>
 	$(document).ready(function(){
@@ -235,9 +243,14 @@ p {
 <body>
 
 <div class="container">
-	<h2>커뮤니티</h2>
-  <p>BTS와 함께 나만의 여행후기를 공유하세요!</p>
-  <img id="main-image" src="${contextPath}/resources/image/community/community_main2.jpg">
+	<div class="main-board">
+		<div class='main-info'>
+			<div class='main-back mx-auto'>
+				<h1>커뮤니티</h1>
+				<span class="main-detail">BTS와 함께 나만의 여행후기를 공유하세요!</span>
+			</div>
+		</div>
+	</div>
   <ul class="nav nav-tabs">
     <li class="nav-item">
       <a class="nav-link" href="${contextPath}/community/plan_list">계획</a>
