@@ -11,6 +11,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
+<style>
+body{
+	padding:0;
+}
+</style>
 <body>
 	<div>
 		<h1 style="text-align: center;">Best Travel Seoul</h1>

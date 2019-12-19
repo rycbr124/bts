@@ -77,7 +77,7 @@ public class B_P003ServiceImpl implements B_P003Service {
 			send_mail(d001vo, "find_pw");
 			out.print("<script>");
 			out.print("alert('이메일로 임시 비밀번호를 발송했습니다.');");
-			out.print("history.go(-1)");
+			out.print("window.location.href='/bts/main/main';");
 			out.print("</script>");
 			out.close();
 		}
@@ -102,7 +102,7 @@ public class B_P003ServiceImpl implements B_P003Service {
 			subject = "BTS 임시 비밀번호 입니다.";
 			msg += "<body style='border:1px solid #EAEAEA;'>";
 			msg += "<div style='background-color:#EAEAEA;padding-top:50px; width:500px; margin-left:500px; height:500px;font-family: '돋움',Dotum,Helvetica,'Apple SD Gothic Neo',Sans-serif;'>";
-			msg += "<img src='http://localhost:8088/bts/resources/image/BTS_logo_black.png' width='200' height='100px' style='margin-left:190px;'><br>";
+			msg += "<img src='http://192.168.0.56:8790/bts/resources/image/BTS_logo_black.png' width='200' height='100px' style='margin-left:190px;'><br>";
 			msg += "<h1 style='text-align:center;'>Best Travel Seoul</h1><br><br>";
 			msg += "<div style='padding-left:10px;padding-bottom:10px;'>";
 			msg += "<h2 style='text-align:center;'>BTS에서 보낸 메일입니다.</h2><br><br>";

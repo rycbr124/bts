@@ -131,8 +131,9 @@
 			         text.appendChild(right);
 			         
 			         
-			         
-			         $('.thumb_nail').prop('src', resultArray.firstimage);
+			         if(i==0){			        	 
+			         	$('.thumb_nail').prop('src', resultArray.firstimage);
+			         }
 			   
 			         var hidden = document.createElement('input');
 			         $(hidden).prop('type', 'hidden');

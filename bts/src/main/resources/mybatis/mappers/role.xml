@@ -36,5 +36,19 @@
 			    WHERE menu_cd=#{menu_cd}
 			)
 	    ]]>
-	</select>	
+	</select>
+	
+	<select id="checkPnishAt" parameterType="string" resultType="a_p002VO_1">
+	    <![CDATA[
+			SELECT t.*
+			FROM (
+			    SELECT begin_date,end_date,pnish_desc
+			    FROM punishment_history
+			    WHERE member_id=#{member_id}
+			    AND sysdate BETWEEN begin_date AND end_date
+			    ORDER BY end_date DESC
+			) t
+			WHERE rownum=1
+	    ]]>
+	</select>		
 </mapper>

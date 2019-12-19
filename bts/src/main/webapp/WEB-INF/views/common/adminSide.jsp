@@ -89,7 +89,6 @@ float:left;
           <div class="bg-white py-2 collapse-inner rounded">
             <h6 class="collapse-header">Member:</h6>
             <a class="collapse-item" href="${contextPath}/admin/mainMember">회원 목록 조회</a>
-            <a class="collapse-item" href="${contextPath}/admin/updateMember">회원 목록 상세/수정</a>
           </div>
         </div>
       </li>

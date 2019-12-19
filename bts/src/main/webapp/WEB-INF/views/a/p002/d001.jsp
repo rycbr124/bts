@@ -64,6 +64,7 @@
 		IBS_InitSheet( mySheet , initSheet);
 
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
+		doAction('search');
 		mySheet.SetFocusAfterProcess(0);
 	}
 	

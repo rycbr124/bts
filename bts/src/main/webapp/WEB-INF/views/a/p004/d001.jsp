@@ -26,7 +26,6 @@
 	
 	/*Sheet 기본 설정 */
 	function LoadPage() {
-		doAction('search');
 		mySheet.RemoveAll();
 		//아이비시트 초기화
 		var initSheet = {};
@@ -44,7 +43,7 @@
 			//MultiLineText설정하면 shift+enter 누를 때 하나의 셀 안에 여러 값을 넣을 수 있음.
 			//Wrap은 컬럼 사이즈가 정해져 있지만 데이터 길이가 더 길 때, 뒷 부분은 알아서 줄 바꿈 해줌.
 			{Header:"상태",Type:"Status",SaveName:"STATUS",MinWidth:50, Align:"Center"},//모든 그리드에 들어감
-			{Header:"contact_no",Type:"Html",SaveName:"contact_no",MinWidth:30, KeyField:1,Hidden:true},
+			{Header:"contact_no",Type:"Html",SaveName:"contact_no",MinWidth:30, KeyField:1,Hidden:1},
 			{Header:"제목",Type:"Text",SaveName:"title",MinWidth:300,Align:"Center",Edit:0},
 			{Header:"카테고리",Type:"Html",SaveName:"contact_type",MinWidth:150,KeyField:1 ,MultiLineText:1,Align:"Center",Edit:0}, //필수값을 체크하고자 할 때 keyField사용			
 			{Header:"ID",Type:"Html",SaveName:"member_id",MinWidth:100, KeyField:1,Edit:0,Align:"Center"},
@@ -52,11 +51,10 @@
 			{Header:"처리상태",Type:"Html",SaveName:"answer_at",MinWidth:100,Edit:0,Align:"Center"},
 		];   
 		IBS_InitSheet( mySheet , initSheet);
-		
-		var button = mySheet.ColSaveName(col) == "button"
-		mySheet.SetRangeValue("답변하기",1,button,4,button);
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
+		mySheet.SetFocusAfterProcess(0);
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
+		doAction('search');
 		
 	}
 	/*Sheet 각종 처리*/
@@ -81,7 +79,7 @@
 				break;
 		}
 	}
-	
+	//모달 
 	function mySheet_OnClick(row,col){
 		var OrgValue = mySheet.CellSearchValue(row, 'answer_at');
 		if(mySheet.ColSaveName(col) == "title" && row >= 1){
@@ -232,14 +230,12 @@
     </div>
     <div class="ib_function float_right">
 	  <a href="javascript:doAction('reload')" class="f1_btn_gray lightgray">초기화</a>
-	  <a href="javascript:doAction('insert')" class="f1_btn_gray lightgray">추가</a>
 	  <a href="javascript:doAction('search')" class="f1_btn_white gray">조회</a>
-	  <a href="javascript:doAction('save')" class="f1_btn_white gray">저장</a>
 	</div>
 
 	<div class="clear hidden"></div>
-	<div class="ib_product">
-	<script>createIBSheet("mySheet", "100%", "auto");</script>
+	<div>
+	<script>createIBSheet("mySheet", "100%", "400px");</script>
 	</div>
   </div>
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

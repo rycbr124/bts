@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import bts.a.p002.vo.A_P002VO_1;
 import bts.common.interceptor.dao.InterceptorDAO;
 
 @Service("InterceptorService")
@@ -27,6 +28,12 @@ public class InterceptorServiceImpl implements InterceptorService{
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public A_P002VO_1 checkPnishAt(String member_id) {
+		A_P002VO_1 result = interceptorDAO.checkPnishAt(member_id);
+		return result;
 	}
 
 }

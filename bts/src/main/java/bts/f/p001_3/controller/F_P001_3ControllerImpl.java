@@ -286,13 +286,22 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 			String randID = UUID.randomUUID().toString();
 			
 			String metaPath=metaUrl+"\\"+saveDate+"\\"+randID+"_"+fileName;
+			String upPath=imageUrl+"\\"+saveDate+"\\"+randID+"_"+fileName;
 			File metaFile = new File(metaPath);
+			File upFile = new File(upPath);
 			
 			if(!metaFile.getParentFile().exists()) {
 				metaFile.getParentFile().mkdirs();
 			}
 			
+			if(!upFile.getParentFile().exists()) {
+				upFile.getParentFile().mkdirs();
+			}
+			
 			out = new FileOutputStream(metaFile);
+			out.write(bytes);
+			out.close();
+			out = new FileOutputStream(upFile);
 			out.write(bytes);
 			
 			String fileUrl = request.getContextPath()+mappingUrl+"/"+saveDate+"/"+randID+"_"+fileName;
@@ -336,13 +345,14 @@ public class F_P001_3ControllerImpl implements F_P001_3Controller{
 				File downloadFile = new File(metaUrl+"\\"+srcUrl);
 				File uploadFile = new File(imageUrl+"\\"+srcUrl);
 				
+				/*
 				if(!uploadFile.getParentFile().exists()) {
 					uploadFile.getParentFile().mkdirs();
 				}
-				
 				if(downloadFile.exists()) {
 					downloadFile.renameTo(uploadFile);
 				}
+				 * */
 			}			
 		}catch(Exception e) {
 			e.printStackTrace();

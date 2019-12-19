@@ -103,7 +103,7 @@
 	</div>
 
 	<div class="clear hidden"></div>
-	<div><script>createIBSheet("mySheet", "100%", "auto");</script></div>
+	<div><script>createIBSheet("mySheet", "100%", "400px");</script></div>
   </div>
 </body>
 </html>

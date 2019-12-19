@@ -42,7 +42,7 @@
 
 		mySheet.SetEditableColorDiff(1); // 편집불가능할 셀 표시구분
         //mySheet.ShowSubSum([{StdCol:"Release",SumCols:"price",Sort:"asc"}]);
-		//doAction('search');
+		doAction('search');
 	}
 	
 	/*Sheet 각종 처리*/
@@ -106,7 +106,7 @@
 	</div>
 
 	<div class="clear hidden"></div>
-	<div><script>createIBSheet("mySheet", "100%", "100%");</script></div>
+	<div><script>createIBSheet("mySheet", "100%", "400px");</script></div>
   </div>
 </body>
 </html>

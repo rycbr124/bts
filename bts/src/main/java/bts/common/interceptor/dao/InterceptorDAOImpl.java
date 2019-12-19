@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
 
+import bts.a.p002.vo.A_P002VO_1;
+
 @Repository("interceptorDAO")
 public class InterceptorDAOImpl implements InterceptorDAO{
 	@Autowired
@@ -22,6 +24,12 @@ public class InterceptorDAOImpl implements InterceptorDAO{
 	@Override
 	public int selectAuthCount(Map<String, String> searchMap) throws DataAccessException{
 		int result = sqlSession.selectOne("mapper.role.selectAuthCount",searchMap);
+		return result;
+	}
+
+	@Override
+	public A_P002VO_1 checkPnishAt(String member_id) {
+		A_P002VO_1 result = sqlSession.selectOne("mapper.role.checkPnishAt",member_id);
 		return result;
 	}
 

@@ -123,7 +123,7 @@
 	</div>
 
 	<div class="clear hidden"></div>
-	<div><script>createIBSheet("mySheet", "100%", "100%");</script></div>
+	<div><script>createIBSheet("mySheet", "100%", "400px");</script></div>
   </div>
 </body>
 </html>

@@ -47,7 +47,10 @@ $.ajax({
     url : reqUrl,
     dataType : 'json',
     success : function(data, textStatus) {
+    	
     	var resultArray = data.response.body.items.item;
+    	console.log("=============");
+    	console.log(resultArray);
     	console.log("1222111 : " + resultArray.title);
    
     	var figure = document.createElement('figure');
