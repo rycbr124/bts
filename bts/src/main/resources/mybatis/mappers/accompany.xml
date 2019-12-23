@@ -138,7 +138,7 @@
 	</select>
 	
 	<!-- 태그 가져오기 -->
-	<select id="tagView" resultMap="accTagResult" parameterType="e_p003VO_2">
+	<select id="tagView" resultMap="accTagResult" parameterType="_int">
 	<![CDATA[
 	select tag_name from tag_accompany where article_no = #{article_no}
 	]]>

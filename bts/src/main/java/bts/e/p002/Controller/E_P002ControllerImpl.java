@@ -25,6 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import bts.e.p001.Service.E_P001Service;
+import bts.e.p001.VO.E_P001VO;
 import bts.e.p002.Service.E_P002Service;
 import bts.e.p002.VO.E_P002VO;
 import bts.e.p003.Service.E_P003Service;
@@ -44,6 +46,8 @@ public class E_P002ControllerImpl implements E_P002Controller{
 	Provider<E_P003VO_2> e_p003VO_2;
 	@Autowired
 	E_P003Service e_p003Service;
+	@Autowired
+	E_P001Service e_p001Service;
 	
 	private static final String imageUrl = "D:\\git\\bts\\bts\\src\\main\\webapp\\resources\\image\\board";
 	private static final String metaUrl = "D:\\project\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\bts\\resources\\image\\board";
@@ -64,8 +68,11 @@ public class E_P002ControllerImpl implements E_P002Controller{
 	public ModelAndView accUpdateForm(@RequestParam("article_no") int article_no, HttpServletRequest request, HttpServletResponse response, HttpSession session)
 			throws Exception {
 		ModelAndView mav = new ModelAndView("/e/p002/d002");
-
+		E_P001VO detail = e_p001Service.accView(article_no);
+		List<E_P003VO_2> tagResult = e_p001Service.selectTag(article_no);
 		mav.addObject("article_no",article_no);
+		mav.addObject("detail",detail);
+		mav.addObject("tagResult",tagResult);
 		return mav;
 	}
 

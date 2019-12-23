@@ -214,10 +214,10 @@ $(document).ready(function(){
 			<div id="form-group">
 				<label for="inputSubject" class="col-lg-2 control-label">제목</label>
 				<div class="form-control">
-					<input type="text" name="acc_title" placeholder="제목">
+					<input type="text" name="acc_title" placeholder="제목" value="${detail.acc_title}">
 				</div>
 			</div>
-			<div id="forom-group">
+			<div id="form-group">
 			<label for="inputarticle_no" class="col-lg-2 control-label">게시글 번호</label>
 			<div class="form-control">
 			<input type="text" name="article_no" value="${article_no }" placeholder="${article_no}" disabled>
@@ -232,7 +232,7 @@ $(document).ready(function(){
 			<div id="form-group">
 				<label for="inputAge" class="col-lg-2 control-label">희망나이</label>
 				<div class="form-control">
-					<input type="text" name="age" placeholder="희망나이">
+					<input type="text" name="age" placeholder="희망나이" value="${detail.age}">
 				</div>
 			</div>
 			<div id="form-group">
@@ -258,7 +258,7 @@ $(document).ready(function(){
 			<div id="form-group">
 				<label for="inputWhlrs_no" class="col-lg-2 control-label">인원수</label>
 				<div class="form-control">
-					<input type="text" name="whlrs_no" placeholder="인원수">
+					<input type="text" name="whlrs_no" placeholder="인원수" value="${detail.whlrs_no}">
 				</div>
 			</div>
 			<br> <br>
@@ -266,10 +266,10 @@ $(document).ready(function(){
 				<div class="form-control" id="tag-list">
 					<input type="text" placeholder="태그"> 
 					<span> 
-					<c:forEach var="tags" items="${tagResult.tag_list }">
+					<c:forEach var="tag" items="${tagResult}">
 							<span class="tag-result"> 
 							<span>#</span> 
-							<span class="tag-input">${tags}</span> 
+							<span class="tag-input">${tag.tag_name}</span> 
 							<a>x</a>
 							</span>
 						</c:forEach>
@@ -277,7 +277,7 @@ $(document).ready(function(){
 				</div>
 			</div>
 			<div id="form-group">
-				<textarea id="editor" name="editor"></textarea>
+				<textarea id="editor" name="editor">${detail.content}</textarea>
 				<input type="hidden" name="imageList"> 
 				<input type="hidden" name="tagList">
 			</div>

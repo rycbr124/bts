@@ -42,7 +42,7 @@
 	    <![CDATA[
 			SELECT t.*
 			FROM (
-			    SELECT begin_date,end_date,pnish_desc
+			    SELECT begin_date,(end_date-1) end_date,pnish_desc
 			    FROM punishment_history
 			    WHERE member_id=#{member_id}
 			    AND sysdate BETWEEN begin_date AND end_date
